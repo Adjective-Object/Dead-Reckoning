@@ -4,14 +4,13 @@ import net.plaidypus.deadreckoning.Tile;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 /*
 
 Griffin Brodman & Jeffrey Tao
 Created: 11/4/2011
 
 */
-import org.newdawn.slick.state.StateBasedGame;
+
 
 public abstract class Entity
 {

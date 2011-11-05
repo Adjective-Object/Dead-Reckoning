@@ -2,7 +2,6 @@ package net.plaidypus.deadreckoning.entities;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.state.StateBasedGame;
 
 import net.plaidypus.deadreckoning.Tile;
 /*

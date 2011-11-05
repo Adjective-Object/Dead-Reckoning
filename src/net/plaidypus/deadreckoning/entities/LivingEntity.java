@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.MoveAction;
 
@@ -18,7 +17,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.state.StateBasedGame;
 
 public class LivingEntity extends Entity{
 	

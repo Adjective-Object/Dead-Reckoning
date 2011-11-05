@@ -1,7 +1,6 @@
 package net.plaidypus.deadreckoning;
 
 import net.plaidypus.deadreckoning.entities.Entity;
-import net.plaidypus.deadreckoning.entities.Player;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
