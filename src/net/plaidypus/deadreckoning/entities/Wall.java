@@ -28,7 +28,7 @@ public class Wall extends Entity
 
 	@Override
 	public void update(GameContainer gc, int delta) {}
-
+	
 	@Override
 	public void render(Graphics g, int x, int y) {}
 	

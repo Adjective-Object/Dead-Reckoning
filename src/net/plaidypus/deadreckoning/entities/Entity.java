@@ -17,8 +17,12 @@ public abstract class Entity
 	
 	private Tile location;
 	
+	public float relativeX, relativeY;
+	
 	public Entity()
 	{
+		relativeX=0;
+		relativeY=0;
 	}
 
 	Entity(Tile t)

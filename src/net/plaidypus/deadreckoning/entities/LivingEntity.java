@@ -12,6 +12,7 @@ import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.MoveAction;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -46,22 +47,24 @@ public class LivingEntity extends Entity{
 		animations.add(walking);
 		animations.add(damageFront);
 		animations.add(damageBack);
-		
-		nextAction = new MoveAction(this,10,10);
 	}
 	
 	@Override
 	public void update(GameContainer gc, int delta) {
 		currentAnimation.update(delta);
+		applyAction(gc,delta);
+	}
+	
+	public void applyAction(GameContainer gc, int delta){
+		currentAnimation.update(delta);
 		if(nextAction!=null){
-			nextAction.apply();
-			nextAction=null;
+			nextAction.applyAction(delta);
 		}
 	}
 
 	@Override
 	public void render(Graphics g,int x, int y) {
-		g.drawImage(currentAnimation.getCurrentFrame(),x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize);
+		g.drawImage(currentAnimation.getCurrentFrame(),x*DeadReckoningGame.tileSize+relativeX,y*DeadReckoningGame.tileSize+relativeY);
 	}
 	
 	public void setCurrentAnimation(int id){
@@ -108,8 +111,8 @@ public class LivingEntity extends Entity{
 						
 						String[] toimageB = toimage[1].split("\"");
 						
-						SpriteSheet p = new SpriteSheet(new Image(toimageB[1]),
-								DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
+						SpriteSheet p = new SpriteSheet(toimageB[1],
+								DeadReckoningGame.tileSize,DeadReckoningGame.tileSize, new Color(255,255,255));
 								
 						images.put(toimage[0], p );
 					}

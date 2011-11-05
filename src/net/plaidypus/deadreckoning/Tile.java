@@ -21,7 +21,7 @@ public class Tile
 	private GameBoard parent;
 	private boolean isEmpty;
 	private int x,y;
-	Image tileFace;
+	private Image tileFace;
 	
  	Tile(GameBoard parent, int x, int y) throws SlickException
 	{
@@ -29,7 +29,8 @@ public class Tile
  		this.y=y;
  		this.x=x;
  		isEmpty = true;
- 		tileFace = new Image("res\\floor1.png");
+ 		
+ 		tileFace = new Image("res\\floor"+Utilities.randInt(1,4)+".png");
 	}
  	
 	Tile(GameBoard parent, int x, int y, Entity e) throws SlickException
@@ -87,10 +88,6 @@ public class Tile
 	public void render(Graphics g,int x, int y)
 	{
 		g.drawImage(tileFace,x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize);
-		if(!this.isEmpty){
-			System.out.println(x+" "+y);
-			this.getEntity().render(g, x, y);
-		}
 	}
 	
 	public GameBoard getParent(){

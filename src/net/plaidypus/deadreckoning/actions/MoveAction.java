@@ -1,6 +1,8 @@
 package net.plaidypus.deadreckoning.actions;
 
+import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.GameBoard;
+import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 
 public class MoveAction extends Action{
@@ -13,15 +15,20 @@ public class MoveAction extends Action{
 		this.destinationY=destinationY;
 	}
 	
-	public void apply() {
-		GameBoard board = target.getLocation().getParent();
-		if(board.getTileAt(destinationX, destinationY).isOpen()){
-			
-			target.setCurrentAnimation(LivingEntity.ANIMATION_WALK);
+	public void apply(int delta) {
+		float xMegaLocation = target.relativeX+(target.getLocation().getX()*DeadReckoningGame.tileSize);
+		float yMegaLocation = target.relativeY+(target.getLocation().getY()*DeadReckoningGame.tileSize);
+		
+		if( Math.abs(xMegaLocation - destinationX*DeadReckoningGame.tileSize) <1 && Math.abs(yMegaLocation - destinationY*DeadReckoningGame.tileSize) <1){
+			completed=true;
+			target.relativeX=0;
+			target.relativeY=0;
 			target.getLocation().removeEntity();
-			board.getTileAt(destinationX, destinationY).placeEntity(target);
-			
-			
+			target.getLocation().getParent().getTileAt(destinationX, destinationY).placeEntity(target);
+		}
+		else{
+			target.relativeX=(float) ((destinationX*DeadReckoningGame.tileSize + xMegaLocation)/2 - target.getLocation().getX()*DeadReckoningGame.tileSize);
+			target.relativeY=(float) ((destinationY*DeadReckoningGame.tileSize + yMegaLocation)/2 - target.getLocation().getY()*DeadReckoningGame.tileSize);
 		}
 		
 	}

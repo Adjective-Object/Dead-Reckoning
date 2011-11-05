@@ -43,11 +43,16 @@ public class GameBoard
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 	{
-		for(int x = 0; x < 25; x++)
-		{
-			for(int y = 0; y < 25; y++ )
-			{
+		for(int x = 0; x < 25; x++){
+			for(int y = 0; y < 25; y++ ){
 				board[x][y].render(g,x,y);
+			}
+		}
+		for(int x = 0; x < 25; x++){
+			for(int y = 0; y < 25; y++ ){
+				if(!board[x][y].isOpen()){
+					board[x][y].getEntity().render(g,x,y);
+				}
 			}
 		}
 	}

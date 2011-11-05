@@ -24,6 +24,7 @@ public class GameplayState extends BasicGameState
 
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		gc.setTargetFrameRate(60);
+		gc.setVSync(true);
 		gb = new GameBoard(25,25);
 		gb.init();
 		gb.placeEntity(0, 0, new Player(gc.getInput()));

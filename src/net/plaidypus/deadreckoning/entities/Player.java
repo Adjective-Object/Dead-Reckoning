@@ -1,7 +1,10 @@
 package net.plaidypus.deadreckoning.entities;
 
+import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Tile;
+import net.plaidypus.deadreckoning.actions.MoveAction;
 
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
@@ -19,12 +22,21 @@ public class Player extends LivingEntity
 	public Player(Input i) throws SlickException
 	{
 		super("res\\player.entity");
+		this.input=i;
 	}
 
 	Player(Tile t) throws SlickException
 	{
 		super("res\\player.entity");
 		setLocation(t);
+	}
+	
+	public void update(GameContainer gc, int delta){
+		// this is totally temporary
+		if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON)){
+			this.nextAction = new MoveAction(this,input.getMouseX()/DeadReckoningGame.tileSize,input.getMouseY()/DeadReckoningGame.tileSize);
+		}
+		super. update(gc,delta);
 	}
 	
 }
