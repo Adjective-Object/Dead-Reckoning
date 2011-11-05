@@ -18,8 +18,9 @@ public class MoveAction extends Action{
 		if(board.getTileAt(destinationX, destinationY).isOpen()){
 			
 			target.setCurrentAnimation(LivingEntity.ANIMATION_WALK);
-			board.getTileAt(destinationX, destinationY).placeEntity(target);
 			target.getLocation().removeEntity();
+			board.getTileAt(destinationX, destinationY).placeEntity(target);
+			
 			
 		}
 		
