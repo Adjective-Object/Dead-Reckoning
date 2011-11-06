@@ -1,5 +1,7 @@
 package net.plaidypus.deadreckoning;
 
+import java.util.ArrayList;
+
 import net.plaidypus.deadreckoning.entities.Entity;
 
 import org.newdawn.slick.Color;
@@ -10,6 +12,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class GameBoard
 {
+	
+	public ArrayList<Entity> ingameEntities;
 	
 	Tile[][] board;
 	Tile primaryHighlight;
@@ -22,11 +26,18 @@ public class GameBoard
 		board = new Tile[width][height];
 		this.width=width;
 		this.height=height;
+		ingameEntities=new ArrayList<Entity>(0);
 	}
 	
 	public void placeEntity(int x, int y, Entity e)
 	{
 		board[x][y].placeEntity(e);
+		ingameEntities.add(e);
+	}
+	
+	public void clearTile(int x, int y){
+		ingameEntities.remove(board[x][y].getEntity());
+		board[x][y].removeEntity();
 	}
 	
 	public void init() throws SlickException
@@ -77,40 +88,6 @@ public class GameBoard
 			}
 		}
 	}
-	
-	public boolean isGameSet(){
-		for(int y=0;y<this.height;y++){
-			for(int x=0;x<this.width;x++){
-				if( !board[x][y].isOpen() && board[x][y].getEntity().isIdle() ){
-					//System.out.println(x+","+y+" is not set");
-					return false;
-				}
-			}
-		}
-		System.out.println("all entities are set");
-		return true;
-	}
-	
-	public void applyActions(int delta){
-		for(int y=0;y<this.height;y++){
-			for(int x=0;x<this.width;x++){
-				if( !board[x][y].isOpen() && board[x][y].getEntity().nextAction!=null ){
-					board[x][y].getEntity().nextAction.applyAction(delta);
-				}
-			}
-		}
-	}
-	
-	public void chooseActions(GameContainer gc, int delta){
-		for(int y=0;y<this.height;y++){
-			for(int x=0;x<this.width;x++){
-				if( !board[x][y].isOpen()){
-					board[x][y].getEntity().setAction(board[x][y].getEntity().chooseAction(gc, delta));
-				}
-			}
-		}
-	}
-	
 	
 	public void highlightSquare(int x, int y){
 		board[x][y].setHighlighted(true);

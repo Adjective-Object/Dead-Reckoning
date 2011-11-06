@@ -35,7 +35,7 @@ public class Tile
  		isEmpty = true;
  		isHighlighted = false;
  		
- 		tileFace = new Image("res\\floor"+Utilities.randInt(1,8)+".png");
+ 		tileFace = new Image("res\\floor"+1+".png");
 	}
  	
 	Tile(GameBoard parent, int x, int y, Entity e) throws SlickException

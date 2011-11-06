@@ -19,7 +19,7 @@ public class Attack extends Skill{
 
 	@Override
 	public boolean canTargetTile(Tile t) {
-		return !t.isOpen();
+		return !t.isOpen() && (t.getX()!=source.getX() || t.getY()!=source.getY());
 	}
 
 	@Override

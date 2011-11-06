@@ -41,10 +41,7 @@ public class AttackAction extends Action{
 			attacking=true;
 		}
 
-		if(e.currentAnimation.isStopped()){
-			return true;
-		}
-		return false;
+		return true;
 
 	}
 	

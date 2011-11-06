@@ -24,6 +24,7 @@ public abstract class LivingEntity extends Entity{
 	public Animation stand, basicAttack, walking, damageFront, damageBack;
 	public Animation currentAnimation;
 	public ArrayList<Animation> animations;
+	int currentAnimationID;
 	public static final int ANIMATION_STAND = 0, ANIMATION_ATTACK = 1, ANIMATION_WALK=2,
 						ANIMATION_FLINCH_FRONT=3, ANIMATION_FLINCH_BACK=4;
 	
@@ -55,7 +56,7 @@ public abstract class LivingEntity extends Entity{
 			this.setCurrentAnimation(ANIMATION_STAND);
 		}
 	}
-	
+
 	public abstract Action chooseAction(GameContainer gc, int delta);
 	
 	public void applyAction(GameContainer gc, int delta){
@@ -64,14 +65,23 @@ public abstract class LivingEntity extends Entity{
 			nextAction.applyAction(delta);
 		}
 	}
-
+	
+	public boolean isIdle(){
+		return super.isIdle() && this.getCurrentAnimationID()==LivingEntity.ANIMATION_STAND;
+	}
+	
 	public void render(Graphics g,int x, int y) {
 		g.drawImage(currentAnimation.getCurrentFrame().getFlippedCopy(getFacing(), false),x*DeadReckoningGame.tileSize+relativeX,y*DeadReckoningGame.tileSize+relativeY);
 	}
 	
 	public void setCurrentAnimation(int id){
+		this.currentAnimationID=id;
 		this.currentAnimation.restart();
 		this.currentAnimation = this.animations.get(id);
+	}
+	
+	public int getCurrentAnimationID(){
+		return currentAnimationID;
 	}
 	
 	public int getMovementSpeed(){

@@ -1,7 +1,10 @@
 package net.plaidypus.deadreckoning.state;
 
 
+import java.util.ArrayList;
+
 import net.plaidypus.deadreckoning.GameBoard;
+import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.Goblin;
 import net.plaidypus.deadreckoning.entities.Player;
 
@@ -15,12 +18,14 @@ public class GameplayState extends BasicGameState
 {
 	
 	int stateID = -1;
+	int currentEntity;
 	
 	GameBoard gb;
 	
 	public GameplayState(int stateID) throws SlickException
 	{
 		this.stateID = stateID;
+		currentEntity=0;
 	}
 
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
@@ -37,13 +42,20 @@ public class GameplayState extends BasicGameState
 	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-		gb.updateAllTiles(gc,delta);
-		if(!gb.isGameSet()){
-			gb.chooseActions(gc,delta);
+		
+		Entity current = gb.ingameEntities.get(currentEntity);
+		if(current.isIdle()){
+			current.setAction(current.chooseAction(gc,delta));
 		}
-		if(gb.isGameSet()){
-			gb.applyActions(delta);
+		if(!current.isIdle()){
+			current.applyAction(gc, delta);
+			if(current.isIdle()){
+				currentEntity = (currentEntity+1)%gb.ingameEntities.size();
+			}
 		}
+		
+		gb.updateAllTiles(gc, delta);
+		
 	}
 
 	public int getID() {

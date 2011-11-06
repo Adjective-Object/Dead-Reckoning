@@ -1,7 +1,7 @@
 package net.plaidypus.deadreckoning.entities;
 
 import net.plaidypus.deadreckoning.actions.Action;
-import net.plaidypus.deadreckoning.actions.MoveAction;
+import net.plaidypus.deadreckoning.actions.WaitAction;
 import net.plaidypus.deadreckoning.skills.Movement;
 import net.plaidypus.deadreckoning.skills.Skill;
 
@@ -19,9 +19,11 @@ public class Goblin extends LivingEntity{
 	@Override
 	public Action chooseAction(GameContainer gc, int delta) {
 		if(movement.canTargetTile(this.getLocation().getToLeft())){
-			return new MoveAction(this.getLocation(),this.getLocation().getToLeft());
+			return movement.makeAction(this.getLocation().getToLeft());
 		}
-		return null;
+		else{
+			return new WaitAction(this.getLocation());
+		}
 	}
 
 }
