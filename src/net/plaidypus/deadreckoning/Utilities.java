@@ -51,4 +51,8 @@ public class Utilities {
 		}
 		return anglepart;
 	}
+
+	public static float randFloat() {
+		return r.nextFloat();
+	}
 }

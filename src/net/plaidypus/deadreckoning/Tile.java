@@ -23,9 +23,9 @@ public class Tile
 	private boolean isEmpty;
 	private int x,y;
 	private Image tileFace;
-	public boolean isHighlighted;
+	public int highlighted;
 	
-	static final Color highlightColor = new Color(252,125,73,100);
+	static final Color[] highlightColors = new Color[] {new Color(0,0,0,0),new Color(255,75,23,100),new Color(252,125,73,100)};
 	
  	Tile(GameBoard parent, int x, int y) throws SlickException
 	{
@@ -33,7 +33,7 @@ public class Tile
  		this.y=y;
  		this.x=x;
  		isEmpty = true;
- 		isHighlighted = false;
+ 		highlighted = 0;
  		
  		tileFace = new Image("res\\floor"+1+".png");
 	}
@@ -77,12 +77,12 @@ public class Tile
 		containedEntity.interact(p);
 	}
 	
-	public void setHighlighted(boolean b){
-		this.isHighlighted=b;
+	public void setHighlighted(int h){
+		this.highlighted=h;
 	}
 	
-	public boolean getHighlighted(){
-		return isHighlighted;
+	public int getHighlighted(){
+		return highlighted;
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta){
@@ -100,11 +100,9 @@ public class Tile
 	public void render(Graphics g,int x, int y)
 	{
 		g.drawImage(tileFace,x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize);
-		if(this.isHighlighted){
-			g.setColor(highlightColor);
-			g.fillRect(x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize,DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
-			g.drawRect(x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize,DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
-		}
+		g.setColor(highlightColors[this.highlighted]);
+		g.fillRect(x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize,DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
+		g.drawRect(x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize,DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
 	}
 	
 	public Tile getToLeft(){
@@ -130,10 +128,6 @@ public class Tile
 	
 	public int getY(){
 		return y;
-	}
-
-	public boolean isHighlighted() {
-		return isHighlighted;
 	}
 	
 }

@@ -23,8 +23,13 @@ public abstract class Skill {
 		board.clearHighlightedSquares();
 		for(int vy=0;vy<board.getHeight();vy++){
 			for(int vx=0;vx<board.getWidth();vx++){
-				if( Math.sqrt( Math.pow(source.getX()-vx,2) + Math.pow(source.getY()-vy,2) ) <= range && canTargetTile(board.getTileAt(vx,vy) )){
-					board.getTileAt(vx, vy).setHighlighted(true);
+				if( Math.sqrt( Math.pow(source.getX()-vx,2) + Math.pow(source.getY()-vy,2) ) <= range){
+					if(canTargetTile(board.getTileAt(vx,vy))){
+						board.getTileAt(vx, vy).setHighlighted(1);
+					}
+					else{
+						board.getTileAt(vx, vy).setHighlighted(2);
+					}
 				}
 			}
 		}

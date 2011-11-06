@@ -55,7 +55,7 @@ public class Player extends LivingEntity
 			this.getLocation().getParent().clearHighlightedSquares();
 			this.getLocation().getParent().clearPrimaryHighlight();
 		}
-		if(input.isKeyPressed(Input.KEY_ENTER) && this.getParent().getPrimairyHighlight()!=null && this.getParent().getPrimairyHighlight().isHighlighted){
+		if(input.isKeyPressed(Input.KEY_ENTER) && this.getParent().getPrimairyHighlight()!=null && this.getParent().getPrimairyHighlight().getHighlighted()==1){
 			Action toRet = skills[currentSkill].makeAction(this.getParent().getPrimairyHighlight());
 			this.getLocation().getParent().clearHighlightedSquares();
 			this.getLocation().getParent().clearPrimaryHighlight();

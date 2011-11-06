@@ -57,7 +57,6 @@ public abstract class LivingEntity extends Entity{
 			this.setCurrentAnimation(ANIMATION_STAND);
 		}
 		if(this.getCurrentAnimationID()==LivingEntity.ANIMATION_STAND && HP<=0){
-			this.HP=0;
 			this.setCurrentAnimation(LivingEntity.ANIMATION_DEATH);
 		}
 	}

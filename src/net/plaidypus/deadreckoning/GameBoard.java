@@ -20,7 +20,7 @@ public class GameBoard
 	Tile primaryHighlight;
 	int width,height;
 	
-	static final Color primaryHighlightColor = new Color(252,125,73);
+	static final Color primaryHighlightColor = new Color(255,75,23);
 	
 	public GameBoard(int width,int height)
 	{
@@ -81,6 +81,11 @@ public class GameBoard
 	}
 	
 	public void updateSelctor(Input i){
+		
+		if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)){
+			primaryHighlight = board[i.getMouseX()/DeadReckoningGame.tileSize][i.getMouseY()/DeadReckoningGame.tileSize];
+		}
+		
 		if(primaryHighlight!=null){
 			if(i.isKeyPressed(Input.KEY_LEFT)){
 				primaryHighlight = primaryHighlight.getToLeft();
@@ -108,11 +113,11 @@ public class GameBoard
 	}
 	
 	public void highlightSquare(int x, int y){
-		board[x][y].setHighlighted(true);
+		board[x][y].setHighlighted(1);
 	}
 	
 	public boolean isTileHighlighted(int x, int y){
-		return board[x][y].isHighlighted;
+		return board[x][y].getHighlighted()==1;
 	}
 	
 	public void setPrimairyHighlight(int x, int y){
@@ -134,7 +139,7 @@ public class GameBoard
 	public void clearHighlightedSquares(){
 		for(int y=0;y<height;y++){
 			for(int x=0;x<width;x++){
-				board[x][y].setHighlighted(false);
+				board[x][y].setHighlighted(0);
 			}
 		}
 	}

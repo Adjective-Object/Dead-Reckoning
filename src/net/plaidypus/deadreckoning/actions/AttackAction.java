@@ -1,9 +1,12 @@
 package net.plaidypus.deadreckoning.actions;
 
+import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
+import net.plaidypus.deadreckoning.particles.DamageParticle;
+import net.plaidypus.deadreckoning.state.GameplayState;
 
 public class AttackAction extends Action{
 	
@@ -23,6 +26,8 @@ public class AttackAction extends Action{
 		else if(target.getX()<source.getX()){
 			source.getEntity().setFacing(false);
 		}
+		
+		GameplayState.spawnParticle(new DamageParticle(target,Integer.toString(damage)));
 		
 		try{ return applyToEntity((LivingEntity)target.getEntity()); }
 		catch(Exception e){return applyToEntity(target.getEntity()); }
