@@ -23,7 +23,7 @@ public class DeadReckoningGame extends StateBasedGame
 		
 		this.addState(new MainMenuState(MAINMENUSTATE));
 		this.addState(new GameplayState(GAMEPLAYSTATE));
-		this.enterState(GAMEPLAYSTATE);
+		this.enterState(MAINMENUSTATE);
 	}
 	
 	public static void main(String[] args) throws SlickException
