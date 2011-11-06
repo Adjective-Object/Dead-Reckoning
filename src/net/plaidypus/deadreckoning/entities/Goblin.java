@@ -18,10 +18,15 @@ public class Goblin extends LivingEntity{
 
 	@Override
 	public Action chooseAction(GameContainer gc, int delta) {
-		if(movement.canTargetTile(this.getLocation().getToLeft())){
+		if(movement.canTargetTile(this.getLocation().getToLeft()) && (this.getLocation()!=this.getLocation().getToLeft())){
 			return movement.makeAction(this.getLocation().getToLeft());
-		}
-		else{
+		} else if(movement.canTargetTile(this.getLocation().getToDown()) && (this.getLocation()!=this.getLocation().getToDown())){
+			return movement.makeAction(this.getLocation().getToDown());
+		} else if(movement.canTargetTile(this.getLocation().getToRight()) && (this.getLocation()!=this.getLocation().getToRight())){
+			return movement.makeAction(this.getLocation().getToRight());
+		} else if(movement.canTargetTile(this.getLocation().getToUp()) && (this.getLocation()!=this.getLocation().getToUp())){
+			return movement.makeAction(this.getLocation().getToUp());
+		} else{
 			return new WaitAction(this.getLocation());
 		}
 	}
