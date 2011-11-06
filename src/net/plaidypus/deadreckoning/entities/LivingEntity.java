@@ -19,7 +19,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
-public class LivingEntity extends Entity{
+public abstract class LivingEntity extends Entity{
 	
 	public int maxHP,maxMP,STR,INT,AGI;
 	public int HP,MP,MOV;
@@ -52,8 +52,15 @@ public class LivingEntity extends Entity{
 	@Override
 	public void update(GameContainer gc, int delta) {
 		currentAnimation.update(delta);
-		applyAction(gc,delta);
+		if(this.nextAction==null || this.nextAction.completed){
+			this.chooseAction(gc, delta);
+		}
+		else{
+			applyAction(gc,delta);
+		}
 	}
+	
+	public abstract void chooseAction(GameContainer gc, int delta);
 	
 	public void applyAction(GameContainer gc, int delta){
 		currentAnimation.update(delta);

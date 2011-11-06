@@ -3,6 +3,7 @@ package net.plaidypus.deadreckoning;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.Player;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -22,6 +23,9 @@ public class Tile
 	private boolean isEmpty;
 	private int x,y;
 	private Image tileFace;
+	public boolean isHighlighted;
+	
+	static final Color highlightColor = new Color(252,125,73,100);
 	
  	Tile(GameBoard parent, int x, int y) throws SlickException
 	{
@@ -29,8 +33,9 @@ public class Tile
  		this.y=y;
  		this.x=x;
  		isEmpty = true;
+ 		isHighlighted = false;
  		
- 		tileFace = new Image("res\\floor"+Utilities.randInt(1,4)+".png");
+ 		tileFace = new Image("res\\floor"+Utilities.randInt(1,8)+".png");
 	}
  	
 	Tile(GameBoard parent, int x, int y, Entity e) throws SlickException
@@ -72,6 +77,13 @@ public class Tile
 		containedEntity.interact(p);
 	}
 	
+	public void setHighlighted(boolean b){
+		this.isHighlighted=b;
+	}
+	
+	public boolean getHighlighted(){
+		return isHighlighted;
+	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta){
 		if(!this.isEmpty){
@@ -88,6 +100,24 @@ public class Tile
 	public void render(Graphics g,int x, int y)
 	{
 		g.drawImage(tileFace,x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize);
+		if(this.isHighlighted){
+			g.setColor(highlightColor);
+			g.fillRect(x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize,DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
+			g.drawRect(x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize,DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
+		}
+	}
+	
+	public Tile getToLeft(){
+		return parent.getTileAt(getX()-1, getY());
+	}
+	public Tile getToRight(){
+		return parent.getTileAt(getX()+1, getY());
+	}
+	public Tile getToUp(){
+		return parent.getTileAt(getX(), getY()-1);
+	}
+	public Tile getToDown(){
+		return parent.getTileAt(getX(), getY()+1);
 	}
 	
 	public GameBoard getParent(){
@@ -100,6 +130,10 @@ public class Tile
 	
 	public int getY(){
 		return y;
+	}
+
+	public boolean isHighlighted() {
+		return isHighlighted;
 	}
 	
 }

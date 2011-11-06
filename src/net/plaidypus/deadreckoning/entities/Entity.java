@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.entities;
 
+import net.plaidypus.deadreckoning.GameBoard;
 import net.plaidypus.deadreckoning.Tile;
 
 import org.newdawn.slick.GameContainer;
@@ -38,6 +39,10 @@ public abstract class Entity
 	public Tile getLocation()
 	{
 		return location;
+	}
+	
+	public GameBoard getParent(){
+		return getLocation().getParent();
 	}
 	
 	public void setLocation(Tile t)

@@ -19,24 +19,64 @@ public class Player extends LivingEntity
 {
 	Input input;
 	
+	public static int MoveCommand = 0, AttackCommand=1, ClassCommand = 2;
+	public int CommandType;
+	
 	public Player(Input i) throws SlickException
 	{
 		super("res\\player.entity");
 		this.input=i;
 	}
 
-	Player(Tile t) throws SlickException
+	Player(Input i, Tile t) throws SlickException
 	{
 		super("res\\player.entity");
+		this.input=i;
 		setLocation(t);
 	}
 	
-	public void update(GameContainer gc, int delta){
+	public void chooseAction(GameContainer gc, int delta){
 		// this is totally temporary
 		if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON)){
-			this.nextAction = new MoveAction(this,input.getMouseX()/DeadReckoningGame.tileSize,input.getMouseY()/DeadReckoningGame.tileSize);
+			this.getParent().setPrimairyHighlight(this.input.getMouseX()/DeadReckoningGame.tileSize  , input.getMouseY()/DeadReckoningGame.tileSize);
 		}
-		super. update(gc,delta);
+		
+		if(this.getParent().getPrimairyHighlight()!=null){ //moving the primary highlighted square
+			if(input.isKeyPressed(Input.KEY_LEFT)){
+				this.getParent().setPrimairyHighlight(this.getParent().getPrimairyHighlight().getToLeft());
+			}
+			if(input.isKeyPressed(Input.KEY_RIGHT)){
+				this.getParent().setPrimairyHighlight(this.getParent().getPrimairyHighlight().getToRight());
+			}
+			if(input.isKeyPressed(Input.KEY_UP)){
+				this.getParent().setPrimairyHighlight(this.getParent().getPrimairyHighlight().getToUp());
+			}
+			if(input.isKeyPressed(Input.KEY_DOWN)){
+				this.getParent().setPrimairyHighlight(this.getParent().getPrimairyHighlight().getToDown());
+			}
+		}
+		
+		if(input.isKeyPressed(Input.KEY_M)){
+			this.getLocation().getParent().clearHighlightedSquares();
+			this.getLocation().getParent().highlightInRadius( this.getLocation(),this.getMovementSpeed() );
+			this.CommandType=MoveCommand;
+			if(this.getParent().getPrimairyHighlight()==null){
+				this.getParent().setPrimairyHighlight(this.getLocation());
+			}
+		}
+		
+		if(input.isKeyPressed(Input.KEY_ESCAPE)){
+			this.getLocation().getParent().clearHighlightedSquares();
+			this.getLocation().getParent().clearPrimaryHighlight();
+		}
+		if(input.isKeyPressed(Input.KEY_ENTER) && this.getParent().getPrimairyHighlight().isHighlighted()){
+			this.nextAction=new MoveAction(this,this.getParent().getPrimairyHighlight().getX(),this.getParent().getPrimairyHighlight().getY());
+			this.getLocation().getParent().clearHighlightedSquares();
+			this.getLocation().getParent().clearPrimaryHighlight();
+		}
+		else if(input.isKeyPressed(Input.KEY_ENTER)){
+			//TODO play error sound
+		}
 	}
 	
 }
