@@ -66,18 +66,51 @@ public class GameBoard
 				}
 			}
 		}
-		
-		
 	}
 	
-	public void update(GameContainer gc, StateBasedGame sbg, int delta)
-	{
+	public void updateAllTiles(GameContainer gc, int delta){
 		for(int y=0;y<this.height;y++){
 			for(int x=0;x<this.width;x++){
-				board[x][y].update(gc,sbg,delta);
+				if( !board[x][y].isOpen()){
+					board[x][y].getEntity().update(gc, delta);
+				}
 			}
 		}
 	}
+	
+	public boolean isGameSet(){
+		for(int y=0;y<this.height;y++){
+			for(int x=0;x<this.width;x++){
+				if( !board[x][y].isOpen() && board[x][y].getEntity().isIdle() ){
+					//System.out.println(x+","+y+" is not set");
+					return false;
+				}
+			}
+		}
+		System.out.println("all entities are set");
+		return true;
+	}
+	
+	public void applyActions(int delta){
+		for(int y=0;y<this.height;y++){
+			for(int x=0;x<this.width;x++){
+				if( !board[x][y].isOpen() && board[x][y].getEntity().nextAction!=null ){
+					board[x][y].getEntity().nextAction.applyAction(delta);
+				}
+			}
+		}
+	}
+	
+	public void chooseActions(GameContainer gc, int delta){
+		for(int y=0;y<this.height;y++){
+			for(int x=0;x<this.width;x++){
+				if( !board[x][y].isOpen()){
+					board[x][y].getEntity().setAction(board[x][y].getEntity().chooseAction(gc, delta));
+				}
+			}
+		}
+	}
+	
 	
 	public void highlightSquare(int x, int y){
 		board[x][y].setHighlighted(true);

@@ -41,9 +41,7 @@ public class DeadReckoningGame extends StateBasedGame
 
 	@Override
 	public void initStatesList(GameContainer gameContainer) throws SlickException {
-		this.getState(MAINMENUSTATE).init(gameContainer, this);
-		this.getState(GAMEPLAYSTATE).init(gameContainer, this);
-		
+		//Jeff, I don't know what this IS for, but you used it wrong. that is all.
 	}
 	
 }

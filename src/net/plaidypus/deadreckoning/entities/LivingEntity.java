@@ -27,11 +27,10 @@ public abstract class LivingEntity extends Entity{
 	public static final int ANIMATION_STAND = 0, ANIMATION_ATTACK = 1, ANIMATION_WALK=2,
 						ANIMATION_FLINCH_FRONT=3, ANIMATION_FLINCH_BACK=4;
 	
-	public Action nextAction;
-	
 	public LivingEntity(String entityfile){
 		try {
 			BufferedReader reader = new BufferedReader (	new FileReader( new File(entityfile)));
+			System.out.println(this);
 			loadFromFile(reader);
 		}
 		catch (IOException e) {	e.printStackTrace();	}
@@ -55,17 +54,9 @@ public abstract class LivingEntity extends Entity{
 		if(this.currentAnimation.isStopped()){
 			this.setCurrentAnimation(ANIMATION_STAND);
 		}
-		
-		if(nextAction==null || nextAction.completed){
-			chooseAction(gc,delta);
-		}
-		else{
-			nextAction.applyAction(delta);
-		}
-		
 	}
 	
-	public abstract void chooseAction(GameContainer gc, int delta);
+	public abstract Action chooseAction(GameContainer gc, int delta);
 	
 	public void applyAction(GameContainer gc, int delta){
 		currentAnimation.update(delta);

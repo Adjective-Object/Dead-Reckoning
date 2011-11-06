@@ -11,9 +11,10 @@ public class MoveAction extends Action{
 		super(source,destination);
 	}
 	
-	public void apply(int delta) {
-		Entity e = source.getEntity();
+	public boolean apply(int delta) {
 		
+		Entity e = source.getEntity();
+
 		float xMegaLocation = e.relativeX+(target.getX()*DeadReckoningGame.tileSize);
 		float yMegaLocation = e.relativeY+(target.getY()*DeadReckoningGame.tileSize);
 		
@@ -24,13 +25,12 @@ public class MoveAction extends Action{
 			e.setFacing(false);
 		}
 			
-		
 		if( Math.abs(xMegaLocation - target.getX()*DeadReckoningGame.tileSize) <1 && Math.abs(yMegaLocation - target.getY()*DeadReckoningGame.tileSize) <1){
-			completed=true;
 			e.relativeX=0;
 			e.relativeY=0;
 			source.removeEntity();
 			target.placeEntity(e);
+			return true;
 			//e.setCurrentAnimation(LivingEntity.ANIMATION_STAND);
 		}
 		else{
@@ -38,7 +38,7 @@ public class MoveAction extends Action{
 			e.relativeY=(float) ((target.getY()*DeadReckoningGame.tileSize + yMegaLocation)/2 - source.getY()*DeadReckoningGame.tileSize);
 			//e.setCurrentAnimation(LivingEntity.ANIMATION_WALK);
 		}
-		
+		return false;
 	}
 	
 	public int calculateRange(LivingEntity source){

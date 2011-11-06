@@ -8,35 +8,43 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
 public class AttackAction extends Action{
 	
 	int damage;
+	boolean attacking;
 	
 	public AttackAction( Tile source, Tile target, int damage) {
 		super(source, target);
 		this.damage = damage;
+		attacking=false;
 	}
 
-	protected void apply(int delta) {
-		try{ applyToEntity((LivingEntity)target.getEntity()); }
-		catch(Exception e){ applyToEntity(target.getEntity()); }
+	protected boolean apply(int delta) {
+		try{ return applyToEntity((LivingEntity)target.getEntity()); }
+		catch(Exception e){return applyToEntity(target.getEntity()); }
 	}
 	
-	private void applyToEntity(Entity entity){this.completed=true;}
+	private boolean applyToEntity(Entity entity){return true;}
 	
-	private void applyToEntity(LivingEntity e){
+	private boolean applyToEntity(LivingEntity e){
 		
-		e.setCurrentAnimation(LivingEntity.ANIMATION_ATTACK);
-		e.HP-=damage;
-		
-		int xdiff = source.getX()-target.getX();
-		int ydiff = source.getY()-target.getY();
-		
-		if(ydiff<xdiff*(Utilities.booleanPlusMin(e.getFacing()))){
-			e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_BACK);
-		}
-		else{
-			e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_FRONT);
+		if(!attacking){
+			e.setCurrentAnimation(LivingEntity.ANIMATION_ATTACK);
+			e.HP-=damage;
+			
+			int xdiff = source.getX()-target.getX();
+			int ydiff = source.getY()-target.getY();
+			
+			if(ydiff<xdiff*(Utilities.booleanPlusMin(e.getFacing()))){
+				e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_BACK);
+			}
+			else{
+				e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_FRONT);
+			}
+			attacking=true;
 		}
 
-		this.completed=true;
+		if(e.currentAnimation.isStopped()){
+			return true;
+		}
+		return false;
 
 	}
 	

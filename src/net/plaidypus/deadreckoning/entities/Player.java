@@ -1,6 +1,7 @@
 package net.plaidypus.deadreckoning.entities;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
+import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.skills.Attack;
 import net.plaidypus.deadreckoning.skills.Movement;
 import net.plaidypus.deadreckoning.skills.Skill;
@@ -34,7 +35,7 @@ public class Player extends LivingEntity
 		skills = new Skill[] {new Movement(this), new Attack(this)};
 	}
 	
-	public void chooseAction(GameContainer gc, int delta){
+	public Action chooseAction(GameContainer gc, int delta){
 		// this is totally temporary
 		if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON)){
 			this.getParent().setPrimairyHighlight(this.input.getMouseX()/DeadReckoningGame.tileSize  , input.getMouseY()/DeadReckoningGame.tileSize);
@@ -72,13 +73,15 @@ public class Player extends LivingEntity
 			this.getLocation().getParent().clearPrimaryHighlight();
 		}
 		if(input.isKeyPressed(Input.KEY_ENTER) && this.getParent().getPrimairyHighlight()!=null && this.getParent().getPrimairyHighlight().isHighlighted){
-			this.nextAction=skills[currentSkill].makeAction(this.getParent().getPrimairyHighlight());
+			Action toRet = skills[currentSkill].makeAction(this.getParent().getPrimairyHighlight());
 			this.getLocation().getParent().clearHighlightedSquares();
 			this.getLocation().getParent().clearPrimaryHighlight();
+			return toRet;
 		}
 		else{
 			//TODO play fail sound
 		}
+		return null;
 	}
 	
 }

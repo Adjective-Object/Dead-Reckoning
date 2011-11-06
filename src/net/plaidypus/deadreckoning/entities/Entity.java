@@ -2,6 +2,7 @@ package net.plaidypus.deadreckoning.entities;
 
 import net.plaidypus.deadreckoning.GameBoard;
 import net.plaidypus.deadreckoning.Tile;
+import net.plaidypus.deadreckoning.actions.Action;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -20,6 +21,8 @@ public abstract class Entity
 	public float relativeX, relativeY;
 	private boolean facing;
 	
+	public Action nextAction;
+	
 	public Entity()
 	{
 		relativeX=0;
@@ -33,6 +36,25 @@ public abstract class Entity
 
 	
 	public abstract void update(GameContainer gc, int delta);
+	
+	public abstract Action chooseAction(GameContainer gc, int delta);
+	
+	public boolean isIdle(){
+		if(nextAction!=null){
+			return nextAction.completed;
+		}
+		return true;
+	}
+	
+	public void applyAction(GameContainer gc, int delta){
+		if(nextAction!=null && !nextAction.completed){
+			nextAction.applyAction(delta);
+		}
+	}
+	
+	public void setAction(Action action) {
+		this.nextAction=action;
+	}
 	
 	public abstract void render(Graphics g, int  x, int  y);
 	
@@ -62,6 +84,7 @@ public abstract class Entity
 	public boolean getFacing() {
 		return facing;
 	}
+
 	
 	
 	

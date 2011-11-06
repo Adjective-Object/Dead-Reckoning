@@ -8,7 +8,7 @@ public abstract class Action {
 	public Tile source;
 	public Tile target;
 	
-	public boolean completed;
+	public boolean completed=false;
 	
 	public Action(Tile source, Tile target){
 		this.source=source;
@@ -16,11 +16,11 @@ public abstract class Action {
 		completed=false;
 	}
 	
-	protected abstract void apply(int delta);
+	protected abstract boolean apply(int delta);
 	
 	public void applyAction(int delta){
 		if(!completed){
-			apply(delta);
+			completed=apply(delta);
 		}
 	}
 	
