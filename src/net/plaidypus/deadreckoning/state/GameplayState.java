@@ -10,6 +10,7 @@ import net.plaidypus.deadreckoning.entities.Player;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -20,6 +21,8 @@ public class GameplayState extends BasicGameState
 	int stateID = -1;
 	int currentEntity;
 	
+	Input input;
+	
 	GameBoard gb;
 	
 	public GameplayState(int stateID) throws SlickException
@@ -29,6 +32,7 @@ public class GameplayState extends BasicGameState
 	}
 
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+		input=gc.getInput();
 		gc.setTargetFrameRate(60);
 		gc.setVSync(true);
 		gb = new GameBoard(25,25);
@@ -54,6 +58,7 @@ public class GameplayState extends BasicGameState
 			}
 		}
 		
+		gb.updateSelctor(input);
 		gb.updateAllTiles(gc, delta);
 		
 	}

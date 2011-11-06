@@ -1,10 +1,12 @@
 package net.plaidypus.deadreckoning.entities;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
+import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.skills.Attack;
 import net.plaidypus.deadreckoning.skills.Movement;
 import net.plaidypus.deadreckoning.skills.Skill;
+import net.plaidypus.deadreckoning.skills.Wait;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
@@ -31,30 +33,11 @@ public class Player extends LivingEntity
 		super("res\\player.entity");
 		this.input=i;
 		
-		keyBinds = new int[] {Input.KEY_M, Input.KEY_A};
-		skills = new Skill[] {new Movement(this), new Attack(this)};
+		keyBinds = new int[] {Input.KEY_M, Input.KEY_A, Input.KEY_W};
+		skills = new Skill[] {new Movement(this), new Attack(this), new Wait(this)};
 	}
 	
 	public Action chooseAction(GameContainer gc, int delta){
-		// this is totally temporary
-		if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON)){
-			this.getParent().setPrimairyHighlight(this.input.getMouseX()/DeadReckoningGame.tileSize  , input.getMouseY()/DeadReckoningGame.tileSize);
-		}
-		
-		if(this.getParent().getPrimairyHighlight()!=null){ //moving the primary highlighted square
-			if(input.isKeyPressed(Input.KEY_LEFT)){
-				this.getParent().setPrimairyHighlight(this.getParent().getPrimairyHighlight().getToLeft());
-			}
-			if(input.isKeyPressed(Input.KEY_RIGHT)){
-				this.getParent().setPrimairyHighlight(this.getParent().getPrimairyHighlight().getToRight());
-			}
-			if(input.isKeyPressed(Input.KEY_UP)){
-				this.getParent().setPrimairyHighlight(this.getParent().getPrimairyHighlight().getToUp());
-			}
-			if(input.isKeyPressed(Input.KEY_DOWN)){
-				this.getParent().setPrimairyHighlight(this.getParent().getPrimairyHighlight().getToDown());
-			}
-		}
 		
 		for(int i=0; i<keyBinds.length;i++){
 			if(input.isKeyPressed(keyBinds[i])){

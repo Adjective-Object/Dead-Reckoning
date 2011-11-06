@@ -7,6 +7,7 @@ import net.plaidypus.deadreckoning.entities.Entity;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -75,6 +76,23 @@ public class GameBoard
 				if(!board[x][y].isOpen()){
 					board[x][y].getEntity().render(g,x,y);
 				}
+			}
+		}
+	}
+	
+	public void updateSelctor(Input i){
+		if(primaryHighlight!=null){
+			if(i.isKeyPressed(Input.KEY_LEFT)){
+				primaryHighlight = primaryHighlight.getToLeft();
+			}
+			if(i.isKeyPressed(Input.KEY_RIGHT)){
+				primaryHighlight = primaryHighlight.getToRight();
+			}
+			if(i.isKeyPressed(Input.KEY_UP)){
+				primaryHighlight = primaryHighlight.getToUp();
+			}
+			if(i.isKeyPressed(Input.KEY_DOWN)){
+				primaryHighlight = primaryHighlight.getToDown();
 			}
 		}
 	}

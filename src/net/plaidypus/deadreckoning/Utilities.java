@@ -17,6 +17,12 @@ public class Utilities {
 		return -1;
 	}
 	
+	public static int limitTo(int toLimit, int lowerBound, int upperBound){
+		if(toLimit<lowerBound){ return lowerBound; }
+		if(toLimit>upperBound){ return upperBound; }
+		return toLimit;
+	}
+	
 	public static int[] moveTowards(int x,int y,int TargetX,int TargetY, int movespeed){
 		if(Math.sqrt(Math.pow(x-TargetX,2)+Math.pow(y-TargetY,2))<=movespeed){
 			double[] v =rotate(movespeed,0,findAngle(x,y,TargetX,TargetY));

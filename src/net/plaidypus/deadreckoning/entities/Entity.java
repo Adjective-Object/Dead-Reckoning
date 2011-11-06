@@ -72,6 +72,14 @@ public abstract class Entity
 		location = t;
 	}
 	
+	public int getX(){
+		return getLocation().getX();
+	}
+			
+	public int getY(){
+		return getLocation().getY();
+	}		
+	
 	public void interact(Entity e)
 	{
 		

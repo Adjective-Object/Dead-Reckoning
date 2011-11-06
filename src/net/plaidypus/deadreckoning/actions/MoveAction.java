@@ -15,8 +15,8 @@ public class MoveAction extends Action{
 		
 		Entity e = source.getEntity();
 
-		float xMegaLocation = e.relativeX+(target.getX()*DeadReckoningGame.tileSize);
-		float yMegaLocation = e.relativeY+(target.getY()*DeadReckoningGame.tileSize);
+		float xMegaLocation = e.relativeX+(source.getX()*DeadReckoningGame.tileSize);
+		float yMegaLocation = e.relativeY+(source.getY()*DeadReckoningGame.tileSize);
 		
 		if(target.getX()>source.getX()){
 			e.setFacing(true);
