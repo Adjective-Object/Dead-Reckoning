@@ -14,9 +14,9 @@ public class MoveAction extends Action{
 	public boolean apply(int delta) {
 		
 		Entity e = source.getEntity();
-
-		float xMegaLocation = e.relativeX+(target.getX()*DeadReckoningGame.tileSize);
-		float yMegaLocation = e.relativeY+(target.getY()*DeadReckoningGame.tileSize);
+		
+		float xAbsoluteLocation = e.relativeX+(source.getX()*DeadReckoningGame.tileSize);
+		float yAbsoluteLocation = e.relativeY+(source.getY()*DeadReckoningGame.tileSize);
 		
 		if(target.getX()>source.getX()){
 			e.setFacing(true);
@@ -25,18 +25,16 @@ public class MoveAction extends Action{
 			e.setFacing(false);
 		}
 			
-		if( Math.abs(xMegaLocation - target.getX()*DeadReckoningGame.tileSize) <1 && Math.abs(yMegaLocation - target.getY()*DeadReckoningGame.tileSize) <1){
+		if( Math.abs(xAbsoluteLocation - target.getX()*DeadReckoningGame.tileSize) <1 && Math.abs(yAbsoluteLocation - target.getY()*DeadReckoningGame.tileSize) <1){
 			e.relativeX=0;
 			e.relativeY=0;
 			source.removeEntity();
 			target.placeEntity(e);
 			return true;
-			//e.setCurrentAnimation(LivingEntity.ANIMATION_STAND);
 		}
 		else{
-			e.relativeX=(float) ((target.getX()*DeadReckoningGame.tileSize + xMegaLocation)/2 - source.getX()*DeadReckoningGame.tileSize);
-			e.relativeY=(float) ((target.getY()*DeadReckoningGame.tileSize + yMegaLocation)/2 - source.getY()*DeadReckoningGame.tileSize);
-			//e.setCurrentAnimation(LivingEntity.ANIMATION_WALK);
+			e.relativeX=(float) ((target.getX()*DeadReckoningGame.tileSize + xAbsoluteLocation)/2 - source.getX()*DeadReckoningGame.tileSize);
+			e.relativeY=(float) ((target.getY()*DeadReckoningGame.tileSize + yAbsoluteLocation)/2 - source.getY()*DeadReckoningGame.tileSize);
 		}
 		return false;
 	}
