@@ -3,6 +3,7 @@ package net.plaidypus.deadreckoning.entities;
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.MoveAction;
+import net.plaidypus.deadreckoning.skills.Attack;
 import net.plaidypus.deadreckoning.skills.Movement;
 import net.plaidypus.deadreckoning.skills.Skill;
 
@@ -31,8 +32,8 @@ public class Player extends LivingEntity
 		super("res\\player.entity");
 		this.input=i;
 		
-		keyBinds = new int[] {Input.KEY_M};
-		skills = new Skill[] {new Movement(this)};
+		keyBinds = new int[] {Input.KEY_M, Input.KEY_A};
+		skills = new Skill[] {new Movement(this), new Attack(this)};
 	}
 	
 	public void chooseAction(GameContainer gc, int delta){
@@ -57,7 +58,7 @@ public class Player extends LivingEntity
 		}
 		
 		for(int i=0; i<keyBinds.length;i++){
-			if(input.isKeyPressed(Input.KEY_M)){
+			if(input.isKeyPressed(keyBinds[i])){
 				this.currentSkill=i;
 				
 				skills[i].highlightRange(getParent());
@@ -72,13 +73,13 @@ public class Player extends LivingEntity
 			this.getLocation().getParent().clearHighlightedSquares();
 			this.getLocation().getParent().clearPrimaryHighlight();
 		}
-		if(input.isKeyPressed(Input.KEY_ENTER) && this.getParent().getPrimairyHighlight().isHighlighted()){
+		if(input.isKeyPressed(Input.KEY_ENTER) && this.getParent().getPrimairyHighlight()!=null && this.getParent().getPrimairyHighlight().isHighlighted){
 			this.nextAction=skills[currentSkill].makeAction(this.getParent().getPrimairyHighlight());
 			this.getLocation().getParent().clearHighlightedSquares();
 			this.getLocation().getParent().clearPrimaryHighlight();
 		}
-		else if(input.isKeyPressed(Input.KEY_ENTER)){
-			//TODO play error sound
+		else{
+			//TODO play fail sound
 		}
 	}
 	

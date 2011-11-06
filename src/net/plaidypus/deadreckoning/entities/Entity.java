@@ -18,6 +18,7 @@ public abstract class Entity
 	private Tile location;
 	
 	public float relativeX, relativeY;
+	private boolean facing;
 	
 	public Entity()
 	{
@@ -52,6 +53,14 @@ public abstract class Entity
 	public void interact(Entity e)
 	{
 		
+	}
+
+	public void setFacing(boolean facing) {
+		this.facing = facing;
+	}
+
+	public boolean getFacing() {
+		return facing;
 	}
 	
 	

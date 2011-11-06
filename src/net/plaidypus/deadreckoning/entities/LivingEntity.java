@@ -27,8 +27,6 @@ public abstract class LivingEntity extends Entity{
 	public static final int ANIMATION_STAND = 0, ANIMATION_ATTACK = 1, ANIMATION_WALK=2,
 						ANIMATION_FLINCH_FRONT=3, ANIMATION_FLINCH_BACK=4;
 	
-	public boolean facing; //true=right, false=left;
-	
 	public Action nextAction;
 	
 	public LivingEntity(String entityfile){
@@ -41,7 +39,7 @@ public abstract class LivingEntity extends Entity{
 		
 		currentAnimation = stand;
 		
-		facing=false;
+		setFacing(false);
 		
 		animations = new ArrayList<Animation>(0);
 		animations.add(stand);
@@ -54,11 +52,8 @@ public abstract class LivingEntity extends Entity{
 	@Override
 	public void update(GameContainer gc, int delta) {
 		currentAnimation.update(delta);
-		if(this.nextAction==null || this.nextAction.completed){
-			this.chooseAction(gc, delta);
-		}
-		else{
-			applyAction(gc,delta);
+		if(this.currentAnimation.isStopped()){
+			this.setCurrentAnimation(ANIMATION_STAND);
 		}
 	}
 	
@@ -72,10 +67,11 @@ public abstract class LivingEntity extends Entity{
 	}
 
 	public void render(Graphics g,int x, int y) {
-		g.drawImage(currentAnimation.getCurrentFrame().getFlippedCopy(facing, false),x*DeadReckoningGame.tileSize+relativeX,y*DeadReckoningGame.tileSize+relativeY);
+		g.drawImage(currentAnimation.getCurrentFrame().getFlippedCopy(getFacing(), false),x*DeadReckoningGame.tileSize+relativeX,y*DeadReckoningGame.tileSize+relativeY);
 	}
 	
 	public void setCurrentAnimation(int id){
+		this.currentAnimation.restart();
 		this.currentAnimation = this.animations.get(id);
 	}
 	
@@ -167,8 +163,11 @@ public abstract class LivingEntity extends Entity{
 		
 		stand=animations.get("Stand");
 		basicAttack=animations.get("AttackBasic");
+		basicAttack.setLooping(false);
 		damageBack=animations.get("FlinchFront");
+		damageBack.setLooping(false);
 		damageFront=animations.get("FlinchBack");
+		damageFront.setLooping(false);
 		walking=animations.get("Walking");
 	}
 

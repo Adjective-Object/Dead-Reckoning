@@ -52,6 +52,13 @@ public class GameBoard
 			}
 		}
 		
+		if(primaryHighlight !=null ){
+			g.setColor(primaryHighlightColor);
+			g.setLineWidth(2);
+			g.drawRect(primaryHighlight.getX()*DeadReckoningGame.tileSize, primaryHighlight.getY()*DeadReckoningGame.tileSize, DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
+			g.setLineWidth(1);
+		}
+		
 		for(int x = 0; x < 25; x++){
 			for(int y = 0; y < 25; y++ ){
 				if(!board[x][y].isOpen()){
@@ -60,12 +67,7 @@ public class GameBoard
 			}
 		}
 		
-		if(primaryHighlight !=null ){
-			g.setColor(primaryHighlightColor);
-			g.setLineWidth(2);
-			g.drawRect(primaryHighlight.getX()*DeadReckoningGame.tileSize, primaryHighlight.getY()*DeadReckoningGame.tileSize, DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
-			g.setLineWidth(1);
-		}
+		
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)

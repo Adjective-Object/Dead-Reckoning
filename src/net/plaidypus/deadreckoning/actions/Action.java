@@ -1,15 +1,16 @@
 package net.plaidypus.deadreckoning.actions;
 
+import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 
 public abstract class Action {
 	
-	public LivingEntity source;
-	public LivingEntity target;
+	public Tile source;
+	public Tile target;
 	
 	public boolean completed;
 	
-	public Action(LivingEntity source, LivingEntity target){
+	public Action(Tile source, Tile target){
 		this.source=source;
 		this.target=target;
 		completed=false;
