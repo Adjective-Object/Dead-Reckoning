@@ -3,6 +3,8 @@ package net.plaidypus.deadreckoning.entities;
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.MoveAction;
+import net.plaidypus.deadreckoning.skills.Movement;
+import net.plaidypus.deadreckoning.skills.Skill;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
@@ -19,20 +21,18 @@ public class Player extends LivingEntity
 {
 	Input input;
 	
-	public static int MoveCommand = 0, AttackCommand=1, ClassCommand = 2;
-	public int CommandType;
+	public static int[] keyBinds;
+	public static Skill[] skills;
+	
+	public int currentSkill;
 	
 	public Player(Input i) throws SlickException
 	{
 		super("res\\player.entity");
 		this.input=i;
-	}
-
-	Player(Input i, Tile t) throws SlickException
-	{
-		super("res\\player.entity");
-		this.input=i;
-		setLocation(t);
+		
+		keyBinds = new int[] {Input.KEY_M};
+		skills = new Skill[] {new Movement(this)};
 	}
 	
 	public void chooseAction(GameContainer gc, int delta){
@@ -56,12 +56,15 @@ public class Player extends LivingEntity
 			}
 		}
 		
-		if(input.isKeyPressed(Input.KEY_M)){
-			this.getLocation().getParent().clearHighlightedSquares();
-			this.getLocation().getParent().highlightInRadius( this.getLocation(),this.getMovementSpeed() );
-			this.CommandType=MoveCommand;
-			if(this.getParent().getPrimairyHighlight()==null){
-				this.getParent().setPrimairyHighlight(this.getLocation());
+		for(int i=0; i<keyBinds.length;i++){
+			if(input.isKeyPressed(Input.KEY_M)){
+				this.currentSkill=i;
+				
+				skills[i].highlightRange(getParent());
+				
+				if(this.getParent().getPrimairyHighlight()==null){
+					this.getParent().setPrimairyHighlight(this.getLocation());
+				}
 			}
 		}
 		
@@ -70,7 +73,7 @@ public class Player extends LivingEntity
 			this.getLocation().getParent().clearPrimaryHighlight();
 		}
 		if(input.isKeyPressed(Input.KEY_ENTER) && this.getParent().getPrimairyHighlight().isHighlighted()){
-			this.nextAction=new MoveAction(this,this.getParent().getPrimairyHighlight().getX(),this.getParent().getPrimairyHighlight().getY());
+			this.nextAction=skills[currentSkill].makeAction(this.getParent().getPrimairyHighlight());
 			this.getLocation().getParent().clearHighlightedSquares();
 			this.getLocation().getParent().clearPrimaryHighlight();
 		}

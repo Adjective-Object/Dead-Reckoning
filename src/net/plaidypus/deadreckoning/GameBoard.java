@@ -77,20 +77,6 @@ public class GameBoard
 		}
 	}
 	
-	public void highlightInRadius(int x, int y, int radius){
-		for(int vy=0;vy<height;vy++){
-			for(int vx=0;vx<width;vx++){
-				if( Math.sqrt( Math.pow(x-vx,2) + Math.pow(y-vy,2) ) <= radius){
-					board[vx][vy].setHighlighted(true);
-				}
-			}
-		}
-	}
-	
-	public void highlightInRadius(Tile t, int radius){
-		highlightInRadius(t.getX(),t.getY(),radius);
-	}
-	
 	public void highlightSquare(int x, int y){
 		board[x][y].setHighlighted(true);
 	}
@@ -121,6 +107,14 @@ public class GameBoard
 				board[x][y].setHighlighted(false);
 			}
 		}
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public int getWidth() {
+		return width;
 	}
 	
 }

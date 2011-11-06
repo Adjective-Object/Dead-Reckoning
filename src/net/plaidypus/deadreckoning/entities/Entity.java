@@ -15,7 +15,6 @@ Created: 11/4/2011
 
 public abstract class Entity
 {
-	
 	private Tile location;
 	
 	public float relativeX, relativeY;

@@ -9,13 +9,11 @@ import java.util.HashMap;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.actions.Action;
-import net.plaidypus.deadreckoning.actions.MoveAction;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
@@ -29,6 +27,8 @@ public abstract class LivingEntity extends Entity{
 	public static final int ANIMATION_STAND = 0, ANIMATION_ATTACK = 1, ANIMATION_WALK=2,
 						ANIMATION_FLINCH_FRONT=3, ANIMATION_FLINCH_BACK=4;
 	
+	public boolean facing; //true=right, false=left;
+	
 	public Action nextAction;
 	
 	public LivingEntity(String entityfile){
@@ -40,6 +40,8 @@ public abstract class LivingEntity extends Entity{
 		catch (SlickException e) {	e.printStackTrace();	}
 		
 		currentAnimation = stand;
+		
+		facing=false;
 		
 		animations = new ArrayList<Animation>(0);
 		animations.add(stand);
@@ -69,9 +71,8 @@ public abstract class LivingEntity extends Entity{
 		}
 	}
 
-	@Override
 	public void render(Graphics g,int x, int y) {
-		g.drawImage(currentAnimation.getCurrentFrame(),x*DeadReckoningGame.tileSize+relativeX,y*DeadReckoningGame.tileSize+relativeY);
+		g.drawImage(currentAnimation.getCurrentFrame().getFlippedCopy(facing, false),x*DeadReckoningGame.tileSize+relativeX,y*DeadReckoningGame.tileSize+relativeY);
 	}
 	
 	public void setCurrentAnimation(int id){
@@ -80,6 +81,14 @@ public abstract class LivingEntity extends Entity{
 	
 	public int getMovementSpeed(){
 		return MOV;
+	}
+
+	public int getY() {
+		return this.getLocation().getY();
+	}
+
+	public int getX() {
+		return this.getLocation().getX();
 	}
 	
 	/**
@@ -162,5 +171,9 @@ public abstract class LivingEntity extends Entity{
 		damageFront=animations.get("FlinchBack");
 		walking=animations.get("Walking");
 	}
+
+	
+	
+	
 	
 }
