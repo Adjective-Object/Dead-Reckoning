@@ -21,12 +21,12 @@ public abstract class LivingEntity extends Entity{
 	
 	public int maxHP,maxMP,STR,INT,AGI;
 	public int HP,MP,MOV;
-	public Animation stand, basicAttack, walking, damageFront, damageBack;
+	public Animation stand, basicAttack, walking, damageFront, damageBack, death;
 	public Animation currentAnimation;
 	public ArrayList<Animation> animations;
 	int currentAnimationID;
 	public static final int ANIMATION_STAND = 0, ANIMATION_ATTACK = 1, ANIMATION_WALK=2,
-						ANIMATION_FLINCH_FRONT=3, ANIMATION_FLINCH_BACK=4;
+						ANIMATION_FLINCH_FRONT=3, ANIMATION_FLINCH_BACK=4, ANIMATION_DEATH=5;
 	
 	public LivingEntity(String entityfile){
 		try {
@@ -47,6 +47,7 @@ public abstract class LivingEntity extends Entity{
 		animations.add(walking);
 		animations.add(damageFront);
 		animations.add(damageBack);
+		animations.add(death);
 	}
 	
 	@Override
@@ -54,6 +55,10 @@ public abstract class LivingEntity extends Entity{
 		currentAnimation.update(delta);
 		if(this.currentAnimation.isStopped()){
 			this.setCurrentAnimation(ANIMATION_STAND);
+		}
+		if(this.getCurrentAnimationID()==LivingEntity.ANIMATION_STAND && HP<=0){
+			this.HP=0;
+			this.setCurrentAnimation(LivingEntity.ANIMATION_DEATH);
 		}
 	}
 
@@ -67,7 +72,7 @@ public abstract class LivingEntity extends Entity{
 	}
 	
 	public boolean isIdle(){
-		return super.isIdle() && this.getCurrentAnimationID()==LivingEntity.ANIMATION_STAND;
+		return super.isIdle() && (this.getCurrentAnimationID()==LivingEntity.ANIMATION_STAND || this.HP<=0);
 	}
 	
 	public void render(Graphics g,int x, int y) {
@@ -178,6 +183,8 @@ public abstract class LivingEntity extends Entity{
 		damageFront=animations.get("FlinchBack");
 		damageFront.setLooping(false);
 		walking=animations.get("Walking");
+		death=animations.get("Death");
+		death.setLooping(false);
 	}
 
 	

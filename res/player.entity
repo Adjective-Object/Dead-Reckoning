@@ -19,6 +19,7 @@ AttackBasic = AttackSheet_0,0, 1,0, 2,0, 3,0, 4,0, 5,0, 0,1, 1,1, 2,1, 3,1, 4,1,
 FlinchFront = FlinchFrontSheet_0,0, 1,0, 2,0, 3,0, 4,0, 5,0, 6,0
 FlinchBack = FlinchBackSheet_0,0, 1,0, 2,0, 3,0, 4,0
 Walking = FlinchBackSheet_0,0, 1,0, 2,0, 3,0, 4,0
+Death = FlinchBackSheet_0,0, 1,0, 2,0, 3,0, 4,0
 
 :EXIT:
 

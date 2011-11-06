@@ -39,7 +39,7 @@ public class AttackAction extends Action{
 			int xdiff = source.getX()-target.getX();
 			int ydiff = source.getY()-target.getY();
 			
-			if(ydiff<xdiff*(Utilities.booleanPlusMin(e.getFacing()))){
+			if((xdiff<0 ^ e.getFacing()) || (xdiff==0 && ydiff>0)){
 				e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_BACK);
 			}
 			else{
