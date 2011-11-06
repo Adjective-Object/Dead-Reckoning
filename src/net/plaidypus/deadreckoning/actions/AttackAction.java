@@ -17,6 +17,13 @@ public class AttackAction extends Action{
 	}
 
 	protected boolean apply(int delta) {
+		if(target.getX()>source.getX()){
+			source.getEntity().setFacing(true);
+		}
+		else if(target.getX()<source.getX()){
+			source.getEntity().setFacing(false);
+		}
+		
 		try{ return applyToEntity((LivingEntity)target.getEntity()); }
 		catch(Exception e){return applyToEntity(target.getEntity()); }
 	}

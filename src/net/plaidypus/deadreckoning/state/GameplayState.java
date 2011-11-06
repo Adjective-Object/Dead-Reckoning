@@ -1,8 +1,5 @@
 package net.plaidypus.deadreckoning.state;
 
-
-import java.util.ArrayList;
-
 import net.plaidypus.deadreckoning.GameBoard;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.Goblin;

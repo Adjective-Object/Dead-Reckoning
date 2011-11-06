@@ -108,16 +108,16 @@ public class Tile
 	}
 	
 	public Tile getToLeft(){
-		return parent.getTileAt(getX()-1, getY());
+		return parent.getTileAt( Utilities.limitTo(getX()-1,0,this.parent.getWidth()), getY());
 	}
 	public Tile getToRight(){
-		return parent.getTileAt(getX()+1, getY());
+		return parent.getTileAt(Utilities.limitTo(getX()+1,0,this.parent.getWidth()), getY());
 	}
 	public Tile getToUp(){
-		return parent.getTileAt(getX(), getY()-1);
+		return parent.getTileAt(getX(),Utilities.limitTo(getY()-1,0,this.parent.getWidth()));
 	}
 	public Tile getToDown(){
-		return parent.getTileAt(getX(), getY()+1);
+		return parent.getTileAt(getX(),Utilities.limitTo(getY()+1,0,this.parent.getWidth()));
 	}
 	
 	public GameBoard getParent(){
