@@ -1,8 +1,6 @@
 package net.plaidypus.deadreckoning.entities;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.Tile;
-import net.plaidypus.deadreckoning.actions.MoveAction;
 import net.plaidypus.deadreckoning.skills.Attack;
 import net.plaidypus.deadreckoning.skills.Movement;
 import net.plaidypus.deadreckoning.skills.Skill;
