@@ -55,6 +55,14 @@ public abstract class LivingEntity extends Entity{
 		if(this.currentAnimation.isStopped()){
 			this.setCurrentAnimation(ANIMATION_STAND);
 		}
+		
+		if(nextAction==null || nextAction.completed){
+			chooseAction(gc,delta);
+		}
+		else{
+			nextAction.applyAction(delta);
+		}
+		
 	}
 	
 	public abstract void chooseAction(GameContainer gc, int delta);
