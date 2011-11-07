@@ -67,8 +67,16 @@ public abstract class LivingEntity extends Entity{
 		}
 	}
 	
+	public void damagePhysical(int damage){//TODO math for damage reduction magic
+		this.HP-=damage;
+	}
+	
+	public void damageMagical(int damage){//TODO math for damage reduction magic
+		this.HP-=damage;
+	}
+	
 	public boolean isIdle(){
-		return super.isIdle() && (this.getCurrentAnimationID()==LivingEntity.ANIMATION_STAND || this.HP<=0);
+		return super.isIdle() && (this.getCurrentAnimationID()==LivingEntity.ANIMATION_STAND);
 	}
 	
 	public void render(Graphics g,float x, float y) {

@@ -37,7 +37,7 @@ public class AttackAction extends Action{
 		
 		if(!attacking){
 			e.setCurrentAnimation(LivingEntity.ANIMATION_ATTACK);
-			e.HP-=damage;
+			e.damagePhysical(damage);
 			
 			int xdiff = source.getX()-target.getX();
 			int ydiff = source.getY()-target.getY();

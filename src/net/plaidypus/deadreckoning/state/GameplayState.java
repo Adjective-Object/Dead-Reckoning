@@ -23,6 +23,9 @@ public class GameplayState extends BasicGameState
 	int currentEntity;
 	
 	public static float cameraX, cameraY;
+	public static float cameraDestX, cameraDestY;
+	
+	static final float cameraRate = (float) 0.2;
 	
 	Input input;
 	Player player;
@@ -63,8 +66,8 @@ public class GameplayState extends BasicGameState
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		
-		cameraX=player.getAbsoluteX()-gc.getWidth()/2;
-		cameraY=player.getAbsoluteY()-gc.getHeight()/2;
+		cameraX = cameraX+(cameraDestX-cameraX)*cameraRate;
+		cameraY = cameraY+(cameraDestY-cameraY)*cameraRate;
 		
 		for(int i=0; i<particles.size();i++){
 			particles.get(i).update(gc, sbg, delta);
@@ -76,7 +79,12 @@ public class GameplayState extends BasicGameState
 		
 		Entity current = gb.ingameEntities.get(currentEntity);
 		if(current.isIdle()){
-			current.setAction(current.chooseAction(gc,delta));
+			cameraDestX=current.getAbsoluteX()-gc.getWidth()/2;
+			cameraDestY=current.getAbsoluteY()-gc.getHeight()/2;
+			if(Math.abs(cameraX-cameraDestX)<0.01 && Math.abs(cameraY-cameraDestY)<=0.01){
+				current.setAction(current.chooseAction(gc,delta));
+			}
+			
 		}
 		if(!current.isIdle()){
 			current.applyAction(gc, delta);

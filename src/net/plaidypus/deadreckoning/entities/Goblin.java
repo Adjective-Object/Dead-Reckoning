@@ -6,7 +6,6 @@ import net.plaidypus.deadreckoning.skills.Movement;
 import net.plaidypus.deadreckoning.skills.Skill;
 
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 
 public class Goblin extends LivingEntity{
 	
@@ -27,11 +26,11 @@ public class Goblin extends LivingEntity{
 			else{return movement.makeAction(this.getLocation().getToLeft());}
 		}
 		if(direction==1){
-			if(!movement.canTargetTile(this.getLocation().getToDown()) || this.getLocation().getToRight().equals(this.getLocation()) ){direction++;}
+			if(!movement.canTargetTile(this.getLocation().getToDown()) || this.getLocation().getToDown().equals(this.getLocation()) ){direction++;}
 			else{return movement.makeAction(this.getLocation().getToDown());}
 		}
 		if(direction==2){
-			if(!movement.canTargetTile(this.getLocation().getToRight()) || this.getLocation().getToDown().equals(this.getLocation()) ){direction++;}
+			if(!movement.canTargetTile(this.getLocation().getToRight()) || this.getLocation().getToRight().equals(this.getLocation()) ){direction++;}
 			else{return movement.makeAction(this.getLocation().getToRight());}
 		}
 		if(direction==3){
