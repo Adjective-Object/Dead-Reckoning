@@ -14,8 +14,8 @@ import org.newdawn.slick.state.StateBasedGame;
 public class DamageParticle extends Particle{
 	
 	static UnicodeFont font;
-	static float gravity= (float) 0.2;
-	static float fadeout= (float) 0.5;
+	static float gravity= (float) 0.05;
+	static float fadeout= (float) 0.8;
 	float x,y,xMove,yMove,visibility;
 	String damage;
 	
@@ -30,7 +30,7 @@ public class DamageParticle extends Particle{
 	}
 	
 	public DamageParticle(Tile t, String damage){
-		this (t.getX()*DeadReckoningGame.tileSize+Utilities.randInt(0, DeadReckoningGame.tileSize),t.getY()*DeadReckoningGame.tileSize+Utilities.randInt(0, DeadReckoningGame.tileSize),damage);
+		this (t.getX()*DeadReckoningGame.tileSize+Utilities.randInt(0, DeadReckoningGame.tileSize/2),t.getY()*DeadReckoningGame.tileSize+Utilities.randInt(0, DeadReckoningGame.tileSize/2),damage);
 	}
 	
 	public static void init() throws SlickException{
@@ -50,10 +50,8 @@ public class DamageParticle extends Particle{
 	}
 
 	public void render(Graphics g, float xOff, float yOff) {
-		g.setColor(new Color(255,255,255,255*visibility));
-		g.setFont(font);
+		g.setColor(new Color(200,0,0,255*visibility));
 		g.drawString(damage, x+xOff, y+yOff);
-		g.fillRect(x+xOff, y+yOff,10,7);
 		
 	}
 }

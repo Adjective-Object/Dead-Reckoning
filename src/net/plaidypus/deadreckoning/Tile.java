@@ -26,6 +26,7 @@ public class Tile
 	public int highlighted;
 	
 	public static final int fogOfWarLevels = 5;
+	public boolean explored;
 	public int fogOfWar;
 	
 	static final Color[] highlightColors = new Color[] {new Color(0,0,0,0),new Color(255,75,23,100),new Color(252,125,73,100)};
@@ -38,6 +39,7 @@ public class Tile
  		isEmpty = true;
  		highlighted = 0;
  		fogOfWar=5;
+ 		explored=false;
  		tileFace = new Image("res\\floor"+1+".png");
 	}
  	
@@ -105,8 +107,6 @@ public class Tile
 		g.drawImage(tileFace,x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize);
 		g.setColor(highlightColors[this.highlighted]);
 		g.fillRect(x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize,DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
-		g.drawRect(x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize,DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
-		
 		g.setColor(new Color(0,0,0,(int)(((fogOfWarLevels-fogOfWar*1.0)/fogOfWarLevels) * 255 )));
 		g.fillRect(x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize,DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
 		

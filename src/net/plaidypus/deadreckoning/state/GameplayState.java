@@ -51,7 +51,7 @@ public class GameplayState extends BasicGameState
 		gb = new GameBoard(25,25);
 		gb.init();
 		player = new Player(gc.getInput());
-		gb.placeEntity(0, 0, player);
+		gb.placeEntity(4, 4, player);
 		gb.placeEntity(24, 1, new Goblin());
 		cameraX=0;
 		cameraY=0;
