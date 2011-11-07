@@ -8,6 +8,10 @@ public class Utilities {
 	
 	private static Random r = new Random();
 	
+	public static double getDistance(Tile a, Tile b){
+		return Math.sqrt( Math.pow(a.getX()-b.getX(), 2) + Math.pow(a.getY()-b.getY(), 2) );
+	}
+	
 	public static int randInt (int lower, int higher){
 		return r.nextInt(higher-lower)+lower;
 	}

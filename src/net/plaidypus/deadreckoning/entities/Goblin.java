@@ -37,6 +37,10 @@ public class Goblin extends LivingEntity{
 			if(!movement.canTargetTile(this.getLocation().getToUp()) || this.getLocation().getToUp().equals(this.getLocation()) ){direction=0;}
 			else{return movement.makeAction(this.getLocation().getToUp());}
 		}
+		if(direction==0){
+			if(!movement.canTargetTile(this.getLocation().getToLeft()) || this.getLocation().getToLeft().equals(this.getLocation())){direction++;}
+			else{return movement.makeAction(this.getLocation().getToLeft());}
+		}
 		return new WaitAction(this.getLocation());
 	}
 

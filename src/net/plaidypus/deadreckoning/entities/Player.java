@@ -1,5 +1,7 @@
 package net.plaidypus.deadreckoning.entities;
 
+import net.plaidypus.deadreckoning.Tile;
+import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.skills.Attack;
 import net.plaidypus.deadreckoning.skills.Movement;
@@ -36,7 +38,6 @@ public class Player extends LivingEntity
 	}
 	
 	public Action chooseAction(GameContainer gc, int delta){
-		
 		for(int i=0; i<keyBinds.length;i++){
 			if(input.isKeyPressed(keyBinds[i])){
 				this.currentSkill=i;
@@ -64,5 +65,18 @@ public class Player extends LivingEntity
 		}
 		return null;
 	}
+	
+	public void applyAction(GameContainer gc, int delta){
+		super.applyAction(gc,delta);
+	}
+
+	public boolean canSee(Entity e) {
+		return Utilities.getDistance(getLocation(), e.getLocation())<=this.VIS;
+	}
+	
+	public boolean canSee(Tile t) {
+		return Utilities.getDistance(getLocation(), t)<=this.VIS;
+	}
+	
 	
 }

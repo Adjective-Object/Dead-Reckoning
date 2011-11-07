@@ -72,7 +72,7 @@ public class GameBoard
 		
 		for(int x = 0; x < 25; x++){
 			for(int y = 0; y < 25; y++ ){
-				if(!board[x][y].isOpen()){
+				if(!board[x][y].isOpen() && board[x][y].fogOfWar>0){
 					board[x][y].getEntity().render(g,x+xoff/DeadReckoningGame.tileSize,y+yoff/DeadReckoningGame.tileSize);
 				}
 			}
@@ -149,6 +149,25 @@ public class GameBoard
 
 	public int getWidth() {
 		return width;
+	}
+	
+	public void revealInRadius(Tile location, int VIS) {
+		for(int x=0; x<board.length;x++){
+			for(int y=0; y<board[x].length;y++){
+				int dist = (int) Utilities.getDistance(location,board[x][y]);
+				if(dist<=VIS){
+					board[x][y].fogOfWar= Utilities.limitTo( VIS-dist , 0,  Tile.fogOfWarLevels);
+				}
+			}
+		}
+	}
+	
+	public void HideAll() {
+		for(int x=0; x<board.length;x++){
+			for(int y=0; y<board[x].length;y++){
+				board[x][y].fogOfWar= 0;
+			}
+		}
 	}
 	
 }

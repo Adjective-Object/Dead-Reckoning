@@ -6,6 +6,7 @@ STR=20
 INT=4
 AGI=10
 MOV=10
+VIS=10
 
 :IMAGES:
 AttackSheet = "res\Thief attack.png"

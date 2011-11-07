@@ -69,6 +69,9 @@ public class GameplayState extends BasicGameState
 		cameraX = cameraX+(cameraDestX-cameraX)*cameraRate;
 		cameraY = cameraY+(cameraDestY-cameraY)*cameraRate;
 		
+		gb.HideAll();
+		gb.revealInRadius(player.getLocation(),player.VIS);
+		
 		for(int i=0; i<particles.size();i++){
 			particles.get(i).update(gc, sbg, delta);
 			if(particles.get(i).toKill){
@@ -79,8 +82,10 @@ public class GameplayState extends BasicGameState
 		
 		Entity current = gb.ingameEntities.get(currentEntity);
 		if(current.isIdle()){
-			cameraDestX=current.getAbsoluteX()-gc.getWidth()/2;
-			cameraDestY=current.getAbsoluteY()-gc.getHeight()/2;
+			if(player.canSee(current)){
+				cameraDestX=current.getAbsoluteX()-gc.getWidth()/2;
+				cameraDestY=current.getAbsoluteY()-gc.getHeight()/2;
+			}
 			if(Math.abs(cameraX-cameraDestX)<0.01 && Math.abs(cameraY-cameraDestY)<=0.01){
 				current.setAction(current.chooseAction(gc,delta));
 			}

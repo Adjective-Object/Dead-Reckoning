@@ -20,7 +20,7 @@ import org.newdawn.slick.SpriteSheet;
 public abstract class LivingEntity extends Entity{
 	
 	public int maxHP,maxMP,STR,INT,AGI;
-	public int HP,MP,MOV;
+	public int HP,MP,MOV,VIS;
 	public Animation stand, basicAttack, walking, damageFront, damageBack, death;
 	public Animation currentAnimation;
 	public ArrayList<Animation> animations;
@@ -175,6 +175,7 @@ public abstract class LivingEntity extends Entity{
 		INT=stats.get("INT");
 		AGI=stats.get("AGI");
 		MOV=stats.get("MOV");
+		VIS=stats.get("VIS");
 		
 		HP=maxHP;
 		MP=maxMP;
