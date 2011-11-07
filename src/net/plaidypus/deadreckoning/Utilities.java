@@ -19,6 +19,12 @@ public class Utilities {
 	
 	public static int limitTo(int toLimit, int lowerBound, int upperBound){
 		if(toLimit<lowerBound){ return lowerBound; }
+		if(toLimit>=upperBound){ return upperBound-1; }
+		return toLimit;
+	}
+	
+	public static float limitTo(float toLimit, float lowerBound, float upperBound){
+		if(toLimit<lowerBound){ return lowerBound; }
 		if(toLimit>upperBound){ return upperBound; }
 		return toLimit;
 	}

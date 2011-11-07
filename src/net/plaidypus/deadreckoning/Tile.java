@@ -97,7 +97,7 @@ public class Tile
 	 * @param sbg
 	 * @param g
 	 */
-	public void render(Graphics g,int x, int y)
+	public void render(Graphics g,float x, float y)
 	{
 		g.drawImage(tileFace,x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize);
 		g.setColor(highlightColors[this.highlighted]);
@@ -112,10 +112,10 @@ public class Tile
 		return parent.getTileAt(Utilities.limitTo(getX()+1,0,this.parent.getWidth()), getY());
 	}
 	public Tile getToUp(){
-		return parent.getTileAt(getX(),Utilities.limitTo(getY()-1,0,this.parent.getWidth()));
+		return parent.getTileAt(getX(),Utilities.limitTo(getY()-1,0,this.parent.getHeight()));
 	}
 	public Tile getToDown(){
-		return parent.getTileAt(getX(),Utilities.limitTo(getY()+1,0,this.parent.getWidth()));
+		return parent.getTileAt(getX(),Utilities.limitTo(getY()+1,0,this.parent.getHeight()));
 	}
 	
 	public GameBoard getParent(){

@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.entities;
 
+import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.GameBoard;
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;
@@ -56,7 +57,7 @@ public abstract class Entity
 		this.nextAction=action;
 	}
 	
-	public abstract void render(Graphics g, int  x, int  y);
+	public abstract void render(Graphics g, float x, float  y);
 	
 	public Tile getLocation()
 	{
@@ -78,6 +79,14 @@ public abstract class Entity
 			
 	public int getY(){
 		return getLocation().getY();
+	}		
+	
+	public int getAbsoluteX(){
+		return (int) (getLocation().getX()*DeadReckoningGame.tileSize+relativeX);
+	}
+			
+	public int getAbsoluteY(){
+		return (int) (getLocation().getY()*DeadReckoningGame.tileSize+relativeY);
 	}		
 	
 	public void interact(Entity e)

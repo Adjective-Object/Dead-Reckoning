@@ -34,8 +34,7 @@ public class DamageParticle extends Particle{
 	}
 	
 	public static void init() throws SlickException{
-		 font = new UnicodeFont( "res\\visitor.ttf" , 7 ,false, false);
-		 
+		 font = new UnicodeFont( "res\\visitor.ttf" , 7 ,false, false);	 
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
@@ -50,11 +49,11 @@ public class DamageParticle extends Particle{
 		
 	}
 
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
+	public void render(Graphics g, float xOff, float yOff) {
 		g.setColor(new Color(255,255,255,255*visibility));
 		g.setFont(font);
-		g.drawString(damage, x, y);
-		g.fillRect(x,y,10,7);
+		g.drawString(damage, x+xOff, y+yOff);
+		g.fillRect(x+xOff, y+yOff,10,7);
 		
 	}
 }

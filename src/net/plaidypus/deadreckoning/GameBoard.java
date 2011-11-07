@@ -56,34 +56,34 @@ public class GameBoard
 		return board[x][y];
 	}
 	
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
+	public void render(Graphics g, float xoff, float yoff)
 	{
 		for(int x = 0; x < 25; x++){
 			for(int y = 0; y < 25; y++ ){
-				board[x][y].render(g,x,y);
+				board[x][y].render(g,x+xoff/DeadReckoningGame.tileSize,y+yoff/DeadReckoningGame.tileSize);
 			}
 		}
 		
 		if(primaryHighlight !=null ){
 			g.setColor(primaryHighlightColor);
 			g.setLineWidth(2);
-			g.drawRect(primaryHighlight.getX()*DeadReckoningGame.tileSize, primaryHighlight.getY()*DeadReckoningGame.tileSize, DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
+			g.drawRect(primaryHighlight.getX()*DeadReckoningGame.tileSize+xoff, primaryHighlight.getY()*DeadReckoningGame.tileSize+yoff, DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
 			g.setLineWidth(1);
 		}
 		
 		for(int x = 0; x < 25; x++){
 			for(int y = 0; y < 25; y++ ){
 				if(!board[x][y].isOpen()){
-					board[x][y].getEntity().render(g,x,y);
+					board[x][y].getEntity().render(g,x+xoff/DeadReckoningGame.tileSize,y+yoff/DeadReckoningGame.tileSize);
 				}
 			}
 		}
 	}
 	
-	public void updateSelctor(Input i){
+	public void updateSelctor(Input i, float xOff, float yOff){
 		
 		if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)){
-			primaryHighlight = board[i.getMouseX()/DeadReckoningGame.tileSize][i.getMouseY()/DeadReckoningGame.tileSize];
+			primaryHighlight = board[Utilities.limitTo((i.getMouseX()-(int)xOff)/DeadReckoningGame.tileSize,0,this.getWidth())][Utilities.limitTo((i.getMouseY()-(int)yOff)/DeadReckoningGame.tileSize,0,this.getHeight())];
 		}
 		
 		if(primaryHighlight!=null){

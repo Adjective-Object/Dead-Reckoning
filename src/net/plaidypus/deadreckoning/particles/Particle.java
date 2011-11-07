@@ -14,5 +14,5 @@ public abstract class Particle {
 	
 	public abstract void update(GameContainer gc, StateBasedGame sbg, int delta);
 	
-	public abstract void render(GameContainer gc, StateBasedGame sbg, Graphics g);
+	public abstract void render(Graphics g, float xoff, float yoff);
 }

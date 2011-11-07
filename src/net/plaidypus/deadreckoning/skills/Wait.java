@@ -24,7 +24,7 @@ public class Wait extends Skill{
 
 	@Override
 	public void highlightRange(GameBoard board) {
-		highlightRange(board,1);
+		highlightRange(board,0);
 	}
 	
 

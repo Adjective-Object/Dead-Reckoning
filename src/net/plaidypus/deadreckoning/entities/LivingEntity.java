@@ -56,9 +56,6 @@ public abstract class LivingEntity extends Entity{
 		if(this.currentAnimation.isStopped()){
 			this.setCurrentAnimation(ANIMATION_STAND);
 		}
-		if(this.getCurrentAnimationID()==LivingEntity.ANIMATION_STAND && HP<=0){
-			this.setCurrentAnimation(LivingEntity.ANIMATION_DEATH);
-		}
 	}
 
 	public abstract Action chooseAction(GameContainer gc, int delta);
@@ -74,7 +71,7 @@ public abstract class LivingEntity extends Entity{
 		return super.isIdle() && (this.getCurrentAnimationID()==LivingEntity.ANIMATION_STAND || this.HP<=0);
 	}
 	
-	public void render(Graphics g,int x, int y) {
+	public void render(Graphics g,float x, float y) {
 		g.drawImage(currentAnimation.getCurrentFrame().getFlippedCopy(getFacing(), false),x*DeadReckoningGame.tileSize+relativeX,y*DeadReckoningGame.tileSize+relativeY);
 	}
 	

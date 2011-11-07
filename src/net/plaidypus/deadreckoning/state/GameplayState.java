@@ -22,7 +22,10 @@ public class GameplayState extends BasicGameState
 	int stateID = -1;
 	int currentEntity;
 	
+	public static float cameraX, cameraY;
+	
 	Input input;
+	Player player;
 	
 	GameBoard gb;
 	
@@ -44,18 +47,24 @@ public class GameplayState extends BasicGameState
 		gc.setVSync(true);
 		gb = new GameBoard(25,25);
 		gb.init();
-		gb.placeEntity(0, 0, new Player(gc.getInput()));
+		player = new Player(gc.getInput());
+		gb.placeEntity(0, 0, player);
 		gb.placeEntity(24, 1, new Goblin());
+		cameraX=0;
+		cameraY=0;
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-		gb.render(gc,sbg,g);
+		gb.render(g,-cameraX,-cameraY);
 		for(int i=0; i<particles.size();i++){
-			particles.get(i).render(gc,sbg,g);
+			particles.get(i).render(g,-cameraX,-cameraY);
 		}
 	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
+		
+		cameraX=player.getAbsoluteX()-gc.getWidth()/2;
+		cameraY=player.getAbsoluteY()-gc.getHeight()/2;
 		
 		for(int i=0; i<particles.size();i++){
 			particles.get(i).update(gc, sbg, delta);
@@ -76,7 +85,7 @@ public class GameplayState extends BasicGameState
 			}
 		}
 		
-		gb.updateSelctor(input);
+		gb.updateSelctor(input,-cameraX,-cameraY);
 		gb.updateAllTiles(gc, delta);
 		
 	}
