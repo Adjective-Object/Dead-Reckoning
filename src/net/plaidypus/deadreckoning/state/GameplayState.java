@@ -76,12 +76,12 @@ public class GameplayState extends BasicGameState {
 
 		Entity current = gb.ingameEntities.get(currentEntity);
 		
-		if (player.canSee(current)) {
+		if (player.canSee(current) && !actionAssigned) {
 			cameraDestX = current.getAbsoluteX() - gc.getWidth() / 2;
 			cameraDestY = current.getAbsoluteY() - gc.getHeight() / 2;
 		}
 		
-		if(!player.canSee(current) || ( Math.abs(cameraDestY-cameraX)<=0.1 &&  Math.abs(cameraDestY-cameraY)<=0.1 ) || true){
+		if(!player.canSee(current) || ( Math.abs(cameraDestX-cameraX)<=0.1 &&  Math.abs(cameraDestY-cameraY)<=0.1 )){
 			
 			if( !this.actionAssigned){
 				current.setAction(current.chooseAction(gc, delta));
