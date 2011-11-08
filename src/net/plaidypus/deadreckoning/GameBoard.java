@@ -156,7 +156,14 @@ public class GameBoard
 			for(int y=0; y<board[x].length;y++){
 				int dist = (int) Utilities.getDistance(location,board[x][y]);
 				if(dist<=VIS){
-					board[x][y].fogOfWar= Utilities.limitTo( VIS-dist , 0,  Tile.fogOfWarLevels);
+					int level = Utilities.limitTo( VIS-dist , 1,  Tile.fogOfWarLevels);
+					if( level > board[x][y].fogOfWar){
+						board[x][y].fogOfWar=level;
+						board[x][y].explored=true;
+					}
+				}
+				else if(board[x][y].explored){
+					board[x][y].fogOfWar=1;
 				}
 			}
 		}
