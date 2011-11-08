@@ -76,7 +76,7 @@ public class GameplayState extends BasicGameState {
 
 		Entity current = gb.ingameEntities.get(currentEntity);
 		
-		if (player.canSee(current) && !actionAssigned && current.isIdle()) {
+		if (player.canSee(current) && !actionAssigned) {
 			cameraDestX = current.getAbsoluteX() - gc.getWidth() / 2;
 			cameraDestY = current.getAbsoluteY() - gc.getHeight() / 2;
 		}
@@ -92,7 +92,7 @@ public class GameplayState extends BasicGameState {
 			
 			current.applyAction(gc, delta);
 			
-			if(this.actionAssigned && current.getAction().completed){
+			if(this.actionAssigned && current.getAction().completed&& gb.isIdle()){
 				this.actionAssigned=false;
 				currentEntity = (currentEntity + 1) % gb.ingameEntities.size();
 				System.out.println("MOVING TO "+currentEntity);
