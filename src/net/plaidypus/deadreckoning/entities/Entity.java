@@ -55,11 +55,9 @@ public abstract class Entity
 	
 	public void setAction(Action action) {
 		this.nextAction=action;
-		System.out.println(nextAction);
 	}
 	
 	public Action getAction() {
-		System.out.println(nextAction);
 		return nextAction;
 	}
 	

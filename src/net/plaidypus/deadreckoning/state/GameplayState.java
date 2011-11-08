@@ -81,14 +81,13 @@ public class GameplayState extends BasicGameState {
 			cameraDestY = current.getAbsoluteY() - gc.getHeight() / 2;
 		}
 		
-		current.setAction(current.chooseAction(gc, delta));
-		
-		if(!player.canSee(current) || ( (cameraDestY-cameraX)<=0.1 &&  (cameraDestY-cameraY)<=0.1 ) || true){
+		if(!player.canSee(current) || ( Math.abs(cameraDestY-cameraX)<=0.1 &&  Math.abs(cameraDestY-cameraY)<=0.1 ) || true){
 			
 			if( !this.actionAssigned){
 				current.setAction(current.chooseAction(gc, delta));
-				current.getAction();
+				System.out.println("ANUSMOON");
 				if(current.getAction()!=null){
+					System.out.println("ANUSMAN");
 					this.actionAssigned = true;
 				}
 			}
