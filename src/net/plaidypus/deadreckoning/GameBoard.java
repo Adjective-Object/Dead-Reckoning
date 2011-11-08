@@ -72,7 +72,7 @@ public class GameBoard
 		
 		for(int x = 0; x < 25; x++){
 			for(int y = 0; y < 25; y++ ){
-				if(!board[x][y].isOpen() && board[x][y].fogOfWar>0){
+				if(!board[x][y].isOpen() && board[x][y].fogOfWar>1){
 					board[x][y].getEntity().render(g,x+xoff/DeadReckoningGame.tileSize,y+yoff/DeadReckoningGame.tileSize);
 				}
 			}
@@ -156,7 +156,7 @@ public class GameBoard
 			for(int y=0; y<board[x].length;y++){
 				int dist = (int) Utilities.getDistance(location,board[x][y]);
 				if(dist<=VIS){
-					int level = Utilities.limitTo( VIS-dist , 1,  Tile.fogOfWarLevels);
+					int level = Utilities.limitTo( VIS+1-dist , 1,  Tile.fogOfWarLevels);
 					if( level > board[x][y].fogOfWar){
 						board[x][y].fogOfWar=level;
 						board[x][y].explored=true;
@@ -175,6 +175,15 @@ public class GameBoard
 				board[x][y].fogOfWar= 0;
 			}
 		}
+	}
+
+	public boolean isIdle() {
+		for(int i=0;i<this.ingameEntities.size();i++){
+			if(!ingameEntities.get(i).isIdle()){
+				return false;
+			}
+		}
+		return true;
 	}
 	
 }

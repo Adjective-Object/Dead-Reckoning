@@ -105,6 +105,13 @@ public abstract class LivingEntity extends Entity{
 		return this.getLocation().getX();
 	}
 	
+	
+	//STAT referencing
+	
+	public int getAttackRange() {
+		return 1;
+	}
+	
 	/**
 	 * Loads an entity from a text file.
 	 * SO UGLY IT HURTS, but it didn't make sense to break indo subroutines

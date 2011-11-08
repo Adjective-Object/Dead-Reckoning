@@ -24,7 +24,7 @@ public class Attack extends Skill{
 
 	@Override
 	public void highlightRange(GameBoard board) {
-		highlightRange(board,12);
+		highlightRange(board,source.getAttackRange());
 	}
 
 }

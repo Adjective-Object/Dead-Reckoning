@@ -36,7 +36,8 @@ public class AttackAction extends Action{
 	private boolean applyToEntity(LivingEntity e){
 		
 		if(!attacking){
-			e.setCurrentAnimation(LivingEntity.ANIMATION_ATTACK);
+			LivingEntity s = (LivingEntity) source.getEntity();
+			s.setCurrentAnimation(LivingEntity.ANIMATION_ATTACK);
 			e.damagePhysical(damage);
 			
 			int xdiff = source.getX()-target.getX();
