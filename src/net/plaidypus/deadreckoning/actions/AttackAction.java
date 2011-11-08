@@ -49,6 +49,8 @@ public class AttackAction extends Action{
 			else{
 				e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_FRONT);
 			}
+			e.animating=true;
+			s.animating=true;
 			attacking=true;
 		}
 

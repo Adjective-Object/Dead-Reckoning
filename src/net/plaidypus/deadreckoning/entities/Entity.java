@@ -22,7 +22,7 @@ public abstract class Entity
 	public float relativeX, relativeY;
 	private boolean facing;
 	
-	public Action nextAction;
+	Action nextAction;
 	
 	public Entity()
 	{
@@ -55,6 +55,12 @@ public abstract class Entity
 	
 	public void setAction(Action action) {
 		this.nextAction=action;
+		System.out.println(nextAction);
+	}
+	
+	public Action getAction() {
+		System.out.println(nextAction);
+		return nextAction;
 	}
 	
 	public abstract void render(Graphics g, float x, float  y);
@@ -101,11 +107,6 @@ public abstract class Entity
 	public boolean getFacing() {
 		return facing;
 	}
-	public Action getAction() {
-		return nextAction;
-	}
-
-	
 	
 	
 }

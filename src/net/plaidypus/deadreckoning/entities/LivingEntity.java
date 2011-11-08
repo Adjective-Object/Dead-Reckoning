@@ -25,6 +25,7 @@ public abstract class LivingEntity extends Entity{
 	public Animation currentAnimation;
 	public ArrayList<Animation> animations;
 	int currentAnimationID;
+	public boolean animating;
 	public static final int ANIMATION_STAND = 0, ANIMATION_ATTACK = 1, ANIMATION_WALK=2,
 						ANIMATION_FLINCH_FRONT=3, ANIMATION_FLINCH_BACK=4, ANIMATION_DEATH=5;
 	
@@ -41,6 +42,8 @@ public abstract class LivingEntity extends Entity{
 		
 		setFacing(false);
 		
+		animating=false;
+		
 		animations = new ArrayList<Animation>(0);
 		animations.add(stand);
 		animations.add(basicAttack);
@@ -55,17 +58,11 @@ public abstract class LivingEntity extends Entity{
 		currentAnimation.update(delta);
 		if(this.currentAnimation.isStopped()){
 			this.setCurrentAnimation(ANIMATION_STAND);
+			this.animating=false;
 		}
 	}
 
 	public abstract Action chooseAction(GameContainer gc, int delta);
-	
-	public void applyAction(GameContainer gc, int delta){
-		currentAnimation.update(delta);
-		if(nextAction!=null){
-			nextAction.applyAction(delta);
-		}
-	}
 	
 	public void damagePhysical(int damage){//TODO math for damage reduction magic
 		this.HP-=damage;
@@ -76,7 +73,7 @@ public abstract class LivingEntity extends Entity{
 	}
 	
 	public boolean isIdle(){
-		return super.isIdle() && (this.getCurrentAnimationID()==LivingEntity.ANIMATION_STAND);
+		return super.isIdle() && (this.nextAction==null || this.nextAction.completed) && !this.animating;
 	}
 	
 	public void render(Graphics g,float x, float y) {
@@ -156,13 +153,13 @@ public abstract class LivingEntity extends Entity{
 					else if(ParsingMode.equals(":SPRITES:")){
 						String[] toAnimation = in.replaceAll(" ","").split("=");
 						String[] toAnimationB = toAnimation[1].replaceAll(" ","").split("_");
-						String[] toAnimationC = toAnimationB[1].split(",");
+						String[] toAnimationC = toAnimationB[2].split(",");
 						
 						int[] frames = new int[toAnimationC.length];
 						int[] durations = new int[toAnimationC.length];
 						for(int i=0;i<toAnimationC.length;i++){
 							frames[i]=Integer.parseInt(toAnimationC[i]);
-							durations[i]=DeadReckoningGame.animationRate;
+							durations[i]=Integer.parseInt(toAnimationB[1]);
 						}
 						
 						

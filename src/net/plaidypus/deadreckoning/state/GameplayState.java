@@ -20,7 +20,8 @@ public class GameplayState extends BasicGameState {
 
 	int stateID = -1;
 	int currentEntity;
-
+	boolean actionAssigned;
+	
 	public static float cameraX, cameraY;
 	public static float cameraDestX, cameraDestY;
 
@@ -30,7 +31,7 @@ public class GameplayState extends BasicGameState {
 	Player player;
 
 	GameBoard gb;
-
+	
 	public static ArrayList<Particle> particles;
 
 	public GameplayState(int stateID) throws SlickException {
@@ -54,18 +55,10 @@ public class GameplayState extends BasicGameState {
 		gb.placeEntity(24, 1, new Goblin());
 		cameraX = 0;
 		cameraY = 0;
+		actionAssigned=false;
 	}
 
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
-			throws SlickException {
-		gb.render(g, -cameraX, -cameraY);
-		for (int i = 0; i < particles.size(); i++) {
-			particles.get(i).render(g, -cameraX, -cameraY);
-		}
-	}
-
-	public void update(GameContainer gc, StateBasedGame sbg, int delta)
-			throws SlickException {
+	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 
 		cameraX = cameraX + (cameraDestX - cameraX) * cameraRate;
 		cameraY = cameraY + (cameraDestY - cameraY) * cameraRate;
@@ -82,30 +75,47 @@ public class GameplayState extends BasicGameState {
 		}
 
 		Entity current = gb.ingameEntities.get(currentEntity);
-		if (current.isIdle()) {
-			if (player.canSee(current)) {
-				cameraDestX = current.getAbsoluteX() - gc.getWidth() / 2;
-				cameraDestY = current.getAbsoluteY() - gc.getHeight() / 2;
-			}
-			if (Math.abs(cameraX - cameraDestX) < 0.01
-					&& Math.abs(cameraY - cameraDestY) <= 0.01) {
-				current.setAction(current.chooseAction(gc, delta));
-			}
-
+		
+		if (player.canSee(current)) {
+			cameraDestX = current.getAbsoluteX() - gc.getWidth() / 2;
+			cameraDestY = current.getAbsoluteY() - gc.getHeight() / 2;
 		}
-		if (!gb.isIdle()) {
+		
+		current.setAction(current.chooseAction(gc, delta));
+		
+		if(!player.canSee(current) || ( (cameraDestY-cameraX)<=0.1 &&  (cameraDestY-cameraY)<=0.1 ) || true){
+			
+			if( !this.actionAssigned){
+				current.setAction(current.chooseAction(gc, delta));
+				current.getAction();
+				if(current.getAction()!=null){
+					this.actionAssigned = true;
+				}
+			}
+			
 			current.applyAction(gc, delta);
-			if (current.isIdle()) {
+			
+			if(this.actionAssigned && current.getAction().completed){
+				this.actionAssigned=false;
 				currentEntity = (currentEntity + 1) % gb.ingameEntities.size();
 				System.out.println("MOVING TO "+currentEntity);
 			}
+			
 		}
-
+		
 		gb.updateSelctor(input, -cameraX, -cameraY);
 		gb.updateAllTiles(gc, delta);
 
 	}
 
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
+	throws SlickException {
+		gb.render(g, -cameraX, -cameraY);
+		for (int i = 0; i < particles.size(); i++) {
+			particles.get(i).render(g, -cameraX, -cameraY);
+		}
+	}
+	
 	public int getID() {
 		return stateID;
 	}

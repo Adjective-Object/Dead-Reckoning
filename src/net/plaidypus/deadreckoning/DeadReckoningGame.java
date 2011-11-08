@@ -15,7 +15,6 @@ public class DeadReckoningGame extends StateBasedGame
 	public static final int GAMEPLAYSTATE	= 1;
 	
 	public static final int tileSize = 32;
-	public static final int animationRate = 120;
 	
 	DeadReckoningGame() throws SlickException
 	{

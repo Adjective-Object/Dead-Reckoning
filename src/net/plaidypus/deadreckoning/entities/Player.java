@@ -58,6 +58,7 @@ public class Player extends LivingEntity
 			Action toRet = skills[currentSkill].makeAction(this.getParent().getPrimairyHighlight());
 			this.getLocation().getParent().clearHighlightedSquares();
 			this.getLocation().getParent().clearPrimaryHighlight();
+			System.out.println(toRet);
 			return toRet;
 		}
 		else{
