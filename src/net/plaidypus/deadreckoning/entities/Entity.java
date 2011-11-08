@@ -101,6 +101,9 @@ public abstract class Entity
 	public boolean getFacing() {
 		return facing;
 	}
+	public Action getAction() {
+		return nextAction;
+	}
 
 	
 	

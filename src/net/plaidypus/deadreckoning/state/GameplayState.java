@@ -95,7 +95,7 @@ public class GameplayState extends BasicGameState {
 		}
 		if (!gb.isIdle()) {
 			current.applyAction(gc, delta);
-			if (gb.isIdle()) {
+			if (current.isIdle()) {
 				currentEntity = (currentEntity + 1) % gb.ingameEntities.size();
 				System.out.println("MOVING TO "+currentEntity);
 			}
