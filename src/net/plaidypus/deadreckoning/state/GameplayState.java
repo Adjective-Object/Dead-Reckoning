@@ -76,7 +76,7 @@ public class GameplayState extends BasicGameState {
 
 		Entity current = gb.ingameEntities.get(currentEntity);
 		
-		if (player.canSee(current) && !actionAssigned) {
+		if (player.canSee(current) && !actionAssigned && current.isIdle()) {
 			cameraDestX = current.getAbsoluteX() - gc.getWidth() / 2;
 			cameraDestY = current.getAbsoluteY() - gc.getHeight() / 2;
 		}
