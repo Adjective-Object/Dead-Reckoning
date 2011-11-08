@@ -85,9 +85,7 @@ public class GameplayState extends BasicGameState {
 			
 			if( !this.actionAssigned){
 				current.setAction(current.chooseAction(gc, delta));
-				System.out.println("ANUSMOON");
 				if(current.getAction()!=null){
-					System.out.println("ANUSMAN");
 					this.actionAssigned = true;
 				}
 			}
