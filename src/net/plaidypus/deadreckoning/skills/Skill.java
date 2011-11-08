@@ -6,28 +6,64 @@ import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 
 public abstract class Skill {
-	
+
 	LivingEntity source;
-	
-	public Skill (LivingEntity source){
-		this.source=source;
+
+	/**
+	 * Skills are a method of having arbitrary abilities on entites (able to be
+	 * stored in an arrayList) while keeping the Action class unique for each
+	 * execution of an action.
+	 * 
+	 * @param source
+	 */
+	public Skill(LivingEntity source) {
+		this.source = source;
 	}
-	
-	public abstract Action makeAction( Tile target);
-	
+
+	/**
+	 * generates an action targeted at a tile. Usually to be assigned to the
+	 * source entity
+	 * 
+	 * @param target
+	 * @return
+	 */
+	public abstract Action makeAction(Tile target);
+
+	/**
+	 * method for checking if a certain tile is highlight-able. used in
+	 * highlightRadial && other highlighting methods.
+	 * 
+	 * @param t
+	 *            the tile that must be checked if it can be targeted
+	 * @return
+	 */
 	public abstract boolean canTargetTile(Tile t);
-	
-	public abstract void highlightRange (GameBoard board);
-	
-	public void highlightRange(GameBoard board, int range) {
+
+	/**
+	 * method for highlighting all the tiles that a skill can target. made
+	 * abstract so not all skills need to have attack ranges of certain shapes,
+	 * etc.
+	 * 
+	 * @param board
+	 */
+	public abstract void highlightRange(GameBoard board);
+
+	/**
+	 * highlights all the tiles within a certain range of the skill's source.
+	 * (radial). made to be called by highlightRange(GameBoard board);
+	 * 
+	 * @param board
+	 * @param range
+	 */
+	public void highlightRadial(GameBoard board, int range) {
 		board.clearHighlightedSquares();
-		for(int vy=0;vy<board.getHeight();vy++){
-			for(int vx=0;vx<board.getWidth();vx++){
-				if( Math.sqrt( Math.pow(source.getX()-vx,2) + Math.pow(source.getY()-vy,2) ) <= range){
-					if(canTargetTile(board.getTileAt(vx,vy))){
+		for (int vy = 0; vy < board.getHeight(); vy++) {
+			for (int vx = 0; vx < board.getWidth(); vx++) {
+				if (Math.sqrt(Math.pow(source.getX() - vx, 2)
+						+ Math.pow(source.getY() - vy, 2)) <= range) {
+					if (canTargetTile(board.getTileAt(vx, vy))) {
 						board.getTileAt(vx, vy).setHighlighted(1);
-					}
-					else{
+					} else {
 						board.getTileAt(vx, vy).setHighlighted(2);
 					}
 				}

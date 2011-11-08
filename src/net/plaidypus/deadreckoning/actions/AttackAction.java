@@ -16,7 +16,7 @@ public class AttackAction extends Action{
 		this.damage = damage;
 		attacking=false;
 	}
-
+	
 	protected boolean apply(int delta) {
 		if(target.getX()>source.getX()){
 			source.getEntity().setFacing(true);

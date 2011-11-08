@@ -6,7 +6,7 @@ import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.AttackAction;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 
-public class Attack extends Skill{
+public class Attack extends Skill {
 
 	public Attack(LivingEntity source) {
 		super(source);
@@ -14,17 +14,21 @@ public class Attack extends Skill{
 
 	@Override
 	public Action makeAction(Tile target) {
-		return new AttackAction(source.getLocation(),target,source.STR);
+		return new AttackAction(source.getLocation(), target, source.STR);
 	}
 
-	@Override
+	/**
+	 * says (in essence) that any occupied tile that is not the same tile as the
+	 * source's tile can be passed
+	 **/
 	public boolean canTargetTile(Tile t) {
-		return !t.isOpen() && (t.getX()!=source.getX() || t.getY()!=source.getY());
+		return !t.isOpen()
+				&& !(t.getX() == source.getX() && t.getY() == source.getY());
 	}
 
 	@Override
 	public void highlightRange(GameBoard board) {
-		highlightRange(board,source.getAttackRange());
+		highlightRadial(board, source.getAttackRange());
 	}
 
 }

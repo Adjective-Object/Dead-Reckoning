@@ -14,70 +14,69 @@ import org.newdawn.slick.SlickException;
 
 /*
 
-Griffin Brodman & Jeffrey Tao & don't forget Max / PJ
-Created: 11/4/2011
+ Griffin Brodman & Jeffrey Tao & don't forget Max / PJ
+ Created: 11/4/2011
 
-*/
+ */
 
-public class Player extends LivingEntity
-{
+public class Player extends LivingEntity {
 	Input input;
-	
+
 	public static int[] keyBinds;
 	public static Skill[] skills;
-	
+
 	public int currentSkill;
-	
-	public Player(Input i) throws SlickException
-	{
+
+	/**
+	 * subclass of living entity that is controlled by user input
+	 * 
+	 * @param i
+	 *            the input object returned by GameContainer.getInput()
+	 * @throws SlickException
+	 */
+	public Player(Input i) throws SlickException {
 		super("res\\player.entity");
-		this.input=i;
-		
-		keyBinds = new int[] {Input.KEY_M, Input.KEY_A, Input.KEY_W};
-		skills = new Skill[] {new Movement(this), new Attack(this), new Wait(this)};
+		this.input = i;
+
+		keyBinds = new int[] { Input.KEY_M, Input.KEY_A, Input.KEY_W };
+		skills = new Skill[] { new Movement(this), new Attack(this),
+				new Wait(this) };
 	}
-	
-	public Action chooseAction(GameContainer gc, int delta){
-		for(int i=0; i<keyBinds.length;i++){
-			if(input.isKeyPressed(keyBinds[i])){
-				this.currentSkill=i;
-				
+
+	/**
+	 * action choosing for the player (returns null often because the player takes time to decide/input)
+	 */
+	public Action chooseAction(GameContainer gc, int delta) {
+		for (int i = 0; i < keyBinds.length; i++) {
+			if (input.isKeyPressed(keyBinds[i])) {
+				this.currentSkill = i;
+
 				skills[i].highlightRange(getParent());
-				
-				if(this.getParent().getPrimairyHighlight()==null){
+
+				if (this.getParent().getPrimairyHighlight() == null) {
 					this.getParent().setPrimairyHighlight(this.getLocation());
 				}
 			}
 		}
-		
-		if(input.isKeyPressed(Input.KEY_ESCAPE)){
+
+		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
 			this.getLocation().getParent().clearHighlightedSquares();
 			this.getLocation().getParent().clearPrimaryHighlight();
 		}
-		if(input.isKeyPressed(Input.KEY_ENTER) && this.getParent().getPrimairyHighlight()!=null && this.getParent().getPrimairyHighlight().getHighlighted()==1){
-			Action toRet = skills[currentSkill].makeAction(this.getParent().getPrimairyHighlight());
+		if (input.isKeyPressed(Input.KEY_ENTER)
+				&& this.getParent().getPrimairyHighlight() != null
+				&& this.getParent().getPrimairyHighlight().getHighlighted() == 1) {
+			Action toRet = skills[currentSkill].makeAction(this.getParent()
+					.getPrimairyHighlight());
 			this.getLocation().getParent().clearHighlightedSquares();
 			this.getLocation().getParent().clearPrimaryHighlight();
 			System.out.println(toRet);
 			return toRet;
-		}
-		else{
-			//TODO play fail sound
+		} else {
+			// TODO play fail sound
 		}
 		return null;
 	}
-	
-	public void applyAction(GameContainer gc, int delta){
-		super.applyAction(gc,delta);
-	}
 
-	public boolean canSee(Entity e) {
-		return Utilities.getDistance(getLocation(), e.getLocation())<=this.VIS;
-	}
-	
-	public boolean canSee(Tile t) {
-		return Utilities.getDistance(getLocation(), t)<=this.VIS;
-	}
-	
-	
+
 }

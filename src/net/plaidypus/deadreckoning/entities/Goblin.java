@@ -13,13 +13,18 @@ public class Goblin extends LivingEntity{
 	
 	public int direction;
 	
+	/**
+	 * a testing monster class
+	 */
 	public Goblin() {
 		super("res\\player.entity");
 		movement=new Movement(this);
 		direction = 0;
 	}
 
-	@Override
+	/**
+	 * if something is blocking its path, it will turn left
+	 */
 	public Action chooseAction(GameContainer gc, int delta) {
 		if(direction==0){
 			if(!movement.canTargetTile(this.getLocation().getToLeft()) || this.getLocation().getToLeft().equals(this.getLocation())){direction++;}

@@ -6,7 +6,7 @@ import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.WaitAction;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 
-public class Wait extends Skill{
+public class Wait extends Skill {
 
 	public Wait(LivingEntity l) {
 		super(l);
@@ -19,13 +19,12 @@ public class Wait extends Skill{
 
 	@Override
 	public boolean canTargetTile(Tile t) {
-		return t==source.getLocation();
+		return t == source.getLocation();
 	}
 
 	@Override
 	public void highlightRange(GameBoard board) {
-		highlightRange(board,0);
+		highlightRadial(board, 0);
 	}
-	
 
 }
