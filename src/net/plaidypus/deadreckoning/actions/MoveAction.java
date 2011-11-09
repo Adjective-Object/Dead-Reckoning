@@ -3,7 +3,6 @@ package net.plaidypus.deadreckoning.actions;
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
-import net.plaidypus.deadreckoning.entities.LivingEntity;
 
 public class MoveAction extends Action{
 	

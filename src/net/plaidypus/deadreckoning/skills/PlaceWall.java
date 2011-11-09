@@ -2,10 +2,10 @@ package net.plaidypus.deadreckoning.skills;
 
 import net.plaidypus.deadreckoning.GameBoard;
 import net.plaidypus.deadreckoning.Tile;
+import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.ChangeMapAction;
-import net.plaidypus.deadreckoning.entities.LivingEntity;
-import net.plaidypus.deadreckoning.entities.Wall;
+import net.plaidypus.deadreckoning.entities.*;
 
 public class PlaceWall extends Skill{
 
@@ -16,7 +16,7 @@ public class PlaceWall extends Skill{
 	@Override
 	public Action makeAction(Tile target) {
 		target.setTileFace(Tile.TILE_EMPTY);
-		return new ChangeMapAction(source.getLocation(),target,new Wall(target));
+		return new ChangeMapAction(source.getLocation(),target,new Torch(target,Utilities.randInt(2, 5)));
 	}
 
 	@Override

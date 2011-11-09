@@ -175,7 +175,7 @@ public abstract class LivingEntity extends Entity {
 	 * @return if the entity can see it
 	 */
 	public boolean canSee(Entity e) {
-		return Utilities.getDistance(getLocation(), e.getLocation()) <= this.VIS;
+		return canSee(e.getLocation());
 	}
 
 	/**
@@ -184,7 +184,7 @@ public abstract class LivingEntity extends Entity {
 	 * @return if the entity can see it
 	 */
 	public boolean canSee(Tile t) {
-		return Utilities.getDistance(getLocation(), t) <= this.VIS;
+		return Utilities.getDistance(getLocation(), t) <= this.VIS && this.getParent().isLineOfSight(getLocation(), t);
 	}
 
 	/**

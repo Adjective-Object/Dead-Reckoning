@@ -1,6 +1,7 @@
 package net.plaidypus.deadreckoning.entities;
 
 
+import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.skills.*;
 
@@ -38,7 +39,11 @@ public class Player extends LivingEntity {
 		skills = new Skill[] { new Movement(this), new Attack(this),
 				new Wait(this), new PlaceWall(this) };
 	}
-
+	
+	public boolean canSee(Tile t){
+		return this.getParent().isLineOfSight(getLocation(), t) && t.fogOfWar>1;
+	}
+	
 	/**
 	 * action choosing for the player (returns null often because the player takes time to decide/input)
 	 */

@@ -7,6 +7,7 @@ import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.Goblin;
 import net.plaidypus.deadreckoning.entities.Player;
+import net.plaidypus.deadreckoning.entities.Torch;
 import net.plaidypus.deadreckoning.particles.DamageParticle;
 import net.plaidypus.deadreckoning.particles.Particle;
 
@@ -59,6 +60,8 @@ public class GameplayState extends BasicGameState {
 		gc.setVSync(true);
 		gb = new GameBoard(25,25);
 		gb.init();
+		Torch.init();
+		
 		player = new Player(gc.getInput());
 		gb.placeEntity(4, 4, player);
 		gb.placeEntity(24, 1, new Goblin());
@@ -80,10 +83,7 @@ public class GameplayState extends BasicGameState {
 
 		cameraX = cameraX + (cameraDestX - cameraX) * cameraRate;
 		cameraY = cameraY + (cameraDestY - cameraY) * cameraRate;
-
-		gb.HideAll();
-		gb.revealInRadius(player.getLocation(), player.VIS);
-
+		
 		for (int i = 0; i < particles.size(); i++) {
 			particles.get(i).update(gc, sbg, delta);
 			if (particles.get(i).toKill) {
@@ -123,7 +123,10 @@ public class GameplayState extends BasicGameState {
 			}
 
 		}
-
+		
+		gb.HideAll();
+		gb.revealFromEntity(player);
+		
 		gb.updateSelctor(input, -cameraX, -cameraY);
 		gb.updateAllTiles(gc, delta);
 

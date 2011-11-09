@@ -2,7 +2,6 @@ package net.plaidypus.deadreckoning.actions;
 
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
-import net.plaidypus.deadreckoning.entities.LivingEntity;
 
 public class ChangeMapAction extends Action{
 	

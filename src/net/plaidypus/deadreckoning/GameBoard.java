@@ -1,13 +1,9 @@
 package net.plaidypus.deadreckoning;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.entities.Entity;
-import net.plaidypus.deadreckoning.state.GameplayState;
+import net.plaidypus.deadreckoning.entities.LivingEntity;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -180,13 +176,17 @@ public class GameBoard {
 						board[x][y].fogOfWar = level;
 						board[x][y].explored = true;
 					}
-				} else if (board[x][y].explored) {
+				} else if (board[x][y].explored && board[x][y].fogOfWar==0) {
 					board[x][y].fogOfWar = 1;
 				}
 			}
 		}
 	}
-
+	
+	public void revealFromEntity(LivingEntity e) {
+		revealInRadius(e.getLocation(),e.VIS);
+	}
+	
 	public void HideAll() {
 		for (int x = 0; x < board.length; x++) {
 			for (int y = 0; y < board[x].length; y++) {
@@ -201,6 +201,10 @@ public class GameBoard {
 				return false;
 			}
 		}
+		return true;
+	}
+	
+	public boolean isLineOfSight(Tile a, Tile b){
 		return true;
 	}
 }
