@@ -29,8 +29,7 @@ public class MoveAction extends Action{
 		if( Math.abs(xAbsoluteLocation - target.getX()*DeadReckoningGame.tileSize) <1 && Math.abs(yAbsoluteLocation - target.getY()*DeadReckoningGame.tileSize) <1){
 			e.relativeX=0;
 			e.relativeY=0;
-			source.removeEntity();
-			target.placeEntity(e);
+			source.getParent().moveEntity(source,target);
 			return true;
 		}
 		else{
@@ -38,10 +37,6 @@ public class MoveAction extends Action{
 			e.relativeY=(float) ((target.getY()*DeadReckoningGame.tileSize + yAbsoluteLocation)/2 - source.getY()*DeadReckoningGame.tileSize);
 		}
 		return false;
-	}
-	
-	public int calculateRange(LivingEntity source){
-		return source.getMovementSpeed();
 	}
 	
 }

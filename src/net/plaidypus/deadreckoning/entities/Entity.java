@@ -7,6 +7,7 @@ import net.plaidypus.deadreckoning.actions.Action;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 /*
 
@@ -20,7 +21,9 @@ public abstract class Entity {
 
 	public float relativeX, relativeY;
 	private boolean facing;
-
+	private boolean transparent;
+	protected boolean interactive;
+	
 	Action nextAction;
 
 	/**
@@ -29,12 +32,14 @@ public abstract class Entity {
 	public Entity() {
 		relativeX = 0;
 		relativeY = 0;
+		setInteractive(true);
 	}
 
 	Entity(Tile t) {
+		super();
 		location = t;
 	}
-
+	
 	/**
 	 * updates the entity. Used primarily for animation.
 	 * 
@@ -131,25 +136,14 @@ public abstract class Entity {
 	 * does not remove this entity from the tile it is currently on
 	 * 
 	 * if the idea is to move something from tile A to tile B, it would be
-	 * better to use moveEntity()
+	 * better to use Gameboard.moveEntity()
 	 * 
 	 * @param t
 	 */
 	public void setLocation(Tile t) {
 		location = t;
 	}
-
-	/**
-	 * moves the entity from the current tile to the destination tile UNTESTED
-	 * 
-	 * @param targetTile
-	 *            the tile to move to
-	 */
-	public void moveEntity(Tile targetTile) {
-		this.getLocation().removeEntity();
-		this.setLocation(targetTile);
-	}
-
+	
 	/**
 	 * returns the X position of the entity (in the XY coordinate plane of the
 	 * tilesystem)
@@ -219,6 +213,30 @@ public abstract class Entity {
 	 */
 	public boolean getFacing() {
 		return facing;
+	}
+	
+	/**
+	 * sets if the entity is "see through" (light passes through it)
+	 * @param transparent
+	 */
+	public void setTransparent(boolean transparent) {
+		this.transparent = transparent;
+	}
+
+	/**
+	 *gets if the entity is "see through" (light passes through it)
+	 * @param transparent
+	 */
+	public boolean isTransparent() {
+		return transparent;
+	}
+	
+	public void setInteractive(boolean interactive) {
+		this.interactive = interactive;
+	}
+
+	public boolean isInteractive() {
+		return interactive;
 	}
 
 }

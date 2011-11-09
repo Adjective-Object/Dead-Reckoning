@@ -1,12 +1,8 @@
 package net.plaidypus.deadreckoning.entities;
 
-import net.plaidypus.deadreckoning.Tile;
-import net.plaidypus.deadreckoning.Utilities;
+
 import net.plaidypus.deadreckoning.actions.Action;
-import net.plaidypus.deadreckoning.skills.Attack;
-import net.plaidypus.deadreckoning.skills.Movement;
-import net.plaidypus.deadreckoning.skills.Skill;
-import net.plaidypus.deadreckoning.skills.Wait;
+import net.plaidypus.deadreckoning.skills.*;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
@@ -38,9 +34,9 @@ public class Player extends LivingEntity {
 		super("res\\player.entity");
 		this.input = i;
 
-		keyBinds = new int[] { Input.KEY_M, Input.KEY_A, Input.KEY_W };
+		keyBinds = new int[] { Input.KEY_M, Input.KEY_A, Input.KEY_W, Input.KEY_P };
 		skills = new Skill[] { new Movement(this), new Attack(this),
-				new Wait(this) };
+				new Wait(this), new PlaceWall(this) };
 	}
 
 	/**
@@ -70,7 +66,6 @@ public class Player extends LivingEntity {
 					.getPrimairyHighlight());
 			this.getLocation().getParent().clearHighlightedSquares();
 			this.getLocation().getParent().clearPrimaryHighlight();
-			System.out.println(toRet);
 			return toRet;
 		} else {
 			// TODO play fail sound

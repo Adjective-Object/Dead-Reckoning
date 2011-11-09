@@ -38,6 +38,4 @@ public abstract class Action {
 			completed = apply(delta);
 		}
 	}
-
-	public abstract int calculateRange(LivingEntity source);
 }

@@ -3,6 +3,7 @@ package net.plaidypus.deadreckoning.state;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.GameBoard;
+import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.Goblin;
 import net.plaidypus.deadreckoning.entities.Player;
@@ -51,11 +52,12 @@ public class GameplayState extends BasicGameState {
 		input = gc.getInput();
 
 		DamageParticle.init();
+		Tile.init("res\\wallTiles.png");
 		particles = new ArrayList<Particle>(0);
 
 		gc.setTargetFrameRate(60);
 		gc.setVSync(true);
-		gb = new GameBoard(25, 25);
+		gb = new GameBoard(25,25);
 		gb.init();
 		player = new Player(gc.getInput());
 		gb.placeEntity(4, 4, player);
@@ -90,8 +92,12 @@ public class GameplayState extends BasicGameState {
 			}
 		}
 
+		while(!gb.ingameEntities.get(currentEntity).isInteractive()){
+			currentEntity = (currentEntity + 1) % gb.ingameEntities.size();
+		}
+		
 		Entity current = gb.ingameEntities.get(currentEntity);
-
+		
 		if (player.canSee(current) && !actionAssigned) {
 			cameraDestX = current.getAbsoluteX() - gc.getWidth() / 2;
 			cameraDestY = current.getAbsoluteY() - gc.getHeight() / 2;
@@ -114,7 +120,6 @@ public class GameplayState extends BasicGameState {
 					&& gb.isIdle()) {
 				this.actionAssigned = false;
 				currentEntity = (currentEntity + 1) % gb.ingameEntities.size();
-				System.out.println("MOVING TO " + currentEntity);
 			}
 
 		}
@@ -123,7 +128,7 @@ public class GameplayState extends BasicGameState {
 		gb.updateAllTiles(gc, delta);
 
 	}
-
+	
 	/**
 	 * renders the gamestate (gameboard and particless)
 	 * 
@@ -143,7 +148,11 @@ public class GameplayState extends BasicGameState {
 	public int getID() {
 		return stateID;
 	}
-
+	
+	/**
+	 * adds a particle to the particle list in game
+	 * @param p the particle to add
+	 */
 	public static void spawnParticle(Particle p) {
 		particles.add(p);
 	}

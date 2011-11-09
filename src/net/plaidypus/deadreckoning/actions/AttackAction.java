@@ -57,9 +57,5 @@ public class AttackAction extends Action{
 		return true;
 
 	}
-	
-	public int calculateRange(LivingEntity source) {
-		return 1;
-	}
 
 }

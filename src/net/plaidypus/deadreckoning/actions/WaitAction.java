@@ -15,8 +15,4 @@ public class WaitAction extends Action{
 		return true;
 	}
 
-	public int calculateRange(LivingEntity source) {
-		return 0;
-	}
-
 }

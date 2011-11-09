@@ -7,22 +7,26 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SpriteSheet;
+
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
+
 /*
 
 Griffin Brodman & Jeffrey Tao
+aaand Maaaaaaxxxxxxxx Huang-Hobbs.
 Created: 11/4/2011
 
 */
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.StateBasedGame;
 
 public class Tile
 {
 	private Entity containedEntity;
 	private GameBoard parent;
-	private boolean isEmpty;
+	public boolean isEmpty;
 	private int x,y;
-	private Image tileFace;
+	private int tileFace;
 	public int highlighted;
 	
 	public static final int fogOfWarLevels = 5;
@@ -30,6 +34,10 @@ public class Tile
 	public int fogOfWar;
 	
 	static final Color[] highlightColors = new Color[] {new Color(0,0,0,0),new Color(255,75,23,100),new Color(252,125,73,100)};
+	
+	static SpriteSheet tileTextures;
+	
+	public static final int TILE_EMPTY = 9, TILE_WALL = 4;
 	
  	Tile(GameBoard parent, int x, int y) throws SlickException
 	{
@@ -40,7 +48,7 @@ public class Tile
  		highlighted = 0;
  		fogOfWar=5;
  		explored=false;
- 		tileFace = new Image("res\\floor"+1+".png");
+ 		setTileFace(TILE_EMPTY);
 	}
  	
 	Tile(GameBoard parent, int x, int y, Entity e) throws SlickException
@@ -49,37 +57,32 @@ public class Tile
 		containedEntity = e;
 		containedEntity.setLocation(this);
 	}
-
-	public void placeEntity(Entity e)
+	
+	public static void init(String mapImage) throws SlickException{
+		tileTextures =  new SpriteSheet("res\\wallTiles.png",DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
+	}
+	
+	public void setEntity(Entity e)
 	{
 		containedEntity = e;
 		containedEntity.setLocation(this);
 		isEmpty = false;
 	}
-
+	
+	public void disconnectEntity()
+	{
+		containedEntity = null;
+		isEmpty = true;
+	}
+	
 	public Entity getEntity()
 	{
 		return containedEntity;
 	}
 	
-	public void removeEntity()
-	{
-		containedEntity = null;
-		isEmpty = true;
-	}
 	public boolean isOpen()
 	{
 		return isEmpty;
-	}
-
-	public void movedTo(Player p)
-	{
-		if(isEmpty)
-		{ 
-			placeEntity(p);
-			return;
-		}
-		containedEntity.interact(p);
 	}
 	
 	public void setHighlighted(int h){
@@ -104,7 +107,7 @@ public class Tile
 	 */
 	public void render(Graphics g,float x, float y)
 	{
-		g.drawImage(tileFace,x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize);
+		g.drawImage(tileTextures.getSprite(tileFace%tileTextures.getHorizontalCount(), tileFace/tileTextures.getHorizontalCount()),x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize);
 		g.setColor(highlightColors[this.highlighted]);
 		g.fillRect(x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize,DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
 		g.setColor(new Color(0,0,0,(int)(((fogOfWarLevels-fogOfWar*1.0)/fogOfWarLevels) * 255 )));
@@ -135,6 +138,14 @@ public class Tile
 	
 	public int getY(){
 		return y;
+	}
+
+	public void setTileFace(int tileFace) {
+		this.tileFace = tileFace;
+	}
+
+	public int getTileFace() {
+		return tileFace;
 	}
 	
 }

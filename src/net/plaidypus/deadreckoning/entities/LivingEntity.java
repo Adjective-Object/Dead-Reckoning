@@ -177,7 +177,7 @@ public abstract class LivingEntity extends Entity {
 	public boolean canSee(Entity e) {
 		return Utilities.getDistance(getLocation(), e.getLocation()) <= this.VIS;
 	}
-	
+
 	/**
 	 * checks to see if a living entity can see a certain tile
 	 * @param t the tile to check against
@@ -186,7 +186,7 @@ public abstract class LivingEntity extends Entity {
 	public boolean canSee(Tile t) {
 		return Utilities.getDistance(getLocation(), t) <= this.VIS;
 	}
-	
+
 	/**
 	 * Loads an entity from a text file. SO UGLY IT HURTS, but it didn't make
 	 * sense to break into subroutines
