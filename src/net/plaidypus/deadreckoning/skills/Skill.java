@@ -70,4 +70,8 @@ public abstract class Skill {
 			}
 		}
 	}
+
+	public boolean isInstant() {
+		return false;
+	}
 }

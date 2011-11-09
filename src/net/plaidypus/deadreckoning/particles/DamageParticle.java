@@ -57,7 +57,7 @@ public class DamageParticle extends Particle {
 	 * @throws SlickException
 	 */
 	public static void init() throws SlickException {
-		font = new UnicodeFont("res\\visitor.ttf", 7, false, false);
+		font = new UnicodeFont("res/visitor.ttf", 7, false, false);
 	}
 
 	/**

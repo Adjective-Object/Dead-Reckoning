@@ -57,18 +57,18 @@ public class MainMenuState extends BasicGameState {
 	 */
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
-		background = new Image("res\\menu\\background.png");
-		artBar = new Image("res\\menu\\artBar.png");
+		background = new Image("res/menu/background.png");
+		artBar = new Image("res/menu/artBar.png");
 
-		startButton = new Image("res\\menu\\start.png");
-		optionsButton = new Image("res\\menu\\options.png");
-		creditsButton = new Image("res\\menu\\credits.png");
-		quitButton = new Image("res\\menu\\quit.png");
+		startButton = new Image("res/menu/start.png");
+		optionsButton = new Image("res/menu/options.png");
+		creditsButton = new Image("res/menu/credits.png");
+		quitButton = new Image("res/menu/quit.png");
 
-		startButtonHighlight = new Image("res\\menu\\startHighlight.png");
-		optionsButtonHighlight = new Image("res\\menu\\optionsHighlight.png");
-		creditsButtonHighlight = new Image("res\\menu\\creditsHighlight.png");
-		quitButtonHighlight = new Image("res\\menu\\quitHighlight.png");
+		startButtonHighlight = new Image("res/menu/startHighlight.png");
+		optionsButtonHighlight = new Image("res/menu/optionsHighlight.png");
+		creditsButtonHighlight = new Image("res/menu/creditsHighlight.png");
+		quitButtonHighlight = new Image("res/menu/quitHighlight.png");
 
 		inStart = false;
 		inOptions = false;

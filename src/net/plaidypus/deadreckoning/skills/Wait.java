@@ -26,5 +26,9 @@ public class Wait extends Skill {
 	public void highlightRange(GameBoard board) {
 		highlightRadial(board, 0);
 	}
+	
+	public boolean isInstant(){
+		return true;
+	}
 
 }

@@ -21,7 +21,7 @@ public class Torch extends Entity{
 	}
 	
 	public static void init() throws SlickException{
-		img = new Image("res\\torch.png");
+		img = new Image("res/torch.png");
 	}
 	
 	public void update(GameContainer gc, int delta) {

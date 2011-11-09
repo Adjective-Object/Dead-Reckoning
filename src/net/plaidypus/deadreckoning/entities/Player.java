@@ -32,7 +32,7 @@ public class Player extends LivingEntity {
 	 * @throws SlickException
 	 */
 	public Player(Input i) throws SlickException {
-		super("res\\player.entity");
+		super("res/player.entity");
 		this.input = i;
 
 		keyBinds = new int[] { Input.KEY_M, Input.KEY_A, Input.KEY_W, Input.KEY_P };
@@ -48,12 +48,14 @@ public class Player extends LivingEntity {
 	 * action choosing for the player (returns null often because the player takes time to decide/input)
 	 */
 	public Action chooseAction(GameContainer gc, int delta) {
+		boolean confirmed = input.isKeyPressed(Input.KEY_ENTER) ;
 		for (int i = 0; i < keyBinds.length; i++) {
 			if (input.isKeyPressed(keyBinds[i])) {
 				this.currentSkill = i;
 
 				skills[i].highlightRange(getParent());
-
+				confirmed = confirmed || skills[i].isInstant();
+				
 				if (this.getParent().getPrimairyHighlight() == null) {
 					this.getParent().setPrimairyHighlight(this.getLocation());
 				}
@@ -64,7 +66,7 @@ public class Player extends LivingEntity {
 			this.getLocation().getParent().clearHighlightedSquares();
 			this.getLocation().getParent().clearPrimaryHighlight();
 		}
-		if (input.isKeyPressed(Input.KEY_ENTER)
+		if (confirmed
 				&& this.getParent().getPrimairyHighlight() != null
 				&& this.getParent().getPrimairyHighlight().getHighlighted() == 1) {
 			Action toRet = skills[currentSkill].makeAction(this.getParent()

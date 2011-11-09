@@ -57,7 +57,7 @@ public class Tile
 	}
 	
 	public static void init(String mapImage) throws SlickException{
-		tileTextures =  new SpriteSheet("res\\wallTiles.png",DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
+		tileTextures =  new SpriteSheet("res/wallTiles.png",DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
 	}
 	
 	public void setEntity(Entity e)
@@ -105,11 +105,13 @@ public class Tile
 	 */
 	public void render(Graphics g,float x, float y)
 	{
-		g.drawImage(tileTextures.getSprite(tileFace%tileTextures.getHorizontalCount(), tileFace/tileTextures.getHorizontalCount()),x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize);
-		g.setColor(highlightColors[this.highlighted]);
-		g.fillRect(x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize,DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
-		g.setColor(new Color(0,0,0,(int)(((fogOfWarLevels-fogOfWar*1.0)/fogOfWarLevels) * 255 )));
-		g.fillRect(x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize,DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
+		if(fogOfWar>0){
+			g.drawImage(tileTextures.getSprite(tileFace%tileTextures.getHorizontalCount(), tileFace/tileTextures.getHorizontalCount()),x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize);
+			g.setColor(highlightColors[this.highlighted]);
+			g.fillRect(x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize,DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
+			g.setColor(new Color(0,0,0,(int)(((fogOfWarLevels-fogOfWar*1.0)/fogOfWarLevels) * 255 )));
+			g.fillRect(x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize,DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
+		}
 		
 	}
 	
