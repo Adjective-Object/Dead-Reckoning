@@ -76,7 +76,6 @@ public class Player extends LivingEntity {
 		if (( input.isKeyPressed(Input.KEY_ENTER) || input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON ) )
 				&& this.getParent().getPrimairyHighlight() != null
 				&& this.getParent().getPrimairyHighlight().getHighlighted() == Tile.HIGHLIGHT_CONFIRM) {
-			System.out.println("NNUGH");
 			return skills[currentSkill].makeAction(this.getParent().getPrimairyHighlight());
 		}
 		
