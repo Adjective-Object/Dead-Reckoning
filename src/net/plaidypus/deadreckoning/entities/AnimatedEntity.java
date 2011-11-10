@@ -2,6 +2,7 @@ package net.plaidypus.deadreckoning.entities;
 
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
+import net.plaidypus.deadreckoning.Tile;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
@@ -13,7 +14,7 @@ public abstract class AnimatedEntity extends Entity{
 	
 	Animation sprite;
 	
-	public AnimatedEntity(String imageRef) throws SlickException
+	public AnimatedEntity(Tile location , String imageRef) throws SlickException
 	{
 		
 		int[] frames = new int[]{0, 0, 1, 0, 2, 0, 3, 0, 4, 0, 0, 1, 1, 1, 2, 1, 3, 1, 4, 1};
@@ -24,6 +25,7 @@ public abstract class AnimatedEntity extends Entity{
 							new Image(imageRef), DeadReckoningGame.tileSize, DeadReckoningGame.tileSize, 0),
 						frames, durations);
 		sprite.setAutoUpdate(true);
+		this.setLocation(location);
 	}
 	
 	public Image render()

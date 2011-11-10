@@ -30,7 +30,7 @@ public class GameplayState extends BasicGameState {
 	static final float cameraRate = (float) 0.2;
 
 	Input input;
-	Player player;
+	public Player player;
 
 	GameBoard gb;
 
@@ -91,7 +91,17 @@ public class GameplayState extends BasicGameState {
 				i--;
 			}
 		}
+		
+		gb.HideAll();
+		
+		gb.updateSelctor(input, -cameraX, -cameraY);
+		gb.updateAllTiles(gc, delta);
+		
+		updateActions(gc,delta);
 
+	}
+	
+	private void updateActions(GameContainer gc, int delta) {
 		while(!gb.ingameEntities.get(currentEntity).isInteractive()){
 			currentEntity = (currentEntity + 1) % gb.ingameEntities.size();
 		}
@@ -115,23 +125,18 @@ public class GameplayState extends BasicGameState {
 			}
 
 			current.applyAction(gc, delta);
-
+			
 			if (this.actionAssigned && current.getAction().completed
 					&& gb.isIdle()) {
+				gb.clearHighlightedSquares();
+				gb.clearPrimaryHighlight();
 				this.actionAssigned = false;
 				currentEntity = (currentEntity + 1) % gb.ingameEntities.size();
 			}
 
 		}
-		
-		gb.HideAll();
-		gb.revealFromEntity(player);
-		
-		gb.updateSelctor(input, -cameraX, -cameraY);
-		gb.updateAllTiles(gc, delta);
-
 	}
-	
+
 	/**
 	 * renders the gamestate (gameboard and particless)
 	 * 

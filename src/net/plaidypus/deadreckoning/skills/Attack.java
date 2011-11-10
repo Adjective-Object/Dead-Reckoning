@@ -25,7 +25,7 @@ public class Attack extends Skill {
 		if( !t.isOpen() && !(t.getX() == source.getX() && t.getY() == source.getY())){
 			return  t.getEntity().isInteractive();
 		}
-		return !(t.getX() == source.getX() && t.getY() == source.getY());
+		return false;
 	}
 
 	@Override

@@ -12,6 +12,7 @@ public class Wall extends Entity{
 	public Wall(Tile targetTile){
 		super(targetTile);
 		interactive = false;
+		this.setTransparent(false);
 		targetTile.setTileFace(Tile.TILE_WALL);
 	}
 	

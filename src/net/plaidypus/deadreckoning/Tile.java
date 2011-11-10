@@ -28,10 +28,12 @@ public class Tile
 	public int highlighted;
 	
 	public static final int fogOfWarLevels = 5;
-	public boolean explored;
+	public boolean explored, visible;
 	public int fogOfWar;
 	
 	static final Color[] highlightColors = new Color[] {new Color(0,0,0,0),new Color(255,75,23,100),new Color(252,125,73,100)};
+	
+	public static final int HIGHLIGHT_NULL =0, HIGHLIGHT_CONFIRM=1, HIGHLIGHT_DENY=2;
 	
 	static SpriteSheet tileTextures;
 	
@@ -46,6 +48,7 @@ public class Tile
  		highlighted = 0;
  		fogOfWar=5;
  		explored=false;
+ 		visible=true;
  		setTileFace(TILE_EMPTY);
 	}
  	
@@ -146,6 +149,10 @@ public class Tile
 
 	public int getTileFace() {
 		return tileFace;
+	}
+
+	public boolean isTransparent() {
+		return isOpen() || this.getEntity().isTransparent();
 	}
 	
 }

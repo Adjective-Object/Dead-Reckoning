@@ -35,47 +35,54 @@ public class Player extends LivingEntity {
 		super("res/player.entity");
 		this.input = i;
 
-		keyBinds = new int[] { Input.KEY_M, Input.KEY_A, Input.KEY_W, Input.KEY_P };
+		keyBinds = new int[] { Input.KEY_M, Input.KEY_A, Input.KEY_W, Input.KEY_P , Input.KEY_T };
 		skills = new Skill[] { new Movement(this), new Attack(this),
-				new Wait(this), new PlaceWall(this) };
+				new Wait(this), new PlaceWall(this), new PlaceTorch(this) };
 	}
 	
 	public boolean canSee(Tile t){
 		return this.getParent().isLineOfSight(getLocation(), t) && t.fogOfWar>1;
 	}
 	
+	public void update(GameContainer gc, int delta){
+		super.update(gc,delta);
+		this.getParent().revealInRadius(this.getLocation(), this.VIS);
+	}
+	
 	/**
 	 * action choosing for the player (returns null often because the player takes time to decide/input)
 	 */
 	public Action chooseAction(GameContainer gc, int delta) {
-		boolean confirmed = input.isKeyPressed(Input.KEY_ENTER) ;
 		for (int i = 0; i < keyBinds.length; i++) {
 			if (input.isKeyPressed(keyBinds[i])) {
 				this.currentSkill = i;
 
-				skills[i].highlightRange(getParent());
-				confirmed = confirmed || skills[i].isInstant();
+				if (skills[i].isInstant()){
+					return skills[currentSkill].makeAction(this.getLocation());
+				}
 				
-				if (this.getParent().getPrimairyHighlight() == null) {
-					this.getParent().setPrimairyHighlight(this.getLocation());
+				else{
+					skills[currentSkill].highlightRange(this.getParent());
+					if (this.getParent().getPrimairyHighlight() == null) {
+						this.getParent().setPrimairyHighlight(this.getLocation());
+					}
+					else if (this.getParent().getPrimairyHighlight().highlighted==Tile.HIGHLIGHT_CONFIRM){//TODO this always returns it can do it
+						return skills[currentSkill].makeAction(this.getParent().getPrimairyHighlight());
+					}
 				}
 			}
 		}
-
+		
+		if (( input.isKeyPressed(Input.KEY_ENTER) || input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON ) )
+				&& this.getParent().getPrimairyHighlight() != null
+				&& this.getParent().getPrimairyHighlight().getHighlighted() == Tile.HIGHLIGHT_CONFIRM) {
+			System.out.println("NNUGH");
+			return skills[currentSkill].makeAction(this.getParent().getPrimairyHighlight());
+		}
+		
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
 			this.getLocation().getParent().clearHighlightedSquares();
 			this.getLocation().getParent().clearPrimaryHighlight();
-		}
-		if (confirmed
-				&& this.getParent().getPrimairyHighlight() != null
-				&& this.getParent().getPrimairyHighlight().getHighlighted() == 1) {
-			Action toRet = skills[currentSkill].makeAction(this.getParent()
-					.getPrimairyHighlight());
-			this.getLocation().getParent().clearHighlightedSquares();
-			this.getLocation().getParent().clearPrimaryHighlight();
-			return toRet;
-		} else {
-			// TODO play fail sound
 		}
 		return null;
 	}

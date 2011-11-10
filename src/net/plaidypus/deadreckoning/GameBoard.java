@@ -62,8 +62,10 @@ public class GameBoard {
 	public void render(Graphics g, float xoff, float yoff) {
 		for (int x = 0; x < 25; x++) {
 			for (int y = 0; y < 25; y++) {
-				board[x][y].render(g, x + xoff / DeadReckoningGame.tileSize, y
+				if(board[x][y].visible){
+					board[x][y].render(g, x + xoff / DeadReckoningGame.tileSize, y
 						+ yoff / DeadReckoningGame.tileSize);
+				}
 			}
 		}
 
@@ -71,8 +73,8 @@ public class GameBoard {
 			g.setColor(primaryHighlightColor);
 			g.setLineWidth(2);
 			g.drawRect(primaryHighlight.getX() * DeadReckoningGame.tileSize
-					+ xoff, primaryHighlight.getY()
-					* DeadReckoningGame.tileSize + yoff,
+					+ (int)xoff, primaryHighlight.getY()
+					* DeadReckoningGame.tileSize + (int)yoff,
 					DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
 			g.setLineWidth(1);
 		}
@@ -191,6 +193,7 @@ public class GameBoard {
 		for (int x = 0; x < board.length; x++) {
 			for (int y = 0; y < board[x].length; y++) {
 				board[x][y].fogOfWar = 0;
+				//aboard[x][y].visible=false; //TODO visibility
 			}
 		}
 	}
