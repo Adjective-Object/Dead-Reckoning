@@ -10,6 +10,7 @@ import java.util.HashMap;
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.Utilities;
+import net.plaidypus.deadreckoning.Items.*;
 import net.plaidypus.deadreckoning.actions.Action;
 
 import org.newdawn.slick.Animation;
@@ -32,7 +33,10 @@ public abstract class LivingEntity extends Entity {
 	public static final int ANIMATION_STAND = 0, ANIMATION_ATTACK = 1,
 			ANIMATION_WALK = 2, ANIMATION_FLINCH_FRONT = 3,
 			ANIMATION_FLINCH_BACK = 4, ANIMATION_DEATH = 5;
-
+	
+	ArrayList<Item> inventory;
+	ArrayList<Equip> epuips;
+	
 	/**
 	 * subclass of entity with some basic stats for damage calulcation and
 	 * health, etc. also animations
