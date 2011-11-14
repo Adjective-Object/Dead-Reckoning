@@ -10,7 +10,6 @@ import java.util.HashMap;
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.Utilities;
-import net.plaidypus.deadreckoning.Items.*;
 import net.plaidypus.deadreckoning.actions.Action;
 
 import org.newdawn.slick.Animation;
@@ -20,7 +19,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
-public abstract class LivingEntity extends Entity {
+public abstract class LivingEntity extends InteractiveEntity {
 
 	public int maxHP, maxMP, STR, INT, AGI;
 	public int HP, MP, MOV, VIS;
@@ -33,9 +32,6 @@ public abstract class LivingEntity extends Entity {
 	public static final int ANIMATION_STAND = 0, ANIMATION_ATTACK = 1,
 			ANIMATION_WALK = 2, ANIMATION_FLINCH_FRONT = 3,
 			ANIMATION_FLINCH_BACK = 4, ANIMATION_DEATH = 5;
-	
-	ArrayList<Item> inventory;
-	ArrayList<Equip> epuips;
 	
 	/**
 	 * subclass of entity with some basic stats for damage calulcation and
@@ -152,26 +148,6 @@ public abstract class LivingEntity extends Entity {
 		return currentAnimationID;
 	}
 
-	/**
-	 * gets the speed the entity can move at (STAT MANAGEMENT)
-	 * 
-	 * @return the number of tiles it can move per turn
-	 */
-	public int getMovementSpeed() {
-		return MOV;
-	}
-
-	// STAT referencing
-
-	/**
-	 * gets the range the entity can attack with its default attack
-	 * (STAT MANAGEMENT)
-	 * 
-	 * @return the number of tiles away the entity can target
-	 */
-	public int getAttackRange() {
-		return 1;
-	}
 
 	/**
 	 * checks to see if a living entity can see a certain entity
@@ -190,7 +166,36 @@ public abstract class LivingEntity extends Entity {
 	public boolean canSee(Tile t) {
 		return Utilities.getDistance(getLocation(), t) <= this.VIS && this.getParent().isLineOfSight(getLocation(), t);
 	}
+	
+	// STAT referencing
 
+	/**
+	 * gets the range the entity can attack with its default attack
+	 * (STAT MANAGEMENT)
+	 * 
+	 * @return the number of tiles away the entity can target
+	 */
+	public int getAttackRange() {
+		return 1;
+	}
+	
+	/**
+	 * gets the speed the entity can move at (STAT MANAGEMENT)
+	 * 
+	 * @return the number of tiles it can move per turn
+	 */
+	public int getMovementSpeed() {
+		return MOV;
+	}
+	
+	/**
+	 * is the entity still alive?
+	 * @return if the HP>0
+	 */
+	public boolean isAlive() {
+		return this.HP>0;
+	}
+	
 	/**
 	 * Loads an entity from a text file. SO UGLY IT HURTS, but it didn't make
 	 * sense to break into subroutines
@@ -280,5 +285,4 @@ public abstract class LivingEntity extends Entity {
 		death = animations.get("Death");
 		death.setLooping(false);
 	}
-
 }

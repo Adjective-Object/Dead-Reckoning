@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.entities;
 
+import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.WaitAction;

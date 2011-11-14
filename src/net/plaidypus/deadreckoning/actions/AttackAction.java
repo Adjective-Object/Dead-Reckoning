@@ -6,7 +6,7 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.particles.DamageParticle;
 import net.plaidypus.deadreckoning.state.GameplayState;
 
-public class AttackAction extends Action{
+public class AttackAction extends EntityTypeAction{
 	
 	int damage;
 	boolean attacking;
@@ -17,23 +17,9 @@ public class AttackAction extends Action{
 		attacking=false;
 	}
 	
-	protected boolean apply(int delta) {
-		if(target.getX()>source.getX()){
-			source.getEntity().setFacing(true);
-		}
-		else if(target.getX()<source.getX()){
-			source.getEntity().setFacing(false);
-		}
-		
-		GameplayState.spawnParticle(new DamageParticle(target,Integer.toString(damage)));
-		
-		try{ return applyToEntity((LivingEntity)target.getEntity()); }
-		catch(Exception e){return applyToEntity(target.getEntity()); }
-	}
+	protected boolean applyToEntity(Entity entity){return true;}
 	
-	private boolean applyToEntity(Entity entity){return true;}
-	
-	private boolean applyToEntity(LivingEntity e){
+	protected boolean applyToEntity(LivingEntity e){
 		
 		if(!attacking){
 			LivingEntity s = (LivingEntity) source.getEntity();
@@ -49,6 +35,9 @@ public class AttackAction extends Action{
 			else{
 				e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_FRONT);
 			}
+			
+			GameplayState.spawnParticle(new DamageParticle(target,Integer.toString(damage)));
+			
 			e.animating=true;
 			s.animating=true;
 			attacking=true;

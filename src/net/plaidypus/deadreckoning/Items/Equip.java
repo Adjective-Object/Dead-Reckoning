@@ -14,7 +14,7 @@ public class Equip extends Item{
 	int equipSlot;
 	
 	public Equip(int itemID) {
-		super(itemID, 1);
+		super(itemID);
 	}
 	
 	private void parseItem(String path) throws IOException, SlickException {
@@ -22,7 +22,6 @@ public class Equip extends Item{
 		name=reader.readLine();
 		description=reader.readLine();
 		image=new Image(reader.readLine());
-		count=Integer.parseInt(reader.readLine());
 		
 		equipSlot = Integer.parseInt(reader.readLine());
 		STR = Integer.parseInt(reader.readLine());
@@ -31,6 +30,8 @@ public class Equip extends Item{
 		HP = Integer.parseInt(reader.readLine());
 		MP = Integer.parseInt(reader.readLine());
 		VIS = Integer.parseInt(reader.readLine());
+		
+		System.out.println("cows come home");
 	}
 	
 }

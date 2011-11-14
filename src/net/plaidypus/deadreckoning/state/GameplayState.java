@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.GameBoard;
 import net.plaidypus.deadreckoning.Tile;
+import net.plaidypus.deadreckoning.entities.Chest;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.Goblin;
 import net.plaidypus.deadreckoning.entities.Player;
@@ -54,13 +55,15 @@ public class GameplayState extends BasicGameState {
 
 		DamageParticle.init();
 		Tile.init("res\\wallTiles.png");
+		Torch.init();
+		Chest.init();
+		
 		particles = new ArrayList<Particle>(0);
 
 		gc.setTargetFrameRate(60);
 		gc.setVSync(true);
 		gb = new GameBoard(25,25);
 		gb.init();
-		Torch.init();
 		
 		player = new Player(gc.getInput());
 		gb.placeEntity(4, 4, player);

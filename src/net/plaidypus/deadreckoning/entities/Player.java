@@ -1,7 +1,10 @@
 package net.plaidypus.deadreckoning.entities;
 
 
+import java.util.ArrayList;
+
 import net.plaidypus.deadreckoning.Tile;
+import net.plaidypus.deadreckoning.Items.Equip;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.skills.*;
 
@@ -23,7 +26,9 @@ public class Player extends LivingEntity {
 	public static Skill[] skills;
 
 	public int currentSkill;
-
+	
+	ArrayList<Equip> epuips;
+	
 	/**
 	 * subclass of living entity that is controlled by user input
 	 * 
@@ -35,9 +40,9 @@ public class Player extends LivingEntity {
 		super("res/player.entity");
 		this.input = i;
 
-		keyBinds = new int[] { Input.KEY_M, Input.KEY_A, Input.KEY_W, Input.KEY_P , Input.KEY_T };
+		keyBinds = new int[] { Input.KEY_M, Input.KEY_A, Input.KEY_W, Input.KEY_P , Input.KEY_T, Input.KEY_C};
 		skills = new Skill[] { new Movement(this), new Attack(this),
-				new Wait(this), new PlaceWall(this), new PlaceTorch(this) };
+				new Wait(this), new PlaceWall(this), new PlaceTorch(this), new PlaceChest(this)};
 	}
 	
 	public boolean canSee(Tile t){

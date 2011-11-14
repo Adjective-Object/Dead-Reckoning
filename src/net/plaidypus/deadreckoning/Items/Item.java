@@ -10,11 +10,11 @@ import org.newdawn.slick.SlickException;
 
 public class Item {
 
-	int itemID, count;
+	int itemID;
 	Image image;
 	String name, description;
 
-	public Item(int itemID, int count) {
+	public Item(int itemID) {
 		this.itemID = itemID;
 		try {
 			parseItem("res/" + Integer.toString(itemID) + ".item");
@@ -32,10 +32,5 @@ public class Item {
 		name=reader.readLine();
 		description=reader.readLine();
 		image=new Image(reader.readLine());
-		count=Integer.parseInt(reader.readLine());
-	}
-	
-	private void parseItem (BufferedReader r){
-		
 	}
 }
