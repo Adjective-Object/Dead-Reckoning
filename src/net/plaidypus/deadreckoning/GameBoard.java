@@ -81,7 +81,7 @@ public class GameBoard {
 
 		for (int x = 0; x < 25; x++) {
 			for (int y = 0; y < 25; y++) {
-				if (!board[x][y].isOpen() && board[x][y].fogOfWar > 1) {
+				if (!board[x][y].isOpen() && board[x][y].lightLevel > 1) {
 					board[x][y].getEntity().render(g,
 							x + xoff / DeadReckoningGame.tileSize,
 							y + yoff / DeadReckoningGame.tileSize);
@@ -173,13 +173,13 @@ public class GameBoard {
 				int dist = (int) Utilities.getDistance(location, board[x][y]);
 				if (dist <= VIS) {
 					int level = Utilities.limitTo(VIS + 1 - dist, 1,
-							Tile.fogOfWarLevels);
-					if (level > board[x][y].fogOfWar) {
-						board[x][y].fogOfWar = level;
+							Tile.numLightLevels);
+					if (level > board[x][y].lightLevel) {
+						board[x][y].lightLevel = level;
 						board[x][y].explored = true;
 					}
-				} else if (board[x][y].explored && board[x][y].fogOfWar==0) {
-					board[x][y].fogOfWar = 1;
+				} else if (board[x][y].explored && board[x][y].lightLevel==0) {
+					board[x][y].lightLevel = 1;
 				}
 			}
 		}
@@ -192,7 +192,7 @@ public class GameBoard {
 	public void HideAll() {
 		for (int x = 0; x < board.length; x++) {
 			for (int y = 0; y < board[x].length; y++) {
-				board[x][y].fogOfWar = 0;
+				board[x][y].lightLevel = 0;
 				//aboard[x][y].visible=false; //TODO visibility
 			}
 		}
@@ -207,7 +207,4 @@ public class GameBoard {
 		return true;
 	}
 	
-	public boolean isLineOfSight(Tile a, Tile b){
-		return true;
-	}
 }

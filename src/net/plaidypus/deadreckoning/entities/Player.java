@@ -46,7 +46,7 @@ public class Player extends LivingEntity {
 	}
 	
 	public boolean canSee(Tile t){
-		return this.getParent().isLineOfSight(getLocation(), t) && t.fogOfWar>1;
+		return this.getParent().isLineOfSight(getLocation(), t) && t.lightLevel>1;
 	}
 	
 	public void update(GameContainer gc, int delta){

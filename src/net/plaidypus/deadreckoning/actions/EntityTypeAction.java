@@ -2,6 +2,7 @@ package net.plaidypus.deadreckoning.actions;
 
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
+import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.particles.DamageParticle;
 import net.plaidypus.deadreckoning.state.GameplayState;
@@ -20,12 +21,23 @@ public abstract class EntityTypeAction extends Action{
 			source.getEntity().setFacing(false);
 		}
 		
-		try{ return applyToEntity((LivingEntity)target.getEntity()); }
-		catch(Exception e){return applyToEntity(target.getEntity()); }
+		try{ 
+			return applyToEntity((LivingEntity)target.getEntity());
+		}
+		catch(ClassCastException e){
+			try{ 
+				return applyToEntity((InteractiveEntity)target.getEntity());
+			}
+			catch(ClassCastException y){
+				return applyToEntity(target.getEntity());
+			}
+		}
 	}
 	
 	protected abstract boolean applyToEntity(Entity entity);
 	
 	protected abstract boolean applyToEntity(LivingEntity e);
+	
+	protected abstract boolean applyToEntity(InteractiveEntity e);
 
 }
