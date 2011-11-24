@@ -19,6 +19,7 @@ public class Chest extends InteractiveEntity{
 	ArrayList<Item> items;
 	
 	public Chest(Tile t, ArrayList<Item> items){
+		super(t);
 		this.setLocation(t);
 		this.items=items;
 		this.setInteractive(false);

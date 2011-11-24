@@ -207,4 +207,9 @@ public class GameBoard {
 		return true;
 	}
 	
+	public boolean isLineOfSight( Tile a, Tile b) {
+		
+		return true;
+	}
+	
 }

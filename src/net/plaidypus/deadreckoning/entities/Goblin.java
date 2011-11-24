@@ -18,8 +18,8 @@ public class Goblin extends LivingEntity {
 	/**
 	 * a testing monster class
 	 */
-	public Goblin() {
-		super("res/player.entity");
+	public Goblin(Tile targetTile) {
+		super("res/player.entity", targetTile);
 		movement = new Movement(this);
 		direction = 0;
 	}

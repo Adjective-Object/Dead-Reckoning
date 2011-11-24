@@ -1,6 +1,7 @@
 package net.plaidypus.deadreckoning;
 
 import net.plaidypus.deadreckoning.state.GameplayState;
+import net.plaidypus.deadreckoning.state.LootState;
 import net.plaidypus.deadreckoning.state.MainMenuState;
 
 import org.newdawn.slick.AppGameContainer;
@@ -13,6 +14,7 @@ public class DeadReckoningGame extends StateBasedGame
 	
 	public static final int MAINMENUSTATE	= 0;
 	public static final int GAMEPLAYSTATE	= 1;
+	public static final int LOOTSTATE		= 2;
 	
 	public static final int tileSize = 32;
 	
@@ -22,6 +24,8 @@ public class DeadReckoningGame extends StateBasedGame
 		
 		this.addState(new MainMenuState(MAINMENUSTATE));
 		this.addState(new GameplayState(GAMEPLAYSTATE));
+		this.addState(new LootState(LOOTSTATE));
+		
 		this.enterState(MAINMENUSTATE);
 	}
 	
@@ -39,8 +43,12 @@ public class DeadReckoningGame extends StateBasedGame
 	}
 
 	@Override
-	public void initStatesList(GameContainer gameContainer) throws SlickException {
-		//Jeff, I don't know what this IS for, but you used it wrong. that is all.
+	public void initStatesList(GameContainer container) throws SlickException {
+		System.out.println("");
+		for(int i=0; i<this.getStateCount()+1;i++){
+			System.out.println(this.getState(i));
+		}
+		System.out.println("");
 	}
 	
 }

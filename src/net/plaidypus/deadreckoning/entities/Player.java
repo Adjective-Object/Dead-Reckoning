@@ -36,8 +36,8 @@ public class Player extends LivingEntity {
 	 *            the input object returned by GameContainer.getInput()
 	 * @throws SlickException
 	 */
-	public Player(Input i) throws SlickException {
-		super("res/player.entity");
+	public Player(Tile targetTile, Input i) throws SlickException {
+		super("res/player.entity",targetTile);
 		this.input = i;
 
 		keyBinds = new int[] { Input.KEY_M, Input.KEY_A, Input.KEY_W, Input.KEY_P , Input.KEY_T, Input.KEY_C, Input.KEY_L};

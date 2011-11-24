@@ -1,9 +1,14 @@
 package net.plaidypus.deadreckoning.actions;
 
+import java.util.ArrayList;
+
 import net.plaidypus.deadreckoning.Tile;
+import net.plaidypus.deadreckoning.Items.Item;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
+import net.plaidypus.deadreckoning.state.GameplayState;
+import net.plaidypus.deadreckoning.state.LootState;
 
 public class LootAction extends EntityTypeAction{
 
@@ -16,7 +21,7 @@ public class LootAction extends EntityTypeAction{
 	}
 	
 	protected boolean applyToEntity(InteractiveEntity e){
-		gotoLootScreen();
+		gotoLootScreen(((InteractiveEntity)source.getEntity()).getInventory(),((InteractiveEntity)target.getEntity()).getInventory());
 		return true;
 	}
 	
@@ -25,13 +30,14 @@ public class LootAction extends EntityTypeAction{
 			//TODO damage the entityofShutup
 		}
 		else{
-			gotoLootScreen();
+			gotoLootScreen(((InteractiveEntity)source.getEntity()).getInventory(),((InteractiveEntity)target.getEntity()).getInventory());
 		}
 		return true;
 	}
 	
-	private void gotoLootScreen(){
-		System.out.println("I'll goto the thing with the thing later.");
+	private void gotoLootScreen(ArrayList<Item> inventoryA, ArrayList<Item> inventoryB){
+		//System.out.println(inventoryA+"__"+inventoryB);
+		LootState.makeFrom(GameplayState.getImage(),inventoryA, inventoryB);
 	}
 
 }

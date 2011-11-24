@@ -35,8 +35,8 @@ public abstract class Entity {
 	}
 
 	Entity(Tile t) {
-		super();
-		location = t;
+		this();
+		t.getParent().placeEntity(t, this);
 	}
 	
 	/**

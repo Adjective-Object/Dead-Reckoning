@@ -39,18 +39,18 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * 
 	 * @param entityfile
 	 */
-	public LivingEntity(String entityfile) {
+	public LivingEntity(String entityfile, Tile targetTile) {
+		super(targetTile);
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(new File(
 					entityfile)));
-			System.out.println(this);
 			loadFromFile(reader);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
-
+		
 		currentAnimation = stand;
 
 		setFacing(false);
@@ -213,8 +213,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 		HashMap<String, Animation> animations = new HashMap<String, Animation>();
 
 		String in = "";
-
-		System.out.println("Parsing Entity....");
+		
 		while (!ParsingMode.equals(":EXIT:") && in != null) {
 			// OH FUCK MY MIND SHITSHTISHIT
 			// THIS IS SO UGLY. BUT IT WORKS

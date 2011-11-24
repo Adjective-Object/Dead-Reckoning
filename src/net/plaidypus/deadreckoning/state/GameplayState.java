@@ -14,6 +14,7 @@ import net.plaidypus.deadreckoning.particles.Particle;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
@@ -32,7 +33,8 @@ public class GameplayState extends BasicGameState {
 
 	Input input;
 	public Player player;
-
+	static Image backgroundScreen;
+	
 	GameBoard gb;
 
 	public static ArrayList<Particle> particles;
@@ -51,6 +53,9 @@ public class GameplayState extends BasicGameState {
 	 */
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
+		
+		System.out.println("Initializing GameplayState");
+		
 		input = gc.getInput();
 
 		DamageParticle.init();
@@ -59,15 +64,15 @@ public class GameplayState extends BasicGameState {
 		Chest.init();
 		
 		particles = new ArrayList<Particle>(0);
-
+		backgroundScreen = new Image(gc.getWidth(),gc.getHeight());
+		
 		gc.setTargetFrameRate(60);
 		gc.setVSync(true);
 		gb = new GameBoard(25,25);
 		gb.init();
 		
-		player = new Player(gc.getInput());
-		gb.placeEntity(4, 4, player);
-		gb.placeEntity(24, 1, new Goblin());
+		player = new Player(gb.getTileAt(4, 4),gc.getInput());
+		new Goblin(gb.getTileAt(24, 1));
 		cameraX = 0;
 		cameraY = 0;
 		actionAssigned = false;
@@ -83,7 +88,7 @@ public class GameplayState extends BasicGameState {
 	 */
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-
+		
 		cameraX = cameraX + (cameraDestX - cameraX) * cameraRate;
 		cameraY = cameraY + (cameraDestY - cameraY) * cameraRate;
 		
@@ -99,9 +104,7 @@ public class GameplayState extends BasicGameState {
 		
 		gb.updateSelctor(input, -cameraX, -cameraY);
 		gb.updateAllTiles(gc, delta);
-		
 		updateActions(gc,delta);
-
 	}
 	
 	private void updateActions(GameContainer gc, int delta) {
@@ -115,7 +118,7 @@ public class GameplayState extends BasicGameState {
 			cameraDestX = current.getAbsoluteX() - gc.getWidth() / 2;
 			cameraDestY = current.getAbsoluteY() - gc.getHeight() / 2;
 		}
-
+		
 		if (!player.canSee(current)
 				|| (Math.abs(cameraDestX - cameraX) <= 0.1 && Math
 						.abs(cameraDestY - cameraY) <= 0.1)) {
@@ -148,12 +151,12 @@ public class GameplayState extends BasicGameState {
 	 * @param g
 	 * @throws SlickException
 	 */
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
-			throws SlickException {
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		gb.render(g, -cameraX, -cameraY);
 		for (int i = 0; i < particles.size(); i++) {
 			particles.get(i).render(g, -cameraX, -cameraY);
 		}
+		//g.copyArea(backgroundScreen, 0, 0);
 	}
 
 	public int getID() {
@@ -166,6 +169,10 @@ public class GameplayState extends BasicGameState {
 	 */
 	public static void spawnParticle(Particle p) {
 		particles.add(p);
+	}
+	
+	public static Image getImage(){
+		return backgroundScreen;
 	}
 
 }

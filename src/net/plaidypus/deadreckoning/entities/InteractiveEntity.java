@@ -14,7 +14,16 @@ public abstract class InteractiveEntity extends Entity{
 	ArrayList<Item> inventory;
 	int inventorySize = 5;
 	
-
+	public InteractiveEntity(Tile targetTile){
+		this(targetTile,new ArrayList<Item>(0));
+	}
+	
+	public InteractiveEntity(Tile targetTile, ArrayList<Item> items){
+		super(targetTile);
+		this.inventory=items;
+		items.add(new Item(0));
+	}
+	
 	@Override
 	public abstract void update(GameContainer gc, int delta);
 

@@ -57,6 +57,8 @@ public class MainMenuState extends BasicGameState {
 	 */
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
+		System.out.println("Initializing MainMenuState");
+		
 		background = new Image("res/menu/background.png");
 		artBar = new Image("res/menu/artBar.png");
 
