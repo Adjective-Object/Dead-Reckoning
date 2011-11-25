@@ -12,7 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class MainMenuState extends BasicGameState {
 
-	int stateID = -1;
+	int stateID;
 
 	Image background;
 	Image startButton;

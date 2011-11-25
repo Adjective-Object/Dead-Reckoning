@@ -36,7 +36,7 @@ public class LootAction extends EntityTypeAction{
 	}
 	
 	private void gotoLootScreen(ArrayList<Item> inventoryA, ArrayList<Item> inventoryB){
-		//System.out.println(inventoryA+"__"+inventoryB);
+		System.out.println("DEM LOOTACTION");
 		LootState.makeFrom(GameplayState.getImage(),inventoryA, inventoryB);
 	}
 

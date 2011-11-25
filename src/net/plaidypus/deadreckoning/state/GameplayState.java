@@ -22,7 +22,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class GameplayState extends BasicGameState {
 
-	int stateID = -1;
+	int stateID;
 	int currentEntity;
 	boolean actionAssigned;
 

@@ -12,9 +12,9 @@ import org.newdawn.slick.state.StateBasedGame;
 public class DeadReckoningGame extends StateBasedGame
 {
 	
-	public static final int MAINMENUSTATE	= 0;
-	public static final int GAMEPLAYSTATE	= 1;
-	public static final int LOOTSTATE		= 2;
+	public static final int MAINMENUSTATE	= 3;
+	public static final int GAMEPLAYSTATE	= 2;
+	public static final int LOOTSTATE		= 1;
 	
 	public static final int tileSize = 32;
 	
@@ -44,11 +44,7 @@ public class DeadReckoningGame extends StateBasedGame
 
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
-		System.out.println("");
-		for(int i=0; i<this.getStateCount()+1;i++){
-			System.out.println(this.getState(i));
-		}
-		System.out.println("");
+		
 	}
 	
 }

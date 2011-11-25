@@ -15,7 +15,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class LootState extends BasicGameState{
 	
-	int stateID = -1;
+	int stateID;
 	
 	static ItemGrid gridA, gridB;
 	static Image background;
