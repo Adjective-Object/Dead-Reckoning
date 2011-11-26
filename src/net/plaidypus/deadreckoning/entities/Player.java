@@ -20,12 +20,14 @@ import org.newdawn.slick.SlickException;
  */
 
 public class Player extends LivingEntity {
+
 	Input input;
 
 	public static int[] keyBinds;
 	public static Skill[] skills;
 
 	public int currentSkill;
+	public int EXP;
 	
 	ArrayList<Equip> epuips;
 	
@@ -89,6 +91,10 @@ public class Player extends LivingEntity {
 			this.getLocation().getParent().clearPrimaryHighlight();
 		}
 		return null;
+	}
+
+	public int getEXPforLevel() {
+		return 100;
 	}
 
 

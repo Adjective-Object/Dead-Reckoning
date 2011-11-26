@@ -36,15 +36,9 @@ public class LootAction extends EntityTypeAction{
 	}
 	
 	private boolean gotoLootScreen(ArrayList<Item> inventoryA, ArrayList<Item> inventoryB){
-		if(!LootState.isFinished()){
-			LootState.makeFrom(GameplayState.getImage(),inventoryA, inventoryB);
-			DeadReckoningGame.instance.enterState(DeadReckoningGame.LOOTSTATE);
-			return false;
-		}
-		else{
-			System.out.println("DEM LOOTACTION");
-			return true;
-		}
+		LootState.makeFrom(GameplayState.getImage(),inventoryA, inventoryB);
+		DeadReckoningGame.instance.enterState(DeadReckoningGame.LOOTSTATE);
+		return true;
 	}
 
 }

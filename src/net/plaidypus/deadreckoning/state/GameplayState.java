@@ -13,6 +13,7 @@ import net.plaidypus.deadreckoning.entities.Torch;
 import net.plaidypus.deadreckoning.particles.DamageParticle;
 import net.plaidypus.deadreckoning.particles.Particle;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -34,7 +35,7 @@ public class GameplayState extends BasicGameState {
 
 	Input input;
 	public Player player;
-	static Image backgroundScreen;
+	static Image backgroundScreen, playerHUD, skillHUD;
 	
 	GameBoard gb;
 
@@ -58,11 +59,14 @@ public class GameplayState extends BasicGameState {
 		System.out.println("Initializing GameplayState");
 		
 		input = gc.getInput();
-
+		
 		DamageParticle.init();
 		Tile.init("res\\wallTiles.png");
 		Torch.init();
 		Chest.init();
+		
+		playerHUD = new Image("res/HUD/PlayerBox.png");
+		skillHUD = new Image("res/HUD/SkillSlots.png");
 		
 		particles = new ArrayList<Particle>(0);
 		backgroundScreen = new Image(gc.getWidth(),gc.getHeight());
@@ -132,11 +136,14 @@ public class GameplayState extends BasicGameState {
 			}
 
 			current.applyAction(gc, delta);
+			if(this.actionAssigned){
+				gb.clearHighlightedSquares();
+				gb.clearPrimaryHighlight();
+			}
 			
 			if (this.actionAssigned && current.getAction().completed
 					&& gb.isIdle()) {
-				gb.clearHighlightedSquares();
-				gb.clearPrimaryHighlight();
+				
 				this.actionAssigned = false;
 				currentEntity = (currentEntity + 1) % gb.ingameEntities.size();
 			}
@@ -158,6 +165,16 @@ public class GameplayState extends BasicGameState {
 			particles.get(i).render(g, -cameraX, -cameraY);
 		}
 		g.copyArea(backgroundScreen, 0, 0);
+		g.drawImage(playerHUD,5,5);
+		g.drawImage(skillHUD,248,5);
+		g.setColor(new Color(200,70,70));
+		g.fillRect(131, 30, 75*player.HP/player.maxHP, 9);
+		g.setColor(new Color(70,70,200));
+		g.fillRect(131, 54, 75*player.MP/player.maxMP, 9);
+		g.setColor(new Color(200,200,70));
+		g.fillRect(131, 79, 75*player.EXP/player.getEXPforLevel(), 9);
+		
+		
 	}
 
 	public int getID() {
