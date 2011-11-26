@@ -2,6 +2,7 @@ package net.plaidypus.deadreckoning.state;
 
 import java.util.ArrayList;
 
+import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.GameBoard;
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.entities.Chest;
@@ -115,8 +116,8 @@ public class GameplayState extends BasicGameState {
 		Entity current = gb.ingameEntities.get(currentEntity);
 		
 		if (player.canSee(current) && !actionAssigned) {
-			cameraDestX = current.getAbsoluteX() - gc.getWidth() / 2;
-			cameraDestY = current.getAbsoluteY() - gc.getHeight() / 2;
+			cameraDestX = current.getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;
+			cameraDestY = current.getAbsoluteY() - gc.getHeight() / 2 + DeadReckoningGame.tileSize/2;
 		}
 		
 		if (!player.canSee(current)
@@ -156,7 +157,7 @@ public class GameplayState extends BasicGameState {
 		for (int i = 0; i < particles.size(); i++) {
 			particles.get(i).render(g, -cameraX, -cameraY);
 		}
-		//g.copyArea(backgroundScreen, 0, 0);
+		g.copyArea(backgroundScreen, 0, 0);
 	}
 
 	public int getID() {

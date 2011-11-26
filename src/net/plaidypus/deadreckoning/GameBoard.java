@@ -71,12 +71,10 @@ public class GameBoard {
 
 		if (primaryHighlight != null) {
 			g.setColor(primaryHighlightColor);
-			g.setLineWidth(2);
 			g.drawRect(primaryHighlight.getX() * DeadReckoningGame.tileSize
-					+ (int)xoff, primaryHighlight.getY()
-					* DeadReckoningGame.tileSize + (int)yoff,
+					+ (int)xoff+1, primaryHighlight.getY()
+					* DeadReckoningGame.tileSize + (int)yoff+1,
 					DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
-			g.setLineWidth(1);
 		}
 
 		for (int x = 0; x < 25; x++) {

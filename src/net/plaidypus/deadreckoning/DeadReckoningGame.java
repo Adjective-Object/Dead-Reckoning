@@ -14,9 +14,11 @@ public class DeadReckoningGame extends StateBasedGame
 	
 	public static final int MAINMENUSTATE	= 3;
 	public static final int GAMEPLAYSTATE	= 2;
-	public static final int LOOTSTATE		= 1;
+	public static final int LOOTSTATE		= 0;
 	
 	public static final int tileSize = 32;
+	
+	public static DeadReckoningGame instance;
 	
 	DeadReckoningGame() throws SlickException
 	{
@@ -27,6 +29,8 @@ public class DeadReckoningGame extends StateBasedGame
 		this.addState(new LootState(LOOTSTATE));
 		
 		this.enterState(MAINMENUSTATE);
+		
+		DeadReckoningGame.instance=this;
 	}
 	
 	public static void main(String[] args) throws SlickException

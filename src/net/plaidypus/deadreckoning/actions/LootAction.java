@@ -2,6 +2,7 @@ package net.plaidypus.deadreckoning.actions;
 
 import java.util.ArrayList;
 
+import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.Items.Item;
 import net.plaidypus.deadreckoning.entities.Entity;
@@ -21,23 +22,29 @@ public class LootAction extends EntityTypeAction{
 	}
 	
 	protected boolean applyToEntity(InteractiveEntity e){
-		gotoLootScreen(((InteractiveEntity)source.getEntity()).getInventory(),((InteractiveEntity)target.getEntity()).getInventory());
-		return true;
+		return gotoLootScreen(((InteractiveEntity)source.getEntity()).getInventory(),((InteractiveEntity)target.getEntity()).getInventory());
 	}
 	
 	protected boolean applyToEntity(LivingEntity e){
 		if(e.isAlive()){
 			//TODO damage the entityofShutup
+			return true;
 		}
 		else{
-			gotoLootScreen(((InteractiveEntity)source.getEntity()).getInventory(),((InteractiveEntity)target.getEntity()).getInventory());
+			return gotoLootScreen(((InteractiveEntity)source.getEntity()).getInventory(),((InteractiveEntity)target.getEntity()).getInventory());
 		}
-		return true;
 	}
 	
-	private void gotoLootScreen(ArrayList<Item> inventoryA, ArrayList<Item> inventoryB){
-		System.out.println("DEM LOOTACTION");
-		LootState.makeFrom(GameplayState.getImage(),inventoryA, inventoryB);
+	private boolean gotoLootScreen(ArrayList<Item> inventoryA, ArrayList<Item> inventoryB){
+		if(!LootState.isFinished()){
+			LootState.makeFrom(GameplayState.getImage(),inventoryA, inventoryB);
+			DeadReckoningGame.instance.enterState(DeadReckoningGame.LOOTSTATE);
+			return false;
+		}
+		else{
+			System.out.println("DEM LOOTACTION");
+			return true;
+		}
 	}
 
 }
