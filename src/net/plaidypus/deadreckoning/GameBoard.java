@@ -1,10 +1,11 @@
 package net.plaidypus.deadreckoning;
 
+
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
-import net.plaidypus.deadreckoning.particles.GridEffect;
+import net.plaidypus.deadreckoning.grideffects.GridEffect;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;

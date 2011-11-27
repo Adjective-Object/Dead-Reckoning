@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.state;
 
+
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
@@ -10,7 +11,7 @@ import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.Goblin;
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.entities.Torch;
-import net.plaidypus.deadreckoning.particles.DamageEffect;
+import net.plaidypus.deadreckoning.grideffects.DamageEffect;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;

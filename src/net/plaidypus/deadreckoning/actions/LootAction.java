@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Tile;
-import net.plaidypus.deadreckoning.Items.Item;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
+import net.plaidypus.deadreckoning.items.Item;
 import net.plaidypus.deadreckoning.state.GameplayState;
 import net.plaidypus.deadreckoning.state.LootState;
 

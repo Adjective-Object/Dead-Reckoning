@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.GameBoard;
 import net.plaidypus.deadreckoning.Tile;
-import net.plaidypus.deadreckoning.Items.Item;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.ChangeMapAction;
 import net.plaidypus.deadreckoning.entities.*;
+import net.plaidypus.deadreckoning.items.Item;
 
 public class PlaceChest extends Skill{
 

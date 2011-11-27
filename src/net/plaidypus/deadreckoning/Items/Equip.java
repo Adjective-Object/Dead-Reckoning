@@ -1,4 +1,4 @@
-package net.plaidypus.deadreckoning.Items;
+package net.plaidypus.deadreckoning.items;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

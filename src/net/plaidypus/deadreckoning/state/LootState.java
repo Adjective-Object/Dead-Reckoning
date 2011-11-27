@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.ItemGrid;
-import net.plaidypus.deadreckoning.Items.Item;
+import net.plaidypus.deadreckoning.items.Item;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;

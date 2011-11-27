@@ -4,8 +4,8 @@ import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
-import net.plaidypus.deadreckoning.particles.DamageEffect;
-import net.plaidypus.deadreckoning.particles.GridEffect;
+import net.plaidypus.deadreckoning.grideffects.DamageEffect;
+import net.plaidypus.deadreckoning.grideffects.GridEffect;
 import net.plaidypus.deadreckoning.state.GameplayState;
 
 public class AttackAction extends EntityTypeAction{

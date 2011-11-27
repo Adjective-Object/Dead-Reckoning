@@ -4,8 +4,8 @@ package net.plaidypus.deadreckoning.entities;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.Tile;
-import net.plaidypus.deadreckoning.Items.Equip;
 import net.plaidypus.deadreckoning.actions.Action;
+import net.plaidypus.deadreckoning.items.Equip;
 import net.plaidypus.deadreckoning.skills.*;
 
 import org.newdawn.slick.GameContainer;
