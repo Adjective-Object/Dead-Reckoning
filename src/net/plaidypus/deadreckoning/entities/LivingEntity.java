@@ -75,6 +75,11 @@ public abstract class LivingEntity extends InteractiveEntity {
 			this.setCurrentAnimation(ANIMATION_STAND);
 			this.animating = false;
 		}
+		
+		if(!this.isAlive()){
+			this.setCurrentAnimation(LivingEntity.ANIMATION_DEATH);
+			this.setInteractive(false);
+		}
 	}
 
 	/**
@@ -112,9 +117,10 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * checks to see if this entity is prepared to accept a command
 	 */
 	public boolean isIdle() {
-		return super.isIdle()
+		return (super.isIdle()
 				&& (this.nextAction == null || this.nextAction.completed)
-				&& !this.animating;
+				&& !this.animating
+				)|| !this.isAlive();
 	}
 
 	/**
@@ -137,6 +143,14 @@ public abstract class LivingEntity extends InteractiveEntity {
 		this.currentAnimationID = id;
 		this.currentAnimation.restart();
 		this.currentAnimation = this.animations.get(id);
+	}
+	
+	public Animation getCurrentAntimation(){
+		return this.animations.get(currentAnimationID);
+	}
+	
+	public Animation getAnimation(int ID){
+		return animations.get(ID);
 	}
 
 	/**

@@ -4,7 +4,8 @@ import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
-import net.plaidypus.deadreckoning.particles.DamageParticle;
+import net.plaidypus.deadreckoning.particles.DamageEffect;
+import net.plaidypus.deadreckoning.particles.GridEffect;
 import net.plaidypus.deadreckoning.state.GameplayState;
 
 public class AttackAction extends EntityTypeAction{
@@ -38,7 +39,7 @@ public class AttackAction extends EntityTypeAction{
 				e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_FRONT);
 			}
 			
-			GameplayState.spawnParticle(new DamageParticle(target,Integer.toString(damage)));
+			e.getParent().addEffectOver(new DamageEffect(target,Integer.toString(damage)));
 			
 			e.animating=true;
 			s.animating=true;

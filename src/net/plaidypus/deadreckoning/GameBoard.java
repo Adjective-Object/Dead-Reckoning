@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
+import net.plaidypus.deadreckoning.particles.GridEffect;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -19,35 +20,39 @@ public class GameBoard {
 	Tile primaryHighlight;
 	int width, height;
 
+	ArrayList<GridEffect> overEffects, underEffects;
+
 	static final Color primaryHighlightColor = new Color(255, 75, 23);
-	
+
 	public GameBoard(int width, int height) {
 		board = new Tile[width][height];
 		this.width = width;
 		this.height = height;
-		ingameEntities = new ArrayList<Entity>(0);
 	}
 
 	public void placeEntity(Tile t, Entity e) {
 		placeEntity(t.getX(), t.getY(), e);
 	}
-	
+
 	public void placeEntity(int x, int y, Entity e) {
 		board[x][y].setEntity(e);
 		ingameEntities.add(e);
 	}
-	
+
 	public void clearTile(int x, int y) {
 		ingameEntities.remove(board[x][y].getEntity());
 		board[x][y].disconnectEntity();
 	}
-	
+
 	public void moveEntity(Tile source, Tile target) {
 		target.setEntity(source.getEntity());
 		source.disconnectEntity();
 	}
-	
+
 	public void init() throws SlickException {
+		ingameEntities = new ArrayList<Entity>(0);
+		overEffects = new ArrayList<GridEffect>(0);
+		underEffects = new ArrayList<GridEffect>(0);
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 				board[x][y] = new Tile(this, x, y);
@@ -62,9 +67,10 @@ public class GameBoard {
 	public void render(Graphics g, float xoff, float yoff) {
 		for (int x = 0; x < 25; x++) {
 			for (int y = 0; y < 25; y++) {
-				if(board[x][y].visible){
-					board[x][y].render(g, x + xoff / DeadReckoningGame.tileSize, y
-						+ yoff / DeadReckoningGame.tileSize);
+				if (board[x][y].visible) {
+					board[x][y].render(g,
+							x + xoff / DeadReckoningGame.tileSize, y + yoff
+									/ DeadReckoningGame.tileSize);
 				}
 			}
 		}
@@ -72,9 +78,13 @@ public class GameBoard {
 		if (primaryHighlight != null) {
 			g.setColor(primaryHighlightColor);
 			g.drawRect(primaryHighlight.getX() * DeadReckoningGame.tileSize
-					+ (int)xoff+1, primaryHighlight.getY()
-					* DeadReckoningGame.tileSize + (int)yoff+1,
+					+ (int) xoff, primaryHighlight.getY()
+					* DeadReckoningGame.tileSize + (int) yoff,
 					DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
+		}
+
+		for (int i = 0; i < underEffects.size(); i++) {
+			underEffects.get(i).render(g, xoff, yoff);
 		}
 
 		for (int x = 0; x < 25; x++) {
@@ -85,6 +95,10 @@ public class GameBoard {
 							y + yoff / DeadReckoningGame.tileSize);
 				}
 			}
+		}
+
+		for (int i = 0; i < overEffects.size(); i++) {
+			overEffects.get(i).render(g, xoff, yoff);
 		}
 	}
 
@@ -115,7 +129,7 @@ public class GameBoard {
 	}
 
 	public void updateAllTiles(GameContainer gc, int delta) {
-		
+
 		for (int y = 0; y < this.height; y++) {
 			for (int x = 0; x < this.width; x++) {
 				if (!board[x][y].isOpen()) {
@@ -123,6 +137,38 @@ public class GameBoard {
 				}
 			}
 		}
+
+		for (int i = 0; i < underEffects.size(); i++) {
+			underEffects.get(i).update(delta);
+			if (underEffects.get(i).kill) {
+				underEffects.remove(i);
+				i -= 1;
+			}
+		}
+
+		for (int i = 0; i < overEffects.size(); i++) {
+			overEffects.get(i).update(delta);
+			if (overEffects.get(i).kill) {
+				overEffects.remove(i);
+				i -= 1;
+			}
+		}
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void addEffectUnder(GridEffect g) {
+		this.underEffects.add(g);
+	}
+
+	public void addEffectOver(GridEffect g) {
+		this.overEffects.add(g);
 	}
 
 	public void highlightSquare(int x, int y) {
@@ -157,14 +203,6 @@ public class GameBoard {
 		}
 	}
 
-	public int getHeight() {
-		return height;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
 	public void revealInRadius(Tile location, int VIS) {
 		for (int x = 0; x < board.length; x++) {
 			for (int y = 0; y < board[x].length; y++) {
@@ -176,22 +214,22 @@ public class GameBoard {
 						board[x][y].lightLevel = level;
 						board[x][y].explored = true;
 					}
-				} else if (board[x][y].explored && board[x][y].lightLevel==0) {
+				} else if (board[x][y].explored && board[x][y].lightLevel == 0) {
 					board[x][y].lightLevel = 1;
 				}
 			}
 		}
 	}
-	
+
 	public void revealFromEntity(LivingEntity e) {
-		revealInRadius(e.getLocation(),e.VIS);
+		revealInRadius(e.getLocation(), e.VIS);
 	}
-	
+
 	public void HideAll() {
 		for (int x = 0; x < board.length; x++) {
 			for (int y = 0; y < board[x].length; y++) {
 				board[x][y].lightLevel = 0;
-				//aboard[x][y].visible=false; //TODO visibility
+				// aboard[x][y].visible=false; //TODO visibility
 			}
 		}
 	}
@@ -204,10 +242,10 @@ public class GameBoard {
 		}
 		return true;
 	}
-	
-	public boolean isLineOfSight( Tile a, Tile b) {
-		
+
+	public boolean isLineOfSight(Tile a, Tile b) {
+
 		return true;
 	}
-	
+
 }

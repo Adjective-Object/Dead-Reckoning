@@ -6,7 +6,9 @@ import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 
 public abstract class Skill {
-
+	
+	int level;
+	
 	LivingEntity source;
 
 	/**
@@ -73,5 +75,13 @@ public abstract class Skill {
 
 	public boolean isInstant() {
 		return false;
+	}
+	
+	public int getLevel(){
+		return level;
+	}
+	
+	public void setLevel(int level){
+		this.level=level;
 	}
 }

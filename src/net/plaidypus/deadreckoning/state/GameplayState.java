@@ -10,8 +10,7 @@ import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.Goblin;
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.entities.Torch;
-import net.plaidypus.deadreckoning.particles.DamageParticle;
-import net.plaidypus.deadreckoning.particles.Particle;
+import net.plaidypus.deadreckoning.particles.DamageEffect;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -39,8 +38,6 @@ public class GameplayState extends BasicGameState {
 	
 	GameBoard gb;
 
-	public static ArrayList<Particle> particles;
-
 	public GameplayState(int stateID) throws SlickException {
 		this.stateID = stateID;
 		currentEntity = 0;
@@ -60,16 +57,14 @@ public class GameplayState extends BasicGameState {
 		
 		input = gc.getInput();
 		
-		DamageParticle.init();
+		DamageEffect.init();
 		Tile.init("res\\wallTiles.png");
 		Torch.init();
 		Chest.init();
+		backgroundScreen=new Image(gc.getWidth(),gc.getHeight());
 		
 		playerHUD = new Image("res/HUD/PlayerBox.png");
 		skillHUD = new Image("res/HUD/SkillSlots.png");
-		
-		particles = new ArrayList<Particle>(0);
-		backgroundScreen = new Image(gc.getWidth(),gc.getHeight());
 		
 		gc.setTargetFrameRate(60);
 		gc.setVSync(true);
@@ -96,14 +91,6 @@ public class GameplayState extends BasicGameState {
 		
 		cameraX = cameraX + (cameraDestX - cameraX) * cameraRate;
 		cameraY = cameraY + (cameraDestY - cameraY) * cameraRate;
-		
-		for (int i = 0; i < particles.size(); i++) {
-			particles.get(i).update(gc, sbg, delta);
-			if (particles.get(i).toKill) {
-				particles.remove(i);
-				i--;
-			}
-		}
 		
 		gb.HideAll();
 		
@@ -143,7 +130,7 @@ public class GameplayState extends BasicGameState {
 			
 			if (this.actionAssigned && current.getAction().completed
 					&& gb.isIdle()) {
-				
+				gc.getGraphics().copyArea(backgroundScreen, 0, 0);
 				this.actionAssigned = false;
 				currentEntity = (currentEntity + 1) % gb.ingameEntities.size();
 			}
@@ -161,10 +148,6 @@ public class GameplayState extends BasicGameState {
 	 */
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		gb.render(g, -cameraX, -cameraY);
-		for (int i = 0; i < particles.size(); i++) {
-			particles.get(i).render(g, -cameraX, -cameraY);
-		}
-		g.copyArea(backgroundScreen, 0, 0);
 		g.drawImage(playerHUD,5,5);
 		g.drawImage(skillHUD,248,5);
 		g.setColor(new Color(200,70,70));
@@ -185,9 +168,6 @@ public class GameplayState extends BasicGameState {
 	 * adds a particle to the particle list in game
 	 * @param p the particle to add
 	 */
-	public static void spawnParticle(Particle p) {
-		particles.add(p);
-	}
 	
 	public static Image getImage(){
 		return backgroundScreen;

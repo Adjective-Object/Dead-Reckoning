@@ -57,7 +57,9 @@ public class LootState extends BasicGameState{
 	}
 	
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		
+		if(input.isKeyPressed(Input.KEY_ESCAPE)){
+			DeadReckoningGame.instance.enterState(DeadReckoningGame.GAMEPLAYSTATE);
+		}
 	}
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
