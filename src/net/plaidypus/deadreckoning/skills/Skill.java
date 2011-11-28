@@ -21,7 +21,20 @@ public abstract class Skill {
 	public Skill(LivingEntity source) {
 		this.source = source;
 	}
-
+	
+	/**
+	 * created to have unlinekd instances of a skill that can be later bound. planned to be used only in character creation
+	 */
+	public Skill(){}
+	
+	/**
+	 * binds the skill to a ceratain livingentity such that it is unecessary to constantly pass the correct livingentity to parse based off of.
+	 * @param source
+	 */
+	public void bindTo(LivingEntity source){
+		this.source=source;
+	}
+	
 	/**
 	 * generates an action targeted at a tile. Usually to be assigned to the
 	 * source entity

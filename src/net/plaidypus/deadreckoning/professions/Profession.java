@@ -1,26 +1,17 @@
 package net.plaidypus.deadreckoning.professions;
 
-import java.util.ArrayList;
+import net.plaidypus.deadreckoning.entities.Player;
 
-public abstract class Profession {
+public class Profession {
 	
 	static final int PROFESSION_MAGICIAN = 0;
 	
-	private ArrayList<SkillProgression> skills;
+	private SkillProgression[] skills;
 	private int[][] statProgression;
 	
-	private static ArrayList<Profession> professions;
-	
-	Profession( ArrayList<SkillProgression> skills, int[][] statProg){
+	Profession( SkillProgression[] skills, int[][] statProg){
 		this.skills=skills;
 		this.statProgression=statProg;
-	}
-	
-	public static void init(){
-		professions = new ArrayList<Profession>(0);
-		ArrayList<SkillProgression> mageSkills;
-		int[][] mageStats;
-		professions.add( new Profession(mageSkills, mageStats) );
 	}
 	
 	public int getHP(int level){
@@ -35,16 +26,18 @@ public abstract class Profession {
 	public int getWIS(int level){
 		return getStatProgression()[3][level];
 	}
-	public int getAGI(int level){
+	public int getLUK(int level){
 		return getStatProgression()[4][level];
+	}
+	public int getAGI(int level){
+		return getStatProgression()[5][level];
 	}
 	
 	protected int[][] getStatProgression(){
 		return statProgression;
 	}
 	
-	
-	public ArrayList<SkillProgression> getSkillProgression(){
+	public SkillProgression[] getSkillProgression(){
 		return skills;
 	}
 }
