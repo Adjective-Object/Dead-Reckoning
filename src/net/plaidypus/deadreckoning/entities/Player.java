@@ -42,9 +42,9 @@ public class Player extends LivingEntity {
 		super("res/player.entity",targetTile);
 		this.input = i;
 
-		keyBinds = new int[] { Input.KEY_M, Input.KEY_A, Input.KEY_W, Input.KEY_P , Input.KEY_T, Input.KEY_C, Input.KEY_L};
+		keyBinds = new int[] { Input.KEY_M, Input.KEY_A, Input.KEY_W, Input.KEY_P , Input.KEY_T, Input.KEY_C, Input.KEY_L, Input.KEY_F};
 		skills = new Skill[] { new Movement(this), new Attack(this),
-				new Wait(this), new PlaceWall(this), new PlaceTorch(this), new PlaceChest(this), new Loot(this)};
+				new Wait(this), new PlaceWall(this), new PlaceTorch(this), new PlaceChest(this), new Loot(this), new Fireball(this)};
 	}
 	
 	public boolean canSee(Tile t){

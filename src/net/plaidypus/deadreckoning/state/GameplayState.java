@@ -1,8 +1,5 @@
 package net.plaidypus.deadreckoning.state;
 
-
-import java.util.ArrayList;
-
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.GameBoard;
 import net.plaidypus.deadreckoning.Tile;
@@ -12,6 +9,7 @@ import net.plaidypus.deadreckoning.entities.Goblin;
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.entities.Torch;
 import net.plaidypus.deadreckoning.grideffects.DamageEffect;
+import net.plaidypus.deadreckoning.skills.Fireball;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -58,6 +56,7 @@ public class GameplayState extends BasicGameState {
 		
 		input = gc.getInput();
 		
+		Fireball.init();
 		DamageEffect.init();
 		Tile.init("res\\wallTiles.png");
 		Torch.init();

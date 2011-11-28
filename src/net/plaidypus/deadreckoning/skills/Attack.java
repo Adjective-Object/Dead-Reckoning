@@ -14,7 +14,7 @@ public class Attack extends Skill {
 
 	@Override
 	public Action makeAction(Tile target) {
-		return new AttackAction(source.getLocation(), target, source.STR);
+		return new AttackAction(source.getLocation(), target, source.STR, false);
 	}
 
 	/**

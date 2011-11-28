@@ -165,11 +165,25 @@ public class GameBoard {
 	}
 
 	public void addEffectUnder(GridEffect g) {
-		this.underEffects.add(g);
+		if(g!=null){this.underEffects.add(g);}
 	}
 
 	public void addEffectOver(GridEffect g) {
-		this.overEffects.add(g);
+		if(g!=null){this.overEffects.add(g);}
+	}
+	
+	public void addEffectUnder(Tile t,GridEffect g) {
+		if(g!=null){
+			g.setLocation(t);
+			this.underEffects.add(g);
+		}
+	}
+
+	public void addEffectOver(Tile t,GridEffect g) {
+		if(g!=null){
+			g.setLocation(t);
+			this.overEffects.add(g);
+		}
 	}
 
 	public void highlightSquare(int x, int y) {
