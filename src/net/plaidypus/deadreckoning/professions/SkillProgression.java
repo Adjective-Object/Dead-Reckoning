@@ -1,25 +1,23 @@
 package net.plaidypus.deadreckoning.professions;
 
-import java.util.ArrayList;
-
 import net.plaidypus.deadreckoning.skills.Skill;
 
 public class SkillProgression {
 	
 	int professionAllignment;
 	
-	ArrayList<Skill> skills;
+	Skill[] skills;
 	
 	float HPbuff, MPbuff, STRbuff, WISbuff, AGIbuff; // these are percentage based skill buffs
 	
-	public SkillProgression(ArrayList<Skill> skills,int[] skillBuffs, int profession){
+	public SkillProgression(Skill[] skills, double[] skillBuffs, int profession){
 		this.skills=skills;
 		
-		HPbuff=skillBuffs[0];
-		MPbuff=skillBuffs[1];
-		STRbuff=skillBuffs[2];
-		WISbuff=skillBuffs[3];
-		AGIbuff=skillBuffs[4];
+		HPbuff=(float)skillBuffs[0];
+		MPbuff=(float)skillBuffs[1];
+		STRbuff=(float)skillBuffs[2];
+		WISbuff=(float)skillBuffs[3];
+		AGIbuff=(float)skillBuffs[4];
 		
 		this.professionAllignment=profession;
 	}

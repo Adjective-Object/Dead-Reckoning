@@ -73,7 +73,7 @@ public class Player extends LivingEntity {
 					if (this.getParent().getPrimairyHighlight() == null) {
 						this.getParent().setPrimairyHighlight(this.getLocation());
 					}
-					else if (this.getParent().getPrimairyHighlight().highlighted==Tile.HIGHLIGHT_CONFIRM){//TODO this always returns it can do it
+					else if (canTarget()){//TODO this always returns it can do it
 						return skills[currentSkill].makeAction(this.getParent().getPrimairyHighlight());
 					}
 				}
@@ -81,8 +81,7 @@ public class Player extends LivingEntity {
 		}
 		
 		if (( input.isKeyPressed(Input.KEY_ENTER) || input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON ) )
-				&& this.getParent().getPrimairyHighlight() != null
-				&& this.getParent().getPrimairyHighlight().getHighlighted() == Tile.HIGHLIGHT_CONFIRM) {
+				&& canTarget()) {
 			return skills[currentSkill].makeAction(this.getParent().getPrimairyHighlight());
 		}
 		
@@ -92,7 +91,11 @@ public class Player extends LivingEntity {
 		}
 		return null;
 	}
-
+	
+	private boolean canTarget(){
+		return this.getParent().getPrimairyHighlight().highlighted==Tile.HIGHLIGHT_CONFIRM && this.canSee(this.getParent().getPrimairyHighlight());
+	}
+	
 	public int getEXPforLevel() {
 		return 100;
 	}
