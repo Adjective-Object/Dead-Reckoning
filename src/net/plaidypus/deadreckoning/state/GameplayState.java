@@ -72,7 +72,7 @@ public class GameplayState extends BasicGameState {
 		gb.init();
 		
 		player = new Player(gb.getTileAt(4, 4),gc.getInput());
-		new Goblin(gb.getTileAt(24, 1));
+		new Goblin(gb.getTileAt(7, 4));
 		cameraX = 0;
 		cameraY = 0;
 		actionAssigned = false;

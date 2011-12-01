@@ -1,5 +1,8 @@
 package net.plaidypus.deadreckoning.professions;
 
+
+import net.plaidypus.deadreckoning.skills.Skill;
+
 public class Profession {
 	
 	static final int PROFESSION_MAGICIAN = 0;
@@ -7,9 +10,22 @@ public class Profession {
 	private SkillProgression[] skills;
 	private int[][] statProgression;
 	
+	public static Profession[] professions;
+	
 	Profession( SkillProgression[] skills, int[][] statProg){
 		this.skills=skills;
 		this.statProgression=statProg;
+	}
+	
+	public static void init(){
+		professions = new Profession[5];
+		
+		SkillProgression testMage =new SkillProgression( new Skill[] {}, new double[] {1.1,1.1,1.1,1.1,1.1}, PROFESSION_MAGICIAN);
+		SkillProgression[] mageSkills = {testMage, testMage, testMage, testMage};
+		int[][] statProgress = {} ;
+		
+		professions [0] = new Profession (mageSkills, statProgress);
+		
 	}
 	
 	public int getHP(int level){
