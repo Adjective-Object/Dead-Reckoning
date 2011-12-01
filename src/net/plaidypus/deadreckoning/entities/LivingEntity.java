@@ -126,11 +126,10 @@ public abstract class LivingEntity extends InteractiveEntity {
 	/**
 	 * renders the entity at an x and y (of the tile XY system)
 	 */
-	public void render(Graphics g, float x, float y) {
+	public void forceRender(Graphics g, float x, float y) {
 		g.drawImage(
 				currentAnimation.getCurrentFrame().getFlippedCopy(getFacing(),
-						false), x * DeadReckoningGame.tileSize + relativeX, y
-						* DeadReckoningGame.tileSize + relativeY);
+						false), x , y);
 	}
 
 	/**

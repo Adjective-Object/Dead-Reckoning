@@ -18,7 +18,7 @@ public class AnimationEffect extends GridEffect{
 	public void update(int delta){
 		this.animation.update(delta);
 		if(animation.isStopped()){
-			this.kill=true;
+			this.setComplete(true);
 		}
 	}
 	

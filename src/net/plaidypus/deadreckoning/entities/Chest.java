@@ -6,7 +6,7 @@ import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.WaitAction;
-import net.plaidypus.deadreckoning.items.Item;
+import net.plaidypus.deadreckoning.item.Item;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -38,7 +38,7 @@ public class Chest extends InteractiveEntity{
 	}
 
 	@Override
-	public void render(Graphics g, float x, float y) {
+	public void forceRender(Graphics g, float x, float y) {
 		g.drawImage(chest, x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize);
 	}
 

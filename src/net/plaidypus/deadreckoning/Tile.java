@@ -1,10 +1,12 @@
 package net.plaidypus.deadreckoning;
 
+
 import net.plaidypus.deadreckoning.entities.Entity;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 
 import org.newdawn.slick.SlickException;
@@ -109,11 +111,13 @@ public class Tile
 	public void render(Graphics g,float x, float y)
 	{
 		if(lightLevel>0){
-			g.drawImage(tileTextures.getSprite(tileFace%tileTextures.getHorizontalCount(), tileFace/tileTextures.getHorizontalCount()),x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize);
-			g.setColor(highlightColors[this.highlighted]);
-			g.fillRect(x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize,DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
-			g.setColor(new Color(0,0,0,(int)(((numLightLevels-lightLevel*1.0)/numLightLevels) * 255 )));
-			g.fillRect(x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize,DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
+			Image toDraw = tileTextures.getSprite(tileFace%tileTextures.getHorizontalCount(), tileFace/tileTextures.getHorizontalCount());
+			toDraw.setAlpha(1-(float)(numLightLevels-lightLevel)/numLightLevels);
+			g.drawImage(toDraw,x,y);
+			if(this.highlighted!=HIGHLIGHT_NULL){
+				g.setColor(highlightColors[highlighted]);
+				g.fillRect(x,y, DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
+			}
 		}
 		
 	}

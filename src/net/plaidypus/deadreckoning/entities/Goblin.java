@@ -3,6 +3,7 @@ package net.plaidypus.deadreckoning.entities;
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
+import net.plaidypus.deadreckoning.actions.MoveAction;
 import net.plaidypus.deadreckoning.actions.WaitAction;
 import net.plaidypus.deadreckoning.skills.Movement;
 import net.plaidypus.deadreckoning.skills.Skill;
@@ -28,43 +29,11 @@ public class Goblin extends LivingEntity {
 	 * if something is blocking its path, it will turn left
 	 */
 	public Action chooseAction(GameContainer gc, int delta) {
-		if (direction == 0) {
-			if (!movement.canTargetTile(this.getLocation().getToLeft())
-					|| this.getLocation().getToLeft()
-							.equals(this.getLocation())) {
-				direction = Utilities.randInt(0, 4);
-			} else {
-				return movement.makeAction(this.getLocation().getToLeft());
-			}
-		}
-		if (direction == 1) {
-			if (!movement.canTargetTile(this.getLocation().getToDown())
-					|| this.getLocation().getToDown()
-							.equals(this.getLocation())) {
-				direction = Utilities.randInt(0, 4);
-				;
-			} else {
-				return movement.makeAction(this.getLocation().getToDown());
-			}
-		}
-		if (direction == 2) {
-			if (!movement.canTargetTile(this.getLocation().getToRight())
-					|| this.getLocation().getToRight()
-							.equals(this.getLocation())) {
-				direction = Utilities.randInt(0, 4);
-				;
-			} else {
-				return movement.makeAction(this.getLocation().getToRight());
-			}
-		}
-		if (direction == 3) {
-			if (!movement.canTargetTile(this.getLocation().getToUp())
-					|| this.getLocation().getToUp().equals(this.getLocation())) {
-				direction = Utilities.randInt(0, 4);
-				;
-			} else {
-				return movement.makeAction(this.getLocation().getToUp());
-			}
+		Tile dest = this.getParent().getTileAt(
+				Utilities.limitTo(this.getX()+Utilities.randInt(-2, 2),0,getParent().getWidth()),
+				Utilities.limitTo(this.getY()+Utilities.randInt(-2, 2),0,getParent().getHeight()));
+		if(dest.isOpen() && !dest.equals(this.getLocation())){
+			return new MoveAction(this.getLocation(),dest);
 		}
 		return new WaitAction(this.getLocation());
 	}

@@ -55,7 +55,7 @@ public class DamageEffect extends GridEffect{
 		y += yMove;
 
 		if (this.visibility <= 0.00001) {
-			this.kill = true;
+			this.setComplete(true);
 		}
 
 	}

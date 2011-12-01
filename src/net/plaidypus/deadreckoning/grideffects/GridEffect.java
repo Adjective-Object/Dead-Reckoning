@@ -5,7 +5,7 @@ import org.newdawn.slick.Graphics;
 import net.plaidypus.deadreckoning.Tile;
 
 public abstract class GridEffect {
-	public boolean kill;
+	private boolean kill;
 	public Tile location;
 	
 	public GridEffect(Tile location){
@@ -15,6 +15,14 @@ public abstract class GridEffect {
 	
 	public void setLocation(Tile l){
 		this.location=l;
+	}
+	
+	public boolean isComplete(){
+		return this.kill;
+	}
+	
+	public void setComplete(boolean comp){
+		this.kill=comp;
 	}
 	
 	public abstract void update(int delta);

@@ -17,10 +17,9 @@ import org.newdawn.slick.Graphics;
 
 public abstract class Entity {
 	private Tile location;
-
-	public float relativeX, relativeY;
+	
 	private boolean facing;
-	private boolean transparent;
+	private boolean transparent, visible;
 	protected boolean interactive;
 	
 	Action nextAction;
@@ -29,9 +28,8 @@ public abstract class Entity {
 	 * the basic entity class upon which all in game objects are based.
 	 */
 	public Entity() {
-		relativeX = 0;
-		relativeY = 0;
 		setInteractive(true);
+		this.visible=true;
 	}
 
 	Entity(Tile t) {
@@ -102,7 +100,15 @@ public abstract class Entity {
 	public Action getAction() {
 		return nextAction;
 	}
-
+	
+	/**
+	 * renders to Graphics only if this.visible
+	 * calls this.forceRender()
+	 **/
+	public void render(Graphics g, float x, float y){
+		if(this.visible){forceRender(g,x,y);}
+	}
+	
 	/**
 	 * renders the entity to a Graphics at a certain X and Y
 	 * 
@@ -110,7 +116,7 @@ public abstract class Entity {
 	 * @param x
 	 * @param y
 	 */
-	public abstract void render(Graphics g, float x, float y);
+	public abstract void forceRender(Graphics g, float x, float y);
 
 	/**
 	 * returns the tile this entity is standing on / is located in
@@ -170,7 +176,7 @@ public abstract class Entity {
 	 * @return the Absolute X position
 	 */
 	public int getAbsoluteX() {
-		return (int) (getLocation().getX() * DeadReckoningGame.tileSize + relativeX);
+		return (int) (getLocation().getX() * DeadReckoningGame.tileSize);
 	}
 
 	/**
@@ -180,7 +186,7 @@ public abstract class Entity {
 	 * @return the Absolute Y position
 	 */
 	public int getAbsoluteY() {
-		return (int) (getLocation().getY() * DeadReckoningGame.tileSize + relativeY);
+		return (int) (getLocation().getY() * DeadReckoningGame.tileSize);
 	}
 
 	/**
@@ -236,6 +242,14 @@ public abstract class Entity {
 
 	public boolean isInteractive() {
 		return interactive;
+	}
+
+	public boolean isVisible() {
+		return visible;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
 	}
 
 }

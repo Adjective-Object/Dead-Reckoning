@@ -7,7 +7,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-import net.plaidypus.deadreckoning.items.Item;
+import net.plaidypus.deadreckoning.item.Item;
 
 public class ItemGrid {
 	ArrayList<Item> contents;

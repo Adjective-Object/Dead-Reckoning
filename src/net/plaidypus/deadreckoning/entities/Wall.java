@@ -23,6 +23,6 @@ public class Wall extends Entity{
 		return new WaitAction(getLocation());
 	}
 
-	public void render(Graphics g, float x, float y) {}
+	public void forceRender(Graphics g, float x, float y) {}
 
 }

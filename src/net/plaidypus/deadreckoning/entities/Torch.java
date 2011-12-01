@@ -34,7 +34,7 @@ public class Torch extends Entity{
 	
 	public Action chooseAction(GameContainer gc, int delta) {return null;}
 
-	public void render(Graphics g, float x, float y) {
-		g.drawImage(ani.getCurrentFrame(),x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize);
+	public void forceRender(Graphics g, float x, float y) {
+		g.drawImage(ani.getCurrentFrame(),x,y);
 	}
 }

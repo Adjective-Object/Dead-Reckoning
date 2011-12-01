@@ -7,7 +7,7 @@ public abstract class Action {
 	public Tile source;
 	public Tile target;
 
-	public boolean completed = false;
+	public boolean completed;
 
 	/**
 	 * actions are the main method of changing things in the game's environment

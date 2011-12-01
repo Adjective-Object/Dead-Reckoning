@@ -1,7 +1,5 @@
 package net.plaidypus.deadreckoning.professions;
 
-import net.plaidypus.deadreckoning.entities.Player;
-
 public class Profession {
 	
 	static final int PROFESSION_MAGICIAN = 0;

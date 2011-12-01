@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;
-import net.plaidypus.deadreckoning.items.Item;
+import net.plaidypus.deadreckoning.item.Item;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -31,7 +31,7 @@ public abstract class InteractiveEntity extends Entity{
 	public abstract Action chooseAction(GameContainer gc, int delta);
 
 	@Override
-	public abstract void render(Graphics g, float x, float y);
+	public abstract void forceRender(Graphics g, float x, float y);
 	
 	public ArrayList<Item> getInventory(){
 		return inventory;

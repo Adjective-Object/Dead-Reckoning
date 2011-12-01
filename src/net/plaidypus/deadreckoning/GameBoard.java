@@ -70,8 +70,8 @@ public class GameBoard {
 			for (int y = 0; y < 25; y++) {
 				if (board[x][y].visible) {
 					board[x][y].render(g,
-							x + xoff / DeadReckoningGame.tileSize, y + yoff
-									/ DeadReckoningGame.tileSize);
+							x*DeadReckoningGame.tileSize + xoff,
+							y*DeadReckoningGame.tileSize + yoff);
 				}
 			}
 		}
@@ -92,8 +92,8 @@ public class GameBoard {
 			for (int y = 0; y < 25; y++) {
 				if (!board[x][y].isOpen() && board[x][y].lightLevel > 1) {
 					board[x][y].getEntity().render(g,
-							x + xoff / DeadReckoningGame.tileSize,
-							y + yoff / DeadReckoningGame.tileSize);
+							x*DeadReckoningGame.tileSize + xoff,
+							y*DeadReckoningGame.tileSize + yoff);
 				}
 			}
 		}
@@ -141,7 +141,7 @@ public class GameBoard {
 
 		for (int i = 0; i < underEffects.size(); i++) {
 			underEffects.get(i).update(delta);
-			if (underEffects.get(i).kill) {
+			if (underEffects.get(i).isComplete()) {
 				underEffects.remove(i);
 				i -= 1;
 			}
@@ -149,7 +149,7 @@ public class GameBoard {
 
 		for (int i = 0; i < overEffects.size(); i++) {
 			overEffects.get(i).update(delta);
-			if (overEffects.get(i).kill) {
+			if (overEffects.get(i).isComplete()) {
 				overEffects.remove(i);
 				i -= 1;
 			}
