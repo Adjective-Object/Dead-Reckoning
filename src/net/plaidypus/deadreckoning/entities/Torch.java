@@ -28,7 +28,7 @@ public class Torch extends Entity{
 	}
 	
 	public void update(GameContainer gc, int delta) {
-		this.getParent().revealInRadius(getLocation(), this.light);
+		this.getParent().lightInRadius(getLocation(), this.light);
 		this.ani.update(delta);
 	}
 	

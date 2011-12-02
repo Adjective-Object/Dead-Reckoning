@@ -9,6 +9,7 @@ import net.plaidypus.deadreckoning.entities.Goblin;
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.entities.Torch;
 import net.plaidypus.deadreckoning.grideffects.DamageEffect;
+import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.skills.Fireball;
 
 import org.newdawn.slick.Color;
@@ -61,6 +62,7 @@ public class GameplayState extends BasicGameState {
 		Tile.init("res\\wallTiles.png");
 		Torch.init();
 		Chest.init();
+		Profession.init();
 		backgroundScreen=new Image(gc.getWidth(),gc.getHeight());
 		
 		playerHUD = new Image("res/HUD/PlayerBox.png");
@@ -71,7 +73,7 @@ public class GameplayState extends BasicGameState {
 		gb = new GameBoard(25,25);
 		gb.init();
 		
-		player = new Player(gb.getTileAt(4, 4),gc.getInput());
+		player = new Player(gb.getTileAt(4, 4),Profession.professions[Profession.PROFESSION_MAGICIAN],gc.getInput());
 		new Goblin(gb.getTileAt(7, 4));
 		cameraX = 0;
 		cameraY = 0;

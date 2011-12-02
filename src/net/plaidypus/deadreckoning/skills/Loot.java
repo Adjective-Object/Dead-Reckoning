@@ -19,7 +19,10 @@ public class Loot extends Skill{
 
 	@Override
 	public boolean canTargetTile(Tile t) {
-		return !t.isOpen();
+		if(!t.isOpen() && !t.getEntity().isInteractive()){
+			return true;
+		}
+		return false;
 	}
 
 	@Override

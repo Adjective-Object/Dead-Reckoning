@@ -35,6 +35,7 @@ public class Tile
 	
 	static final Color[] highlightColors = new Color[] {new Color(0,0,0,0),new Color(255,75,23,100),new Color(252,125,73,100)};
 	
+	static final float brightness = (float)(0.8);
 	public static final int HIGHLIGHT_NULL =0, HIGHLIGHT_CONFIRM=1, HIGHLIGHT_DENY=2;
 	
 	static SpriteSheet tileTextures;
@@ -110,14 +111,19 @@ public class Tile
 	 */
 	public void render(Graphics g,float x, float y)
 	{
-		if(lightLevel>0){
+		int renderLight = this.lightLevel;
+		if(this.explored && renderLight == 0){
+			renderLight = 1;
+		}
+		if(this.visible && renderLight>0){
 			Image toDraw = tileTextures.getSprite(tileFace%tileTextures.getHorizontalCount(), tileFace/tileTextures.getHorizontalCount());
-			toDraw.setAlpha(1-(float)(numLightLevels-lightLevel)/numLightLevels);
+			toDraw.setAlpha(1-(float)(numLightLevels-renderLight)*brightness/numLightLevels);
 			g.drawImage(toDraw,x,y);
-			if(this.highlighted!=HIGHLIGHT_NULL){
-				g.setColor(highlightColors[highlighted]);
-				g.fillRect(x,y, DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
-			}
+		}
+		
+		if(this.highlighted!=HIGHLIGHT_NULL){
+			g.setColor(highlightColors[highlighted]);
+			g.fillRect(x,y, DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
 		}
 		
 	}

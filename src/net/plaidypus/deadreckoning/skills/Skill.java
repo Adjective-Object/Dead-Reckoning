@@ -76,10 +76,10 @@ public abstract class Skill {
 			for (int vx = 0; vx < board.getWidth(); vx++) {
 				if (Math.sqrt(Math.pow(source.getX() - vx, 2)
 						+ Math.pow(source.getY() - vy, 2)) <= range) {
-					if (canTargetTile(board.getTileAt(vx, vy))) {
-						board.getTileAt(vx, vy).setHighlighted(1);
+					if (canTargetTile(board.getTileAt(vx, vy)) && board.getTileAt(vx, vy).lightLevel>1) {
+						board.getTileAt(vx, vy).setHighlighted(Tile.HIGHLIGHT_CONFIRM);
 					} else {
-						board.getTileAt(vx, vy).setHighlighted(2);
+						board.getTileAt(vx, vy).setHighlighted(Tile.HIGHLIGHT_DENY);
 					}
 				}
 			}

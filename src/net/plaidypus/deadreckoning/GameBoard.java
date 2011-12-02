@@ -90,7 +90,7 @@ public class GameBoard {
 
 		for (int x = 0; x < 25; x++) {
 			for (int y = 0; y < 25; y++) {
-				if (!board[x][y].isOpen() && board[x][y].lightLevel > 1) {
+				if (!board[x][y].isOpen() && board[x][y].lightLevel > 1 && board[x][y].visible) {
 					board[x][y].getEntity().render(g,
 							x*DeadReckoningGame.tileSize + xoff,
 							y*DeadReckoningGame.tileSize + yoff);
@@ -218,7 +218,7 @@ public class GameBoard {
 		}
 	}
 
-	public void revealInRadius(Tile location, int VIS) {
+	public void lightInRadius(Tile location, int VIS) {
 		for (int x = 0; x < board.length; x++) {
 			for (int y = 0; y < board[x].length; y++) {
 				int dist = (int) Utilities.getDistance(location, board[x][y]);
@@ -229,26 +229,34 @@ public class GameBoard {
 						board[x][y].lightLevel = level;
 						board[x][y].explored = true;
 					}
-				} else if (board[x][y].explored && board[x][y].lightLevel == 0) {
-					board[x][y].lightLevel = 1;
 				}
 			}
 		}
 	}
 
 	public void revealFromEntity(LivingEntity e) {
-		revealInRadius(e.getLocation(), e.VIS);
+		for(int x=0; x<width;x++){
+			for (int y=0;y<height;y++){
+				board[x][y].visible = e.canSee(board[x][y]);
+			}
+		}
 	}
-
+	
+	/**
+	 * makes every tile on the board have a low light level, and makes it invisible
+	 */
 	public void HideAll() {
 		for (int x = 0; x < board.length; x++) {
 			for (int y = 0; y < board[x].length; y++) {
 				board[x][y].lightLevel = 0;
-				// aboard[x][y].visible=false; //TODO visibility
+				board[x][y].visible=false; //TODO visibility
 			}
 		}
 	}
-
+	
+	/**
+	 *checks if the board is idle (that all entities on the board are idle) 
+	 */
 	public boolean isIdle() {
 		for (int i = 0; i < this.ingameEntities.size(); i++) {
 			if (!ingameEntities.get(i).isIdle()) {
@@ -257,9 +265,14 @@ public class GameBoard {
 		}
 		return true;
 	}
-
+	
+	/**
+	 * determines if there is a line of sight (i.e. no entites without the tag transparent) between tiles a,b
+	 * @param tile a
+	 * @param tile b
+	 * @return if there is a line of sight
+	 */
 	public boolean isLineOfSight(Tile a, Tile b) {
-
 		return true;
 	}
 

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.item.Equip;
+import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.skills.*;
 
 import org.newdawn.slick.GameContainer;
@@ -14,7 +15,7 @@ import org.newdawn.slick.SlickException;
 
 /*
 
- Griffin Brodman & Jeffrey Tao & don't forget Max / PJ
+ Lezbihonest here, Max is the only one who's been coding this for a while.
  Created: 11/4/2011
 
  */
@@ -29,6 +30,8 @@ public class Player extends LivingEntity {
 	public int currentSkill;
 	public int EXP;
 	
+	public Profession profession;
+	
 	ArrayList<Equip> epuips;
 	
 	/**
@@ -38,22 +41,24 @@ public class Player extends LivingEntity {
 	 *            the input object returned by GameContainer.getInput()
 	 * @throws SlickException
 	 */
-	public Player(Tile targetTile, Input i) throws SlickException {
+	public Player(Tile targetTile, Profession p, Input i) throws SlickException {
 		super("res/player.entity",targetTile);
 		this.input = i;
 
 		keyBinds = new int[] { Input.KEY_M, Input.KEY_A, Input.KEY_W, Input.KEY_P , Input.KEY_T, Input.KEY_C, Input.KEY_L, Input.KEY_F};
 		skills = new Skill[] { new Movement(this), new Attack(this),
 				new Wait(this), new PlaceWall(this), new PlaceTorch(this), new PlaceChest(this), new Loot(this), new Fireball(this)};
+		profession = p;
 	}
 	
 	public boolean canSee(Tile t){
-		return this.getParent().isLineOfSight(getLocation(), t) && t.lightLevel>1;
+		return this.getParent().isLineOfSight(getLocation(), t);
 	}
 	
 	public void update(GameContainer gc, int delta){
 		super.update(gc,delta);
-		this.getParent().revealInRadius(this.getLocation(), this.VIS);
+		this.getParent().lightInRadius(getLocation(), this.VIS);
+		this.getParent().revealFromEntity(this);
 	}
 	
 	/**
@@ -73,7 +78,7 @@ public class Player extends LivingEntity {
 					if (this.getParent().getPrimairyHighlight() == null) {
 						this.getParent().setPrimairyHighlight(this.getLocation());
 					}
-					else if (canTarget()){//TODO this always returns it can do it
+					else if (canTarget()){
 						return skills[currentSkill].makeAction(this.getParent().getPrimairyHighlight());
 					}
 				}
