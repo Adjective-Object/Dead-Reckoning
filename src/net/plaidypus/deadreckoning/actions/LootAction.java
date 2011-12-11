@@ -7,7 +7,7 @@ import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
-import net.plaidypus.deadreckoning.item.Item;
+import net.plaidypus.deadreckoning.ergomgs.Item;
 import net.plaidypus.deadreckoning.state.GameplayState;
 import net.plaidypus.deadreckoning.state.LootState;
 

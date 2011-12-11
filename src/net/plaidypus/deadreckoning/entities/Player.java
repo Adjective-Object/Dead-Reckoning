@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;
-import net.plaidypus.deadreckoning.item.Equip;
+import net.plaidypus.deadreckoning.ergomgs.Equip;
 import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.skills.*;
 

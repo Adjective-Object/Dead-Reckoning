@@ -7,7 +7,7 @@ import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.ChangeMapAction;
 import net.plaidypus.deadreckoning.entities.*;
-import net.plaidypus.deadreckoning.item.Item;
+import net.plaidypus.deadreckoning.ergomgs.Item;
 
 public class PlaceChest extends Skill{
 

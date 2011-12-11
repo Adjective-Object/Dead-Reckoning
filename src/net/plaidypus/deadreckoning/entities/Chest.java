@@ -6,7 +6,7 @@ import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.WaitAction;
-import net.plaidypus.deadreckoning.item.Item;
+import net.plaidypus.deadreckoning.ergomgs.Item;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
