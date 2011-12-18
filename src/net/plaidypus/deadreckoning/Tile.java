@@ -30,7 +30,8 @@ public class Tile
 	public int highlighted;
 	
 	public static final int numLightLevels = 5;
-	public boolean explored, visible;
+	public boolean explored;
+	public double visibility;
 	public int lightLevel;
 	
 	static final Color[] highlightColors = new Color[] {new Color(0,0,0,0),new Color(255,75,23,100),new Color(252,125,73,100)};
@@ -41,6 +42,7 @@ public class Tile
 	static SpriteSheet tileTextures;
 	
 	public static final int TILE_EMPTY = 9, TILE_WALL = 4;
+	private static final double VISIBILITY_THRESHOLD = 0.1;
 	
  	Tile(GameBoard parent, int x, int y) throws SlickException
 	{
@@ -51,7 +53,7 @@ public class Tile
  		highlighted = 0;
  		lightLevel=5;
  		explored=false;
- 		visible=true;
+ 		visibility=1.0;
  		setTileFace(TILE_EMPTY);
 	}
  	
@@ -115,7 +117,7 @@ public class Tile
 		if(this.explored && renderLight == 0){
 			renderLight = 1;
 		}
-		if(this.visible && renderLight>0){
+		if(this.isVisible() && renderLight>0){
 			Image toDraw = tileTextures.getSprite(tileFace%tileTextures.getHorizontalCount(), tileFace/tileTextures.getHorizontalCount());
 			toDraw.setAlpha(1-(float)(numLightLevels-renderLight)*brightness/numLightLevels);
 			g.drawImage(toDraw,x,y);
@@ -128,6 +130,10 @@ public class Tile
 		
 	}
 	
+	public boolean isVisible() {
+		return visibility>Tile.VISIBILITY_THRESHOLD;
+	}
+
 	public Tile getToLeft(){
 		return parent.getTileAt( Utilities.limitTo(getX()-1,0,this.parent.getWidth()), getY());
 	}

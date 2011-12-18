@@ -177,7 +177,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * @return if the entity can see it
 	 */
 	public boolean canSee(Tile t) {
-		return Utilities.getDistance(getLocation(), t) <= this.VIS && this.getParent().isLineOfSight(getLocation(), t);
+		return Utilities.getDistance(getLocation(), t) <= this.VIS && t.isVisible();
 	}
 	
 	// STAT referencing

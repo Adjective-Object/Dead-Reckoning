@@ -68,7 +68,7 @@ public class GameBoard {
 	public void render(Graphics g, float xoff, float yoff) {
 		for (int x = 0; x < 25; x++) {
 			for (int y = 0; y < 25; y++) {
-				if (board[x][y].visible) {
+				if (board[x][y].isVisible()) {
 					board[x][y].render(g,
 							x*DeadReckoningGame.tileSize + xoff,
 							y*DeadReckoningGame.tileSize + yoff);
@@ -90,7 +90,7 @@ public class GameBoard {
 
 		for (int x = 0; x < 25; x++) {
 			for (int y = 0; y < 25; y++) {
-				if (!board[x][y].isOpen() && board[x][y].lightLevel > 1 && board[x][y].visible) {
+				if (!board[x][y].isOpen() && board[x][y].lightLevel > 1 && board[x][y].isVisible()) {
 					board[x][y].getEntity().render(g,
 							x*DeadReckoningGame.tileSize + xoff,
 							y*DeadReckoningGame.tileSize + yoff);
@@ -235,11 +235,7 @@ public class GameBoard {
 	}
 
 	public void revealFromEntity(LivingEntity e) {
-		for(int x=0; x<width;x++){
-			for (int y=0;y<height;y++){
-				board[x][y].visible = e.canSee(board[x][y]);
-			}
-		}
+		//TODO
 	}
 	
 	/**
@@ -249,7 +245,7 @@ public class GameBoard {
 		for (int x = 0; x < board.length; x++) {
 			for (int y = 0; y < board[x].length; y++) {
 				board[x][y].lightLevel = 0;
-				board[x][y].visible=false; //TODO visibility
+				board[x][y].visibility=0; //TODO visibility
 			}
 		}
 	}
@@ -263,16 +259,6 @@ public class GameBoard {
 				return false;
 			}
 		}
-		return true;
-	}
-	
-	/**
-	 * determines if there is a line of sight (i.e. no entites without the tag transparent) between tiles a,b
-	 * @param tile a
-	 * @param tile b
-	 * @return if there is a line of sight
-	 */
-	public boolean isLineOfSight(Tile a, Tile b) {
 		return true;
 	}
 

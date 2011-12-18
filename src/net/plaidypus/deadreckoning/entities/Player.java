@@ -52,7 +52,7 @@ public class Player extends LivingEntity {
 	}
 	
 	public boolean canSee(Tile t){
-		return this.getParent().isLineOfSight(getLocation(), t);
+		return this.getLocation().isVisible();
 	}
 	
 	public void update(GameContainer gc, int delta){
