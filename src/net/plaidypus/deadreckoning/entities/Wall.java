@@ -17,7 +17,10 @@ public class Wall extends Entity{
 	}
 	
 	public void update(GameContainer gc, int delta) {}
-
+	
+	public void updateBoardEffects(GameContainer gc, int delta){
+	}
+	
 	@Override
 	public Action chooseAction(GameContainer gc, int delta) {
 		return new WaitAction(getLocation());

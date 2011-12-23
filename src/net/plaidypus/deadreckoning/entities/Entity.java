@@ -55,6 +55,9 @@ public abstract class Entity {
 	 *            the elapsed milliseconds since the last call of update
 	 * @return
 	 */
+	
+	public abstract void updateBoardEffects(GameContainer gc, int delta);
+	
 	public abstract Action chooseAction(GameContainer gc, int delta);
 
 	/**

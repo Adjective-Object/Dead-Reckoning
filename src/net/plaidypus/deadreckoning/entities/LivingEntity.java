@@ -81,7 +81,10 @@ public abstract class LivingEntity extends InteractiveEntity {
 			this.setInteractive(false);
 		}
 	}
-
+	
+	public void updateBoardEffects(GameContainer gc, int delta){
+	}
+	
 	/**
 	 * still abstract because different livingEntities will have differing AIs
 	 */

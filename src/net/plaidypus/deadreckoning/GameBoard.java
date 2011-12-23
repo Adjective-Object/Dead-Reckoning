@@ -155,6 +155,16 @@ public class GameBoard {
 			}
 		}
 	}
+	
+	public void updateBoardEffects(GameContainer gc, int delta) {
+		for (int y = 0; y < this.height; y++) {
+			for (int x = 0; x < this.width; x++) {
+				if (!board[x][y].isOpen()) {
+					board[x][y].getEntity().updateBoardEffects(gc, delta);
+				}
+			}
+		}
+	}
 
 	public int getHeight() {
 		return height;
@@ -218,12 +228,12 @@ public class GameBoard {
 		}
 	}
 
-	public void lightInRadius(Tile location, int VIS) {
+	public void lightInRadius(Tile location, float VIS) {
 		for (int x = 0; x < board.length; x++) {
 			for (int y = 0; y < board[x].length; y++) {
 				int dist = (int) Utilities.getDistance(location, board[x][y]);
 				if (dist <= VIS) {
-					int level = Utilities.limitTo(VIS + 1 - dist, 1,
+					float level = Utilities.limitTo(VIS + 1 - dist, 1,
 							Tile.numLightLevels);
 					if (level > board[x][y].lightLevel) {
 						board[x][y].lightLevel = level;
@@ -235,7 +245,33 @@ public class GameBoard {
 	}
 
 	public void revealFromEntity(LivingEntity e) {
-		//TODO
+		//TODO replace with around exterior
+		if(this.getPrimairyHighlight()!=null){
+			revealAlongVector(e.getLocation(),this.getPrimairyHighlight());
+		}
+		else{
+			revealAlongVector(e.getLocation(),this.getTileAt(0,0));
+		}
+	}
+	
+	public void revealAlongVector(Tile a, Tile b){
+		if(a.getX()!=b.getX()){
+			float slope = (a.getY()-b.getY())/(a.getX()-b.getX());
+			int iteration = (b.getX()-a.getX())/Math.abs(b.getX()-a.getX());
+			System.out.println(a+","+b+","+iteration);
+			int lasty=a.getY();
+			for(int i=0; i<Math.abs(a.getX()-b.getX());i++){
+					System.out.println(a.getX()+(i*iteration)+"," + (int)(a.getY()+i*iteration*slope));//TODO fix LOS to do ALL in a column between the targeted points
+					a.getParent().getTileAt(a.getX()+(i*iteration), (int)(a.getY()+i*iteration*slope)).visibility=true;
+			}
+		}
+		else{
+			int iteration = (b.getY()-a.getY())/Math.abs(b.getY()-a.getY());
+			for(int i=0; i<Math.abs(a.getY()-b.getY()); i++){
+				Tile target = a.getParent().getTileAt(a.getX(), a.getX()+i*iteration);
+				target.visibility=true;
+			}
+		}
 	}
 	
 	/**
@@ -245,7 +281,7 @@ public class GameBoard {
 		for (int x = 0; x < board.length; x++) {
 			for (int y = 0; y < board[x].length; y++) {
 				board[x][y].lightLevel = 0;
-				board[x][y].visibility=0; //TODO visibility
+				board[x][y].visibility=false; //TODO visibility
 			}
 		}
 	}

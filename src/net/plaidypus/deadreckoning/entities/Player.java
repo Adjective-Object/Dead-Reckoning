@@ -58,7 +58,13 @@ public class Player extends LivingEntity {
 	public void update(GameContainer gc, int delta){
 		super.update(gc,delta);
 		this.getParent().lightInRadius(getLocation(), this.VIS);
-		this.getParent().revealFromEntity(this);
+		getParent().revealFromEntity(this);
+	}
+	
+	public void updateBoardEffects(GameContainer gc, int delta){
+		this.getParent().lightInRadius(getLocation(), this.VIS);
+		getParent().revealFromEntity(this);
+		System.out.println("asd");
 	}
 	
 	/**

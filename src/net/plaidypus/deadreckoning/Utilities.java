@@ -8,6 +8,10 @@ public class Utilities {
 	
 	private static Random r = new Random();
 	
+	public static float fPart(float frac){
+		return frac-(int)frac;
+	}
+	
 	public static double getDistance(Tile a, Tile b){
 		return Math.sqrt( Math.pow(a.getX()-b.getX(), 2) + Math.pow(a.getY()-b.getY(), 2) );
 	}
@@ -64,5 +68,16 @@ public class Utilities {
 
 	public static float randFloat() {
 		return r.nextFloat();
+	}
+	
+	public static int roundUp(float target){
+		if(fPart(target)>0){
+			return (int)(target)+1;
+		}
+		return (int)(target);
+	}
+	
+	public static int roundDown(float target){
+		return (int)(target);
 	}
 }

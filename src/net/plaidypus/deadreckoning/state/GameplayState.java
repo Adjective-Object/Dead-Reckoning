@@ -78,6 +78,8 @@ public class GameplayState extends BasicGameState {
 		cameraX = 0;
 		cameraY = 0;
 		actionAssigned = false;
+		
+		updateBoardEffects(gc, 0);
 	}
 
 	/**
@@ -94,11 +96,14 @@ public class GameplayState extends BasicGameState {
 		cameraX = cameraX + (cameraDestX - cameraX) * cameraRate;
 		cameraY = cameraY + (cameraDestY - cameraY) * cameraRate;
 		
-		gb.HideAll();
-		
 		gb.updateSelctor(input, -cameraX, -cameraY);
 		gb.updateAllTiles(gc, delta);
 		updateActions(gc,delta);
+	}
+	
+	public void updateBoardEffects(GameContainer gc, int delta){
+		gb.HideAll();
+		gb.updateBoardEffects(gc, delta);
 	}
 	
 	private void updateActions(GameContainer gc, int delta) {
@@ -130,11 +135,11 @@ public class GameplayState extends BasicGameState {
 				gb.clearPrimaryHighlight();
 			}
 			
-			if (this.actionAssigned && current.getAction().completed
-					&& gb.isIdle()) {
+			if (this.actionAssigned && current.getAction().completed && gb.isIdle()) {
 				gc.getGraphics().copyArea(backgroundScreen, 0, 0);
 				this.actionAssigned = false;
 				currentEntity = (currentEntity + 1) % gb.ingameEntities.size();
+				updateBoardEffects(gc,delta);
 			}
 
 		}

@@ -31,8 +31,8 @@ public class Tile
 	
 	public static final int numLightLevels = 5;
 	public boolean explored;
-	public double visibility;
-	public int lightLevel;
+	public boolean visibility;
+	public float lightLevel;
 	
 	static final Color[] highlightColors = new Color[] {new Color(0,0,0,0),new Color(255,75,23,100),new Color(252,125,73,100)};
 	
@@ -53,7 +53,7 @@ public class Tile
  		highlighted = 0;
  		lightLevel=5;
  		explored=false;
- 		visibility=1.0;
+ 		visibility=true;
  		setTileFace(TILE_EMPTY);
 	}
  	
@@ -113,7 +113,7 @@ public class Tile
 	 */
 	public void render(Graphics g,float x, float y)
 	{
-		int renderLight = this.lightLevel;
+		float renderLight = this.lightLevel;
 		if(this.explored && renderLight == 0){
 			renderLight = 1;
 		}
@@ -131,7 +131,7 @@ public class Tile
 	}
 	
 	public boolean isVisible() {
-		return visibility>Tile.VISIBILITY_THRESHOLD;
+		return visibility;
 	}
 
 	public Tile getToLeft(){
@@ -169,6 +169,10 @@ public class Tile
 
 	public boolean isTransparent() {
 		return isOpen() || this.getEntity().isTransparent();
+	}
+	
+	public String toString(){
+		return "Tile["+x+","+y+"]";
 	}
 	
 }

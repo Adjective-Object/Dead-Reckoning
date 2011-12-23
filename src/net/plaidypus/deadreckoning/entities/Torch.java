@@ -1,7 +1,7 @@
 package net.plaidypus.deadreckoning.entities;
 
-import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Tile;
+import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
 
 import org.newdawn.slick.Animation;
@@ -28,8 +28,12 @@ public class Torch extends Entity{
 	}
 	
 	public void update(GameContainer gc, int delta) {
-		this.getParent().lightInRadius(getLocation(), this.light);
+		this.getParent().lightInRadius(getLocation(), this.light+Utilities.randFloat());
 		this.ani.update(delta);
+	}
+	
+	public void updateBoardEffects(GameContainer gc, int delta){
+		this.getParent().lightInRadius(getLocation(), this.light+Utilities.randFloat());
 	}
 	
 	public Action chooseAction(GameContainer gc, int delta) {return null;}
