@@ -235,7 +235,6 @@ public class GameBoard {
 							Tile.numLightLevels);
 					if (level > (int)board[x][y].lightLevel) {
 						board[x][y].lightLevel = level;
-						board[x][y].explored = true;
 					}
 				}
 			}
@@ -263,7 +262,7 @@ public class GameBoard {
 			for(int i=0; i<Math.abs(a.getX()-b.getX())+1;i++){
 					//TODO fix LOS to do ALL in a column between the targeted points
 					int x = a.getX()+(i*iteration);
-					int newy = (int)(a.getY()+i*iteration*slope);
+					int newy = (int) Math.round(a.getY()+i*iteration*slope);
 					if (revealAlongVector(getTileAt(x,lasty),getTileAt(x,newy))){
 						return true;
 					}
@@ -275,6 +274,9 @@ public class GameBoard {
 			for(int i=0; i<Math.abs(a.getY()-b.getY())+1; i++){
 				Tile target = a.getParent().getTileAt(a.getX(), a.getY()+i*iteration);
 				target.visibility=true;
+				if(target.lightLevel>0){
+					target.explored=true;
+				}
 				if(!target.isTransparent()){
 					return true;
 				}
@@ -282,6 +284,9 @@ public class GameBoard {
 		}
 		else{
 			a.visibility=true;
+			if(a.lightLevel>0){
+				a.explored=true;
+			}
 			return !a.isTransparent();
 		}
 		return false;

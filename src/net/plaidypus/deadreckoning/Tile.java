@@ -113,27 +113,20 @@ public class Tile
 	 */
 	public void render(Graphics g,float x, float y)
 	{
-		float renderLight = this.lightLevel;
-		if(this.explored && renderLight == 0){
-			renderLight = 1;
-		}
-		
-		if(this.explored && !this.isVisible()){
-			renderLight = 1;
-		}
-		else if(!this.explored){
-			renderLight = 0;
-		}
-		
-		if(renderLight>0){
+		if(explored){
+			float renderLight = this.lightLevel;
+			if(renderLight == 0 || !this.isVisible()){
+				renderLight = 1;
+			}
+			
 			Image toDraw = tileTextures.getSprite(tileFace%tileTextures.getHorizontalCount(), tileFace/tileTextures.getHorizontalCount());
 			toDraw.setAlpha(1-(float)(numLightLevels-renderLight)*brightness/numLightLevels);
 			g.drawImage(toDraw,x,y);
-		}
-		
-		if(this.highlighted!=HIGHLIGHT_NULL){
-			g.setColor(highlightColors[highlighted]);
-			g.fillRect(x,y, DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
+			
+			if(this.highlighted!=HIGHLIGHT_NULL){
+				g.setColor(highlightColors[highlighted]);
+				g.fillRect(x,y, DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
+			}
 		}
 		
 	}

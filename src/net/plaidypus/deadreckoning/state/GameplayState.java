@@ -104,6 +104,7 @@ public class GameplayState extends BasicGameState {
 	public void updateBoardEffects(GameContainer gc, int delta){
 		gb.HideAll();
 		gb.updateBoardEffects(gc, delta);
+		gb.revealFromEntity(player);
 	}
 	
 	private void updateActions(GameContainer gc, int delta) {
