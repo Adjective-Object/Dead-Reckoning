@@ -30,6 +30,7 @@ public abstract class Entity {
 	public Entity() {
 		setInteractive(true);
 		this.visible=true;
+		this.transparent=true;
 	}
 
 	Entity(Tile t) {

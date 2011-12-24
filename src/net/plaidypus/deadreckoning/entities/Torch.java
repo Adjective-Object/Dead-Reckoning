@@ -28,12 +28,12 @@ public class Torch extends Entity{
 	}
 	
 	public void update(GameContainer gc, int delta) {
-		this.getParent().lightInRadius(getLocation(), this.light+Utilities.randFloat());
+		this.getParent().lightInRadius(getLocation(), this.light+Utilities.randFloat()/5);
 		this.ani.update(delta);
 	}
 	
 	public void updateBoardEffects(GameContainer gc, int delta){
-		this.getParent().lightInRadius(getLocation(), this.light+Utilities.randFloat());
+		this.getParent().lightInRadius(getLocation(), this.light+Utilities.randFloat()/5);
 	}
 	
 	public Action chooseAction(GameContainer gc, int delta) {return null;}

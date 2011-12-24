@@ -68,11 +68,9 @@ public class GameBoard {
 	public void render(Graphics g, float xoff, float yoff) {
 		for (int x = 0; x < 25; x++) {
 			for (int y = 0; y < 25; y++) {
-				if (board[x][y].isVisible()) {
 					board[x][y].render(g,
 							x*DeadReckoningGame.tileSize + xoff,
 							y*DeadReckoningGame.tileSize + yoff);
-				}
 			}
 		}
 
@@ -235,7 +233,7 @@ public class GameBoard {
 				if (dist <= VIS) {
 					float level = Utilities.limitTo(VIS + 1 - dist, 1,
 							Tile.numLightLevels);
-					if (level > board[x][y].lightLevel) {
+					if (level > (int)board[x][y].lightLevel) {
 						board[x][y].lightLevel = level;
 						board[x][y].explored = true;
 					}
@@ -245,33 +243,48 @@ public class GameBoard {
 	}
 
 	public void revealFromEntity(LivingEntity e) {
-		//TODO replace with around exterior
-		if(this.getPrimairyHighlight()!=null){
-			revealAlongVector(e.getLocation(),this.getPrimairyHighlight());
-		}
-		else{
-			revealAlongVector(e.getLocation(),this.getTileAt(0,0));
-		}
+		for(int i=0; i<width; i++){	revealAlongVector(e.getLocation(),this.getTileAt(i,0)); }
+		for(int i=0; i<width; i++){	revealAlongVector(e.getLocation(),this.getTileAt(i,height-1)); }
+		for(int i=0; i<height-2; i++){	revealAlongVector(e.getLocation(),this.getTileAt(0,i+1)); }
+		for(int i=0; i<height-2; i++){	revealAlongVector(e.getLocation(),this.getTileAt(width-1,i+1)); }
 	}
-	
-	public void revealAlongVector(Tile a, Tile b){
+		
+	/**
+	 * returns if the vision was blocked
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	public boolean revealAlongVector(Tile a, Tile b){
 		if(a.getX()!=b.getX()){
-			float slope = (a.getY()-b.getY())/(a.getX()-b.getX());
+			double slope = (double)(a.getY()-b.getY())/(a.getX()-b.getX());
 			int iteration = (b.getX()-a.getX())/Math.abs(b.getX()-a.getX());
-			System.out.println(a+","+b+","+iteration);
-			int lasty=a.getY();
-			for(int i=0; i<Math.abs(a.getX()-b.getX());i++){
-					System.out.println(a.getX()+(i*iteration)+"," + (int)(a.getY()+i*iteration*slope));//TODO fix LOS to do ALL in a column between the targeted points
-					a.getParent().getTileAt(a.getX()+(i*iteration), (int)(a.getY()+i*iteration*slope)).visibility=true;
+			int lasty = a.getY();
+			for(int i=0; i<Math.abs(a.getX()-b.getX())+1;i++){
+					//TODO fix LOS to do ALL in a column between the targeted points
+					int x = a.getX()+(i*iteration);
+					int newy = (int)(a.getY()+i*iteration*slope);
+					if (revealAlongVector(getTileAt(x,lasty),getTileAt(x,newy))){
+						return true;
+					}
+					lasty=newy;
+			}
+		}
+		else if (a!=b){
+			int iteration = (b.getY()-a.getY())/Math.abs(b.getY()-a.getY());
+			for(int i=0; i<Math.abs(a.getY()-b.getY())+1; i++){
+				Tile target = a.getParent().getTileAt(a.getX(), a.getY()+i*iteration);
+				target.visibility=true;
+				if(!target.isTransparent()){
+					return true;
+				}
 			}
 		}
 		else{
-			int iteration = (b.getY()-a.getY())/Math.abs(b.getY()-a.getY());
-			for(int i=0; i<Math.abs(a.getY()-b.getY()); i++){
-				Tile target = a.getParent().getTileAt(a.getX(), a.getX()+i*iteration);
-				target.visibility=true;
-			}
+			a.visibility=true;
+			return !a.isTransparent();
 		}
+		return false;
 	}
 	
 	/**

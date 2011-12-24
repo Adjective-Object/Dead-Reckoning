@@ -117,7 +117,15 @@ public class Tile
 		if(this.explored && renderLight == 0){
 			renderLight = 1;
 		}
-		if(this.isVisible() && renderLight>0){
+		
+		if(this.explored && !this.isVisible()){
+			renderLight = 1;
+		}
+		else if(!this.explored){
+			renderLight = 0;
+		}
+		
+		if(renderLight>0){
 			Image toDraw = tileTextures.getSprite(tileFace%tileTextures.getHorizontalCount(), tileFace/tileTextures.getHorizontalCount());
 			toDraw.setAlpha(1-(float)(numLightLevels-renderLight)*brightness/numLightLevels);
 			g.drawImage(toDraw,x,y);

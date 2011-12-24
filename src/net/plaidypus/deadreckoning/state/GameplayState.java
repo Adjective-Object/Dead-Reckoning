@@ -107,18 +107,18 @@ public class GameplayState extends BasicGameState {
 	}
 	
 	private void updateActions(GameContainer gc, int delta) {
-		while(!gb.ingameEntities.get(currentEntity).isInteractive()){
+		while(!gb.ingameEntities.get(currentEntity).isInteractive() ){
 			currentEntity = (currentEntity + 1) % gb.ingameEntities.size();
 		}
 		
 		Entity current = gb.ingameEntities.get(currentEntity);
 		
-		if (player.canSee(current) && !actionAssigned) {
+		if (current.getLocation().isVisible() && current.getLocation().lightLevel>0 && !actionAssigned) {
 			cameraDestX = current.getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;
 			cameraDestY = current.getAbsoluteY() - gc.getHeight() / 2 + DeadReckoningGame.tileSize/2;
 		}
 		
-		if (!player.canSee(current)
+		if ((!current.getLocation().isVisible() && current.getLocation().lightLevel==0)
 				|| (Math.abs(cameraDestX - cameraX) <= 0.1 && Math
 						.abs(cameraDestY - cameraY) <= 0.1)) {
 
