@@ -80,4 +80,12 @@ public class Utilities {
 	public static int roundDown(float target){
 		return (int)(target);
 	}
+
+	public static int roundUp(double d) {
+		return roundUp((float)d);
+	}
+	
+	public static int roundDown(double d){
+		return roundDown((float)d);
+	}
 }

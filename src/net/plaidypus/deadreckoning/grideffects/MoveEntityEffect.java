@@ -49,7 +49,7 @@ public class MoveEntityEffect extends GridEffect{
 	}
 	
 	public void render(Graphics g, float xoff, float yoff) {
-		if((location.lightLevel>1 || destination.lightLevel>1) && (location.isVisible() || location.isVisible())){
+		if((location.lightLevel>=1 || destination.lightLevel>=1) && (location.isVisible() || location.isVisible())){
 			location.getEntity().forceRender(g, xoff+location.getX()*DeadReckoningGame.tileSize+this.xoff,yoff+location.getY()*DeadReckoningGame.tileSize+this.yoff);
 		}
 	}
