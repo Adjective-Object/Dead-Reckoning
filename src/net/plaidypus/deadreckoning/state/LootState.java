@@ -30,7 +30,6 @@ public class LootState extends BasicGameState{
 		this.stateID = stateID;
 		System.out.println(stateID);
 	}
-
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {	
 		System.out.println("Initialzing LootState");
@@ -57,10 +56,10 @@ public class LootState extends BasicGameState{
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-		if(input.isKeyPressed(Input.KEY_TAB)){
+		if(input.isKeyPressed(Input.KEY_ESCAPE)){
 			DeadReckoningGame.instance.enterState(DeadReckoningGame.GAMEPLAYSTATE);
 		}
-		if(input.isKeyPressed(Input.KEY_Q)){
+		if(input.isKeyPressed(Input.KEY_TAB)){
 			focus = !focus;
 		}
 		if(focus){gridB.parseInput(input, gc.getWidth()/2+DeadReckoningGame.tileSize/2,gc.getHeight()/2-gridB.getHeight()/2);}

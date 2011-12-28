@@ -29,6 +29,7 @@ public class Chest extends InteractiveEntity{
 	
 	public static void init() throws SlickException{
 		chest = new Image("res/chest.png");
+		System.out.println(chest);
 	}
 	
 	public void update(GameContainer gc, int delta) {
@@ -44,7 +45,7 @@ public class Chest extends InteractiveEntity{
 
 	@Override
 	public void forceRender(Graphics g, float x, float y) {
-		g.drawImage(chest, x*DeadReckoningGame.tileSize,y*DeadReckoningGame.tileSize);
+		g.drawImage(chest, x,y);
 	}
 
 }
