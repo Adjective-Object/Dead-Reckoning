@@ -27,7 +27,7 @@ public class Fireball extends Skill{
 	public Action makeAction(Tile target) {
 		Animation an = new Animation(fireball,40);
 		an.setLooping(false);
-		return new AttackAction(source.getLocation(), target, source.INT, true, null,null,new AnimationEffect(target,an),null);
+		return new AttackAction(source.getLocation(), target, 100, true, null,null,new AnimationEffect(target,an),null);
 	}
 
 	public boolean canTargetTile(Tile t) {

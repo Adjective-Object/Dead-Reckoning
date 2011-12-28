@@ -33,4 +33,8 @@ public class Item {
 		description=reader.readLine();
 		image=new Image(reader.readLine());
 	}
+
+	public Image getImage() {
+		return image;
+	}
 }

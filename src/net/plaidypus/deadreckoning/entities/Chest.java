@@ -8,6 +8,7 @@ import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.WaitAction;
 import net.plaidypus.deadreckoning.items.Item;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -22,6 +23,7 @@ public class Chest extends InteractiveEntity{
 		super(t);
 		this.setLocation(t);
 		this.items=items;
+		this.setVisible(true);
 		this.setInteractive(false);
 	}
 	
