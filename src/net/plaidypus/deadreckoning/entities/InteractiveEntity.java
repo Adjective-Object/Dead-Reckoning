@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;
+import net.plaidypus.deadreckoning.items.Equip;
 import net.plaidypus.deadreckoning.items.Item;
 
 import org.newdawn.slick.GameContainer;
@@ -21,7 +22,6 @@ public abstract class InteractiveEntity extends Entity{
 	public InteractiveEntity(Tile targetTile, ArrayList<Item> items){
 		super(targetTile);
 		this.inventory=items;
-		items.add(new Item(0));
 	}
 	
 	@Override

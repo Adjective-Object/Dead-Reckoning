@@ -12,12 +12,13 @@ public class Equip extends Item{
 	int STR, WIS, DEX, HP, MP, VIS;
 	
 	int equipSlot;
+	int[] classCompatability;
 	
 	public Equip(int itemID) {
 		super(itemID);
 	}
 	
-	private void parseItem(String path) throws IOException, SlickException {
+	protected void parseItem(String path) throws IOException, SlickException {
 		BufferedReader reader = new BufferedReader(new FileReader(path));
 		name=reader.readLine();
 		description=reader.readLine();
@@ -30,8 +31,6 @@ public class Equip extends Item{
 		HP = Integer.parseInt(reader.readLine());
 		MP = Integer.parseInt(reader.readLine());
 		VIS = Integer.parseInt(reader.readLine());
-		
-		System.out.println("cows come home");
 	}
 	
 }

@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning;
 
+import net.plaidypus.deadreckoning.state.CheckInventoryState;
 import net.plaidypus.deadreckoning.state.GameplayState;
 import net.plaidypus.deadreckoning.state.LootState;
 import net.plaidypus.deadreckoning.state.MainMenuState;
@@ -15,6 +16,7 @@ public class DeadReckoningGame extends StateBasedGame
 	public static final int MAINMENUSTATE	= 3;
 	public static final int GAMEPLAYSTATE	= 2;
 	public static final int LOOTSTATE		= 0;
+	public static final int INVENTORYSTATE 	= 1;
 	
 	public static final int tileSize = 32;
 	
@@ -27,6 +29,7 @@ public class DeadReckoningGame extends StateBasedGame
 		this.addState(new MainMenuState(MAINMENUSTATE));
 		this.addState(new GameplayState(GAMEPLAYSTATE));
 		this.addState(new LootState(LOOTSTATE));
+		this.addState(new CheckInventoryState(INVENTORYSTATE));
 		
 		this.enterState(MAINMENUSTATE);
 		

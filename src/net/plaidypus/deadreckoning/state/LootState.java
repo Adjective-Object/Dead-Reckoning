@@ -59,11 +59,11 @@ public class LootState extends BasicGameState{
 		if(input.isKeyPressed(Input.KEY_ESCAPE)){
 			DeadReckoningGame.instance.enterState(DeadReckoningGame.GAMEPLAYSTATE);
 		}
-		if(input.isKeyPressed(Input.KEY_TAB)){
+		if(input.isKeyPressed(Input.KEY_TAB) || input.isKeyPressed(Input.KEY_Q)){
 			focus = !focus;
 		}
-		if(focus){gridB.parseInput(input, gc.getWidth()/2+DeadReckoningGame.tileSize/2,gc.getHeight()/2-gridB.getHeight()/2);}
-		else{gridA.parseInput(input, gc.getWidth()/2-DeadReckoningGame.tileSize/2-gridA.getWidth(),gc.getHeight()/2-gridA.getHeight()/2);}
+		gridB.parseInput(input, gc.getWidth()/2+DeadReckoningGame.tileSize/2,gc.getHeight()/2-gridB.getHeight()/2,focus);
+		gridA.parseInput(input, gc.getWidth()/2-DeadReckoningGame.tileSize/2-gridA.getWidth(),gc.getHeight()/2-gridA.getHeight()/2,!focus);
 		if(input.isKeyPressed(Input.KEY_ENTER)){
 			if(focus && gridB.getContents().size()<gridB.getWidth()*gridB.getHeight() && gridB.isValidSelected()){
 				gridA.getContents().add(gridB.getSelected());
@@ -78,14 +78,12 @@ public class LootState extends BasicGameState{
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		g.drawImage(background,0,0);
-		gridB.render(g,gc.getWidth()/2+DeadReckoningGame.tileSize/2,gc.getHeight()/2-gridB.getHeight()/2);
-		gridA.render(g,gc.getWidth()/2-DeadReckoningGame.tileSize/2-gridA.getWidth(),gc.getHeight()/2-gridA.getHeight()/2);
-		if(focus){ 	g.drawRect(gc.getWidth()/2+DeadReckoningGame.tileSize/2,gc.getHeight()/2-gridB.getHeight()/2, gridB.getWidth(), gridB.getHeight());}
-		else{		g.drawRect(gc.getWidth()/2-DeadReckoningGame.tileSize/2-gridA.getWidth(),gc.getHeight()/2-gridA.getHeight()/2, gridA.getWidth(), gridA.getHeight());}
+		gridB.render(g,gc.getWidth()/2+DeadReckoningGame.tileSize/2,gc.getHeight()/2-gridB.getHeight()/2,focus);
+		gridA.render(g,gc.getWidth()/2-DeadReckoningGame.tileSize/2-gridA.getWidth(),gc.getHeight()/2-gridA.getHeight()/2,!focus);
 	}
 	
 	public int getID() {
-		return 0;
+		return stateID;
 	}
 
 }

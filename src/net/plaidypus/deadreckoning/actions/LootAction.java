@@ -22,21 +22,22 @@ public class LootAction extends EntityTypeAction{
 	}
 	
 	protected boolean applyToEntity(InteractiveEntity e){
-		return gotoLootScreen(((InteractiveEntity)source.getEntity()).getInventory(),((InteractiveEntity)target.getEntity()).getInventory());
+		System.out.println(e.getInventory());
+		return gotoLootScreen(((InteractiveEntity)source.getEntity()).getInventory(),e.getInventory());
 	}
 	
 	protected boolean applyToEntity(LivingEntity e){
 		if(e.isAlive()){
-			//TODO damage the entityofShutup
 			return true;
 		}
 		else{
-			return gotoLootScreen(((InteractiveEntity)source.getEntity()).getInventory(),((InteractiveEntity)target.getEntity()).getInventory());
+			return gotoLootScreen(((InteractiveEntity)source.getEntity()).getInventory(),e.getInventory());
 		}
 	}
 	
 	private boolean gotoLootScreen(ArrayList<Item> inventoryA, ArrayList<Item> inventoryB){
 		LootState.makeFrom(GameplayState.getImage(),inventoryA, inventoryB);
+		System.out.println(inventoryA+"  "+inventoryB);
 		DeadReckoningGame.instance.enterState(DeadReckoningGame.LOOTSTATE);
 		return true;
 	}

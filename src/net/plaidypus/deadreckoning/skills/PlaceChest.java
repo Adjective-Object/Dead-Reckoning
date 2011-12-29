@@ -7,6 +7,7 @@ import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.ChangeMapAction;
 import net.plaidypus.deadreckoning.entities.*;
+import net.plaidypus.deadreckoning.items.Equip;
 import net.plaidypus.deadreckoning.items.Item;
 
 public class PlaceChest extends Skill{
@@ -18,7 +19,6 @@ public class PlaceChest extends Skill{
 	@Override
 	public Action makeAction(Tile target) {
 		ArrayList<Item> inv = new ArrayList<Item>(0);
-		inv.add(new Item(0));
 		return new ChangeMapAction(source.getLocation(),target,new Chest(target, inv));
 	}
 

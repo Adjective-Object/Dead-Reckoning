@@ -31,20 +31,21 @@ public class ItemGrid {
 		tileimage = new Image("res/lootscreen/ItemSlot.png");
 	}
 	
-	public void parseInput(Input i, int xoff, int yoff){
-		if(i.isKeyPressed(Input.KEY_LEFT)){
-			selector=Utilities.limitTo(selector-1,0,width*height);
+	public void parseInput(Input i, int xoff, int yoff, boolean hasFocus){
+		if(hasFocus){
+			if(i.isKeyPressed(Input.KEY_LEFT)){
+				selector=Utilities.limitTo(selector-1,0,width*height);
+			}
+			if(i.isKeyPressed(Input.KEY_RIGHT)){
+				selector=Utilities.limitTo(selector+1,0,width*height);
+			}
+			if(i.isKeyPressed(Input.KEY_UP)){
+				selector=Utilities.limitTo(selector-width,0,width*height);
+			}
+			if(i.isKeyPressed(Input.KEY_DOWN)){
+				selector=Utilities.limitTo(selector+width,0,width*height);
+			}
 		}
-		if(i.isKeyPressed(Input.KEY_RIGHT)){
-			selector=Utilities.limitTo(selector+1,0,width*height);
-		}
-		if(i.isKeyPressed(Input.KEY_UP)){
-			selector=Utilities.limitTo(selector-width,0,width*height);
-		}
-		if(i.isKeyPressed(Input.KEY_DOWN)){
-			selector=Utilities.limitTo(selector+width,0,width*height);
-		}
-
 	}
 	
 	public void setContents(ArrayList<Item> newcont) {
@@ -67,9 +68,15 @@ public class ItemGrid {
 		return 2*externalBorder+height*(DeadReckoningGame.tileSize+internalBorder);
 	}
 	
-	public void render(Graphics g, int offsetX, int offsetY){
+	public void render(Graphics g, int offsetX, int offsetY, boolean hasFocus){
 		g.setColor(backgroundColor);
 		g.fillRect(offsetX,offsetY,getWidth(),getHeight());
+		
+		g.setColor(new Color(255,255,255));
+		
+		if(hasFocus){
+			g.drawRect(offsetX,offsetY,getWidth(),getHeight());
+		}
 		
 		for(int x=0; x<width; x++){
 			for(int y=0; y<height; y++){
@@ -77,8 +84,7 @@ public class ItemGrid {
 				if(x+y*width<contents.size()){
 					g.drawImage(contents.get(x+y*width).getImage(),offsetX+externalBorder+x*(DeadReckoningGame.tileSize+internalBorder),offsetY+externalBorder+y*(DeadReckoningGame.tileSize+internalBorder));
 				}
-				if(selector == x+y*width){
-					g.setColor(new Color(255,255,255));
+				if(hasFocus && selector == x+y*width){
 					g.drawRect(offsetX+externalBorder+x*(DeadReckoningGame.tileSize+internalBorder),offsetY+externalBorder+y*(DeadReckoningGame.tileSize+internalBorder),DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
 				}
 			}

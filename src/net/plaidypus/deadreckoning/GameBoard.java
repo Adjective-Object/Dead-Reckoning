@@ -133,6 +133,9 @@ public class GameBoard {
 			for (int x = 0; x < this.width; x++) {
 				if (!board[x][y].isOpen()) {
 					board[x][y].getEntity().update(gc, delta);
+					if(board[x][y].getEntity().toKill){
+						board[x][y].clearTile();
+					}
 				}
 			}
 		}

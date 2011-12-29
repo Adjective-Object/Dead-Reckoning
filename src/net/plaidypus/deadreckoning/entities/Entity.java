@@ -20,6 +20,7 @@ public abstract class Entity {
 	
 	private boolean facing;
 	private boolean transparent, visible;
+	public boolean toKill;
 	protected boolean interactive;
 	
 	Action nextAction;
@@ -254,6 +255,10 @@ public abstract class Entity {
 
 	public void setVisible(boolean visible) {
 		this.visible = visible;
+	}
+	
+	public void kill(){
+		this.toKill=true;
 	}
 
 }

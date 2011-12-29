@@ -1,14 +1,12 @@
 package net.plaidypus.deadreckoning.items;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-public class Item {
+public abstract class Item {
 
 	int itemID;
 	Image image;
@@ -27,12 +25,7 @@ public class Item {
 		}
 	}
 
-	private void parseItem(String path) throws IOException, SlickException {
-		BufferedReader reader = new BufferedReader(new FileReader(path));
-		name=reader.readLine();
-		description=reader.readLine();
-		image=new Image(reader.readLine());
-	}
+	protected abstract void parseItem(String path) throws IOException, SlickException;
 
 	public Image getImage() {
 		return image;

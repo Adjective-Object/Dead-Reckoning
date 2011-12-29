@@ -1,6 +1,5 @@
 package net.plaidypus.deadreckoning;
 
-
 import net.plaidypus.deadreckoning.entities.Entity;
 
 import org.newdawn.slick.Color;
@@ -14,149 +13,160 @@ import org.newdawn.slick.state.StateBasedGame;
 
 /*
 
-Griffin Brodman & Jeffrey Tao
-aaand Maaaaaaxxxxxxxx Huang-Hobbs.
-Created: 11/4/2011
+ Griffin Brodman & Jeffrey Tao
+ and Maaaaaaxxxxxxxx Huang-Hobbs.
+ Created: 11/4/2011
 
-*/
+ */
 
-public class Tile
-{
+public class Tile {
 	private Entity containedEntity;
 	private GameBoard parent;
 	public boolean isEmpty;
-	private int x,y;
+	private int x, y;
 	private int tileFace;
 	public int highlighted;
-	
+
 	public static final int numLightLevels = 5;
 	public boolean explored;
 	public boolean visibility;
 	public float lightLevel;
-	
-	static final Color[] highlightColors = new Color[] {new Color(0,0,0,0),new Color(255,75,23,100),new Color(252,125,73,100)};
-	
-	static final float brightness = (float)(0.8);
-	public static final int HIGHLIGHT_NULL =0, HIGHLIGHT_CONFIRM=1, HIGHLIGHT_DENY=2;
-	
+
+	static final Color[] highlightColors = new Color[] { new Color(0, 0, 0, 0),
+			new Color(255, 75, 23, 100), new Color(252, 125, 73, 100) };
+
+	static final float brightness = (float) (0.8);
+	public static final int HIGHLIGHT_NULL = 0, HIGHLIGHT_CONFIRM = 1,
+			HIGHLIGHT_DENY = 2;
+
 	static SpriteSheet tileTextures;
-	
+
 	public static final int TILE_EMPTY = 9, TILE_WALL = 4;
-	private static final double VISIBILITY_THRESHOLD = 0.1;
-	
- 	Tile(GameBoard parent, int x, int y) throws SlickException
-	{
- 		this.parent=parent;
- 		this.y=y;
- 		this.x=x;
- 		isEmpty = true;
- 		highlighted = 0;
- 		lightLevel=5;
- 		explored=false;
- 		visibility=true;
- 		setTileFace(TILE_EMPTY);
+
+	Tile(GameBoard parent, int x, int y) throws SlickException {
+		this.parent = parent;
+		this.y = y;
+		this.x = x;
+		isEmpty = true;
+		highlighted = 0;
+		lightLevel = 5;
+		explored = false;
+		visibility = true;
+		setTileFace(TILE_EMPTY);
 	}
- 	
-	Tile(GameBoard parent, int x, int y, Entity e) throws SlickException
-	{
-		this(parent, x,y);
+
+	Tile(GameBoard parent, int x, int y, Entity e) throws SlickException {
+		this(parent, x, y);
 		containedEntity = e;
 		containedEntity.setLocation(this);
 	}
-	
-	public static void init(String mapImage) throws SlickException{
-		tileTextures =  new SpriteSheet("res/wallTiles.png",DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
+
+	public static void init(String mapImage) throws SlickException {
+		tileTextures = new SpriteSheet("res/wallTiles.png",
+				DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
 	}
-	
-	public void setEntity(Entity e)
-	{
+
+	public void setEntity(Entity e) {
 		containedEntity = e;
 		containedEntity.setLocation(this);
 		isEmpty = false;
 	}
-	
-	public void disconnectEntity()
-	{
+
+	public void disconnectEntity() {
 		containedEntity = null;
-		isEmpty = true;
 	}
-	
-	public Entity getEntity()
-	{
+
+	public Entity getEntity() {
 		return containedEntity;
 	}
-	
-	public boolean isOpen()
-	{
-		return isEmpty;
+
+	public boolean isOpen() {
+		return this.containedEntity==null;
 	}
-	
-	public void setHighlighted(int h){
-		this.highlighted=h;
+
+	public void clearTile(){
+		this.containedEntity=null;
 	}
-	
-	public int getHighlighted(){
+
+	public void setHighlighted(int h) {
+		this.highlighted = h;
+	}
+
+	public int getHighlighted() {
 		return highlighted;
 	}
-	
-	public void update(GameContainer gc, StateBasedGame sbg, int delta){
-		if(!this.isEmpty){
+
+	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
+		if (!this.isEmpty) {
 			this.getEntity().update(gc, delta);
 		}
 	}
-	
+
 	/**
 	 * renders to Graphics
+	 * 
 	 * @param gc
 	 * @param sbg
 	 * @param g
 	 */
-	public void render(Graphics g,float x, float y)
-	{
-		if(explored){
+	public void render(Graphics g, float x, float y) {
+		if (explored) {
 			float renderLight = this.lightLevel;
-			if(renderLight == 0 || !this.isVisible()){
+			if (renderLight == 0 || !this.isVisible()) {
 				renderLight = (float) 0.5;
 			}
-			
-			Image toDraw = tileTextures.getSprite(tileFace%tileTextures.getHorizontalCount(), tileFace/tileTextures.getHorizontalCount());
-			toDraw.setAlpha(1-(float)(numLightLevels-renderLight)*brightness/numLightLevels);
-			g.drawImage(toDraw,x,y);
-			
-			if(this.highlighted!=HIGHLIGHT_NULL){
+
+			Image toDraw = tileTextures.getSprite(
+					tileFace % tileTextures.getHorizontalCount(), tileFace
+							/ tileTextures.getHorizontalCount());
+			toDraw.setAlpha(1 - (float) (numLightLevels - renderLight)
+					* brightness / numLightLevels);
+			g.drawImage(toDraw, x, y);
+
+			if (this.highlighted != HIGHLIGHT_NULL) {
 				g.setColor(highlightColors[highlighted]);
-				g.fillRect(x,y, DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
+				g.fillRect(x, y, DeadReckoningGame.tileSize,
+						DeadReckoningGame.tileSize);
 			}
 		}
-		
+
 	}
-	
+
 	public boolean isVisible() {
 		return visibility;
 	}
 
-	public Tile getToLeft(){
-		return parent.getTileAt( Utilities.limitTo(getX()-1,0,this.parent.getWidth()), getY());
+	public Tile getToLeft() {
+		return parent.getTileAt(
+				Utilities.limitTo(getX() - 1, 0, this.parent.getWidth()),
+				getY());
 	}
-	public Tile getToRight(){
-		return parent.getTileAt(Utilities.limitTo(getX()+1,0,this.parent.getWidth()), getY());
+
+	public Tile getToRight() {
+		return parent.getTileAt(
+				Utilities.limitTo(getX() + 1, 0, this.parent.getWidth()),
+				getY());
 	}
-	public Tile getToUp(){
-		return parent.getTileAt(getX(),Utilities.limitTo(getY()-1,0,this.parent.getHeight()));
+
+	public Tile getToUp() {
+		return parent.getTileAt(getX(),
+				Utilities.limitTo(getY() - 1, 0, this.parent.getHeight()));
 	}
-	public Tile getToDown(){
-		return parent.getTileAt(getX(),Utilities.limitTo(getY()+1,0,this.parent.getHeight()));
+
+	public Tile getToDown() {
+		return parent.getTileAt(getX(),
+				Utilities.limitTo(getY() + 1, 0, this.parent.getHeight()));
 	}
-	
-	public GameBoard getParent(){
+
+	public GameBoard getParent() {
 		return this.parent;
 	}
-	
-	public int getX(){
+
+	public int getX() {
 		return x;
 	}
-	
-	public int getY(){
+
+	public int getY() {
 		return y;
 	}
 
@@ -169,11 +179,14 @@ public class Tile
 	}
 
 	public boolean isTransparent() {
-		return isOpen() || this.getEntity().isTransparent();
+		if(!isOpen()){
+			return this.getEntity().isTransparent();
+		}
+		return true;
 	}
-	
-	public String toString(){
-		return "Tile["+x+","+y+"]";
+
+	public String toString() {
+		return "Tile[" + x + "," + y + "]";
 	}
-	
+
 }
