@@ -35,7 +35,7 @@ public class Tile {
 	static final Color[] highlightColors = new Color[] { new Color(0, 0, 0, 0),
 			new Color(255, 75, 23, 100), new Color(252, 125, 73, 100) };
 
-	static final float brightness = (float) (0.8);
+	static final float brightness = (float) (1.0);
 	public static final int HIGHLIGHT_NULL = 0, HIGHLIGHT_CONFIRM = 1,
 			HIGHLIGHT_DENY = 2;
 
@@ -111,6 +111,7 @@ public class Tile {
 	 */
 	public void render(Graphics g, float x, float y) {
 		if (explored) {
+			
 			float renderLight = this.lightLevel;
 			if (renderLight == 0 || !this.isVisible()) {
 				renderLight = (float) 0.5;

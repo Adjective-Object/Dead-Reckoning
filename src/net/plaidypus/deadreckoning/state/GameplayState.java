@@ -155,7 +155,9 @@ public class GameplayState extends BasicGameState {
 	 * @throws SlickException
 	 */
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+		g.clear();
 		gb.render(g, -cameraX, -cameraY);
+		gc.getGraphics().copyArea(backgroundScreen, 0, 0);
 		g.drawImage(playerHUD,5,5);
 		g.drawImage(skillHUD,248,5);
 		g.setColor(new Color(200,70,70));
@@ -164,8 +166,6 @@ public class GameplayState extends BasicGameState {
 		g.fillRect(131, 54, 75*player.MP/player.maxMP, 9);
 		g.setColor(new Color(200,200,70));
 		g.fillRect(131, 79, 75*player.EXP/player.getEXPforLevel(), 9);
-		
-		
 	}
 
 	public int getID() {
