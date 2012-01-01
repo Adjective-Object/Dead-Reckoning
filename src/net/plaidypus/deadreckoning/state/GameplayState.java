@@ -1,8 +1,11 @@
 package net.plaidypus.deadreckoning.state;
 
+import java.util.ArrayList;
+
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.GameBoard;
 import net.plaidypus.deadreckoning.Tile;
+import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.entities.Chest;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.Goblin;
@@ -25,7 +28,6 @@ public class GameplayState extends BasicGameState {
 
 	int stateID;
 	int currentEntity;
-	boolean actionAssigned;
 
 	public static float cameraX, cameraY;
 	public static float cameraDestX, cameraDestY;
@@ -37,7 +39,9 @@ public class GameplayState extends BasicGameState {
 	static Image backgroundScreen, playerHUD, skillHUD;
 	
 	GameBoard gb;
-
+	
+	ArrayList<Action> actions;
+	
 	public GameplayState(int stateID) throws SlickException {
 		this.stateID = stateID;
 		currentEntity = 0;
@@ -77,7 +81,7 @@ public class GameplayState extends BasicGameState {
 		new Goblin(gb.getTileAt(7, 4));
 		cameraX = 0;
 		cameraY = 0;
-		actionAssigned = false;
+		actions = new ArrayList<Action> (0);
 		
 		updateBoardEffects(gc, 0);
 	}
@@ -114,7 +118,7 @@ public class GameplayState extends BasicGameState {
 		
 		Entity current = gb.ingameEntities.get(currentEntity);
 		
-		if (current.getLocation().isVisible() && current.getLocation().lightLevel>0 && !actionAssigned) {
+		if (current.getLocation().isVisible() && current.getLocation().lightLevel>0 && actions.size()==0) {
 			cameraDestX = current.getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;
 			cameraDestY = current.getAbsoluteY() - gc.getHeight() / 2 + DeadReckoningGame.tileSize/2;
 		}
@@ -123,27 +127,36 @@ public class GameplayState extends BasicGameState {
 				|| (Math.abs(cameraDestX - cameraX) <= 0.1 && Math
 						.abs(cameraDestY - cameraY) <= 0.1)) {
 
-			if (!this.actionAssigned) {
-				current.setAction(current.chooseAction(gc, delta));
-				if (current.getAction() != null) {
-					this.actionAssigned = true;
-				}
+			if (this.actions.size()==0) {
+				Action a = current.chooseAction(gc, delta);
+				if(a!=null){actions.add(a);}
 			}
 
-			current.applyAction(gc, delta);
-			if(this.actionAssigned){
-				gb.clearHighlightedSquares();
-				gb.clearPrimaryHighlight();
+			if(!actionsComplete() && actions.size()>0){
+				for(int i=0; i<actions.size(); i++){
+					actions.get(i).applyAction(delta);
+				}
 			}
 			
-			if (this.actionAssigned && current.getAction().completed && gb.isIdle()) {
+			if (actionsComplete()&& actions.size()>0) {
+				gb.clearHighlightedSquares();
+				gb.clearPrimaryHighlight();
 				gc.getGraphics().copyArea(backgroundScreen, 0, 0);
-				this.actionAssigned = false;
 				currentEntity = (currentEntity + 1) % gb.ingameEntities.size();
 				updateBoardEffects(gc,delta);
+				actions.clear();
 			}
 
 		}
+	}
+
+	private boolean actionsComplete() {
+		for(int i=0; i<actions.size();i++){
+			if(!actions.get(i).completed){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**

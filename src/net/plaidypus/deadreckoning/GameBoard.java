@@ -389,18 +389,6 @@ public class GameBoard {
 		}
 	}
 	
-	/**
-	 *checks if the board is idle (that all entities on the board are idle) 
-	 */
-	public boolean isIdle() {
-		for (int i = 0; i < this.ingameEntities.size(); i++) {
-			if (!ingameEntities.get(i).isIdle()) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
 	public boolean coordInGrid(int x, int y){
 		return x>=0 && y>=0 && x<width && y<width;
 	}

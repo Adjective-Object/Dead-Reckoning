@@ -1,5 +1,7 @@
 package net.plaidypus.deadreckoning.entities;
 
+import java.util.ArrayList;
+
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.GameBoard;
 import net.plaidypus.deadreckoning.Tile;
@@ -22,8 +24,6 @@ public abstract class Entity {
 	private boolean transparent, visible;
 	public boolean toKill;
 	protected boolean interactive;
-	
-	Action nextAction;
 
 	/**
 	 * the basic entity class upon which all in game objects are based.
@@ -59,52 +59,7 @@ public abstract class Entity {
 	 */
 	
 	public abstract void updateBoardEffects(GameContainer gc, int delta);
-	
 	public abstract Action chooseAction(GameContainer gc, int delta);
-
-	/**
-	 * checks to see the entity is ready to recivie a command
-	 * 
-	 * @return if the entity is ready to receive a command
-	 */
-	public boolean isIdle() {
-		if (nextAction != null) {
-			return nextAction.completed;
-		}
-		return true;
-	}
-
-	/**
-	 * if the current action is not null (if there is a current action), it
-	 * applies the current action
-	 * 
-	 * @param gc
-	 * @param delta
-	 */
-	public void applyAction(GameContainer gc, int delta) {
-		if (nextAction != null && !nextAction.completed) {
-			nextAction.applyAction(delta);
-		}
-	}
-
-	/**
-	 * sets the current action
-	 * 
-	 * @param action
-	 *            the new action
-	 */
-	public void setAction(Action action) {
-		this.nextAction = action;
-	}
-
-	/**
-	 * gets the current action
-	 * 
-	 * @return the current action
-	 */
-	public Action getAction() {
-		return nextAction;
-	}
 	
 	/**
 	 * renders to Graphics only if this.visible

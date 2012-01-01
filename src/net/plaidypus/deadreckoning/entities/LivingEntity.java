@@ -58,7 +58,9 @@ public abstract class LivingEntity extends InteractiveEntity {
 		setFacing(false);
 
 		animating = false;
-
+		
+		this.statuses=new ArrayList<Status>(0);
+		
 		animations = new ArrayList<Animation>(0);
 		animations.add(stand);
 		animations.add(basicAttack);
@@ -123,16 +125,6 @@ public abstract class LivingEntity extends InteractiveEntity {
 	public void damageMagical(int damage) {// TODO math for damage reduction
 											// magic
 		this.HP -= damage;
-	}
-
-	/**
-	 * checks to see if this entity is prepared to accept a command
-	 */
-	public boolean isIdle() {
-		return (super.isIdle()
-				&& (this.nextAction == null || this.nextAction.completed)
-				&& !this.animating
-				)|| !this.isAlive();
 	}
 
 	/**
