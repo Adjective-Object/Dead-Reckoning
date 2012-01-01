@@ -11,6 +11,7 @@ import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
+import net.plaidypus.deadreckoning.status.Status;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
@@ -27,6 +28,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 			death;
 	public Animation currentAnimation;
 	public ArrayList<Animation> animations;
+	public ArrayList<Status> statuses;
 	int currentAnimationID;
 	public boolean animating;
 	public static final int ANIMATION_STAND = 0, ANIMATION_ATTACK = 1,
@@ -76,6 +78,10 @@ public abstract class LivingEntity extends InteractiveEntity {
 			this.animating = false;
 		}
 		
+		for(int i=0; i<this.statuses.size(); i++){
+			statuses.get(i).update(this, delta);
+		}
+		
 		if(!this.isAlive()){
 			this.setCurrentAnimation(LivingEntity.ANIMATION_DEATH);
 			this.setInteractive(false);
@@ -83,6 +89,9 @@ public abstract class LivingEntity extends InteractiveEntity {
 	}
 	
 	public void updateBoardEffects(GameContainer gc, int delta){
+		for(int i=0; i<this.statuses.size(); i++){
+			statuses.get(i).updateEntityEffects(this, delta);
+		}
 	}
 	
 	/**
@@ -210,6 +219,22 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 */
 	public boolean isAlive() {
 		return this.HP>0;
+	}
+	
+	public ArrayList<Status> getConditions(){
+		return this.statuses;
+	}
+	
+	public void addCondition(Status s){
+		s.applyToEntity(this);
+		this.statuses.add(s);
+	}
+	
+	public void clearConditions(){
+		for(int i=0; i<statuses.size(); i++){
+			statuses.get(i).removeFromEntity(this);
+		}
+		statuses.clear();
 	}
 	
 	/**
