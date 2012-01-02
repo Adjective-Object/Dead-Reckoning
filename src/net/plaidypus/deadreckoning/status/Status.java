@@ -19,10 +19,11 @@ public abstract class Status {
 	
 	public abstract void update(LivingEntity target, int delta);
 	
-	public abstract void updateEntityEffects(LivingEntity target, int delta);
+	public abstract void advanceTurnEffects(LivingEntity target);
 	
 	public abstract void removeFromEntity( LivingEntity target);
 	
 	public abstract void render(Graphics g, LivingEntity target, int xOff, int yOff);
 	
+	public abstract boolean isFinished();
 }

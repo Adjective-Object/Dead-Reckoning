@@ -14,6 +14,7 @@ import net.plaidypus.deadreckoning.entities.Torch;
 import net.plaidypus.deadreckoning.grideffects.DamageEffect;
 import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.skills.Fireball;
+import net.plaidypus.deadreckoning.status.OnFire;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -66,6 +67,8 @@ public class GameplayState extends BasicGameState {
 		Tile.init("res\\wallTiles.png");
 		Torch.init();
 		Chest.init();
+		OnFire.init();
+		
 		Profession.init();
 		backgroundScreen=new Image(gc.getWidth(),gc.getHeight());
 		
@@ -74,7 +77,7 @@ public class GameplayState extends BasicGameState {
 		
 		gc.setTargetFrameRate(60);
 		gc.setVSync(true);
-		gb = new GameBoard(25,25);
+		gb = new GameBoard(this,25,25);
 		gb.init();
 		
 		player = new Player(gb.getTileAt(4, 4),Profession.professions[Profession.PROFESSION_MAGICIAN],gc.getInput());
@@ -142,6 +145,7 @@ public class GameplayState extends BasicGameState {
 				gb.clearHighlightedSquares();
 				gb.clearPrimaryHighlight();
 				gc.getGraphics().copyArea(backgroundScreen, 0, 0);
+				current.advanceTurn();
 				currentEntity = (currentEntity + 1) % gb.ingameEntities.size();
 				updateBoardEffects(gc,delta);
 				actions.clear();
@@ -192,6 +196,10 @@ public class GameplayState extends BasicGameState {
 	
 	public static Image getImage(){
 		return backgroundScreen;
+	}
+	
+	public void addAction(Action a){
+		this.actions.add(a);
 	}
 
 }

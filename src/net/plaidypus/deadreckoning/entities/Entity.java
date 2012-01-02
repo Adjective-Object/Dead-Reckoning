@@ -216,4 +216,6 @@ public abstract class Entity {
 		this.toKill=true;
 	}
 
+	public void advanceTurn(){}
+
 }

@@ -11,6 +11,7 @@ import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
+import net.plaidypus.deadreckoning.state.GameplayState;
 import net.plaidypus.deadreckoning.status.Status;
 
 import org.newdawn.slick.Animation;
@@ -90,11 +91,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 		}
 	}
 	
-	public void updateBoardEffects(GameContainer gc, int delta){
-		for(int i=0; i<this.statuses.size(); i++){
-			statuses.get(i).updateEntityEffects(this, delta);
-		}
-	}
+	public abstract void updateBoardEffects(GameContainer gc, int delta);
 	
 	/**
 	 * still abstract because different livingEntities will have differing AIs
@@ -317,4 +314,15 @@ public abstract class LivingEntity extends InteractiveEntity {
 		death = animations.get("Death");
 		death.setLooping(false);
 	}
+
+	public GameplayState getGame() {
+		return this.getParent().getGame();
+	}
+	
+	public void advanceTurn(){
+		for (int i=0; i<statuses.size(); i++){
+			statuses.get(i).advanceTurnEffects(this);
+		}
+	}
+	
 }

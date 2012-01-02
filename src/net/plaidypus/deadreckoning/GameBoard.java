@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.grideffects.GridEffect;
+import net.plaidypus.deadreckoning.state.GameplayState;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -22,13 +23,16 @@ public class GameBoard {
 	int width, height;
 
 	ArrayList<GridEffect> overEffects, underEffects;
-
+	
+	GameplayState gameplayState;
+	
 	static final Color primaryHighlightColor = new Color(255, 75, 23);
 
-	public GameBoard(int width, int height) {
+	public GameBoard(GameplayState g, int width, int height) {
 		board = new Tile[width][height];
 		this.width = width;
 		this.height = height;
+		this.gameplayState=g;
 	}
 
 	public void placeEntity(Tile t, Entity e) {
@@ -391,6 +395,10 @@ public class GameBoard {
 	
 	public boolean coordInGrid(int x, int y){
 		return x>=0 && y>=0 && x<width && y<width;
+	}
+
+	public GameplayState getGame() {
+		return gameplayState;
 	}
 
 }

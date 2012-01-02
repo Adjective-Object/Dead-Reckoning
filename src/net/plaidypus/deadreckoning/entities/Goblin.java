@@ -39,5 +39,7 @@ public class Goblin extends LivingEntity {
 		}
 		return new WaitAction(this.getLocation());
 	}
+
+	public void updateBoardEffects(GameContainer gc, int delta) {}
 	
 }

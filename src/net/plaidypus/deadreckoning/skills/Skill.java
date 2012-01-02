@@ -1,5 +1,7 @@
 package net.plaidypus.deadreckoning.skills;
 
+import java.util.ArrayList;
+
 import net.plaidypus.deadreckoning.GameBoard;
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;

@@ -1,5 +1,7 @@
 package net.plaidypus.deadreckoning.skills;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
@@ -8,9 +10,12 @@ import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.GameBoard;
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;
+import net.plaidypus.deadreckoning.actions.ActionSpawner;
+import net.plaidypus.deadreckoning.actions.ApplyStatusAction;
 import net.plaidypus.deadreckoning.actions.AttackAction;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.grideffects.AnimationEffect;
+import net.plaidypus.deadreckoning.status.OnFire;
 
 public class Fireball extends Skill{
 	
@@ -25,9 +30,12 @@ public class Fireball extends Skill{
 	}
 	
 	public Action makeAction(Tile target) {
+		ArrayList<Action> toRet = new ArrayList<Action>(0);
 		Animation an = new Animation(fireball,40);
 		an.setLooping(false);
-		return new AttackAction(source.getLocation(), target, 100, true, null,null,new AnimationEffect(target,an),null);
+		toRet.add(new ApplyStatusAction(source.getLocation(), target, new OnFire(2, 1)));
+		toRet.add(new AttackAction(source.getLocation(), target, 2, true, null,null,new AnimationEffect(target,an),null));
+		return new ActionSpawner(source.getLocation(), toRet);
 	}
 
 	public boolean canTargetTile(Tile t) {
