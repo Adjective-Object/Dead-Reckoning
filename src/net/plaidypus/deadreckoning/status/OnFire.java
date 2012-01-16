@@ -1,6 +1,7 @@
 package net.plaidypus.deadreckoning.status;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
@@ -17,9 +18,10 @@ public class OnFire extends AnimatedStatus{
 	static SpriteSheet sprite;
 	
 	public OnFire( int duration, int power){
-		super(image, details,new Animation(sprite, 12));
+		super(image, details,new Animation(sprite, 60));
 		this.duration=duration;
 		this.power=power;
+		this.statusID=Status.STATUS_ONFIRE;
 	}
 	
 	public static void init() throws SlickException{
@@ -46,7 +48,8 @@ public class OnFire extends AnimatedStatus{
 	public void removeFromEntity(LivingEntity target) {
 		// TODO Auto-generated method stub
 	}
-
+	
+	
 	@Override
 	public boolean isFinished() {
 		return duration<=0;

@@ -37,4 +37,10 @@ public abstract class Action {
 			completed = apply(delta);
 		}
 	}
+	
+	public String toString(){
+		String[] p = this.getClass().toString().split("actions.");
+
+		return p[p.length-1]+" "+this.source+" -> "+this.target;
+	}
 }

@@ -64,8 +64,6 @@ public class AttackAction extends EntityTypeAction {
 			e.getParent().addEffectOver(
 					new DamageEffect(target, Integer.toString(damage)));
 			
-			e.animating = true;
-			s.animating = true;
 			attacking = true;
 		}
 

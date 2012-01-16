@@ -218,4 +218,8 @@ public abstract class Entity {
 
 	public void advanceTurn(){}
 
+	public boolean isIdle() {
+		return true;
+	}
+
 }

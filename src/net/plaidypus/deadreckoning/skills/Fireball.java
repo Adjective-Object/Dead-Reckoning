@@ -33,7 +33,7 @@ public class Fireball extends Skill{
 		ArrayList<Action> toRet = new ArrayList<Action>(0);
 		Animation an = new Animation(fireball,40);
 		an.setLooping(false);
-		toRet.add(new ApplyStatusAction(source.getLocation(), target, new OnFire(2, 1)));
+		toRet.add(new ApplyStatusAction(source.getLocation(), target, new OnFire(2, 100)));
 		toRet.add(new AttackAction(source.getLocation(), target, 2, true, null,null,new AnimationEffect(target,an),null));
 		return new ActionSpawner(source.getLocation(), toRet);
 	}

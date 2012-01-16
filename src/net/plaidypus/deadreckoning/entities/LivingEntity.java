@@ -11,7 +11,7 @@ import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
-import net.plaidypus.deadreckoning.state.GameplayState;
+import net.plaidypus.deadreckoning.hudelements.GameplayElement;
 import net.plaidypus.deadreckoning.status.Status;
 
 import org.newdawn.slick.Animation;
@@ -20,6 +20,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+
 
 public abstract class LivingEntity extends InteractiveEntity {
 
@@ -31,7 +32,6 @@ public abstract class LivingEntity extends InteractiveEntity {
 	public ArrayList<Animation> animations;
 	public ArrayList<Status> statuses;
 	int currentAnimationID;
-	public boolean animating;
 	public static final int ANIMATION_STAND = 0, ANIMATION_ATTACK = 1,
 			ANIMATION_WALK = 2, ANIMATION_FLINCH_FRONT = 3,
 			ANIMATION_FLINCH_BACK = 4, ANIMATION_DEATH = 5;
@@ -57,8 +57,6 @@ public abstract class LivingEntity extends InteractiveEntity {
 		currentAnimation = stand;
 
 		setFacing(false);
-
-		animating = false;
 		
 		this.statuses=new ArrayList<Status>(0);
 		
@@ -78,7 +76,6 @@ public abstract class LivingEntity extends InteractiveEntity {
 		currentAnimation.update(delta);
 		if (this.currentAnimation.isStopped()) {
 			this.setCurrentAnimation(ANIMATION_STAND);
-			this.animating = false;
 		}
 		
 		for(int i=0; i<this.statuses.size(); i++){
@@ -130,7 +127,10 @@ public abstract class LivingEntity extends InteractiveEntity {
 	public void forceRender(Graphics g, float x, float y) {
 		g.drawImage(
 				currentAnimation.getCurrentFrame().getFlippedCopy(getFacing(),
-						false), x , y);
+						false), (int)x , (int)y);
+		for(int i=0; i<statuses.size();i++){
+			statuses.get(i).render(g,(int)x, (int)y);
+		}
 	}
 
 	/**
@@ -226,6 +226,10 @@ public abstract class LivingEntity extends InteractiveEntity {
 		statuses.clear();
 	}
 	
+	public boolean isIdle(){
+		return this.getCurrentAnimationID()==LivingEntity.ANIMATION_STAND || this.HP<=0;
+	}
+	
 	/**
 	 * Loads an entity from a text file. SO UGLY IT HURTS, but it didn't make
 	 * sense to break into subroutines
@@ -315,7 +319,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 		death.setLooping(false);
 	}
 
-	public GameplayState getGame() {
+	public GameplayElement getGame() {
 		return this.getParent().getGame();
 	}
 	

@@ -39,8 +39,7 @@ public class Chest extends InteractiveEntity{
 		}
 	}
 	
-	public void updateBoardEffects(GameContainer gc, int delta){
-	}
+	public void updateBoardEffects(GameContainer gc, int delta){}
 
 	@Override
 	public Action chooseAction(GameContainer gc, int delta) {

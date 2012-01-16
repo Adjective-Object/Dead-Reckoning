@@ -6,13 +6,14 @@ import java.util.ArrayList;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.grideffects.GridEffect;
-import net.plaidypus.deadreckoning.state.GameplayState;
+import net.plaidypus.deadreckoning.hudelements.GameplayElement;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+
 
 public class GameBoard {
 
@@ -24,15 +25,15 @@ public class GameBoard {
 
 	ArrayList<GridEffect> overEffects, underEffects;
 	
-	GameplayState gameplayState;
+	GameplayElement GameplayLayer;
 	
 	static final Color primaryHighlightColor = new Color(255, 75, 23);
 
-	public GameBoard(GameplayState g, int width, int height) {
+	public GameBoard(GameplayElement g, int width, int height) {
 		board = new Tile[width][height];
 		this.width = width;
 		this.height = height;
-		this.gameplayState=g;
+		this.GameplayLayer=g;
 	}
 
 	public void placeEntity(Tile t, Entity e) {
@@ -262,7 +263,7 @@ public class GameBoard {
 	 * @param b
 	 * @return
 	 */
-	public boolean revealAlongVector(Tile a, Tile b){
+	public boolean revealAlongVector(Tile a, Tile b){//TODO it's a work in progress
 		if(a.getX()!=b.getX()){
 			double slope = (double)(a.getY()-b.getY())/(a.getX()-b.getX());
 			int iteration = (b.getX()-a.getX())/Math.abs(b.getX()-a.getX());
@@ -294,7 +295,7 @@ public class GameBoard {
 			if(a.lightLevel>0){
 				a.explored=true;
 			}
-			return !a.isTransparent();
+			return false;
 		}
 		return false;
 	}
@@ -397,8 +398,17 @@ public class GameBoard {
 		return x>=0 && y>=0 && x<width && y<width;
 	}
 
-	public GameplayState getGame() {
-		return gameplayState;
+	public GameplayElement getGame() {
+		return GameplayLayer;
+	}
+
+	public boolean isIdle() {
+		for(int i=0; i<this.ingameEntities.size() ;i++){
+			if(!ingameEntities.get(i).isIdle()){
+				return false;
+			}
+		}
+		return true;
 	}
 
 }

@@ -8,7 +8,7 @@ import net.plaidypus.deadreckoning.Tile;
 
 public class FadeoutEffect extends GridEffect{
 	
-	int alpha;
+	float alpha;
 	Image image;
 	
 	public FadeoutEffect(Tile location, Image image) {
@@ -27,8 +27,9 @@ public class FadeoutEffect extends GridEffect{
 
 	@Override
 	public void render(Graphics g, float xOff, float yOff) {
-		image.setAlpha(alpha);
+		image.setAlpha(alpha/255);
 		g.drawImage(image,location.getX()*DeadReckoningGame.tileSize + xOff, location.getY()*DeadReckoningGame.tileSize + yOff);
+		image.setAlpha(1);
 	}
 
 }

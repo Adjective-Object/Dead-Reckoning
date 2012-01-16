@@ -9,6 +9,9 @@ public abstract class Status {
 	
 	public Image tileImage;
 	public String description;
+	int statusID;
+	
+	static final int STATUS_ONFIRE = 1;
 	
 	public Status(Image tileImage, String description){
 		this.description=description;
@@ -23,7 +26,7 @@ public abstract class Status {
 	
 	public abstract void removeFromEntity( LivingEntity target);
 	
-	public abstract void render(Graphics g, LivingEntity target, int xOff, int yOff);
+	public abstract void render(Graphics g, int x, int y);
 	
 	public abstract boolean isFinished();
 }

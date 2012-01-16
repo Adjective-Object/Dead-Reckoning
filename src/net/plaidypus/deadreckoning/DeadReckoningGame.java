@@ -1,14 +1,20 @@
 package net.plaidypus.deadreckoning;
 
-import net.plaidypus.deadreckoning.state.CheckInventoryState;
-import net.plaidypus.deadreckoning.state.GameplayState;
-import net.plaidypus.deadreckoning.state.LootState;
+import net.plaidypus.deadreckoning.hudelements.GameplayElement;
+import net.plaidypus.deadreckoning.hudelements.HudElement;
+import net.plaidypus.deadreckoning.hudelements.ItemGridElement;
+import net.plaidypus.deadreckoning.hudelements.ItemGridInteractionElement;
+import net.plaidypus.deadreckoning.hudelements.ReturnToGameElement;
+import net.plaidypus.deadreckoning.hudelements.StillImageElement;
+import net.plaidypus.deadreckoning.state.ExclusiveHudLayersState;
+import net.plaidypus.deadreckoning.state.HudLayersState;
 import net.plaidypus.deadreckoning.state.MainMenuState;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+
 
 public class DeadReckoningGame extends StateBasedGame
 {
@@ -27,9 +33,17 @@ public class DeadReckoningGame extends StateBasedGame
 		super("Dead Reckoning");
 		
 		this.addState(new MainMenuState(MAINMENUSTATE));
-		this.addState(new GameplayState(GAMEPLAYSTATE));
-		this.addState(new LootState(LOOTSTATE));
-		this.addState(new CheckInventoryState(INVENTORYSTATE));
+		this.addState(new HudLayersState(GAMEPLAYSTATE, new HudElement[] {new GameplayElement()} ));
+		this.addState(new ExclusiveHudLayersState(LOOTSTATE, new HudElement[] {
+				new StillImageElement(0,0,HudElement.TOP_LEFT),
+				new ItemGridElement(-100,0,HudElement.CENTER_CENTER),
+				new ItemGridElement(100,0,HudElement.CENTER_CENTER),
+				new ItemGridInteractionElement(1,2),
+				new ReturnToGameElement()} ));
+		this.addState(new HudLayersState(INVENTORYSTATE, new HudElement[] {
+				new StillImageElement(0,0,HudElement.TOP_LEFT),
+				new ItemGridElement(0,0, HudElement.CENTER_CENTER),
+				new ReturnToGameElement()}));
 		
 		this.enterState(MAINMENUSTATE);
 		
@@ -49,9 +63,13 @@ public class DeadReckoningGame extends StateBasedGame
 		
 	}
 
+	public HudLayersState getHudState(int id){
+		return (HudLayersState)(getState(id));
+	}
+	
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
-		
+		HudElement.calculateOffsets(container);
 	}
 	
 }

@@ -20,8 +20,8 @@ public abstract class AnimatedStatus extends Status{
 		animation.update(delta);
 	}
 	@Override
-	public void render(Graphics g, LivingEntity target, int xOff, int yOff) {
-		g.drawImage(animation.getCurrentFrame(),target.getAbsoluteX()-xOff,target.getAbsoluteY()-yOff);
+	public void render(Graphics g, int x, int y) {
+		g.drawImage(animation.getCurrentFrame(),x,y);
 	}
 
 }
