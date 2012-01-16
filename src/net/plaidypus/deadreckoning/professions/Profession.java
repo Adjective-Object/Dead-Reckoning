@@ -1,6 +1,10 @@
 package net.plaidypus.deadreckoning.professions;
 
 
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
+
 import net.plaidypus.deadreckoning.skills.Skill;
 
 public class Profession {
@@ -12,12 +16,21 @@ public class Profession {
 	
 	public static Profession[] professions;
 	
-	Profession( SkillProgression[] skills, int[][] statProg){
+	public Image portrait,icon;
+	public SpriteSheet spriteSheet;
+
+	private String entityFile;
+	
+	Profession( int baseClass, SkillProgression[] skills, int[][] statProg) throws SlickException{
 		this.skills=skills;
 		this.statProgression=statProg;
+		//this.spriteSheet=new SpriteSheet("res/professions/"+baseClass+"/spriteSheet.png",32,32);
+		this.entityFile = "res/professions/"+baseClass+"/Player.entity";
+		this.portrait=new Image("res/professions/"+baseClass+"/Portrait.png");
+		this.icon=new Image("res/professions/"+baseClass+"/icon.png");
 	}
 	
-	public static void init(){
+	public static void init() throws SlickException{
 		professions = new Profession[5];
 		
 		SkillProgression testMage =new SkillProgression( new Skill[] {}, new double[] {1.1,1.1,1.1,1.1,1.1}, PROFESSION_MAGICIAN);
@@ -32,9 +45,14 @@ public class Profession {
 				{4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4}
 				} ;
 		
-		professions [0] = new Profession (mageSkills, statProgress);
-		
+		professions [0] = new Profession ( Profession.PROFESSION_MAGICIAN ,mageSkills, statProgress);
 	}
+	
+	public Image getPortriat(){return portrait;}
+	
+	public Image getIcon(){return icon;}
+	
+	public SpriteSheet getSpriteSheet(){return spriteSheet;}
 	
 	public int getHP(int level){
 		return getStatProgression()[0][level];
@@ -61,5 +79,9 @@ public class Profession {
 	
 	public SkillProgression[] getSkillProgression(){
 		return skills;
+	}
+
+	public String getEntityFile() {
+		return entityFile;
 	}
 }

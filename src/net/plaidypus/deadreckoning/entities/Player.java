@@ -42,7 +42,7 @@ public class Player extends LivingEntity {
 	 * @throws SlickException
 	 */
 	public Player(Tile targetTile, Profession p, Input i) throws SlickException {
-		super("res/player.entity",targetTile);
+		super(p.getEntityFile(),targetTile);
 		this.input = i;
 
 		keyBinds = new int[] { Input.KEY_M, Input.KEY_A, Input.KEY_W, Input.KEY_P , Input.KEY_T, Input.KEY_C, Input.KEY_L, Input.KEY_F, Input.KEY_I};
@@ -106,6 +106,10 @@ public class Player extends LivingEntity {
 	
 	public int getEXPforLevel() {
 		return 100;
+	}
+	
+	public Profession getProfession(){
+		return this.profession;
 	}
 
 

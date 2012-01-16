@@ -4,6 +4,7 @@ import net.plaidypus.deadreckoning.hudelements.GameplayElement;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.ItemGridElement;
 import net.plaidypus.deadreckoning.hudelements.ItemGridInteractionElement;
+import net.plaidypus.deadreckoning.hudelements.PlayerHud;
 import net.plaidypus.deadreckoning.hudelements.ReturnToGameElement;
 import net.plaidypus.deadreckoning.hudelements.StillImageElement;
 import net.plaidypus.deadreckoning.state.ExclusiveHudLayersState;
@@ -33,7 +34,10 @@ public class DeadReckoningGame extends StateBasedGame
 		super("Dead Reckoning");
 		
 		this.addState(new MainMenuState(MAINMENUSTATE));
-		this.addState(new HudLayersState(GAMEPLAYSTATE, new HudElement[] {new GameplayElement()} ));
+		this.addState(new HudLayersState(GAMEPLAYSTATE,new HudElement[] {
+				new GameplayElement(),
+				new PlayerHud(10,10,HudElement.TOP_LEFT,0)
+				} ));
 		this.addState(new ExclusiveHudLayersState(LOOTSTATE, new HudElement[] {
 				new StillImageElement(0,0,HudElement.TOP_LEFT),
 				new ItemGridElement(-100,0,HudElement.CENTER_CENTER),

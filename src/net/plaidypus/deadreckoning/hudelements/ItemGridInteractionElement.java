@@ -40,16 +40,16 @@ public class ItemGridInteractionElement extends HudElement{
 	}
 
 	@Override
-	public void makeFrom(Object o) {
+	public void makeFrom(Object o) {}
+
+	@Override
+	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		System.out.println(index1+" "+index2);
 		System.out.println(this.getParent().getElement(index1));
 		System.out.println(this.getParent().getElement(index2));
 		a=(ItemGridElement) this.getParent().getElement(index1);
 		b=(ItemGridElement) this.getParent().getElement(index2);
 	}
-
-	@Override
-	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {}
 
 	@Override
 	public int getWidth() {return 0;}

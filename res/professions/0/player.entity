@@ -9,10 +9,10 @@ MOV=3
 VIS=5
 
 :IMAGES:
-AttackSheet = "res/Thief attack.png"
-StandSheet = "res/Thief stand.png"
-FlinchFrontSheet = "res/Thief flinch front.png"
-FlinchBackSheet = "res/Thief flinch back.png"
+AttackSheet = "res/professions/0/attack.png"
+StandSheet = "res/professions/0/stand.png"
+FlinchFrontSheet = "res/professions/0/flinchFront.png"
+FlinchBackSheet = "res/professions/0/flinchBack.png"
 
 :SPRITES:
 Stand = StandSheet_120_0,0, 1,0, 2,0, 3,0, 4,0, 0,1, 1,1, 2,1, 3,1, 4,1

@@ -1,7 +1,5 @@
 package net.plaidypus.deadreckoning.entities;
 
-import java.util.ArrayList;
-
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
@@ -22,7 +20,7 @@ public class Goblin extends LivingEntity {
 	 * a testing monster class
 	 */
 	public Goblin(Tile targetTile) {
-		super("res/player.entity", targetTile);
+		super("res/goblin.entity", targetTile);
 		movement = new Movement(this);
 		direction = 0;
 	}

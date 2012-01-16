@@ -24,6 +24,7 @@ import org.newdawn.slick.SpriteSheet;
 
 public abstract class LivingEntity extends InteractiveEntity {
 
+	public int level;
 	public int maxHP, maxMP, STR, INT, AGI;
 	public int HP, MP, MOV, VIS;
 	public Animation stand, basicAttack, walking, damageFront, damageBack,
