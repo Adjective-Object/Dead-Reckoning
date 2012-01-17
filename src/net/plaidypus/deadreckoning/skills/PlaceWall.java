@@ -14,7 +14,7 @@ public class PlaceWall extends Skill{
 
 	@Override
 	public Action makeAction(Tile target) {
-		target.setTileFace(Tile.TILE_EMPTY);
+		target.setTileFace(Tile.TILE_WALL);
 		return new ChangeMapAction(source.getLocation(),target,new Wall(target));
 	}
 

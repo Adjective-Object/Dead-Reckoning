@@ -1,6 +1,10 @@
 package net.plaidypus.deadreckoning;
 
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.entities.Entity;
@@ -25,17 +29,32 @@ public class GameBoard {
 
 	ArrayList<GridEffect> overEffects, underEffects;
 	
-	GameplayElement GameplayLayer;
+	GameplayElement GameplayElement;
 	
 	static final Color primaryHighlightColor = new Color(255, 75, 23);
-
-	public GameBoard(GameplayElement g, int width, int height) {
+	
+	public GameBoard(GameplayElement g, int saveNumber, int floorNumber) throws NumberFormatException, IOException, SlickException{
+		BufferedReader r = new BufferedReader(new FileReader("saves/"+saveNumber+"/floor"+floorNumber+".map"));
+		this.GameplayElement=g;
+		width=(r.read()-48)*10+r.read()-48;
+		r.readLine();
+		height=(r.read()-48)*10+r.read()-48;
+		r.readLine();
+		System.out.println(width+" "+height);
 		board = new Tile[width][height];
-		this.width = width;
-		this.height = height;
-		this.GameplayLayer=g;
+		for(int y=0; y<height; y++){
+			for(int x=0; x<width; x++){
+				int q=(r.read()-48)*10+r.read()-48;
+				board[x][y]=new Tile(this,x,y,q);
+			}
+			r.readLine();
+		}
+		System.out.println(board.length);
+		for(int i=0; i<board.length; i++){
+			System.out.println(board[i].length);
+		}
 	}
-
+	
 	public void placeEntity(Tile t, Entity e) {
 		placeEntity(t.getX(), t.getY(), e);
 	}
@@ -59,11 +78,6 @@ public class GameBoard {
 		ingameEntities = new ArrayList<Entity>(0);
 		overEffects = new ArrayList<GridEffect>(0);
 		underEffects = new ArrayList<GridEffect>(0);
-		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < height; y++) {
-				board[x][y] = new Tile(this, x, y);
-			}
-		}
 	}
 
 	public Tile getTileAt(int x, int y) {
@@ -71,8 +85,8 @@ public class GameBoard {
 	}
 
 	public void render(Graphics g, float xoff, float yoff) {
-		for (int x = 0; x < 25; x++) {
-			for (int y = 0; y < 25; y++) {
+		for (int x = 0; x < board.length; x++) {
+			for (int y = 0; y < board[x].length; y++) {
 					board[x][y].render(g,
 							x*DeadReckoningGame.tileSize + xoff,
 							y*DeadReckoningGame.tileSize + yoff);
@@ -91,8 +105,8 @@ public class GameBoard {
 			underEffects.get(i).render(g, xoff, yoff);
 		}
 
-		for (int x = 0; x < 25; x++) {
-			for (int y = 0; y < 25; y++) {
+		for (int x = 0; x < board.length; x++) {
+			for (int y = 0; y < board[x].length; y++) {
 				if (!board[x][y].isOpen() && board[x][y].lightLevel >= 1 && board[x][y].isVisible()) {
 					board[x][y].getEntity().render(g,
 							x*DeadReckoningGame.tileSize + xoff,
@@ -203,7 +217,7 @@ public class GameBoard {
 	}
 
 	public void highlightSquare(int x, int y) {
-		board[x][y].setHighlighted(1);
+		board[x][y].setHighlighted(Tile.HIGHLIGHT_CONFIRM);
 	}
 
 	public boolean isTileHighlighted(int x, int y) {
@@ -399,7 +413,7 @@ public class GameBoard {
 	}
 
 	public GameplayElement getGame() {
-		return GameplayLayer;
+		return GameplayElement;
 	}
 
 	public boolean isIdle() {

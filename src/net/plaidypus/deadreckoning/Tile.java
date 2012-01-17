@@ -41,9 +41,9 @@ public class Tile {
 
 	static SpriteSheet tileTextures;
 
-	public static final int TILE_EMPTY = 9, TILE_WALL = 4;
+	public static final int TILE_EMPTY = 4, TILE_WALL = 9;
 
-	Tile(GameBoard parent, int x, int y) throws SlickException {
+	Tile(GameBoard parent, int x, int y, int tileFace) throws SlickException {
 		this.parent = parent;
 		this.y = y;
 		this.x = x;
@@ -52,15 +52,9 @@ public class Tile {
 		lightLevel = 5;
 		explored = false;
 		visibility = true;
-		setTileFace(TILE_EMPTY);
+		setTileFace(tileFace);
 	}
-
-	Tile(GameBoard parent, int x, int y, Entity e) throws SlickException {
-		this(parent, x, y);
-		containedEntity = e;
-		containedEntity.setLocation(this);
-	}
-
+	
 	public static void init(String mapImage) throws SlickException {
 		tileTextures = new SpriteSheet("res/wallTiles.png",
 				DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);

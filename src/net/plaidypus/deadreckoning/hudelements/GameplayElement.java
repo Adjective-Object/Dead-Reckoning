@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.hudelements;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
@@ -29,6 +30,7 @@ public class GameplayElement extends HudElement {
 
 	int stateID;
 	int currentEntity;
+	int saveNumber;
 	
 	private int width;
 	private int height;
@@ -47,9 +49,10 @@ public class GameplayElement extends HudElement {
 	ArrayList<Action> actions;
 	
 	
-	public GameplayElement() throws SlickException {
+	public GameplayElement(int saveNumber) throws SlickException {
 		super(0,0,HudElement.TOP_LEFT,true);
 		currentEntity = 0;
+		saveNumber = saveNumber;
 	}
 
 	/**
@@ -81,7 +84,14 @@ public class GameplayElement extends HudElement {
 		
 		gc.setTargetFrameRate(60);
 		gc.setVSync(true);
-		gb = new GameBoard(this,25,25);
+		try {
+			gb = new GameBoard(this,saveNumber,0);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e){
+			e.printStackTrace();
+		}
+		
 		gb.init();
 		
 		player = new Player(gb.getTileAt(4, 4),Profession.professions[Profession.PROFESSION_MAGICIAN],gc.getInput());
@@ -217,6 +227,6 @@ public class GameplayElement extends HudElement {
 	}
 
 	@Override
-	public void makeFrom(Object o) {}
+	public void makeFrom(Object o) {}//TODO making from integer saveNumber instead of passing that way cna be mde from selector
 
 }

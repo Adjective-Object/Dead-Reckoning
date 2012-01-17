@@ -46,7 +46,7 @@ public class Fireball extends Skill{
 	}
 
 	public void highlightRange(GameBoard board) {
-		highlightRadial(board, 8);
+		highlightRadial(board, 2);
 	}
 
 }
