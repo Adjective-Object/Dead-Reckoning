@@ -24,8 +24,7 @@ import org.newdawn.slick.SpriteSheet;
 
 public abstract class LivingEntity extends InteractiveEntity {
 
-	public int level;
-	public int maxHP, maxMP, STR, INT, AGI;
+	public int maxHP, maxMP, STR, INT, AGI, level;
 	public int HP, MP, MOV, VIS;
 	public Animation stand, basicAttack, walking, damageFront, damageBack,
 			death;
@@ -304,7 +303,9 @@ public abstract class LivingEntity extends InteractiveEntity {
 		AGI = stats.get("AGI");
 		MOV = stats.get("MOV");
 		VIS = stats.get("VIS");
-
+		
+		level = stats.get("level");
+		
 		HP = maxHP;
 		MP = maxMP;
 
@@ -328,6 +329,10 @@ public abstract class LivingEntity extends InteractiveEntity {
 		for (int i=0; i<statuses.size(); i++){
 			statuses.get(i).advanceTurnEffects(this);
 		}
+	}
+
+	public int calculateEXPValue() {
+		return this.level*10;//TODO angus
 	}
 	
 }

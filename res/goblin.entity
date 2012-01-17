@@ -8,6 +8,8 @@ AGI=3
 MOV=3
 VIS=5
 
+level=1
+
 :IMAGES:
 StandSheet = "res/Goblin stand.png"
 AttackSheet = "res/professions/0/attack.png"

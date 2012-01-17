@@ -5,10 +5,12 @@ import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;
+import net.plaidypus.deadreckoning.grideffects.AnimationEffect;
 import net.plaidypus.deadreckoning.items.Equip;
 import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.skills.*;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -28,6 +30,7 @@ public class Player extends LivingEntity {
 	public static Skill[] skills;
 
 	public int currentSkill;
+	public int level;
 	public int EXP;
 	
 	public Profession profession;
@@ -62,6 +65,13 @@ public class Player extends LivingEntity {
 	
 	public void updateBoardEffects(GameContainer gc, int delta){
 		this.getParent().lightInRadius(getLocation(), this.VIS);
+		if(this.EXP>=this.getEXPforLevel()){
+			this.EXP-=this.getEXPforLevel();
+			this.level++;
+			Animation levelUp=new Animation(Fireball.fireball,100);//TODO actual level up animation
+			levelUp.setLooping(false);
+			this.getParent().addEffectOver(this.getLocation(),new AnimationEffect(this.getLocation(),levelUp));//TODO Level up Animation
+		}
 	}
 	
 	/**
@@ -110,6 +120,10 @@ public class Player extends LivingEntity {
 	
 	public Profession getProfession(){
 		return this.profession;
+	}
+
+	public void addExp(int value) {
+		this.EXP+=value;
 	}
 
 

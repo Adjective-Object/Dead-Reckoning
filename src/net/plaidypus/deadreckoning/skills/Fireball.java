@@ -19,7 +19,7 @@ import net.plaidypus.deadreckoning.status.OnFire;
 
 public class Fireball extends Skill{
 	
-	static SpriteSheet fireball;
+	public static SpriteSheet fireball;
 	
 	public Fireball(LivingEntity source) {
 		super(source);
@@ -33,8 +33,8 @@ public class Fireball extends Skill{
 		ArrayList<Action> toRet = new ArrayList<Action>(0);
 		Animation an = new Animation(fireball,40);
 		an.setLooping(false);
-		toRet.add(new ApplyStatusAction(source.getLocation(), target, new OnFire(2, 100)));
-		toRet.add(new AttackAction(source.getLocation(), target, 2, true, null,null,new AnimationEffect(target,an),null));
+		toRet.add(new ApplyStatusAction(source.getLocation(), target, new OnFire(this.source, 2, 100)));
+		toRet.add(new AttackAction(source.getLocation(), target, 2, true, true, null,null,new AnimationEffect(target,an),null));
 		return new ActionSpawner(source.getLocation(), toRet);
 	}
 

@@ -4,27 +4,32 @@ import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
+import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.grideffects.DamageEffect;
 import net.plaidypus.deadreckoning.grideffects.GridEffect;
 
 public class AttackAction extends EntityTypeAction {
 
 	int damage;
-	boolean attacking;
+	boolean animateSource;
 	boolean physical;
 	GridEffect targetEffectTop, targetEffectBottom, sourceEffectTop,
 			sourceEffectBottom;
 
 	public AttackAction( Tile source, Tile target, int damage, boolean physical) {
-		this(source,target,damage,physical,null,null,null,null);
+		this(source,target,damage,physical,true,null,null,null,null);
+	}
+	
+	public AttackAction( Tile source, Tile target, int damage, boolean physical, boolean animateSource) {
+		this(source,target,damage,physical,animateSource,null,null,null,null);
 	}
 
-	public AttackAction( Tile source, Tile target, int damage, boolean physical,
+	public AttackAction( Tile source, Tile target, int damage, boolean physical, boolean animateSource,
 			GridEffect sourceTopEffect, GridEffect sourceBottomEffect ,
 			GridEffect targetTopEffect, GridEffect targetBottomEffect) {
 		super(source, target);
 		this.damage = damage;
-		attacking=false;
+		this.animateSource=animateSource;
 		this.physical=physical;
 		this.sourceEffectTop=sourceTopEffect;
 		this.sourceEffectBottom=sourceBottomEffect;
@@ -42,10 +47,24 @@ public class AttackAction extends EntityTypeAction {
 
 	protected boolean applyToEntity(LivingEntity e) {
 
-		if (!attacking) {
 			LivingEntity s = (LivingEntity) source.getEntity();
-			s.setCurrentAnimation(LivingEntity.ANIMATION_ATTACK);
-			e.damagePhysical(damage);
+			if(animateSource){
+				s.setCurrentAnimation(LivingEntity.ANIMATION_ATTACK);
+			}
+			if(physical){
+				e.damagePhysical(damage);
+			}
+			else{
+				e.damageMagical(damage);
+			}
+			if(e.HP<=0){
+				try{
+					Player p = (Player)(s);
+					p.addExp(e.calculateEXPValue());
+				}
+				catch(ClassCastException cce){}
+				
+			}
 
 			int xdiff = source.getX() - target.getX();
 			int ydiff = source.getY() - target.getY();
@@ -63,9 +82,6 @@ public class AttackAction extends EntityTypeAction {
 			
 			e.getParent().addEffectOver(
 					new DamageEffect(target, Integer.toString(damage)));
-			
-			attacking = true;
-		}
 
 		return true;
 

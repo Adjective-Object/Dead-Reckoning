@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.status;
 
+import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 
 import org.newdawn.slick.Animation;
@@ -10,8 +11,8 @@ public abstract class AnimatedStatus extends Status{
 	
 	Animation animation;
 	
-	public AnimatedStatus(Image tile, String description, Animation effectAnimation){
-		super(tile,description);
+	public AnimatedStatus(InteractiveEntity source,Image tile, String description, Animation effectAnimation){
+		super(source,tile,description);
 		this.animation=effectAnimation;
 	}
 

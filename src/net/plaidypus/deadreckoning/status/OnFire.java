@@ -8,6 +8,7 @@ import org.newdawn.slick.SpriteSheet;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.actions.AttackAction;
+import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 
 public class OnFire extends AnimatedStatus{
@@ -17,8 +18,8 @@ public class OnFire extends AnimatedStatus{
 	static String details;
 	static SpriteSheet sprite;
 	
-	public OnFire( int duration, int power){
-		super(image, details,new Animation(sprite, 60));
+	public OnFire( InteractiveEntity source, int duration, int power){
+		super(source, image, details,new Animation(sprite, 60));
 		this.duration=duration;
 		this.power=power;
 		this.statusID=Status.STATUS_ONFIRE;
@@ -39,7 +40,7 @@ public class OnFire extends AnimatedStatus{
 	@Override
 	public void advanceTurnEffects(LivingEntity target) {
 		System.out.println("blaw");
-		target.getGame().addAction(new AttackAction(target.getLocation(),target.getLocation(),power,false,
+		target.getGame().addAction(new AttackAction(source.getLocation(),target.getLocation(),power,false,false,
 				null, null, null, null));
 		duration--;
 	}

@@ -3,6 +3,7 @@ package net.plaidypus.deadreckoning.status;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
+import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 
 public abstract class Status {
@@ -10,12 +11,14 @@ public abstract class Status {
 	public Image tileImage;
 	public String description;
 	int statusID;
+	public InteractiveEntity source;
 	
 	static final int STATUS_ONFIRE = 1;
 	
-	public Status(Image tileImage, String description){
+	public Status(InteractiveEntity source,Image tileImage, String description){
 		this.description=description;
 		this.tileImage=tileImage;
+		this.source=source;
 	}
 	
 	public abstract void applyToEntity(LivingEntity target);
