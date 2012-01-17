@@ -30,7 +30,7 @@ public class GameBoard {
 	int width, height;
 
 	ArrayList<GridEffect> overEffects, underEffects;
-	HashMap<String,Entity> makerArray;
+	static HashMap<String,Entity> makerArray;
 	
 	GameplayElement GameplayElement;
 	
@@ -39,6 +39,9 @@ public class GameBoard {
 	public GameBoard(GameplayElement g, int saveNumber, int floorNumber) throws NumberFormatException, IOException, SlickException{
 		this.GameplayElement=g;
 		BufferedReader r = new BufferedReader(new FileReader("saves/"+saveNumber+"/floor"+floorNumber+".map"));
+		ingameEntities = new ArrayList<Entity>(0);
+		overEffects = new ArrayList<GridEffect>(0);
+		underEffects = new ArrayList<GridEffect>(0);
 		loadBoardFromSave(r);
 		loadEntitiesFromSave(r);
 	}
@@ -66,11 +69,12 @@ public class GameBoard {
 
 	private void loadEntitiesFromSave(BufferedReader r) throws IOException{
 		String entityDefinition = "";
-		while(!entityDefinition.equals("/Files")){
-			entityDefinition = r.readLine();
+		while(entityDefinition!=null){
+			System.out.println(entityDefinition);
 			if(!entityDefinition.equals("")){
 				makerArray.get(entityDefinition.split(":")[0]).makeFromString(this,entityDefinition.split(":"));
 			}
+			entityDefinition = r.readLine();
 		}
 	}
 	
@@ -93,10 +97,7 @@ public class GameBoard {
 		source.disconnectEntity();
 	}
 
-	public void init() throws SlickException {
-		ingameEntities = new ArrayList<Entity>(0);
-		overEffects = new ArrayList<GridEffect>(0);
-		underEffects = new ArrayList<GridEffect>(0);
+	public static void init() throws SlickException {
 		
 		makerArray = new HashMap<String,Entity>(0);
 		makerArray.put("Torch",new Torch("Torch"));
@@ -287,11 +288,11 @@ public class GameBoard {
 		}
 	}
 
-	public void revealFromEntity(LivingEntity e) {
-		for(int i=0; i<width; i++){	revealAlongVector(e.getLocation(),this.getTileAt(i,0)); }
-		for(int i=0; i<width; i++){	revealAlongVector(e.getLocation(),this.getTileAt(i,height-1)); }
-		for(int i=0; i<height-2; i++){	revealAlongVector(e.getLocation(),this.getTileAt(0,i+1)); }
-		for(int i=0; i<height-2; i++){	revealAlongVector(e.getLocation(),this.getTileAt(width-1,i+1)); }
+	public void revealFromEntity(Entity entity) {
+		for(int i=0; i<width; i++){	revealAlongVector(entity.getLocation(),this.getTileAt(i,0)); }
+		for(int i=0; i<width; i++){	revealAlongVector(entity.getLocation(),this.getTileAt(i,height-1)); }
+		for(int i=0; i<height-2; i++){	revealAlongVector(entity.getLocation(),this.getTileAt(0,i+1)); }
+		for(int i=0; i<height-2; i++){	revealAlongVector(entity.getLocation(),this.getTileAt(width-1,i+1)); }
 	}
 	
 	/**

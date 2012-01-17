@@ -10,6 +10,7 @@ import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.entities.Chest;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.Goblin;
+import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.entities.Torch;
 import net.plaidypus.deadreckoning.grideffects.DamageEffect;
@@ -41,7 +42,7 @@ public class GameplayElement extends HudElement {
 	static final float cameraRate = (float) 0.2;
 
 	Input input;
-	public Player player;
+	public LivingEntity player;
 	static Image backgroundScreen;
 	
 	GameBoard gb;
@@ -78,6 +79,7 @@ public class GameplayElement extends HudElement {
 		Torch.init();
 		Chest.init();
 		OnFire.init();
+		GameBoard.init();
 		
 		backgroundScreen=new Image(gc.getWidth(),gc.getHeight());
 		
@@ -91,10 +93,7 @@ public class GameplayElement extends HudElement {
 			e.printStackTrace();
 		}
 		
-		gb.init();
-		
-		player = new Player(gb.getTileAt(4, 4),Profession.professions[Profession.PROFESSION_MAGICIAN],gc.getInput());
-		new Goblin(gb.getTileAt(7, 4));
+		player = new Goblin(gb.getTileAt(7, 4));
 		cameraX = 0;
 		cameraY = 0;
 		actions = new ArrayList<Action> (0);
@@ -124,7 +123,7 @@ public class GameplayElement extends HudElement {
 	public void updateBoardEffects(GameContainer gc, int delta){
 		gb.HideAll();
 		gb.updateBoardEffects(gc, delta);
-		gb.revealFromEntity(player);
+		gb.revealFromEntity(player);//TODO replace with from player
 	}
 	
 	private void updateActions(GameContainer gc, int delta) {

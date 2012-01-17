@@ -35,9 +35,9 @@ public class Wall extends Entity{
 
 	@Override
 	public Entity makeFromString(GameBoard g, String[] toload) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		return new Wall(g.getTileAt(Integer.parseInt(toload[1]), Integer.parseInt(toload[2])));
+		}
+	
 
 	@Override
 	public String saveToString() {
