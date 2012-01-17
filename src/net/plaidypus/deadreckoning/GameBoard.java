@@ -2,13 +2,15 @@ package net.plaidypus.deadreckoning;
 
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
+import net.plaidypus.deadreckoning.entities.Torch;
+import net.plaidypus.deadreckoning.entities.Wall;
 import net.plaidypus.deadreckoning.grideffects.GridEffect;
 import net.plaidypus.deadreckoning.hudelements.GameplayElement;
 
@@ -28,14 +30,21 @@ public class GameBoard {
 	int width, height;
 
 	ArrayList<GridEffect> overEffects, underEffects;
+	HashMap<String,Entity> makerArray;
 	
 	GameplayElement GameplayElement;
 	
 	static final Color primaryHighlightColor = new Color(255, 75, 23);
 	
 	public GameBoard(GameplayElement g, int saveNumber, int floorNumber) throws NumberFormatException, IOException, SlickException{
-		BufferedReader r = new BufferedReader(new FileReader("saves/"+saveNumber+"/floor"+floorNumber+".map"));
 		this.GameplayElement=g;
+		BufferedReader r = new BufferedReader(new FileReader("saves/"+saveNumber+"/floor"+floorNumber+".map"));
+		loadBoardFromSave(r);
+		loadEntitiesFromSave(r);
+	}
+	
+	private void loadBoardFromSave(BufferedReader r) throws IOException, SlickException {
+		
 		width=(r.read()-48)*10+r.read()-48;
 		r.readLine();
 		height=(r.read()-48)*10+r.read()-48;
@@ -52,6 +61,16 @@ public class GameBoard {
 		System.out.println(board.length);
 		for(int i=0; i<board.length; i++){
 			System.out.println(board[i].length);
+		}
+	}
+
+	private void loadEntitiesFromSave(BufferedReader r) throws IOException{
+		String entityDefinition = "";
+		while(!entityDefinition.equals("/Files")){
+			entityDefinition = r.readLine();
+			if(!entityDefinition.equals("")){
+				makerArray.get(entityDefinition.split(":")[0]).makeFromString(this,entityDefinition.split(":"));
+			}
 		}
 	}
 	
@@ -78,6 +97,10 @@ public class GameBoard {
 		ingameEntities = new ArrayList<Entity>(0);
 		overEffects = new ArrayList<GridEffect>(0);
 		underEffects = new ArrayList<GridEffect>(0);
+		
+		makerArray = new HashMap<String,Entity>(0);
+		makerArray.put("Torch",new Torch("Torch"));
+		makerArray.put("Wall",new Wall("Wall"));
 	}
 
 	public Tile getTileAt(int x, int y) {

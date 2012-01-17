@@ -3,6 +3,7 @@ package net.plaidypus.deadreckoning.entities;
 
 import java.util.ArrayList;
 
+import net.plaidypus.deadreckoning.GameBoard;
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.grideffects.AnimationEffect;
@@ -124,6 +125,18 @@ public class Player extends LivingEntity {
 
 	public void addExp(int value) {
 		this.EXP+=value;
+	}
+
+	@Override
+	public Entity makeFromString(GameBoard g, String[] toload) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String saveToString() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

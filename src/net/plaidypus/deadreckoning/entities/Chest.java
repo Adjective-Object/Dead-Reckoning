@@ -2,6 +2,7 @@ package net.plaidypus.deadreckoning.entities;
 
 import java.util.ArrayList;
 
+import net.plaidypus.deadreckoning.GameBoard;
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.WaitAction;
@@ -49,6 +50,18 @@ public class Chest extends InteractiveEntity{
 	@Override
 	public void forceRender(Graphics g, float x, float y) {
 		g.drawImage(chest, x,y);
+	}
+
+	@Override
+	public Entity makeFromString(GameBoard g, String[] toload) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String saveToString() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

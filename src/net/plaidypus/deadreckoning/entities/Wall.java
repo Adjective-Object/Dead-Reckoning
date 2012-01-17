@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.entities;
 
+import net.plaidypus.deadreckoning.GameBoard;
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.WaitAction;
@@ -16,6 +17,10 @@ public class Wall extends Entity{
 		targetTile.setTileFace(Tile.TILE_WALL);
 	}
 	
+	public Wall(String stringCode){
+		super(stringCode);
+	}
+	
 	public void update(GameContainer gc, int delta) {}
 	
 	public void updateBoardEffects(GameContainer gc, int delta){
@@ -27,5 +32,17 @@ public class Wall extends Entity{
 	}
 
 	public void forceRender(Graphics g, float x, float y) {}
+
+	@Override
+	public Entity makeFromString(GameBoard g, String[] toload) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String saveToString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

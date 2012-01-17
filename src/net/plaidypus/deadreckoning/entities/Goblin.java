@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.entities;
 
+import net.plaidypus.deadreckoning.GameBoard;
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
@@ -39,5 +40,17 @@ public class Goblin extends LivingEntity {
 	}
 
 	public void updateBoardEffects(GameContainer gc, int delta) {}
+
+	@Override
+	public Entity makeFromString(GameBoard g, String[] toload) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public String saveToString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

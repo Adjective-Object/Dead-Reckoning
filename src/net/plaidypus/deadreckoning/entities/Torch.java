@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.entities;
 
+import net.plaidypus.deadreckoning.GameBoard;
 import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
@@ -15,6 +16,10 @@ public class Torch extends Entity{
 	int light;
 	static SpriteSheet img;
 	Animation ani;
+	
+	public Torch(String stringCode){
+		super(stringCode);
+	}
 	
 	public Torch(Tile t, int areaofLight){
 		super(t);
@@ -40,5 +45,16 @@ public class Torch extends Entity{
 
 	public void forceRender(Graphics g, float x, float y) {
 		g.drawImage(ani.getCurrentFrame(),x,y);
+	}
+
+	@Override
+	public Entity makeFromString(GameBoard g, String[] toload) {
+		return new Torch(g.getTileAt(Integer.parseInt(toload[1]),Integer.parseInt(toload[2])),Integer.parseInt(toload[3]));
+	}
+	
+	@Override
+	public String saveToString() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

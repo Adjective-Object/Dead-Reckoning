@@ -79,7 +79,6 @@ public class GameplayElement extends HudElement {
 		Chest.init();
 		OnFire.init();
 		
-		Profession.init();
 		backgroundScreen=new Image(gc.getWidth(),gc.getHeight());
 		
 		gc.setTargetFrameRate(60);

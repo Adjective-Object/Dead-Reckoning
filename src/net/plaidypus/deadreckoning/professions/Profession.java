@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.professions;
 
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import net.plaidypus.deadreckoning.items.Item;
@@ -16,14 +17,17 @@ public class Profession {
 	
 	private SkillProgression passiveTree;
 	
+	private Image portrait;
+	private int baseClassID;
 	
-	Profession(SkillProgression skillsA, SkillProgression skillsB, SkillProgression skillsC, SkillProgression passives, int[] statDist, Item main) throws SlickException{
+	Profession(int baseClassID, SkillProgression skillsA, SkillProgression skillsB, SkillProgression skillsC, SkillProgression passives, int[] statDist, Item main) throws SlickException{
 		this.skillTreeA=skillsA;
 		this.skillTreeB=skillsB;
 		this.skillTreeC=skillsC;
 		this.passiveTree=passives;
 		this.mainWeapon=main;
 		this.statDist=statDist;
+		this.portrait=new Image("res/professions/"+baseClassID+"/Portrait.png");
 	}
 	
 	public int[] getStatDist(){return statDist;}
@@ -32,6 +36,10 @@ public class Profession {
 	public SkillProgression getActiveTreeB(){return skillTreeB;}
 	public SkillProgression getActiveTreeC(){return skillTreeC;}
 	public SkillProgression getPassiveTree(){return passiveTree;}
+	
+	public Image getPortriat(){return portrait;}
+	public String getEntityFile(){return "res/professions/"+baseClassID+"/Player.entity";}
+	
 		//this.spriteSheet=new SpriteSheet("res/professions/"+baseClass+"/spriteSheet.png",32,32);
 		//this.entityFile = "res/professions/"+baseClass+"/Player.entity";
 		//this.portrait=new Image("res/professions/"+baseClass+"/Portrait.png");

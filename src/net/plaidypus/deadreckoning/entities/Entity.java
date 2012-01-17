@@ -1,7 +1,5 @@
 package net.plaidypus.deadreckoning.entities;
 
-import java.util.ArrayList;
-
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.GameBoard;
 import net.plaidypus.deadreckoning.Tile;
@@ -24,6 +22,8 @@ public abstract class Entity {
 	private boolean transparent, visible;
 	public boolean toKill;
 	protected boolean interactive;
+	
+	String stringCode;
 
 	/**
 	 * the basic entity class upon which all in game objects are based.
@@ -33,8 +33,12 @@ public abstract class Entity {
 		this.visible=true;
 		this.transparent=true;
 	}
-
-	Entity(Tile t) {
+	
+	public Entity(String stringCode){
+		this.stringCode=stringCode;
+	}
+	
+	public Entity(Tile t) {
 		this();
 		t.getParent().placeEntity(t, this);
 	}
@@ -221,5 +225,8 @@ public abstract class Entity {
 	public boolean isIdle() {
 		return true;
 	}
+	
+	public abstract Entity makeFromString(GameBoard target, String[] toload);
+	public abstract String saveToString();
 
 }
