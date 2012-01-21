@@ -8,6 +8,7 @@ import org.newdawn.slick.SpriteSheet;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.actions.AttackAction;
+import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 
@@ -54,6 +55,18 @@ public class OnFire extends AnimatedStatus{
 	@Override
 	public boolean isFinished() {
 		return duration<=0;
+	}
+
+	@Override
+	public Status makeFromString(LivingEntity target, String[] attributes) {
+		target.addCondition(new OnFire(null,Integer.parseInt(attributes[1]),Integer.parseInt(attributes[2])));//TODO entity linking - how do I I don't even? store all entities to a hashmap in GameBoard to reference that way? or just create an array list and assume it will never need to be sorted? but that won't allow for any initiative
+		return null;
+	}
+
+	@Override
+	public String saveToString() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

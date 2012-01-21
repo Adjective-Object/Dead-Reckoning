@@ -20,6 +20,12 @@ public class Profession {
 	private Image portrait;
 	private int baseClassID;
 	
+	public Profession(int baseClassID) throws SlickException{
+		//THIS DOES NOTHING. ONLY MEANT TO ACT AS A PLACEHOLDER FOR INTERACTIONS WITH THE REST OF THE CODE WHILE WILL PULLS HIS SHIT TOGETHER;
+		this.baseClassID=baseClassID;
+		this.portrait=new Image("res/professions/"+baseClassID+"/Portrait.png");
+	}
+	
 	Profession(int baseClassID, SkillProgression skillsA, SkillProgression skillsB, SkillProgression skillsC, SkillProgression passives, int[] statDist, Item main) throws SlickException{
 		this.skillTreeA=skillsA;
 		this.skillTreeB=skillsB;

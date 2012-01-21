@@ -1,11 +1,11 @@
 package net.plaidypus.deadreckoning.entities;
 
-import net.plaidypus.deadreckoning.GameBoard;
-import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.MoveAction;
 import net.plaidypus.deadreckoning.actions.WaitAction;
+import net.plaidypus.deadreckoning.board.GameBoard;
+import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.skills.Movement;
 import net.plaidypus.deadreckoning.skills.Skill;
 

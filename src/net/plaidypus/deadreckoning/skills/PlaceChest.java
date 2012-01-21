@@ -2,10 +2,10 @@ package net.plaidypus.deadreckoning.skills;
 
 import java.util.ArrayList;
 
-import net.plaidypus.deadreckoning.GameBoard;
-import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.ChangeMapAction;
+import net.plaidypus.deadreckoning.board.GameBoard;
+import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.*;
 import net.plaidypus.deadreckoning.items.Equip;
 import net.plaidypus.deadreckoning.items.Item;

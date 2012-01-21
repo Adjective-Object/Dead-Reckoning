@@ -1,9 +1,9 @@
 package net.plaidypus.deadreckoning.skills;
 
-import net.plaidypus.deadreckoning.GameBoard;
-import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.AttackAction;
+import net.plaidypus.deadreckoning.board.GameBoard;
+import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 
 public class Attack extends Skill {

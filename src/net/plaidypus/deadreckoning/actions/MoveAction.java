@@ -1,6 +1,6 @@
 package net.plaidypus.deadreckoning.actions;
 
-import net.plaidypus.deadreckoning.Tile;
+import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.grideffects.GridEffect;
 import net.plaidypus.deadreckoning.grideffects.MoveEntityEffect;
 

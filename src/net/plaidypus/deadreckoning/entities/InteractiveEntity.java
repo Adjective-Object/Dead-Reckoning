@@ -2,8 +2,8 @@ package net.plaidypus.deadreckoning.entities;
 
 import java.util.ArrayList;
 
-import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;
+import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.items.Item;
 
 import org.newdawn.slick.GameContainer;
@@ -23,6 +23,8 @@ public abstract class InteractiveEntity extends Entity{
 		this.inventory=items;
 	}
 	
+	public InteractiveEntity(String stringCode){}
+
 	@Override
 	public abstract void update(GameContainer gc, int delta);
 

@@ -2,7 +2,7 @@ package net.plaidypus.deadreckoning.actions;
 
 import java.util.ArrayList;
 
-import net.plaidypus.deadreckoning.Tile;
+import net.plaidypus.deadreckoning.board.Tile;
 
 public class ActionSpawner extends Action{
 	

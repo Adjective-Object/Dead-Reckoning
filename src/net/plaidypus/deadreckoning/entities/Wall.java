@@ -1,9 +1,9 @@
 package net.plaidypus.deadreckoning.entities;
 
-import net.plaidypus.deadreckoning.GameBoard;
-import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.WaitAction;
+import net.plaidypus.deadreckoning.board.GameBoard;
+import net.plaidypus.deadreckoning.board.Tile;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;

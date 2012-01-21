@@ -1,7 +1,7 @@
 package net.plaidypus.deadreckoning.actions;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.Tile;
+import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.hudelements.GameplayElement;
 

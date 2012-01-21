@@ -1,6 +1,6 @@
 package net.plaidypus.deadreckoning.actions;
 
-import net.plaidypus.deadreckoning.Tile;
+import net.plaidypus.deadreckoning.board.Tile;
 
 public abstract class Action {
 

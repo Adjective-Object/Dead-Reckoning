@@ -2,12 +2,13 @@ package net.plaidypus.deadreckoning.entities;
 
 import java.util.ArrayList;
 
-import net.plaidypus.deadreckoning.GameBoard;
-import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.WaitAction;
+import net.plaidypus.deadreckoning.board.GameBoard;
+import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.grideffects.FadeoutEffect;
 import net.plaidypus.deadreckoning.items.Equip;
+import net.plaidypus.deadreckoning.items.EtcDrop;
 import net.plaidypus.deadreckoning.items.Item;
 
 import org.newdawn.slick.GameContainer;
@@ -19,13 +20,16 @@ public class Chest extends InteractiveEntity{
 	
 	static Image chest;
 	
+	public Chest(String stringCode){
+		super(stringCode);
+	}
+	
 	public Chest(Tile t, ArrayList<Item> items){
 		super(t);
 		this.setLocation(t);
 		this.setVisible(true);
 		this.setInteractive(false);
-		
-		this.inventory.add(new Equip(0));
+		this.inventory.addAll(items);
 	}
 	
 	public static void init() throws SlickException{
@@ -54,8 +58,11 @@ public class Chest extends InteractiveEntity{
 
 	@Override
 	public Entity makeFromString(GameBoard g, String[] toload) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Item> content = new ArrayList<Item>(0);
+		for(int i=3; i<toload.length; i++){
+			content.add(new EtcDrop(Integer.parseInt(toload[i])));//TODO equip parsing
+		}
+		return new Chest(g.getTileAt(Integer.parseInt(toload[1]),Integer.parseInt(toload[2])),content);
 	}
 
 	@Override

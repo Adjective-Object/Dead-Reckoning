@@ -1,7 +1,7 @@
 package net.plaidypus.deadreckoning.grideffects;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.Tile;
+import net.plaidypus.deadreckoning.board.Tile;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;

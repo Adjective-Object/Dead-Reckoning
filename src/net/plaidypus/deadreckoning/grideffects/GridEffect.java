@@ -2,7 +2,7 @@ package net.plaidypus.deadreckoning.grideffects;
 
 import org.newdawn.slick.Graphics;
 
-import net.plaidypus.deadreckoning.Tile;
+import net.plaidypus.deadreckoning.board.Tile;
 
 public abstract class GridEffect {
 	private boolean kill;

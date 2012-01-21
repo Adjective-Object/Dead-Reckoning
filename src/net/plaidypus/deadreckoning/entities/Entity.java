@@ -1,9 +1,9 @@
 package net.plaidypus.deadreckoning.entities;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.GameBoard;
-import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;
+import net.plaidypus.deadreckoning.board.GameBoard;
+import net.plaidypus.deadreckoning.board.Tile;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -226,7 +226,7 @@ public abstract class Entity {
 		return true;
 	}
 	
-	public abstract Entity makeFromString(GameBoard target, String[] toload);
+	public abstract Entity makeFromString(GameBoard target, String[] attributes);
 	public abstract String saveToString();
 
 }

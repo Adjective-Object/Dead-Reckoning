@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.GameBoard;
-import net.plaidypus.deadreckoning.Tile;
 import net.plaidypus.deadreckoning.actions.Action;
+import net.plaidypus.deadreckoning.board.GameBoard;
+import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Chest;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.Goblin;
@@ -42,7 +42,7 @@ public class GameplayElement extends HudElement {
 	static final float cameraRate = (float) 0.2;
 
 	Input input;
-	public LivingEntity player;
+	public Player player;
 	static Image backgroundScreen;
 	
 	GameBoard gb;
@@ -93,7 +93,8 @@ public class GameplayElement extends HudElement {
 			e.printStackTrace();
 		}
 		
-		player = new Goblin(gb.getTileAt(7, 4));
+		player = new Player(gb.getTileAt(4,4), new Profession (0), input);
+		new Goblin(gb.getTileAt(7, 4));
 		cameraX = 0;
 		cameraY = 0;
 		actions = new ArrayList<Action> (0);

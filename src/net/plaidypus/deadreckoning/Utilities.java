@@ -2,6 +2,8 @@ package net.plaidypus.deadreckoning;
 
 import java.util.Random;
 
+import net.plaidypus.deadreckoning.board.Tile;
+
 public class Utilities {
 	public static int width=800;
 	public static int height=600;
