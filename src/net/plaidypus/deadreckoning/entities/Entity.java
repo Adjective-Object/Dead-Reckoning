@@ -20,26 +20,23 @@ import org.newdawn.slick.Graphics;
 public abstract class Entity {
 	private Tile location;
 	
+	private String name = "NAMELESS ENTITY";
 	private boolean facing;
 	private boolean transparent, visible;
 	public boolean toKill;
+	public int allignmnet;
+	public static final int ALLIGN_NEUTRAL = 0, ALLIGN_HOSTILE = 1, ALLIGN_FRIENDLY = 2;
 	
 	String stringCode;
-
-	/**
-	 * the basic entity class upon which all in game objects are based.
-	 */
-	public Entity() {
-		this.visible=true;
-		this.transparent=true;
-	}
 	
 	public Entity(String stringCode){
 		this.stringCode=stringCode;
 	}
 	
 	public Entity(Tile t) {
-		this();
+		this.visible=true;
+		this.transparent=true;
+		this.allignmnet=0;
 		t.getParent().placeEntity(t, this);
 	}
 	
@@ -199,7 +196,15 @@ public abstract class Entity {
 	public boolean isTransparent() {
 		return transparent;
 	}
-
+		
+	public int getAllignment(){
+		return this.allignmnet;
+	}
+	
+	public void setAllignment(int allign){
+		this.allignmnet=allign;
+	}
+	
 	public abstract boolean isInteractive();
 
 	public boolean isVisible() {
@@ -212,6 +217,14 @@ public abstract class Entity {
 	
 	public void kill(){
 		this.toKill=true;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public void setName(String n){
+		this.name=n;
 	}
 
 	public abstract ArrayList<Action> advanceTurn();

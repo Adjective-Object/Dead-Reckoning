@@ -36,7 +36,6 @@ public abstract class Status {
 	public abstract void render(Graphics g, int x, int y);
 	
 	public abstract boolean isFinished();
-	
-	public abstract Status makeFromString(LivingEntity target, String[] attributes);
-	public abstract String saveToString();
+
+	public abstract String getName();
 }

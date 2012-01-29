@@ -29,6 +29,7 @@ public class Chest extends InteractiveEntity{
 		this.setLocation(t);
 		this.setVisible(true);
 		this.inventory.addAll(items);
+		this.setName("a chest");
 	}
 	
 	public static void init() throws SlickException{

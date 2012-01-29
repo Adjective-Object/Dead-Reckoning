@@ -31,12 +31,13 @@ public class DeadReckoningGame extends StateBasedGame
 		this.addState(new HudLayersState(GAMEPLAYSTATE,new HudElement[] {
 				new GameplayElement(0),
 				new PlayerHudElement(10,10,HudElement.TOP_LEFT,0),
-				new StatusTrackerElement(10,120,HudElement.TOP_LEFT,0)
+				new StatusTrackerElement(10,120,HudElement.TOP_LEFT,0),
+				new StringPutter(0,0,HudElement.BOTTOM_LEFT,0,100)
 				} ));
 		this.addState(new ExclusiveHudLayersState(LOOTSTATE, new HudElement[] {
 				new StillImageElement(0,0,HudElement.TOP_LEFT),
-				new ItemGridElement(-100,0,HudElement.CENTER_CENTER),
-				new ItemGridElement(100,0,HudElement.CENTER_CENTER),
+				new ItemGridElement(-241,-132,HudElement.CENTER_CENTER),
+				new ItemGridElement(50,-132,HudElement.CENTER_CENTER),
 				new ItemGridInteractionElement(1,2),
 				new ReturnToGameElement()} ));
 		this.addState(new HudLayersState(INVENTORYSTATE, new HudElement[] {

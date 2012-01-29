@@ -43,4 +43,6 @@ public abstract class Action {
 
 		return p[p.length-1]+" "+this.source+" -> "+this.target;
 	}
+
+	public abstract String getMessage();
 }

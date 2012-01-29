@@ -24,4 +24,8 @@ public class ApplyStatusAction extends EntityTypeAction{
 	
 	protected boolean applyToEntity(InteractiveEntity e) {return true;}
 
+	public String getMessage() {
+		return source.getEntity().getName()+" made "+target.getEntity().getName()+" become "+s.getName();
+	}
+
 }

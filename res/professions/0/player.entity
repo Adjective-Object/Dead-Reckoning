@@ -1,3 +1,7 @@
+:INFORMATION:
+NAME=Player
+DESCRIPTION=That Player thing
+
 :STATS:
 HP=100
 MP=10

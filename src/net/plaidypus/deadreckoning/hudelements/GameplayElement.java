@@ -9,7 +9,7 @@ import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Chest;
 import net.plaidypus.deadreckoning.entities.Entity;
-import net.plaidypus.deadreckoning.entities.Goblin;
+import net.plaidypus.deadreckoning.entities.Monster;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.entities.Torch;
@@ -40,7 +40,9 @@ public class GameplayElement extends HudElement {
 	public static float cameraDestX, cameraDestY;
 
 	static final float cameraRate = (float) 0.2;
-
+	
+	public String message;
+	
 	Input input;
 	public Player player;
 	static Image backgroundScreen;
@@ -95,7 +97,8 @@ public class GameplayElement extends HudElement {
 		}
 		
 		player = new Player(gb.getTileAt(4,4), new Profession (0), input);
-		new Goblin(gb.getTileAt(7, 4));
+		new Monster("res/goblin.entity",gb.getTileAt(7, 4),1);
+		new Monster("res/goblin.entity",gb.getTileAt(5, 4),2);
 		cameraX = 0;
 		cameraY = 0;
 		actions = new ArrayList<Action> (0);
@@ -156,6 +159,7 @@ public class GameplayElement extends HudElement {
 			if(currentAction<actions.size()){
 				actions.get(currentAction).applyAction(delta);
 				if(actions.get(currentAction).completed){
+					setMessage(actions.get(currentAction).getMessage());
 					currentAction++;
 				}
 			}
@@ -225,5 +229,17 @@ public class GameplayElement extends HudElement {
 
 	@Override
 	public void makeFrom(Object o) {}//TODO making from integer saveNumber instead of passing that way cna be mde from selector
+	
+	public String getMessage(){
+		return this.message;
+	}
+	
+	public void setMessage(String newMes){
+		this.message=newMes;
+	}
 
+	public void clearMessage() {
+		this.message=null;
+	}
+	
 }

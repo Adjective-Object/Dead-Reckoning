@@ -14,9 +14,8 @@ public abstract class AnimatedEntity extends Entity{
 	
 	Animation sprite;
 	
-	public AnimatedEntity(Tile location , String imageRef) throws SlickException
-	{
-		
+	public AnimatedEntity(Tile location , String imageRef) throws SlickException{
+		super(location);
 		int[] frames = new int[]{0, 0, 1, 0, 2, 0, 3, 0, 4, 0, 0, 1, 1, 1, 2, 1, 3, 1, 4, 1};
 		int[] durations = new int[]{120, 120, 120, 120, 120, 120, 120, 120, 120, 120};
 		
@@ -25,7 +24,6 @@ public abstract class AnimatedEntity extends Entity{
 							new Image(imageRef), DeadReckoningGame.tileSize, DeadReckoningGame.tileSize, 0),
 						frames, durations);
 		sprite.setAutoUpdate(true);
-		this.setLocation(location);
 	}
 	
 	public Image render()

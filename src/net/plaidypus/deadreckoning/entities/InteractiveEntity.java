@@ -23,7 +23,7 @@ public abstract class InteractiveEntity extends Entity{
 		this.inventory=items;
 	}
 	
-	public InteractiveEntity(String stringCode){}
+	public InteractiveEntity(String stringCode){super(stringCode);}
 
 	@Override
 	public abstract void update(GameContainer gc, int delta);

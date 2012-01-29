@@ -7,7 +7,37 @@ import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 
 public class MoveEntityEffect extends GridEffect{
-
+	Tile destination;
+	double currentdown;
+	
+	public MoveEntityEffect(Tile location, Tile targetLocation) {
+		super(location);
+		this.destination = targetLocation;
+		location.getEntity().setVisible(false);
+		
+		if(destination.getX()>location.getX()){
+			location.getEntity().setFacing(true);
+		}
+		else if(destination.getX()<location.getX()){
+			location.getEntity().setFacing(false);
+		}
+		
+		currentdown = 5.0;
+	}
+	
+	public void update(int delta){
+		currentdown = currentdown/2;
+		if(currentdown <0.5){
+			this.setComplete(true);
+			location.getEntity().setVisible(true);
+			location.getParent().moveEntity(location,destination);
+		}
+	}
+	
+	public void render(Graphics g, float xoff, float yoff){
+		location.getEntity().forceRender(g, destination.getX()*DeadReckoningGame.tileSize+xoff,destination.getY()*DeadReckoningGame.tileSize-(int)currentdown+yoff);
+	}
+	/*
 	Tile destination;
 	float xoff, yoff;
 	int moveSpeed;
@@ -21,10 +51,6 @@ public class MoveEntityEffect extends GridEffect{
 		b = location.getY()-destination.getY();
 		hypotenuse = Math.sqrt(Math.pow(a,2)+Math.pow(b,2));
 		distravelled=0;
-	}
-
-	
-	public void update(int delta) {
 		
 		Entity e = location.getEntity();
 		
@@ -34,6 +60,10 @@ public class MoveEntityEffect extends GridEffect{
 		else if(destination.getX()<location.getX()){
 			e.setFacing(false);
 		}
+	}
+
+	
+	public void update(int delta) {
 			
 		if( distravelled>=hypotenuse ){
 			//TODO fix finish trigger conditions
@@ -53,5 +83,5 @@ public class MoveEntityEffect extends GridEffect{
 			location.getEntity().forceRender(g, xoff+location.getX()*DeadReckoningGame.tileSize+this.xoff,yoff+location.getY()*DeadReckoningGame.tileSize+this.yoff);
 		}
 	}
-
+	*/
 }

@@ -49,8 +49,8 @@ public abstract class HudElement {
 		offsets = new int[9][2];
 		for(int i=0; i<3; i++){
 			for(int p=0; p<3; p++){
-				offsets[p+i*3][0]=(int) (gc.getWidth()/3.0*p);
-				offsets[p+i*3][1]=(int) (gc.getHeight()/3.0*i);
+				offsets[p+i*3][0]=(int) (gc.getWidth()/2.0*p);
+				offsets[p+i*3][1]=(int) (gc.getHeight()/2.0*i);
 			}
 		}
 	}

@@ -20,5 +20,9 @@ public class MoveAction extends Action{
 		}
 		return false;
 	}
+
+	public String getMessage() {
+		return null;
+	}
 	
 }

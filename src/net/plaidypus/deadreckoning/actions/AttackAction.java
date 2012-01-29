@@ -48,7 +48,7 @@ public class AttackAction extends EntityTypeAction {
 	protected boolean applyToEntity(LivingEntity e) {
 
 			LivingEntity s = (LivingEntity) source.getEntity();
-			if(animateSource){
+			if(animateSource && source.isVisible()){
 				s.setCurrentAnimation(LivingEntity.ANIMATION_ATTACK);
 			}
 			if(physical){
@@ -68,11 +68,13 @@ public class AttackAction extends EntityTypeAction {
 
 			int xdiff = source.getX() - target.getX();
 			int ydiff = source.getY() - target.getY();
-
-			if ((xdiff < 0 ^ e.getFacing()) || (xdiff == 0 && ydiff > 0)) {
-				e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_BACK);
-			} else {
-				e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_FRONT);
+			
+			if(e.getLocation().isVisible()){
+				if ((xdiff < 0 ^ e.getFacing()) || (xdiff == 0 && ydiff > 0)) {
+					e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_BACK);
+				} else {
+					e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_FRONT);
+				}
 			}
 			
 			e.getParent().addEffectOver(source, this.sourceEffectTop);
@@ -85,5 +87,10 @@ public class AttackAction extends EntityTypeAction {
 
 		return true;
 
+	}
+
+	@Override
+	public String getMessage() {
+		return source.getEntity().getName()+" attacked "+target.getEntity().getName()+" for "+damage+" damage";
 	}
 }

@@ -41,4 +41,9 @@ public class LootAction extends EntityTypeAction{
 		return true;
 	}
 
+	@Override
+	public String getMessage() {
+		return source.getEntity().getName()+" looted "+target.getEntity().getName();
+	}
+
 }

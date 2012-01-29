@@ -16,4 +16,9 @@ public class ChangeMapAction extends Action{
 		source.getParent().placeEntity(target, toWrite);
 		return true;
 	}
+
+	@Override
+	public String getMessage() {
+		return null;
+	}
 }

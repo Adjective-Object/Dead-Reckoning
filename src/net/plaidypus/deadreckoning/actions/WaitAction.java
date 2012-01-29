@@ -14,4 +14,9 @@ public class WaitAction extends Action{
 		return true;
 	}
 
+
+	public String getMessage() {
+		return source.getEntity().getName()+" is useless";
+	}
+
 }

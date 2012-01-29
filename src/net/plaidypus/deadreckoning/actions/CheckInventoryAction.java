@@ -19,4 +19,9 @@ public class CheckInventoryAction extends Action{
 		return true;
 	}
 
+	@Override
+	public String getMessage() {
+		return source.getEntity().getName()+" is digging through his shit";
+	}
+
 }

@@ -42,7 +42,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * 
 	 * @param entityfile
 	 */
-	public LivingEntity(String entityfile, Tile targetTile) {
+	public LivingEntity(String entityfile, Tile targetTile, int allignment) {
 		super(targetTile);
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(new File(
@@ -58,6 +58,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 		setFacing(false);
 		
+		this.setAllignment(allignment);
 		this.statuses=new ArrayList<Status>(0);
 		
 		animations = new ArrayList<Animation>(0);
@@ -235,7 +236,8 @@ public abstract class LivingEntity extends InteractiveEntity {
 	public void loadFromFile(BufferedReader reader) throws IOException,
 			SlickException {
 		String ParsingMode = "";
-
+		
+		HashMap<String, String> info = new HashMap<String, String>();
 		HashMap<String, Integer> stats = new HashMap<String, Integer>();
 		HashMap<String, SpriteSheet> images = new HashMap<String, SpriteSheet>();
 		HashMap<String, Animation> animations = new HashMap<String, Animation>();
@@ -253,6 +255,10 @@ public abstract class LivingEntity extends InteractiveEntity {
 				}
 
 				else {
+					if (ParsingMode.equals(":INFORMATION:")) {
+						String[] tostat = in.split("=");
+						info.put(tostat[0], tostat[1]);
+					}
 					if (ParsingMode.equals(":STATS:")) {
 						String[] tostat = in.replaceAll(" ", "").split("=");
 						stats.put(tostat[0], Integer.parseInt(tostat[1]));
@@ -290,6 +296,8 @@ public abstract class LivingEntity extends InteractiveEntity {
 			}
 		}
 
+		setName(info.get("NAME"));
+		
 		maxHP = stats.get("HP");
 		maxMP = stats.get("MP");
 		STR = stats.get("STR");
@@ -328,6 +336,14 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 	public int calculateEXPValue() {
 		return this.level*10;//TODO angus
+	}
+	
+	public String getName(){
+		String p = super.getName();
+		if(!this.isAlive()){
+			p+="'s corpse";
+		}
+		return p;
 	}
 	
 }
