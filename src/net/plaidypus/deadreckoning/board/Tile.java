@@ -154,6 +154,13 @@ public class Tile {
 		return parent.getTileAt(getX(),
 				Utilities.limitTo(getY() + 1, 0, this.parent.getHeight()));
 	}
+	
+	public Tile getRelativeTo(int xoff, int yoff) {
+		return parent.getTileAt(
+				Utilities.limitTo(getX() + xoff, 0, this.parent.getWidth()),
+				Utilities.limitTo(getY() + yoff, 0, this.parent.getHeight()));
+	}
+
 
 	public GameBoard getParent() {
 		return this.parent;
@@ -185,5 +192,4 @@ public class Tile {
 	public String toString() {
 		return "Tile[" + x + "," + y + "]";
 	}
-
 }

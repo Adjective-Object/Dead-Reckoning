@@ -30,7 +30,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class GameplayElement extends HudElement {
 
 	int stateID;
-	int currentEntity;
+	int currentEntity, currentAction;
 	int saveNumber;
 	
 	private int width;
@@ -53,6 +53,7 @@ public class GameplayElement extends HudElement {
 	public GameplayElement(int saveNumber) throws SlickException {
 		super(0,0,HudElement.TOP_LEFT,true);
 		currentEntity = 0;
+		currentAction = 0;
 		saveNumber = saveNumber;
 	}
 
@@ -128,51 +129,45 @@ public class GameplayElement extends HudElement {
 	}
 	
 	private void updateActions(GameContainer gc, int delta) {
-		
-		while(!gb.ingameEntities.get(currentEntity).isInteractive() ){
-			currentEntity = (currentEntity + 1) % gb.ingameEntities.size();
-		}
-		
-		Entity current = gb.ingameEntities.get(currentEntity);
-		
-		if (current.getLocation().isVisible() && current.getLocation().lightLevel>0 && actions.size()==0) {
-			cameraDestX = current.getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;
-			cameraDestY = current.getAbsoluteY() - gc.getHeight() / 2 + DeadReckoningGame.tileSize/2;
-		}
-		
-		if ((!current.getLocation().isVisible() && current.getLocation().lightLevel==0)
-				|| (Math.abs(cameraDestX - cameraX) <= 0.01 && Math
-						.abs(cameraDestY - cameraY) <= 0.01)) {
+		if(actions.size()==0){
+			while(!gb.ingameEntities.get(currentEntity).isInteractive() ){
+				currentEntity = (currentEntity + 1) % gb.ingameEntities.size();
+			}
 			
-			//System.out.println(actions);
+			Entity current = gb.ingameEntities.get(currentEntity);
 			
-			if (this.actions.size()==0) {
-				current.advanceTurn();
+			if (current.getLocation().isVisible() && current.getLocation().lightLevel>0 && actions.size()==0) {
+				cameraDestX = current.getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;
+				cameraDestY = current.getAbsoluteY() - gc.getHeight() / 2 + DeadReckoningGame.tileSize/2;
+			}
+			
+			
+			if(Math.abs(cameraDestX-cameraX) <= 0.1  && Math.abs(cameraDestY-cameraY) <= 0.1){
 				Action a = current.chooseAction(gc, delta);
 				if(a!=null){
+					actions.addAll(current.advanceTurn());
 					actions.add(a);
 				}
 			}
-
-			if(!actionsComplete() && actions.size()>0 && gb.isIdle()){
-				actions.get(0).applyAction(delta);
-				for(int i=0; i<actions.size(); i++){
-					if(!actions.get(i).completed){
-						actions.get(i).applyAction(delta);
-						break;
-					}
+			
+		}
+		
+		if(!actionsComplete()){
+			if(currentAction<actions.size()){
+				actions.get(currentAction).applyAction(delta);
+				if(actions.get(currentAction).completed){
+					currentAction++;
 				}
 			}
-			
-			if (actionsComplete() & actions.size()>0 && gb.isIdle()) {
+			if(currentAction==actions.size() && gb.isIdle() || !gb.ingameEntities.get(currentEntity).isInteractive()){
+				currentAction=0;
+				currentEntity = (currentEntity + 1) % gb.ingameEntities.size();
+				updateBoardEffects(gc, delta);
 				gb.clearHighlightedSquares();
 				gb.clearPrimaryHighlight();
-				gc.getGraphics().copyArea(backgroundScreen, 0, 0);
-				currentEntity = (currentEntity + 1) % gb.ingameEntities.size();
-				updateBoardEffects(gc,delta);
 				actions.clear();
+				input.clearKeyPressedRecord();
 			}
-
 		}
 	}
 
@@ -181,6 +176,9 @@ public class GameplayElement extends HudElement {
 			if(!actions.get(i).completed){
 				return false;
 			}
+		}
+		if(actions.size()>0){
+			return false;
 		}
 		return true;
 	}

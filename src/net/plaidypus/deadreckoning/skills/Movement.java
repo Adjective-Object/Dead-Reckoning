@@ -27,7 +27,7 @@ public class Movement extends Skill {
 	}
 
 	public void highlightRange(GameBoard board) {
-		board.highLightAvailablePaths( source.getLocation(), source.getMovementSpeed());
+		board.highLightAvailablePaths( source.getLocation(), 1);
 	}
 
 }

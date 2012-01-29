@@ -49,8 +49,10 @@ public class Player extends LivingEntity {
 		super(p.getEntityFile(),targetTile);
 		this.input = i;
 
-		keyBinds = new int[] { Input.KEY_M, Input.KEY_A, Input.KEY_W, Input.KEY_P , Input.KEY_T, Input.KEY_C, Input.KEY_L, Input.KEY_F, Input.KEY_I};
-		skills = new Skill[] { new Movement(this), new Attack(this),
+		keyBinds = new int[] { Input.KEY_A, Input.KEY_D, Input.KEY_W, Input.KEY_S, Input.KEY_Y, Input.KEY_E, Input.KEY_P , Input.KEY_T, Input.KEY_C, Input.KEY_L, Input.KEY_F, Input.KEY_I};
+		skills = new Skill[] { new PreBakedMove(this,-1,0),
+				new PreBakedMove(this,1,0),new PreBakedMove(this,0,-1),
+				new PreBakedMove(this,0,1),new Attack(this),
 				new Wait(this), new PlaceWall(this), new PlaceTorch(this),
 				new PlaceChest(this), new Loot(this), new Fireball(this), new CheckInventory(this)};
 		profession = p;

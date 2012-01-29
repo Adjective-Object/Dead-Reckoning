@@ -1,8 +1,11 @@
 package net.plaidypus.deadreckoning.status;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
+import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
@@ -26,7 +29,7 @@ public abstract class Status {
 	
 	public abstract void update(LivingEntity target, int delta);
 	
-	public abstract void advanceTurnEffects(LivingEntity target);
+	public abstract ArrayList<Action> advanceTurnEffects(LivingEntity target);
 	
 	public abstract void removeFromEntity( LivingEntity target);
 	

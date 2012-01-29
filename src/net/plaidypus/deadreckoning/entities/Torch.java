@@ -1,5 +1,7 @@
 package net.plaidypus.deadreckoning.entities;
 
+import java.util.ArrayList;
+
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
@@ -24,7 +26,6 @@ public class Torch extends Entity{
 	public Torch(Tile t, int areaofLight){
 		super(t);
 		this.light = areaofLight;
-		this.interactive=false;
 		ani = new Animation(img , new int []{0,0,1,0,2,0,3,0}, new int[] {60,60,60,60});
 	}
 	
@@ -56,5 +57,15 @@ public class Torch extends Entity{
 	public String saveToString() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public ArrayList<Action> advanceTurn() {
+		return new ArrayList<Action>(0);
+	}
+
+	@Override
+	public boolean isInteractive() {
+		return false;
 	}
 }

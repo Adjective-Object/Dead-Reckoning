@@ -1,5 +1,7 @@
 package net.plaidypus.deadreckoning.entities;
 
+import java.util.ArrayList;
+
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
@@ -21,7 +23,6 @@ public abstract class Entity {
 	private boolean facing;
 	private boolean transparent, visible;
 	public boolean toKill;
-	protected boolean interactive;
 	
 	String stringCode;
 
@@ -29,7 +30,6 @@ public abstract class Entity {
 	 * the basic entity class upon which all in game objects are based.
 	 */
 	public Entity() {
-		setInteractive(true);
 		this.visible=true;
 		this.transparent=true;
 	}
@@ -199,14 +199,8 @@ public abstract class Entity {
 	public boolean isTransparent() {
 		return transparent;
 	}
-	
-	public void setInteractive(boolean interactive) {
-		this.interactive = interactive;
-	}
 
-	public boolean isInteractive() {
-		return interactive;
-	}
+	public abstract boolean isInteractive();
 
 	public boolean isVisible() {
 		return visible;
@@ -220,7 +214,7 @@ public abstract class Entity {
 		this.toKill=true;
 	}
 
-	public void advanceTurn(){}
+	public abstract ArrayList<Action> advanceTurn();
 
 	public boolean isIdle() {
 		return true;

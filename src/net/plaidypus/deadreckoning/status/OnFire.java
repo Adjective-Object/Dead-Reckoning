@@ -1,5 +1,7 @@
 package net.plaidypus.deadreckoning.status;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -7,6 +9,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
+import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.AttackAction;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
@@ -39,16 +42,18 @@ public class OnFire extends AnimatedStatus{
 	}
 
 	@Override
-	public void advanceTurnEffects(LivingEntity target) {
-		System.out.println("blaw");
-		target.getGame().addAction(new AttackAction(source.getLocation(),target.getLocation(),power,false,false,
+	public ArrayList<Action> advanceTurnEffects(LivingEntity target) {
+		ArrayList<Action> actions = new ArrayList<Action>(0);
+		actions.add(new AttackAction(source.getLocation(),target.getLocation(),power,false,false,
 				null, null, null, null));
 		duration--;
+		System.out.println(actions);
+		return actions;
 	}
 
 	@Override
 	public void removeFromEntity(LivingEntity target) {
-		// TODO Auto-generated method stub
+		
 	}
 	
 	

@@ -36,7 +36,6 @@ public class HudLayersState extends BasicGameState{
 		}
 	}
 	
-	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
 		for(int i=0; i<this.HudElements.size();i++){

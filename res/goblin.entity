@@ -5,7 +5,6 @@ MP=10
 STR=20
 INT=4
 AGI=3
-MOV=3
 VIS=5
 
 level=1

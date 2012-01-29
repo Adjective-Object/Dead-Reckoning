@@ -25,7 +25,7 @@ import org.newdawn.slick.SpriteSheet;
 public abstract class LivingEntity extends InteractiveEntity {
 
 	public int maxHP, maxMP, STR, INT, AGI, level;
-	public int HP, MP, MOV, VIS;
+	public int HP, MP, VIS;
 	public Animation stand, basicAttack, walking, damageFront, damageBack,
 			death;
 	public Animation currentAnimation;
@@ -84,7 +84,6 @@ public abstract class LivingEntity extends InteractiveEntity {
 		
 		if(!this.isAlive()){
 			this.setCurrentAnimation(LivingEntity.ANIMATION_DEATH);
-			this.setInteractive(false);
 		}
 	}
 	
@@ -194,20 +193,15 @@ public abstract class LivingEntity extends InteractiveEntity {
 	}
 	
 	/**
-	 * gets the speed the entity can move at (STAT MANAGEMENT)
-	 * 
-	 * @return the number of tiles it can move per turn
-	 */
-	public int getMovementSpeed() {
-		return MOV;
-	}
-	
-	/**
 	 * is the entity still alive?
 	 * @return if the HP>0
 	 */
 	public boolean isAlive() {
 		return this.HP>0;
+	}
+	
+	public boolean isInteractive(){
+		return this.isAlive();
 	}
 	
 	public ArrayList<Status> getConditions(){
@@ -301,7 +295,6 @@ public abstract class LivingEntity extends InteractiveEntity {
 		STR = stats.get("STR");
 		INT = stats.get("INT");
 		AGI = stats.get("AGI");
-		MOV = stats.get("MOV");
 		VIS = stats.get("VIS");
 		
 		level = stats.get("level");
@@ -325,10 +318,12 @@ public abstract class LivingEntity extends InteractiveEntity {
 		return this.getParent().getGame();
 	}
 	
-	public void advanceTurn(){
+	public ArrayList<Action> advanceTurn(){
+		ArrayList<Action> actions = new ArrayList<Action>(0);
 		for (int i=0; i<statuses.size(); i++){
-			statuses.get(i).advanceTurnEffects(this);
+			actions.addAll(statuses.get(i).advanceTurnEffects(this));
 		}
+		return actions;
 	}
 
 	public int calculateEXPValue() {

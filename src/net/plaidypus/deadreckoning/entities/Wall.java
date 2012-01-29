@@ -1,5 +1,7 @@
 package net.plaidypus.deadreckoning.entities;
 
+import java.util.ArrayList;
+
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.WaitAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
@@ -12,7 +14,6 @@ public class Wall extends Entity{
 
 	public Wall(Tile targetTile){
 		super(targetTile);
-		interactive = false;
 		this.setTransparent(false);
 		targetTile.setTileFace(Tile.TILE_WALL);
 	}
@@ -43,6 +44,16 @@ public class Wall extends Entity{
 	public String saveToString() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public ArrayList<Action> advanceTurn() {
+		return new ArrayList<Action>(0);
+	}
+
+	@Override
+	public boolean isInteractive() {
+		return false;
 	}
 
 }

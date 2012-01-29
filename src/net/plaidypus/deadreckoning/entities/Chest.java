@@ -28,7 +28,6 @@ public class Chest extends InteractiveEntity{
 		super(t);
 		this.setLocation(t);
 		this.setVisible(true);
-		this.setInteractive(false);
 		this.inventory.addAll(items);
 	}
 	
@@ -69,6 +68,16 @@ public class Chest extends InteractiveEntity{
 	public String saveToString() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public ArrayList<Action> advanceTurn() {
+		return new ArrayList<Action>(0);
+	}
+
+	@Override
+	public boolean isInteractive() {
+		return false;
 	}
 
 }
