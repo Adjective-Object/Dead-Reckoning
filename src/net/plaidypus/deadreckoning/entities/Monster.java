@@ -42,8 +42,8 @@ public class Monster extends LivingEntity {
 		}
 		
 		Tile dest = this.getParent().getTileAt(
-				Utilities.limitTo(this.getX()+Utilities.randInt(-1, 1),0,getParent().getWidth()),
-				Utilities.limitTo(this.getY()+Utilities.randInt(-1, 1),0,getParent().getHeight()));
+				Utilities.limitTo(this.getX()+Utilities.randInt(-1, 2),0,getParent().getWidth()),
+				Utilities.limitTo(this.getY()+Utilities.randInt(-1, 2),0,getParent().getHeight()));
 		if(dest.isOpen() && !dest.equals(this.getLocation())){
 			return movement.makeAction(dest);
 		}

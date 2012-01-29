@@ -32,6 +32,7 @@ public class GameplayElement extends HudElement {
 	int stateID;
 	int currentEntity, currentAction;
 	int saveNumber;
+	int timeOn;
 	
 	private int width;
 	private int height;
@@ -101,6 +102,9 @@ public class GameplayElement extends HudElement {
 		new Monster("res/goblin.entity",gb.getTileAt(5, 4),2);
 		cameraX = 0;
 		cameraY = 0;
+		cameraDestX = player.getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;
+		cameraDestY = player.getAbsoluteY() - gc.getHeight() / 2 + DeadReckoningGame.tileSize/2;
+		timeOn=0;
 		actions = new ArrayList<Action> (0);
 		
 		updateBoardEffects(gc, 0);
@@ -117,8 +121,8 @@ public class GameplayElement extends HudElement {
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 		
-		cameraX = cameraX + (cameraDestX - cameraX) * cameraRate;
-		cameraY = cameraY + (cameraDestY - cameraY) * cameraRate;
+			cameraX = cameraX + (cameraDestX - cameraX) * cameraRate;
+			cameraY = cameraY + (cameraDestY - cameraY) * cameraRate;
 		
 		gb.updateSelctor(input, -cameraX, -cameraY);
 		gb.updateAllTiles(gc, delta);
@@ -130,7 +134,7 @@ public class GameplayElement extends HudElement {
 		gb.updateBoardEffects(gc, delta);
 		gb.revealFromEntity(player);//TODO replace with from player
 	}
-	
+	  
 	private void updateActions(GameContainer gc, int delta) {
 		if(actions.size()==0){
 			while(!gb.ingameEntities.get(currentEntity).isInteractive() ){
@@ -139,13 +143,22 @@ public class GameplayElement extends HudElement {
 			
 			Entity current = gb.ingameEntities.get(currentEntity);
 			
-			if (current.getLocation().isVisible() && current.getLocation().lightLevel>0 && actions.size()==0) {
-				cameraDestX = current.getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;
-				cameraDestY = current.getAbsoluteY() - gc.getHeight() / 2 + DeadReckoningGame.tileSize/2;
+			if (current.getLocation().isVisible() && current.getLocation().lightLevel>0 && actions.size()==0 && timeOn>500){
+				int nx = current.getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;
+				int ny = current.getAbsoluteY() - gc.getHeight() / 2 + DeadReckoningGame.tileSize/2;
+				if	( Math.abs( cameraDestX-nx )>gc.getWidth()/3 ){
+					cameraDestX = nx;
+					timeOn=0;
+				}
+				if( Math.abs( cameraDestY-ny )>gc.getHeight()/3 ){
+					cameraDestY = ny;
+					timeOn=0;
+				}
+				
 			}
 			
-			
-			if(Math.abs(cameraDestX-cameraX) <= 0.1  && Math.abs(cameraDestY-cameraY) <= 0.1){
+			timeOn+=delta;
+			if(Math.abs(cameraDestX-cameraX) <=0.1  && Math.abs(cameraDestY-cameraY) <= 0.1){
 				Action a = current.chooseAction(gc, delta);
 				if(a!=null){
 					actions.addAll(current.advanceTurn());

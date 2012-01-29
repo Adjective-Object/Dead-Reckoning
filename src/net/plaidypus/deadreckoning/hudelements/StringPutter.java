@@ -58,7 +58,7 @@ public class StringPutter extends HudElement{
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
 		for(int i=0; i< messages.size(); i++){
 			g.setColor(new Color(255,255,255,alphas.get(i).intValue()));
-			g.drawString(messages.get(i),this.getX() ,this.getY()-( (messages.size()-i-1)*25 ));
+			g.drawString(messages.get(i),this.getX() ,this.getY()-( (messages.size()-i)*25 ));
 		}
 	}
 	
