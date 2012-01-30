@@ -10,6 +10,8 @@ public class ChangeMapAction extends Action{
 	public ChangeMapAction(Tile source, Tile target, Entity toOverWrite) {
 		super(source, target);
 		toWrite = toOverWrite;
+		
+		takesTurn=false;
 	}
 
 	protected boolean apply(int delta) {

@@ -7,7 +7,7 @@ public abstract class Action {
 	public Tile source;
 	public Tile target;
 
-	public boolean completed;
+	public boolean completed, takesTurn;
 
 	/**
 	 * actions are the main method of changing things in the game's environment
@@ -21,6 +21,7 @@ public abstract class Action {
 		this.source = source;
 		this.target = target;
 		completed = false;
+		takesTurn=true;
 	}
 
 	/**

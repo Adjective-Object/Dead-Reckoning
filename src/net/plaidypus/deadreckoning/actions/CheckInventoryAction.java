@@ -6,9 +6,10 @@ import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.hudelements.GameplayElement;
 
 public class CheckInventoryAction extends Action{
-
+	
 	public CheckInventoryAction(Tile source, Tile target) {
 		super(source, target);
+		takesTurn= false;
 	}
 
 	@Override
@@ -21,7 +22,7 @@ public class CheckInventoryAction extends Action{
 
 	@Override
 	public String getMessage() {
-		return source.getEntity().getName()+" is digging through his shit";
+		return source.getEntity().getName()+" is digging through their shit";
 	}
 
 }

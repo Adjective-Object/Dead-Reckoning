@@ -121,9 +121,14 @@ public class GameplayElement extends HudElement {
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 		
-			cameraX = cameraX + (cameraDestX - cameraX) * cameraRate;
-			cameraY = cameraY + (cameraDestY - cameraY) * cameraRate;
+		cameraX = cameraX + (cameraDestX - cameraX) * cameraRate;
+		cameraY = cameraY + (cameraDestY - cameraY) * cameraRate;
 		
+		if(gc.getInput().isKeyPressed(Input.KEY_Y)){
+			cameraDestX = player.getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;
+			cameraDestY = player.getAbsoluteY() - gc.getHeight() / 2 + DeadReckoningGame.tileSize/2;
+		}
+			
 		gb.updateSelctor(input, -cameraX, -cameraY);
 		gb.updateAllTiles(gc, delta);
 		updateActions(gc,delta);
@@ -161,7 +166,9 @@ public class GameplayElement extends HudElement {
 			if(Math.abs(cameraDestX-cameraX) <=0.1  && Math.abs(cameraDestY-cameraY) <= 0.1){
 				Action a = current.chooseAction(gc, delta);
 				if(a!=null){
-					actions.addAll(current.advanceTurn());
+					if(a.takesTurn){
+						actions.addAll(current.advanceTurn());
+					}
 					actions.add(a);
 				}
 			}
@@ -178,8 +185,10 @@ public class GameplayElement extends HudElement {
 			}
 			if(currentAction==actions.size() && gb.isIdle() || !gb.ingameEntities.get(currentEntity).isInteractive()){
 				currentAction=0;
-				currentEntity = (currentEntity + 1) % gb.ingameEntities.size();
-				updateBoardEffects(gc, delta);
+				if(actions.get(currentAction).takesTurn){
+					currentEntity = (currentEntity + 1) % gb.ingameEntities.size();
+					updateBoardEffects(gc, delta);
+				}	
 				gb.clearHighlightedSquares();
 				gb.clearPrimaryHighlight();
 				actions.clear();
