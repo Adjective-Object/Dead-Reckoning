@@ -25,7 +25,7 @@ import org.newdawn.slick.SpriteSheet;
 public abstract class LivingEntity extends InteractiveEntity {
 
 	public int maxHP, maxMP, STR, INT, AGI, level;
-	public int HP, MP, VIS;
+	public int HP, MP, width, height;
 	public Animation stand, basicAttack, walking, damageFront, damageBack,
 			death;
 	public Animation currentAnimation;
@@ -127,7 +127,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	public void forceRender(Graphics g, float x, float y) {
 		g.drawImage(
 				currentAnimation.getCurrentFrame().getFlippedCopy(getFacing(),
-						false), (int)x , (int)y);
+						false), (int)x+DeadReckoningGame.tileSize/2-this.width/2, (int)y+DeadReckoningGame.tileSize/2-this.height);
 		for(int i=0; i<statuses.size();i++){
 			statuses.get(i).render(g,(int)x, (int)y);
 		}
@@ -178,7 +178,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * @return if the entity can see it
 	 */
 	public boolean canSee(Tile t) {
-		return Utilities.getDistance(getLocation(), t) <= this.VIS && t.isVisible();
+		return t.lightLevel<0 && this.getParent().isLineofSight(this.getLocation(), t);
 	}
 	
 	// STAT referencing
@@ -269,9 +269,8 @@ public abstract class LivingEntity extends InteractiveEntity {
 						String[] toimageB = toimage[1].split("\"");
 
 						SpriteSheet p = new SpriteSheet(toimageB[1],
-								DeadReckoningGame.tileSize,
-								DeadReckoningGame.tileSize, new Color(255, 255,
-										255));
+								stats.get("TILEX"), stats.get("TILEY"),
+								new Color(255, 255, 255));
 
 						images.put(toimage[0], p);
 					} else if (ParsingMode.equals(":SPRITES:")) {
@@ -303,9 +302,10 @@ public abstract class LivingEntity extends InteractiveEntity {
 		STR = stats.get("STR");
 		INT = stats.get("INT");
 		AGI = stats.get("AGI");
-		VIS = stats.get("VIS");
 		
-		level = stats.get("level");
+		width = stats.get("TILEX");
+		height = stats.get("TILEY");
+		
 		
 		HP = maxHP;
 		MP = maxMP;

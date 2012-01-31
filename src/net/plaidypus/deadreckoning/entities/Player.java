@@ -67,7 +67,7 @@ public class Player extends LivingEntity {
 	}
 	
 	public void updateBoardEffects(GameContainer gc, int delta){
-		this.getParent().lightInRadius(getLocation(), this.VIS);
+		this.getParent().lightInRadius(getLocation(), 2);//TODO visibility light radius thing?
 		if(this.EXP>=this.getEXPforLevel()){
 			this.EXP-=this.getEXPforLevel();
 			this.level++;

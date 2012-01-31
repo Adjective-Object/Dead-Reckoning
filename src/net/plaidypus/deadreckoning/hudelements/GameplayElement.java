@@ -125,8 +125,8 @@ public class GameplayElement extends HudElement {
 		cameraY = cameraY + (cameraDestY - cameraY) * cameraRate;
 		
 		if(gc.getInput().isKeyPressed(Input.KEY_Y)){
-			cameraDestX = player.getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;
-			cameraDestY = player.getAbsoluteY() - gc.getHeight() / 2 + DeadReckoningGame.tileSize/2;
+			cameraDestX = gb.ingameEntities.get(currentEntity).getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;
+			cameraDestY = gb.ingameEntities.get(currentEntity).getAbsoluteY() - gc.getHeight() / 2 + DeadReckoningGame.tileSize/2;
 		}
 			
 		gb.updateSelctor(input, -cameraX, -cameraY);
