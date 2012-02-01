@@ -23,8 +23,8 @@ public class Torch extends Entity{
 		super(stringCode);
 	}
 	
-	public Torch(Tile t, int areaofLight){
-		super(t);
+	public Torch(Tile t, int layer, int areaofLight){
+		super(t, layer);
 		this.light = areaofLight;
 		ani = new Animation(img , new int []{0,0,1,0,2,0,3,0}, new int[] {60,60,60,60});
 	}
@@ -50,7 +50,7 @@ public class Torch extends Entity{
 
 	@Override
 	public Entity makeFromString(GameBoard g, String[] toload) {
-		return new Torch(g.getTileAt(Integer.parseInt(toload[1]),Integer.parseInt(toload[2])),Integer.parseInt(toload[3]));
+		return new Torch(g.getTileAt(Integer.parseInt(toload[1]),Integer.parseInt(toload[2])),Integer.parseInt(toload[3]),Integer.parseInt(toload[4]));
 	}
 	
 	@Override

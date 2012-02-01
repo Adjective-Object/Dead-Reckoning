@@ -9,17 +9,19 @@ import net.plaidypus.deadreckoning.entities.Entity;
 public class MoveEntityEffect extends GridEffect{
 	Tile destination;
 	double currentdown;
+	int layer;
 	
-	public MoveEntityEffect(Tile location, Tile targetLocation) {
+	public MoveEntityEffect(Tile location, int layer, Tile targetLocation) {
 		super(location);
+		this.layer = layer;
 		this.destination = targetLocation;
-		location.getEntity().setVisible(false);
+		location.getEntity(layer).setVisible(false);
 		
 		if(destination.getX()>location.getX()){
-			location.getEntity().setFacing(true);
+			location.getEntity(layer).setFacing(true);
 		}
 		else if(destination.getX()<location.getX()){
-			location.getEntity().setFacing(false);
+			location.getEntity(layer).setFacing(false);
 		}
 		
 		currentdown = 5.0;
@@ -29,13 +31,13 @@ public class MoveEntityEffect extends GridEffect{
 		currentdown = currentdown/2;
 		if(currentdown <0.5){
 			this.setComplete(true);
-			location.getEntity().setVisible(true);
-			location.getParent().moveEntity(location,destination);
+			location.getEntity(layer).setVisible(true);
+			location.getParent().moveEntity(location,destination,layer);
 		}
 	}
 	
 	public void render(Graphics g, float xoff, float yoff){
-		location.getEntity().forceRender(g, destination.getX()*DeadReckoningGame.tileSize+xoff,destination.getY()*DeadReckoningGame.tileSize-(int)currentdown+yoff);
+		location.getEntity(layer).forceRender(g, destination.getX()*DeadReckoningGame.tileSize+xoff,destination.getY()*DeadReckoningGame.tileSize-(int)currentdown+yoff);
 	}
 	/*
 	Tile destination;

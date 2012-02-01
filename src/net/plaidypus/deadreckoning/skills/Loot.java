@@ -14,12 +14,12 @@ public class Loot extends Skill{
 
 	@Override
 	public Action makeAction(Tile target) {
-		return new LootAction(source.getLocation(),target);
+		return new LootAction(source,target,source.getLayer());//TODO fix that shit. make it so I can loot corpses on the ground
 	}
 
 	@Override
 	public boolean canTargetTile(Tile t) {
-		if(!t.isOpen() && !t.getEntity().isInteractive()){
+		if(!t.isOpen(Tile.LAYER_ACTIVE) && !t.getEntity(Tile.LAYER_ACTIVE).isInteractive()){
 			return true;
 		}
 		return false;

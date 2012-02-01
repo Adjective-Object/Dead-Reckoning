@@ -22,9 +22,11 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 
 public class Tile {
-	private Entity containedEntity;
+	private Entity[] containedEntities;
+	public static final int LAYER_ACTIVE = 0, LAYER_PASSIVE_PLAY = 1, LAYER_PASSIVE_MAP = 2;
+	public static final int numLayers = 3;
+	
 	private GameBoard parent;
-	public boolean isEmpty;
 	private int x, y;
 	private int tileFace;
 	public int highlighted;
@@ -49,12 +51,12 @@ public class Tile {
 		this.parent = parent;
 		this.y = y;
 		this.x = x;
-		isEmpty = true;
 		highlighted = 0;
 		lightLevel = 5;
 		explored = false;
 		visibility = true;
 		setTileFace(tileFace);
+		containedEntities = emptyEntityArray();
 	}
 	
 	public static void init(String mapImage) throws SlickException {
@@ -62,26 +64,42 @@ public class Tile {
 				DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
 	}
 
-	public void setEntity(Entity e) {
-		containedEntity = e;
-		containedEntity.setLocation(this);
-		isEmpty = false;
+	public void setEntity(Entity e, int layer) {
+		e.setLayer(layer);
+		containedEntities[layer] = e;
+		containedEntities[layer].setLocation(this);
 	}
 
-	public void disconnectEntity() {
-		containedEntity = null;
+	public void disconnectEntity(int layer) {
+		containedEntities[layer] = null;
+	}
+	
+	public void disconnectEntities() {
+		containedEntities = emptyEntityArray();
 	}
 
-	public Entity getEntity() {
-		return containedEntity;
+	public Entity[] getEntities() {
+		return containedEntities;
+	}
+	
+	public Entity getEntity(int layer) {
+		return containedEntities[layer];
 	}
 
-	public boolean isOpen() {
-		return this.containedEntity==null;
+	public boolean isOpen(int layer) {
+		return this.containedEntities[layer]==null;
 	}
 
 	public void clearTile(){
-		this.containedEntity=null;
+		this.containedEntities= emptyEntityArray();
+	}
+	
+	public static Entity[] emptyEntityArray(){
+		Entity[] q = new Entity[numLayers];
+		for(int i=0; i<numLayers;i++){
+			q[i]=null;
+		}
+		return q;
 	}
 
 	public void setHighlighted(int h) {
@@ -93,8 +111,10 @@ public class Tile {
 	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
-		if (!this.isEmpty) {
-			this.getEntity().update(gc, delta);
+		for(int i=0; i<getEntities().length; i++){
+			if (!this.isOpen(i)) {
+				this.getEntity(i).update(gc, delta);
+			}
 		}
 	}
 
@@ -183,8 +203,8 @@ public class Tile {
 	}
 
 	public boolean isTransparent() {
-		if(!isOpen()){
-			return this.getEntity().isTransparent();
+		if(!isOpen(Tile.LAYER_ACTIVE)){
+			return this.getEntity(Tile.LAYER_ACTIVE).isTransparent();
 		}
 		return true;
 	}

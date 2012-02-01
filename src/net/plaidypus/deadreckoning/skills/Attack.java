@@ -14,7 +14,7 @@ public class Attack extends Skill {
 
 	@Override
 	public Action makeAction(Tile target) {
-		return new AttackAction(source.getLocation(), target, source.STR, false);
+		return new AttackAction(source, target, source.STR, false);
 	}
 
 	/**
@@ -22,8 +22,8 @@ public class Attack extends Skill {
 	 * source's tile can be passed
 	 **/
 	public boolean canTargetTile(Tile t) {
-		if( !t.isOpen() && !(t.getX() == source.getX() && t.getY() == source.getY())){
-			return  t.getEntity().isInteractive();
+		if( !t.isOpen(Tile.LAYER_ACTIVE) && !(t.getX() == source.getX() && t.getY() == source.getY())){
+			return  t.getEntity(Tile.LAYER_ACTIVE).isInteractive();
 		}
 		return false;
 	}

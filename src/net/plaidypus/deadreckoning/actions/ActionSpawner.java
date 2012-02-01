@@ -3,13 +3,14 @@ package net.plaidypus.deadreckoning.actions;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.board.Tile;
+import net.plaidypus.deadreckoning.entities.Entity;
 
 public class ActionSpawner extends Action{
 	
 	ArrayList<Action> actions;
 	
-	public ActionSpawner(Tile source, ArrayList<Action> actions) {
-		super(source, source);
+	public ActionSpawner(Entity source, ArrayList<Action> actions) {
+		super(source, source.getLocation());
 		this.actions=actions;
 	}
 	

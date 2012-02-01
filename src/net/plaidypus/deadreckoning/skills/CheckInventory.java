@@ -14,7 +14,7 @@ public class CheckInventory extends Skill{
 
 	@Override
 	public Action makeAction(Tile target) {
-		return new CheckInventoryAction(source.getLocation(),target);
+		return new CheckInventoryAction(source,target);
 	}
 
 	@Override

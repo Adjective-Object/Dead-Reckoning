@@ -1,11 +1,12 @@
 package net.plaidypus.deadreckoning.actions;
 
 import net.plaidypus.deadreckoning.board.Tile;
+import net.plaidypus.deadreckoning.entities.Entity;
 
 public class WaitAction extends Action{
 
-	public WaitAction(Tile source) {
-		super(source, source);
+	public WaitAction(Entity source) {
+		super(source, source.getLocation());
 		// TODO Auto-generated constructor stub
 	}
 
@@ -16,7 +17,7 @@ public class WaitAction extends Action{
 
 
 	public String getMessage() {
-		return source.getEntity().getName()+" is useless";
+		return source.getName()+" is useless";
 	}
 
 }

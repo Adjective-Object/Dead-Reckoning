@@ -16,18 +16,18 @@ public class AttackAction extends EntityTypeAction {
 	GridEffect targetEffectTop, targetEffectBottom, sourceEffectTop,
 			sourceEffectBottom;
 
-	public AttackAction( Tile source, Tile target, int damage, boolean physical) {
+	public AttackAction( Entity source, Tile target, int damage, boolean physical) {
 		this(source,target,damage,physical,true,null,null,null,null);
 	}
 	
-	public AttackAction( Tile source, Tile target, int damage, boolean physical, boolean animateSource) {
+	public AttackAction( Entity source, Tile target, int damage, boolean physical, boolean animateSource) {
 		this(source,target,damage,physical,animateSource,null,null,null,null);
 	}
 
-	public AttackAction( Tile source, Tile target, int damage, boolean physical, boolean animateSource,
+	public AttackAction( Entity source, Tile target, int damage, boolean physical, boolean animateSource,
 			GridEffect sourceTopEffect, GridEffect sourceBottomEffect ,
 			GridEffect targetTopEffect, GridEffect targetBottomEffect) {
-		super(source, target);
+		super(source, target, Tile.LAYER_ACTIVE);
 		this.damage = damage;
 		this.animateSource=animateSource;
 		this.physical=physical;
@@ -47,7 +47,7 @@ public class AttackAction extends EntityTypeAction {
 
 	protected boolean applyToEntity(LivingEntity e) {
 
-			LivingEntity s = (LivingEntity) source.getEntity();
+			LivingEntity s = (LivingEntity) source;
 			if(animateSource && source.isVisible()){
 				s.setCurrentAnimation(LivingEntity.ANIMATION_ATTACK);
 			}
@@ -77,8 +77,8 @@ public class AttackAction extends EntityTypeAction {
 				}
 			}
 			
-			e.getParent().addEffectOver(source, this.sourceEffectTop);
-			e.getParent().addEffectUnder(source, this.sourceEffectBottom);
+			e.getParent().addEffectOver(source.getLocation(), this.sourceEffectTop);
+			e.getParent().addEffectUnder(source.getLocation(), this.sourceEffectBottom);
 			e.getParent().addEffectOver(target, this.targetEffectTop);
 			e.getParent().addEffectUnder(target, this.targetEffectBottom);
 			
@@ -91,6 +91,6 @@ public class AttackAction extends EntityTypeAction {
 
 	@Override
 	public String getMessage() {
-		return source.getEntity().getName()+" attacked "+target.getEntity().getName()+" for "+damage+" damage";
+		return source.getName()+" attacked "+target.getEntity(Tile.LAYER_ACTIVE).getName()+" for "+damage+" damage";
 	}
 }

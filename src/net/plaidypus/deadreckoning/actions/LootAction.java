@@ -11,10 +11,10 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.hudelements.GameplayElement;
 import net.plaidypus.deadreckoning.items.Item;
 
-public class LootAction extends EntityTypeAction{
+public class LootAction extends EntityTypeAction{ //TODO make it so you can loot entities on other layers?
 
-	public LootAction(Tile source, Tile target) {
-		super(source, target);
+	public LootAction(Entity source, Tile target, int targetLayer) {
+		super(source, target, targetLayer);
 	}
 	
 	protected boolean applyToEntity(Entity entity){
@@ -23,7 +23,7 @@ public class LootAction extends EntityTypeAction{
 	
 	protected boolean applyToEntity(InteractiveEntity e){
 		System.out.println(e.getInventory());
-		return gotoLootScreen(((InteractiveEntity)source.getEntity()),e);
+		return gotoLootScreen(((InteractiveEntity)source),e);
 	}
 	
 	protected boolean applyToEntity(LivingEntity e){
@@ -31,7 +31,7 @@ public class LootAction extends EntityTypeAction{
 			return true;
 		}
 		else{
-			return gotoLootScreen(((InteractiveEntity)source.getEntity()),e);
+			return gotoLootScreen(((InteractiveEntity)source),e);
 		}
 	}
 	
@@ -43,7 +43,7 @@ public class LootAction extends EntityTypeAction{
 
 	@Override
 	public String getMessage() {
-		return source.getEntity().getName()+" looted "+target.getEntity().getName();
+		return source.getName()+" looted "+target.getEntity(Tile.LAYER_ACTIVE).getName();
 	}
 
 }

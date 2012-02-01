@@ -33,14 +33,14 @@ public class Fireball extends Skill{
 		ArrayList<Action> toRet = new ArrayList<Action>(0);
 		Animation an = new Animation(fireball,40);
 		an.setLooping(false);
-		toRet.add(new ApplyStatusAction(source.getLocation(), target, new OnFire(this.source, 2, 100)));
-		toRet.add(new AttackAction(source.getLocation(), target, 2, true, true, null,null,new AnimationEffect(target,an),null));
-		return new ActionSpawner(source.getLocation(), toRet);
+		toRet.add(new ApplyStatusAction(source, target, Tile.LAYER_ACTIVE, new OnFire(this.source, 2, 100)));
+		toRet.add(new AttackAction(source, target, 2, true, true, null,null,new AnimationEffect(target,an),null));
+		return new ActionSpawner(source, toRet);
 	}
 
 	public boolean canTargetTile(Tile t) {
-		if( !t.isOpen() && !(t.getX() == source.getX() && t.getY() == source.getY())){
-			return  t.getEntity().isInteractive();
+		if( !t.isOpen(Tile.LAYER_ACTIVE) && !(t.getX() == source.getX() && t.getY() == source.getY())){
+			return  t.getEntity(Tile.LAYER_ACTIVE).isInteractive();
 		}
 		return false;
 	}

@@ -14,12 +14,12 @@ public abstract class InteractiveEntity extends Entity{
 	ArrayList<Item> inventory;
 	int inventorySize = 5;
 	
-	public InteractiveEntity(Tile targetTile){
-		this(targetTile,new ArrayList<Item>(0));
+	public InteractiveEntity(Tile targetTile, int layer){
+		this(targetTile, layer, new ArrayList<Item>(0));
 	}
 	
-	public InteractiveEntity(Tile targetTile, ArrayList<Item> items){
-		super(targetTile);
+	public InteractiveEntity(Tile targetTile, int layer, ArrayList<Item> items){
+		super(targetTile,layer);
 		this.inventory=items;
 	}
 	

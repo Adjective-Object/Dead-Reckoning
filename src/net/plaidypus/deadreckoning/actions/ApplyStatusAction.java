@@ -10,8 +10,8 @@ public class ApplyStatusAction extends EntityTypeAction{
 
 	Status s;
 	
-	public ApplyStatusAction(Tile source, Tile target, Status toApply) {
-		super(source, target);
+	public ApplyStatusAction(Entity source, Tile target, int targetTile, Status toApply) {
+		super(source, target, targetTile);
 		this.s=toApply;
 	}
 
@@ -25,7 +25,7 @@ public class ApplyStatusAction extends EntityTypeAction{
 	protected boolean applyToEntity(InteractiveEntity e) {return true;}
 
 	public String getMessage() {
-		return source.getEntity().getName()+" made "+target.getEntity().getName()+" become "+s.getName();
+		return source.getName()+" made "+target.getEntity(Tile.LAYER_ACTIVE).getName()+" become "+s.getName();
 	}
 
 }

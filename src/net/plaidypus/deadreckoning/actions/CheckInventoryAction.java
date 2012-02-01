@@ -2,19 +2,20 @@ package net.plaidypus.deadreckoning.actions;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.board.Tile;
+import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.hudelements.GameplayElement;
 
 public class CheckInventoryAction extends Action{
 	
-	public CheckInventoryAction(Tile source, Tile target) {
+	public CheckInventoryAction(Entity source, Tile target) {
 		super(source, target);
 		takesTurn= false;
 	}
 
 	@Override
 	protected boolean apply(int delta) {
-		InteractiveEntity po = (InteractiveEntity)(source.getEntity());
+		InteractiveEntity po = (InteractiveEntity)(source);
 		DeadReckoningGame.instance.getHudState(DeadReckoningGame.INVENTORYSTATE).makeFrom(new Object[] {GameplayElement.getImage(),po});
 		DeadReckoningGame.instance.enterState(DeadReckoningGame.INVENTORYSTATE);
 		return true;
@@ -22,7 +23,7 @@ public class CheckInventoryAction extends Action{
 
 	@Override
 	public String getMessage() {
-		return source.getEntity().getName()+" is digging through their shit";
+		return source.getName()+" is digging through their shit";
 	}
 
 }

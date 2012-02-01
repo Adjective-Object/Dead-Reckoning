@@ -42,8 +42,8 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * 
 	 * @param entityfile
 	 */
-	public LivingEntity(String entityfile, Tile targetTile, int allignment) {
-		super(targetTile);
+	public LivingEntity(Tile targetTile, int layer, String entityfile, int allignment) {
+		super(targetTile, layer);
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(new File(
 					entityfile)));
@@ -127,7 +127,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	public void forceRender(Graphics g, float x, float y) {
 		g.drawImage(
 				currentAnimation.getCurrentFrame().getFlippedCopy(getFacing(),
-						false), (int)x+DeadReckoningGame.tileSize/2-this.width/2, (int)y+DeadReckoningGame.tileSize/2-this.height);
+						false), (int)x+DeadReckoningGame.tileSize/2-this.width/2, (int)y+DeadReckoningGame.tileSize-this.height);
 		for(int i=0; i<statuses.size();i++){
 			statuses.get(i).render(g,(int)x, (int)y);
 		}

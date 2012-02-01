@@ -24,8 +24,8 @@ public class Chest extends InteractiveEntity{
 		super(stringCode);
 	}
 	
-	public Chest(Tile t, ArrayList<Item> items){
-		super(t);
+	public Chest(Tile t, int layer, ArrayList<Item> items){
+		super(t, layer);
 		this.setLocation(t);
 		this.setVisible(true);
 		this.inventory.addAll(items);
@@ -48,7 +48,7 @@ public class Chest extends InteractiveEntity{
 
 	@Override
 	public Action chooseAction(GameContainer gc, int delta) {
-		return new WaitAction(this.getLocation());
+		return new WaitAction(this);
 	}
 
 	@Override
@@ -59,10 +59,10 @@ public class Chest extends InteractiveEntity{
 	@Override
 	public Entity makeFromString(GameBoard g, String[] toload) {
 		ArrayList<Item> content = new ArrayList<Item>(0);
-		for(int i=3; i<toload.length; i++){
+		for(int i=4; i<toload.length; i++){
 			content.add(new EtcDrop(Integer.parseInt(toload[i])));//TODO equip parsing
 		}
-		return new Chest(g.getTileAt(Integer.parseInt(toload[1]),Integer.parseInt(toload[2])),content);
+		return new Chest(g.getTileAt(Integer.parseInt(toload[1]),Integer.parseInt(toload[2])),Integer.parseInt(toload[3]),content);
 	}
 
 	@Override

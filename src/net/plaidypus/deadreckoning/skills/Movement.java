@@ -19,15 +19,15 @@ public class Movement extends Skill {
 	}
 
 	public boolean canTargetTile(Tile t) {
-		return t.isOpen();
+		return t.isOpen(Tile.LAYER_ACTIVE);
 	}
 
 	public Action makeAction(Tile target) {
-		return new MoveAction(source.getLocation(), target);
+		return new MoveAction(source, target,source.getLayer());
 	}
 
 	public void highlightRange(GameBoard board) {
-		board.highLightAvailablePaths( source.getLocation(), 1);
+		board.highLightAvailablePaths( source.getLocation(), 1, Tile.LAYER_ACTIVE);
 	}
 
 }

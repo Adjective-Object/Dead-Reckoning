@@ -9,27 +9,30 @@ import net.plaidypus.deadreckoning.hudelements.GameplayElement;
 
 public abstract class EntityTypeAction extends Action{
 
-	public EntityTypeAction(Tile source, Tile target) {
+	int layer;
+	
+	public EntityTypeAction(Entity source, Tile target, int targetLayer) {
 		super(source, target);
+		layer = targetLayer;
 	}
 
 	protected boolean apply(int delta) {
 		if(target.getX()>source.getX()){
-			source.getEntity().setFacing(true);
+			source.setFacing(true);
 		}
 		else if(target.getX()<source.getX()){
-			source.getEntity().setFacing(false);
+			source.setFacing(false);
 		}
 		
 		try{ 
-			return applyToEntity((LivingEntity)target.getEntity());
+			return applyToEntity((LivingEntity)target.getEntity(layer));
 		}
 		catch(ClassCastException e){
 			try{ 
-				return applyToEntity((InteractiveEntity)target.getEntity());
+				return applyToEntity((InteractiveEntity)target.getEntity(layer));
 			}
 			catch(ClassCastException y){
-				return applyToEntity(target.getEntity());
+				return applyToEntity(target.getEntity(layer));
 			}
 		}
 	}

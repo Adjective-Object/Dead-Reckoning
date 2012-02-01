@@ -55,7 +55,7 @@ public class GameBoard {
 		r.readLine();
 		height=(r.read()-48)*10+r.read()-48;
 		r.readLine();
-		System.out.println(width+" "+height);
+		System.out.println("Map Dimensions: "+width+","+height);
 		board = new Tile[width][height];
 		for(int y=0; y<height; y++){
 			for(int x=0; x<width; x++){
@@ -81,23 +81,25 @@ public class GameBoard {
 		}
 	}
 	
-	public void placeEntity(Tile t, Entity e) {
-		placeEntity(t.getX(), t.getY(), e);
+	public void placeEntity(Tile t, Entity e, int layer) {
+		placeEntity(t.getX(), t.getY(), e, layer);
 	}
 
-	public void placeEntity(int x, int y, Entity e) {
-		board[x][y].setEntity(e);
+	public void placeEntity(int x, int y, Entity e, int layer) {
+		board[x][y].setEntity(e,layer);
 		ingameEntities.add(e);
 	}
 
 	public void clearTile(int x, int y) {
-		ingameEntities.remove(board[x][y].getEntity());
-		board[x][y].disconnectEntity();
+		for(int i=0; i<Tile.numLayers; i++){
+			ingameEntities.remove(board[x][y].getEntity(i));
+		}
+		board[x][y].disconnectEntities();
 	}
 
-	public void moveEntity(Tile source, Tile target) {
-		target.setEntity(source.getEntity());
-		source.disconnectEntity();
+	public void moveEntity(Tile source, Tile target, int layer) {
+		target.setEntity(source.getEntity(layer),layer);
+		source.disconnectEntity(layer);
 	}
 
 	public static void init() throws SlickException {
@@ -135,10 +137,12 @@ public class GameBoard {
 
 		for (int x = 0; x < board.length; x++) {
 			for (int y = 0; y < board[x].length; y++) {
-				if (!board[x][y].isOpen() && board[x][y].lightLevel >= 1 && board[x][y].isVisible()) {
-					board[x][y].getEntity().render(g,
-							x*DeadReckoningGame.tileSize + xoff,
-							y*DeadReckoningGame.tileSize + yoff);
+				for(int i=Tile.numLayers-1; i>=0; i--){
+					if (!board[x][y].isOpen(i) && board[x][y].lightLevel >= 1 && board[x][y].isVisible()) {
+						board[x][y].getEntity(i).render(g,
+								x*DeadReckoningGame.tileSize + xoff,
+								y*DeadReckoningGame.tileSize + yoff);
+					}
 				}
 			}
 		}
@@ -178,10 +182,12 @@ public class GameBoard {
 
 		for (int y = 0; y < this.height; y++) {
 			for (int x = 0; x < this.width; x++) {
-				if (!board[x][y].isOpen()) {
-					board[x][y].getEntity().update(gc, delta);
-					if(board[x][y].getEntity().toKill){
-						board[x][y].clearTile();
+				for(int i=0; i<Tile.numLayers; i++){
+					if (!board[x][y].isOpen(i)) {
+						board[x][y].getEntity(i).update(gc, delta);
+						if(board[x][y].getEntity(i).toKill){
+							board[x][y].clearTile();
+						}
 					}
 				}
 			}
@@ -207,8 +213,10 @@ public class GameBoard {
 	public void updateBoardEffects(GameContainer gc, int delta) {
 		for (int y = 0; y < this.height; y++) {
 			for (int x = 0; x < this.width; x++) {
-				if (!board[x][y].isOpen()) {
-					board[x][y].getEntity().updateBoardEffects(gc, delta);
+				for(int i=0; i< Tile.numLayers; i++){
+					if (!board[x][y].isOpen(i)) {
+						board[x][y].getEntity(i).updateBoardEffects(gc, delta);
+					}
 				}
 			}
 		}
@@ -371,7 +379,7 @@ public class GameBoard {
 		return true;
 	}
 	
-	public ArrayList<Tile> findAvailablePaths(Tile source, int wanderDist){//TODO limit generated array to dimensions of board
+	public ArrayList<Tile> findAvailablePaths(Tile source, int wanderDist, int layer){//TODO limit generated array to dimensions of board
 		ArrayList<Tile> toRet = new ArrayList<Tile> (0);
 		
 		double[][] tiles = new double[wanderDist*2+1][wanderDist*2+1];
@@ -392,7 +400,7 @@ public class GameBoard {
 								double tot=tiles[Utilities.limitTo(x+a,0,tiles.length)] [Utilities.limitTo(y+b,0,tiles[x].length)];								
 								if(tiles[x][y]>=tot+1
 										&& coordInGrid(source.getX()-wanderDist+x,source.getY()-wanderDist+y)
-										&& getTileAt(source.getX()-wanderDist+x,source.getY()-wanderDist+y).isOpen()){
+										&& getTileAt(source.getX()-wanderDist+x,source.getY()-wanderDist+y).isOpen(layer)){
 									tiles[x][y]=tot+1;
 								}
 							}
@@ -416,8 +424,8 @@ public class GameBoard {
 		return toRet;
 	}
 	
-	public void highLightAvailablePaths(Tile source, int wanderDist){
-		ArrayList<Tile> targetableTiles = findAvailablePaths(source,wanderDist);
+	public void highLightAvailablePaths(Tile source, int wanderDist, int layer){
+		ArrayList<Tile> targetableTiles = findAvailablePaths(source,wanderDist, layer);
 		for(int i=0; i<targetableTiles.size() ;i++){
 			targetableTiles.get(i).highlighted=Tile.HIGHLIGHT_CONFIRM;
 		}

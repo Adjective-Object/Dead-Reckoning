@@ -44,7 +44,7 @@ public class OnFire extends AnimatedStatus{
 	@Override
 	public ArrayList<Action> advanceTurnEffects(LivingEntity target) {
 		ArrayList<Action> actions = new ArrayList<Action>(0);
-		actions.add(new AttackAction(source.getLocation(),target.getLocation(),power,false,false,
+		actions.add(new AttackAction(source,target.getLocation(),power,false,false,
 				null, null, null, null));
 		duration--;
 		System.out.println(actions);

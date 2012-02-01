@@ -14,7 +14,7 @@ public class Wait extends Skill {
 
 	@Override
 	public Action makeAction(Tile target) {
-		return new WaitAction(target);
+		return new WaitAction(source);
 	}
 
 	@Override

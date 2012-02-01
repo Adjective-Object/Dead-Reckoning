@@ -19,6 +19,7 @@ import org.newdawn.slick.Graphics;
 
 public abstract class Entity {
 	private Tile location;
+	private int layer;
 	
 	private String name = "NAMELESS ENTITY";
 	private boolean facing;
@@ -33,11 +34,11 @@ public abstract class Entity {
 		this.stringCode=stringCode;
 	}
 	
-	public Entity(Tile t) {
+	public Entity(Tile t, int layer) {
 		this.visible=true;
 		this.transparent=true;
 		this.allignmnet=0;
-		t.getParent().placeEntity(t, this);
+		t.getParent().placeEntity(t, this, layer);
 	}
 	
 	/**
@@ -235,5 +236,13 @@ public abstract class Entity {
 	
 	public abstract Entity makeFromString(GameBoard target, String[] attributes);
 	public abstract String saveToString();
+
+	public void setLayer(int layer) {
+		this.layer=layer;
+	}
+	
+	public int getLayer(){
+		return layer;
+	}
 
 }

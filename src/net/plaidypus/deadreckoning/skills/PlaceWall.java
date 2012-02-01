@@ -15,17 +15,17 @@ public class PlaceWall extends Skill{
 	@Override
 	public Action makeAction(Tile target) {
 		target.setTileFace(Tile.TILE_WALL);
-		return new ChangeMapAction(source.getLocation(),target,new Wall(target));
+		return new ChangeMapAction(source,target,Tile.LAYER_ACTIVE,new Wall(target,Tile.LAYER_ACTIVE));
 	}
 
 	@Override
 	public boolean canTargetTile(Tile t) {
-		return !t.isOpen();
+		return !t.isOpen(Tile.LAYER_ACTIVE);
 	}
 
 	@Override
 	public void highlightRange(GameBoard board) {
-		for(int y=0; y<board.getWidth(); y++){
+		for(int y=0; y<board.getHeight(); y++){
 			for(int x=0; x<board.getWidth(); x++){
 				board.highlightSquare(x, y);
 			}

@@ -1,10 +1,11 @@
 package net.plaidypus.deadreckoning.actions;
 
 import net.plaidypus.deadreckoning.board.Tile;
+import net.plaidypus.deadreckoning.entities.Entity;
 
 public abstract class Action {
 
-	public Tile source;
+	public Entity source;
 	public Tile target;
 
 	public boolean completed, takesTurn;
@@ -17,7 +18,7 @@ public abstract class Action {
 	 * @param target
 	 *            the tile the action is going to target
 	 */
-	public Action(Tile source, Tile target) {
+	public Action(Entity source, Tile target) {
 		this.source = source;
 		this.target = target;
 		completed = false;

@@ -97,9 +97,9 @@ public class GameplayElement extends HudElement {
 			e.printStackTrace();
 		}
 		
-		player = new Player(gb.getTileAt(4,4), new Profession (0), input);
-		new Monster("res/goblin.entity",gb.getTileAt(7, 4),1);
-		new Monster("res/goblin.entity",gb.getTileAt(5, 4),2);
+		player = new Player(gb.getTileAt(4,4), Tile.LAYER_ACTIVE, new Profession (0), input);
+		new Monster(gb.getTileAt(7, 4),Tile.LAYER_ACTIVE,"res/goblin.entity",1);
+		new Monster(gb.getTileAt(5, 4),Tile.LAYER_ACTIVE,"res/goblin.entity",2);
 		cameraX = 0;
 		cameraY = 0;
 		cameraDestX = player.getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;

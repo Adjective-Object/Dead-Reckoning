@@ -12,8 +12,8 @@ import org.newdawn.slick.Graphics;
 
 public class Wall extends Entity{
 
-	public Wall(Tile targetTile){
-		super(targetTile);
+	public Wall(Tile targetTile, int layer){
+		super(targetTile, layer);
 		this.setTransparent(false);
 		targetTile.setTileFace(Tile.TILE_WALL);
 	}
@@ -29,14 +29,14 @@ public class Wall extends Entity{
 	
 	@Override
 	public Action chooseAction(GameContainer gc, int delta) {
-		return new WaitAction(getLocation());
+		return new WaitAction(this);
 	}
 
 	public void forceRender(Graphics g, float x, float y) {}
 
 	@Override
 	public Entity makeFromString(GameBoard g, String[] toload) {
-		return new Wall(g.getTileAt(Integer.parseInt(toload[1]), Integer.parseInt(toload[2])));
+		return new Wall(g.getTileAt(Integer.parseInt(toload[1]), Integer.parseInt(toload[2])), Integer.parseInt(toload[3]));
 		}
 	
 

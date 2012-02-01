@@ -18,10 +18,10 @@ public class PreBakedMove extends Movement{
 	}
 	
 	public Action makeAction(Tile target) {
-		if( source.getLocation().getRelativeTo(xoff,yoff).isOpen()){
-			return new MoveAction(source.getLocation(), source.getLocation().getRelativeTo(xoff,yoff));
+		if( source.getLocation().getRelativeTo(xoff,yoff).isOpen(source.getLayer())){
+			return new MoveAction(source, source.getLocation().getRelativeTo(xoff,yoff), source.getLayer());
 		}
-		return new WaitAction(source.getLocation());
+		return new WaitAction(source);
 	}
 	
 	public boolean isInstant(){

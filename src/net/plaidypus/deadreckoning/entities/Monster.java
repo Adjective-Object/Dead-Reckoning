@@ -19,8 +19,8 @@ public class Monster extends LivingEntity {
 	/**
 	 * a testing monster class
 	 */
-	public Monster(String entityFile, Tile targetTile, int allign) {
-		super (entityFile, targetTile, allign);
+	public Monster(Tile targetTile, int layer, String entityFile, int allign) {
+		super (targetTile, layer, entityFile, allign);
 		movement = new Movement(this);
 		attack = new Attack(this);
 	}
@@ -32,10 +32,12 @@ public class Monster extends LivingEntity {
 		
 		for(int i=-1; i<2; i++){
 			for(int q=-1; q<2; q++){
-				if(!this.getLocation().getRelativeTo(i, q).isOpen()){
-					Entity n =this.getLocation().getRelativeTo(i, q).getEntity();
-					if(n.getAllignment()!=this.getAllignment() && n.getAllignment()!=Entity.ALLIGN_NEUTRAL && n.isInteractive()){
-						return attack.makeAction(this.getLocation().getRelativeTo(i, q));
+				for(int k=0; k<Tile.numLayers; k++){
+					if(!this.getLocation().getRelativeTo(i, q).isOpen(k)){
+						Entity n =this.getLocation().getRelativeTo(i, q).getEntity(k);
+						if(n.getAllignment()!=this.getAllignment() && n.getAllignment()!=Entity.ALLIGN_NEUTRAL && n.isInteractive()){
+							return attack.makeAction(this.getLocation().getRelativeTo(i, q));
+						}
 					}
 				}
 			}
@@ -44,11 +46,11 @@ public class Monster extends LivingEntity {
 		Tile dest = this.getParent().getTileAt(
 				Utilities.limitTo(this.getX()+Utilities.randInt(-1, 2),0,getParent().getWidth()),
 				Utilities.limitTo(this.getY()+Utilities.randInt(-1, 2),0,getParent().getHeight()));
-		if(dest.isOpen() && !dest.equals(this.getLocation())){
+		if(dest.isOpen(this.getLayer()) && !dest.equals(this.getLocation())){
 			return movement.makeAction(dest);
 		}
 		
-		return new WaitAction(this.getLocation());
+		return new WaitAction(this);
 	}
 
 	public void updateBoardEffects(GameContainer gc, int delta) {}

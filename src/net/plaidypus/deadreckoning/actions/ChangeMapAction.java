@@ -6,16 +6,17 @@ import net.plaidypus.deadreckoning.entities.Entity;
 public class ChangeMapAction extends Action{
 	
 	Entity toWrite;
+	int layer;
 	
-	public ChangeMapAction(Tile source, Tile target, Entity toOverWrite) {
+	public ChangeMapAction(Entity source, Tile target, int layer, Entity toOverWrite) {
 		super(source, target);
 		toWrite = toOverWrite;
-		
+		this.layer = layer;
 		takesTurn=false;
 	}
 
 	protected boolean apply(int delta) {
-		source.getParent().placeEntity(target, toWrite);
+		source.getParent().placeEntity(target, toWrite, layer);
 		return true;
 	}
 
