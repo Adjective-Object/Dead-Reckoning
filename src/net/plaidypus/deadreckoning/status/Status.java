@@ -13,16 +13,27 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
 public abstract class Status {
 	
 	public Image tileImage;
-	public String description;
-	int statusID;
+	public String description, identifier;
+	int statusID, duration, stacks;
 	public InteractiveEntity source;
 	
 	static final int STATUS_ONFIRE = 1;
 	
-	public Status(InteractiveEntity source,Image tileImage, String description){
+	public Status(InteractiveEntity source,Image tileImage, String description, String identifier){
 		this.description=description;
+		this.identifier=identifier;
 		this.tileImage=tileImage;
 		this.source=source;
+	}
+	
+	//Only called if they have the same identifier string
+	public Status collapseWithStatus(Status s) { 
+		Status p = this;
+		if(s.duration>this.duration){
+			p = s;
+		}
+		p.stacks=this.stacks+s.stacks;
+		return p;
 	}
 	
 	public abstract void applyToEntity(LivingEntity target);

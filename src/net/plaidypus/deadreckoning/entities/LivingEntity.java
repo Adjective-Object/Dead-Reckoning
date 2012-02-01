@@ -210,8 +210,21 @@ public abstract class LivingEntity extends InteractiveEntity {
 	}
 	
 	public void addCondition(Status s){
-		s.applyToEntity(this);
-		this.statuses.add(s);
+		int i=0;
+		while(i<this.statuses.size()){
+			if(this.statuses.get(i).identifier.equals(s.identifier)){
+				System.out.println("collapsing");
+				Status p = s.collapseWithStatus(statuses.get(i));
+				p.applyToEntity(this);
+				this.statuses.remove(i);
+				break;
+			}
+			i++;
+		}
+		if(i==this.statuses.size()){
+			this.statuses.add(s);
+			s.applyToEntity(this);
+		}
 	}
 	
 	public void clearConditions(){

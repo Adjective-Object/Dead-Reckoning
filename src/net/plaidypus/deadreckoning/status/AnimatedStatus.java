@@ -11,8 +11,8 @@ public abstract class AnimatedStatus extends Status{
 	
 	Animation animation;
 	
-	public AnimatedStatus(InteractiveEntity source,Image tile, String description, Animation effectAnimation){
-		super(source,tile,description);
+	public AnimatedStatus(InteractiveEntity source,Image tile, String description, String identifier, Animation effectAnimation){
+		super(source,tile,description,identifier);
 		this.animation=effectAnimation;
 	}
 

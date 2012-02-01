@@ -23,7 +23,7 @@ public class OnFire extends AnimatedStatus{
 	static SpriteSheet sprite;
 	
 	public OnFire( InteractiveEntity source, int duration, int power){
-		super(source, image, details,new Animation(sprite, 60));
+		super(source, image, details, "OnFire", new Animation(sprite, 60));
 		this.duration=duration;
 		this.power=power;
 		this.statusID=Status.STATUS_ONFIRE;
