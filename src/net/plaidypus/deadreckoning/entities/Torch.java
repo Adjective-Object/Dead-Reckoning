@@ -68,4 +68,7 @@ public class Torch extends Entity{
 	public boolean isInteractive() {
 		return false;
 	}
+
+	@Override
+	public void onDeath() {}
 }

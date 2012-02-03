@@ -24,6 +24,7 @@ public abstract class Status {
 		this.identifier=identifier;
 		this.tileImage=tileImage;
 		this.source=source;
+		this.stacks=1;
 	}
 	
 	//Only called if they have the same identifier string

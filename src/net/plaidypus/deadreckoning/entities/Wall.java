@@ -56,4 +56,10 @@ public class Wall extends Entity{
 		return false;
 	}
 
+	@Override
+	public void onDeath() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -43,7 +43,7 @@ public class LootAction extends EntityTypeAction{ //TODO make it so you can loot
 
 	@Override
 	public String getMessage() {
-		return source.getName()+" looted "+target.getEntity(Tile.LAYER_ACTIVE).getName();
+		return source.getName()+" looted "+target.getEntity(this.layer).getName();
 	}
 
 }

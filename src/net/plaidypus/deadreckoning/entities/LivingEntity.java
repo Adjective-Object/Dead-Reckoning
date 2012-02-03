@@ -83,8 +83,8 @@ public abstract class LivingEntity extends InteractiveEntity {
 			statuses.get(i).update(this, delta);
 		}
 		
-		if(!this.isAlive()){
-			this.setCurrentAnimation(LivingEntity.ANIMATION_DEATH);
+		if(this.HP<=0){
+			this.kill();
 		}
 	}
 	
@@ -199,6 +199,19 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 */
 	public boolean isAlive() {
 		return this.HP>0;
+	}
+	
+	public void onDeath(){
+		this.getParent().removeEntity(this);
+		for(int i=0; i<this.getLocation().getEntities().length; i++){
+			System.out.println(this.getLocation().getEntity(i));
+		}
+		this.getParent().placeEntity(this.getX(), this.getY(),new Corpse(this.getLocation(),Tile.LAYER_PASSIVE_PLAY,this), Tile.LAYER_PASSIVE_PLAY);
+		System.out.println(this.getParent().ingameEntities);
+		for(int i=0; i<this.getLocation().getEntities().length; i++){
+			System.out.println(this.getLocation().getEntity(i));
+		}
+		System.out.println(this.getParent().ingameEntities);
 	}
 	
 	public boolean isInteractive(){

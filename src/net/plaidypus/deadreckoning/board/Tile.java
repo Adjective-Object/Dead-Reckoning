@@ -68,6 +68,7 @@ public class Tile {
 		e.setLayer(layer);
 		containedEntities[layer] = e;
 		containedEntities[layer].setLocation(this);
+		containedEntities[layer].setLayer(layer);
 	}
 
 	public void disconnectEntity(int layer) {
@@ -92,6 +93,10 @@ public class Tile {
 
 	public void clearTile(){
 		this.containedEntities= emptyEntityArray();
+	}
+	
+	public void clearTile(int i) {
+		this.containedEntities[i]=null;
 	}
 	
 	public static Entity[] emptyEntityArray(){

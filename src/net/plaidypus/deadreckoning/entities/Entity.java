@@ -245,4 +245,6 @@ public abstract class Entity {
 		return layer;
 	}
 
+	public abstract void onDeath();
+
 }

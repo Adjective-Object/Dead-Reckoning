@@ -38,17 +38,17 @@ public class Chest extends InteractiveEntity{
 	}
 	
 	public void update(GameContainer gc, int delta) {
-		if(this.inventory.isEmpty()){
-			this.kill();
-			this.getParent().addEffectOver(new FadeoutEffect(this.getLocation(),chest));
-		}
 	}
 	
-	public void updateBoardEffects(GameContainer gc, int delta){}
+	public void updateBoardEffects(GameContainer gc, int delta){
+		if(this.inventory.isEmpty()){
+			this.kill();
+		}
+	}
 
 	@Override
 	public Action chooseAction(GameContainer gc, int delta) {
-		return new WaitAction(this);
+		return null;
 	}
 
 	@Override
@@ -79,6 +79,11 @@ public class Chest extends InteractiveEntity{
 	@Override
 	public boolean isInteractive() {
 		return false;
+	}
+
+	@Override
+	public void onDeath() {
+		this.getParent().addEffectOver(new FadeoutEffect(this.getLocation(),chest));
 	}
 
 }

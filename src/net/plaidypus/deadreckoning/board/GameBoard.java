@@ -33,7 +33,7 @@ public class GameBoard {
 	int width, height;
 
 	ArrayList<GridEffect> overEffects, underEffects;
-	static HashMap<String,Entity> makerArray;
+	public static HashMap<String,Entity> makerArray;
 	
 	GameplayElement GameplayElement;
 	
@@ -89,7 +89,36 @@ public class GameBoard {
 		board[x][y].setEntity(e,layer);
 		ingameEntities.add(e);
 	}
-
+	
+	public boolean placeEntityNear(int x, int y, Entity e, int layer) {
+		for(int scanRadius=0 ;scanRadius<10; scanRadius++){
+			for(int i=-scanRadius+1; i<scanRadius; i++){
+				if(getTileAt(x+i,y-scanRadius).isOpen(layer)){
+					board[x][y].setEntity(e,layer);
+					ingameEntities.add(e);
+					return true;
+				}
+				if(getTileAt(x-scanRadius,y+i).isOpen(layer)){
+					board[x][y].setEntity(e,layer);
+					ingameEntities.add(e);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	
+	public void removeEntity(int x, int y, int layer) {
+		ingameEntities.remove(board[x][y].getEntity(layer));
+		board[x][y].disconnectEntity(layer);
+	}
+	
+	public void removeEntity(Entity e) {
+		ingameEntities.remove(e);
+		e.getLocation().disconnectEntity(e.getLayer());
+	}
+	
 	public void clearTile(int x, int y) {
 		for(int i=0; i<Tile.numLayers; i++){
 			ingameEntities.remove(board[x][y].getEntity(i));
@@ -186,7 +215,8 @@ public class GameBoard {
 					if (!board[x][y].isOpen(i)) {
 						board[x][y].getEntity(i).update(gc, delta);
 						if(board[x][y].getEntity(i).toKill){
-							board[x][y].clearTile();
+							board[x][y].getEntity(i).onDeath();
+							board[x][y].clearTile(i);
 						}
 					}
 				}

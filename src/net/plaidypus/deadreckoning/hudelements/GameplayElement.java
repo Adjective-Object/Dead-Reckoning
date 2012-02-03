@@ -186,9 +186,9 @@ public class GameplayElement extends HudElement {
 			if(currentAction==actions.size() && gb.isIdle() || !gb.ingameEntities.get(currentEntity).isInteractive()){
 				currentAction=0;
 				if(actions.get(currentAction).takesTurn){
-					currentEntity = (currentEntity + 1) % gb.ingameEntities.size();
-					updateBoardEffects(gc, delta);
-				}	
+					currentEntity = (currentEntity + 1) % gb.ingameEntities.size();	
+				}
+				updateBoardEffects(gc, delta);
 				gb.clearHighlightedSquares();
 				gb.clearPrimaryHighlight();
 				actions.clear();
