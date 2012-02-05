@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.actions;
 
+import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
@@ -84,13 +85,10 @@ public class AttackAction extends EntityTypeAction {
 			
 			e.getParent().addEffectOver(
 					new DamageEffect(target, Integer.toString(damage)));
+			
+			DeadReckoningGame.instance.messages.addMessage( source.getName()+" attacked "+target.getEntity(Tile.LAYER_ACTIVE).getName()+" for "+damage+" damage");
 
 		return true;
 
-	}
-
-	@Override
-	public String getMessage() {
-		return source.getName()+" attacked "+target.getEntity(Tile.LAYER_ACTIVE).getName()+" for "+damage+" damage";
 	}
 }

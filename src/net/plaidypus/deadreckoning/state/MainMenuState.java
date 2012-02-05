@@ -162,7 +162,7 @@ public class MainMenuState extends BasicGameState {
 
 		if (inStart) {
 			if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-				sbg.enterState(DeadReckoningGame.GAMEPLAYSTATE);
+				sbg.enterState(DeadReckoningGame.SAVESELECTSTATE);
 			}
 		} else {
 		}

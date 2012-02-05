@@ -60,7 +60,7 @@ public class Chest extends InteractiveEntity{
 	public Entity makeFromString(GameBoard g, String[] toload) {
 		ArrayList<Item> content = new ArrayList<Item>(0);
 		for(int i=4; i<toload.length; i++){
-			content.add(new EtcDrop(Integer.parseInt(toload[i])));//TODO equip parsing
+			content.add(new EtcDrop(Integer.parseInt(toload[i]),1));//TODO equip parsing
 		}
 		return new Chest(g.getTileAt(Integer.parseInt(toload[1]),Integer.parseInt(toload[2])),Integer.parseInt(toload[3]),content);
 	}

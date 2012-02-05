@@ -28,57 +28,21 @@ public class GameBoard {
 
 	public ArrayList<Entity> ingameEntities;
 
-	Tile[][] board;
+	public Tile[][] board;
 	Tile primaryHighlight;
-	int width, height;
+	public int width, height;
 
 	ArrayList<GridEffect> overEffects, underEffects;
-	public static HashMap<String,Entity> makerArray;
 	
 	GameplayElement GameplayElement;
 	
 	static final Color primaryHighlightColor = new Color(255, 75, 23);
 	
-	public GameBoard(GameplayElement g, int saveNumber, int floorNumber) throws NumberFormatException, IOException, SlickException{
+	public GameBoard(GameplayElement g, int floorNumber) throws NumberFormatException, IOException, SlickException{
 		this.GameplayElement=g;
-		BufferedReader r = new BufferedReader(new FileReader("saves/"+saveNumber+"/floor"+floorNumber+".map"));
 		ingameEntities = new ArrayList<Entity>(0);
 		overEffects = new ArrayList<GridEffect>(0);
 		underEffects = new ArrayList<GridEffect>(0);
-		loadBoardFromSave(r);
-		loadEntitiesFromSave(r);
-	}
-	
-	private void loadBoardFromSave(BufferedReader r) throws IOException, SlickException {
-		
-		width=(r.read()-48)*10+r.read()-48;
-		r.readLine();
-		height=(r.read()-48)*10+r.read()-48;
-		r.readLine();
-		System.out.println("Map Dimensions: "+width+","+height);
-		board = new Tile[width][height];
-		for(int y=0; y<height; y++){
-			for(int x=0; x<width; x++){
-				int q=(r.read()-48)*10+r.read()-48;
-				board[x][y]=new Tile(this,x,y,q);
-			}
-			r.readLine();
-		}
-		System.out.println(board.length);
-		for(int i=0; i<board.length; i++){
-			System.out.println(board[i].length);
-		}
-	}
-
-	private void loadEntitiesFromSave(BufferedReader r) throws IOException{
-		String entityDefinition = "";
-		while(entityDefinition!=null){
-			System.out.println(entityDefinition);
-			if(!entityDefinition.equals("")){
-				makerArray.get(entityDefinition.split(":")[0]).makeFromString(this,entityDefinition.split(":"));
-			}
-			entityDefinition = r.readLine();
-		}
 	}
 	
 	public void placeEntity(Tile t, Entity e, int layer) {
@@ -129,14 +93,6 @@ public class GameBoard {
 	public void moveEntity(Tile source, Tile target, int layer) {
 		target.setEntity(source.getEntity(layer),layer);
 		source.disconnectEntity(layer);
-	}
-
-	public static void init() throws SlickException {
-		
-		makerArray = new HashMap<String,Entity>(0);
-		makerArray.put("Torch",new Torch("Torch"));
-		makerArray.put("Wall",new Wall("Wall"));
-		makerArray.put("Chest",new Chest("Chest"));
 	}
 
 	public Tile getTileAt(int x, int y) {

@@ -88,8 +88,6 @@ public abstract class LivingEntity extends InteractiveEntity {
 		}
 	}
 	
-	public abstract void updateBoardEffects(GameContainer gc, int delta);
-	
 	/**
 	 * still abstract because different livingEntities will have differing AIs
 	 */
@@ -226,7 +224,6 @@ public abstract class LivingEntity extends InteractiveEntity {
 		int i=0;
 		while(i<this.statuses.size()){
 			if(this.statuses.get(i).identifier.equals(s.identifier)){
-				System.out.println("collapsing");
 				Status p = s.collapseWithStatus(statuses.get(i));
 				p.applyToEntity(this);
 				this.statuses.remove(i);

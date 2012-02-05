@@ -18,32 +18,30 @@ public class LootAction extends EntityTypeAction{ //TODO make it so you can loot
 	}
 	
 	protected boolean applyToEntity(Entity entity){
+		DeadReckoningGame.instance.messages.addMessage("That's Not Allowed");
 		return true;
 	}
 	
 	protected boolean applyToEntity(InteractiveEntity e){
-		System.out.println(e.getInventory());
+		DeadReckoningGame.instance.messages.addMessage(source.getName()+" looted "+target.getEntity(this.layer).getName());
 		return gotoLootScreen(((InteractiveEntity)source),e);
 	}
 	
 	protected boolean applyToEntity(LivingEntity e){
 		if(e.isAlive()){
+			DeadReckoningGame.instance.messages.addMessage("That's Not Allowed");
 			return true;
 		}
 		else{
+			DeadReckoningGame.instance.messages.addMessage(source.getName()+" looted "+target.getEntity(this.layer).getName());
 			return gotoLootScreen(((InteractiveEntity)source),e);
 		}
 	}
 	
 	private boolean gotoLootScreen(InteractiveEntity a, InteractiveEntity b){
-		DeadReckoningGame.instance.getHudState(DeadReckoningGame.LOOTSTATE).makeFrom(new Object[] {GameplayElement.getImage(),a,b,null,null} );
+		DeadReckoningGame.instance.getHudState(DeadReckoningGame.LOOTSTATE).makeFrom(new Object[] {GameplayElement.getImage(),null,a,b,null,null} );
 		DeadReckoningGame.instance.enterState(DeadReckoningGame.LOOTSTATE);
 		return true;
-	}
-
-	@Override
-	public String getMessage() {
-		return source.getName()+" looted "+target.getEntity(this.layer).getName();
 	}
 
 }

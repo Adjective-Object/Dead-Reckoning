@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.actions;
 
+import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 
@@ -17,11 +18,7 @@ public class ChangeMapAction extends Action{
 
 	protected boolean apply(int delta) {
 		source.getParent().placeEntity(target, toWrite, layer);
+		DeadReckoningGame.instance.messages.addMessage(source.getName()+"oh look, the map has been changed");
 		return true;
-	}
-
-	@Override
-	public String getMessage() {
-		return null;
 	}
 }

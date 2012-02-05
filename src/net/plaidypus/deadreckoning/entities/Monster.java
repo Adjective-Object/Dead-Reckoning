@@ -35,7 +35,7 @@ public class Monster extends LivingEntity {
 				for(int k=0; k<Tile.numLayers; k++){
 					if(!this.getLocation().getRelativeTo(i, q).isOpen(k)){
 						Entity n =this.getLocation().getRelativeTo(i, q).getEntity(k);
-						if(n.getAllignment()!=this.getAllignment() && n.getAllignment()!=Entity.ALLIGN_NEUTRAL && n.isInteractive()){
+						if(n.getAllignment()!=this.getAllignment() && n.getAllignment()!=Entity.ALLIGN_NEUTRAL && n.isInteractive() && Utilities.randFloat()<=0.8){
 							return attack.makeAction(this.getLocation().getRelativeTo(i, q));
 						}
 					}

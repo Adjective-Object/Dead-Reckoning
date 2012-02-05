@@ -16,14 +16,10 @@ public class CheckInventoryAction extends Action{
 	@Override
 	protected boolean apply(int delta) {
 		InteractiveEntity po = (InteractiveEntity)(source);
-		DeadReckoningGame.instance.getHudState(DeadReckoningGame.INVENTORYSTATE).makeFrom(new Object[] {GameplayElement.getImage(),po});
+		DeadReckoningGame.instance.getHudState(DeadReckoningGame.INVENTORYSTATE).makeFrom(new Object[] {GameplayElement.getImage(),null,po});
 		DeadReckoningGame.instance.enterState(DeadReckoningGame.INVENTORYSTATE);
+		DeadReckoningGame.instance.messages.addMessage(source.getName()+" is digging through their shit");
 		return true;
-	}
-
-	@Override
-	public String getMessage() {
-		return source.getName()+" is digging through their shit";
 	}
 
 }

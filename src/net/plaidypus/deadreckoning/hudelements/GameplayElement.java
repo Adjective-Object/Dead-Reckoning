@@ -14,6 +14,8 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.entities.Torch;
 import net.plaidypus.deadreckoning.grideffects.DamageEffect;
+import net.plaidypus.deadreckoning.loader.BoardLoader;
+import net.plaidypus.deadreckoning.loader.EntityLoader;
 import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.skills.Fireball;
 import net.plaidypus.deadreckoning.status.OnFire;
@@ -83,14 +85,14 @@ public class GameplayElement extends HudElement {
 		Torch.init();
 		Chest.init();
 		OnFire.init();
-		GameBoard.init();
+		EntityLoader.init();
 		
 		backgroundScreen=new Image(gc.getWidth(),gc.getHeight());
 		
 		gc.setTargetFrameRate(60);
 		gc.setVSync(true);
 		try {
-			gb = new GameBoard(this,saveNumber,0);
+			gb = BoardLoader.loadBoardFromSave(this,saveNumber,0);
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (IOException e){
@@ -179,7 +181,6 @@ public class GameplayElement extends HudElement {
 			if(currentAction<actions.size()){
 				actions.get(currentAction).applyAction(delta);
 				if(actions.get(currentAction).completed){
-					setMessage(actions.get(currentAction).getMessage());
 					currentAction++;
 				}
 			}

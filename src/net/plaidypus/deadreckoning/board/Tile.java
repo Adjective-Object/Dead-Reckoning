@@ -47,7 +47,7 @@ public class Tile {
 
 	public static final int TILE_EMPTY = 4, TILE_WALL = 9;
 
-	Tile(GameBoard parent, int x, int y, int tileFace) throws SlickException {
+	public Tile(GameBoard parent, int x, int y, int tileFace) throws SlickException {
 		this.parent = parent;
 		this.y = y;
 		this.x = x;

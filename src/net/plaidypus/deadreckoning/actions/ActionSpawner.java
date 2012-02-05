@@ -21,7 +21,4 @@ public class ActionSpawner extends Action{
 		return true;
 	}
 
-	@Override
-	public String getMessage() {return null;}
-
 }

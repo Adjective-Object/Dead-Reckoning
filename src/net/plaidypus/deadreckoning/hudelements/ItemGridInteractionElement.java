@@ -5,6 +5,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 
 public class ItemGridInteractionElement extends HudElement{
 
@@ -37,6 +38,8 @@ public class ItemGridInteractionElement extends HudElement{
 				a.contents.clear();
 			}
 		}
+		InteractiveEntity.collapseItemArray(a.contents);
+		InteractiveEntity.collapseItemArray(b.contents);
 	}
 
 	@Override

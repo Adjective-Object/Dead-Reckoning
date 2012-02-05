@@ -15,7 +15,7 @@ public class Equip extends Item{
 	int[] classCompatability;
 	
 	public Equip(int itemID) {
-		super(itemID);
+		super(itemID,Item.ITEM_EQUIP);
 	}
 	
 	protected void parseItem(String path) throws IOException, SlickException {
@@ -31,6 +31,16 @@ public class Equip extends Item{
 		HP = Integer.parseInt(reader.readLine());
 		MP = Integer.parseInt(reader.readLine());
 		VIS = Integer.parseInt(reader.readLine());
+	}
+
+	@Override
+	public boolean stacksWith(Item item) {
+		return false;
+	}
+
+	@Override
+	public Item combineWith(Item item) {
+		return null;
 	}
 	
 }

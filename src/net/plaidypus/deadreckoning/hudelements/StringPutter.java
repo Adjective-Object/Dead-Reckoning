@@ -13,7 +13,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class StringPutter extends HudElement{
 	
-	private GameplayElement target;
 	private ArrayList<Double> alphas;
 	private ArrayList<String> messages;
 	private int hookElement, fadeoutRate;
@@ -26,7 +25,6 @@ public class StringPutter extends HudElement{
 	
 	public void init(GameContainer gc, StateBasedGame sbg)
 	throws SlickException {
-		this.target  = (GameplayElement)(this.getParent().getElement(hookElement));
 		alphas = new ArrayList<Double>(0);
 		messages = new ArrayList<String>(0);
 	}
@@ -42,14 +40,9 @@ public class StringPutter extends HudElement{
 				i--;
 			}
 		}
-		String s = target.getMessage();
-		if(s!=null){
-			addMessage(s);
-			target.clearMessage();
-		}
 	}
 	
-	private void addMessage(String string) {
+	public void addMessage(String string) {
 		messages.add(string);
 		alphas.add(255.0);
 	}

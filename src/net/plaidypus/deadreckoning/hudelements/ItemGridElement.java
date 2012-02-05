@@ -101,7 +101,7 @@ public class ItemGridElement extends HudElement{
 			for(int ym=0; ym<height; ym++){
 				g.drawImage(tileimage,getX()+externalBorder+xm*(DeadReckoningGame.tileSize+internalBorder),getY()+externalBorder+ym*(DeadReckoningGame.tileSize+internalBorder));
 				if(xm+ym*width<contents.size()){
-					g.drawImage(contents.get(xm+ym*width).getImage(),getX()+externalBorder+xm*(DeadReckoningGame.tileSize+internalBorder),getY()+externalBorder+ym*(DeadReckoningGame.tileSize+internalBorder));
+					contents.get(xm+ym*width).render(g,getX()+externalBorder+xm*(DeadReckoningGame.tileSize+internalBorder),getY()+externalBorder+ym*(DeadReckoningGame.tileSize+internalBorder));
 				}
 				if(selector==xm+ym*width){
 					g.drawRect(getX()+externalBorder+xm*(DeadReckoningGame.tileSize+internalBorder),getY()+externalBorder+ym*(DeadReckoningGame.tileSize+internalBorder),DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
