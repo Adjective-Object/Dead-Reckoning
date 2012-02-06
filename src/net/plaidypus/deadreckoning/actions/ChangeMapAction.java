@@ -18,7 +18,7 @@ public class ChangeMapAction extends Action{
 
 	protected boolean apply(int delta) {
 		source.getParent().placeEntity(target, toWrite, layer);
-		DeadReckoningGame.instance.messages.addMessage(source.getName()+"oh look, the map has been changed");
+		DeadReckoningGame.instance.messages.addMessage("oh look, the map has been changed by "+source.getName());
 		return true;
 	}
 }

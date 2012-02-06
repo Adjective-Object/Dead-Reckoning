@@ -15,8 +15,7 @@ public class PlaceTorch extends Skill{
 
 	@Override
 	public Action makeAction(Tile target) {
-		target.setTileFace(Tile.TILE_EMPTY);
-		return new ChangeMapAction(source,target,Tile.LAYER_ACTIVE,new Torch(target,Tile.LAYER_ACTIVE,Utilities.randInt(2, 5)));
+		return new ChangeMapAction(source,target,Tile.LAYER_ACTIVE,new Torch(target,Tile.LAYER_PASSIVE_MAP,Utilities.randInt(2, 5)));
 	}
 
 	@Override

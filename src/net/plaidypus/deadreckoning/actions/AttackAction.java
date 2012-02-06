@@ -70,21 +70,21 @@ public class AttackAction extends EntityTypeAction {
 			int xdiff = source.getX() - target.getX();
 			int ydiff = source.getY() - target.getY();
 			
-			if(e.getLocation().isVisible()){
+			if(e.getLocation().isVisible() && e.getLocation().lightLevel>0){
 				if ((xdiff < 0 ^ e.getFacing()) || (xdiff == 0 && ydiff > 0)) {
 					e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_BACK);
 				} else {
 					e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_FRONT);
 				}
+				
+				e.getParent().addEffectOver(source.getLocation(), this.sourceEffectTop);
+				e.getParent().addEffectUnder(source.getLocation(), this.sourceEffectBottom);
+				e.getParent().addEffectOver(target, this.targetEffectTop);
+				e.getParent().addEffectUnder(target, this.targetEffectBottom);
+				
+				e.getParent().addEffectOver(
+						new DamageEffect(target, Integer.toString(damage)));
 			}
-			
-			e.getParent().addEffectOver(source.getLocation(), this.sourceEffectTop);
-			e.getParent().addEffectUnder(source.getLocation(), this.sourceEffectBottom);
-			e.getParent().addEffectOver(target, this.targetEffectTop);
-			e.getParent().addEffectUnder(target, this.targetEffectBottom);
-			
-			e.getParent().addEffectOver(
-					new DamageEffect(target, Integer.toString(damage)));
 			
 			DeadReckoningGame.instance.messages.addMessage( source.getName()+" attacked "+target.getEntity(Tile.LAYER_ACTIVE).getName()+" for "+damage+" damage");
 

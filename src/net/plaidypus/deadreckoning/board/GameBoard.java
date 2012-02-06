@@ -1,19 +1,10 @@
 package net.plaidypus.deadreckoning.board;
 
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Utilities;
-import net.plaidypus.deadreckoning.entities.Chest;
 import net.plaidypus.deadreckoning.entities.Entity;
-import net.plaidypus.deadreckoning.entities.LivingEntity;
-import net.plaidypus.deadreckoning.entities.Torch;
-import net.plaidypus.deadreckoning.entities.Wall;
 import net.plaidypus.deadreckoning.grideffects.GridEffect;
 import net.plaidypus.deadreckoning.hudelements.GameplayElement;
 
@@ -38,13 +29,30 @@ public class GameBoard {
 	
 	static final Color primaryHighlightColor = new Color(255, 75, 23);
 	
-	public GameBoard(GameplayElement g, int floorNumber) throws NumberFormatException, IOException, SlickException{
+	public GameBoard(GameplayElement g){
+		this();
 		this.GameplayElement=g;
+	}
+	
+	public GameBoard(){
 		ingameEntities = new ArrayList<Entity>(0);
 		overEffects = new ArrayList<GridEffect>(0);
 		underEffects = new ArrayList<GridEffect>(0);
 	}
 	
+	public GameBoard(int width, int height) {
+		this();
+		this.width=width;
+		this.height=height;
+		board=new Tile[width][height];
+		for(int x=0; x<width; x++){
+			for(int y=0; y<height; y++){
+				try {board[x][y]=new Tile(this,x,y,Tile.TILE_EMPTY);}
+				catch (SlickException e) {e.printStackTrace();}
+			}
+		}
+	}
+
 	public void placeEntity(Tile t, Entity e, int layer) {
 		placeEntity(t.getX(), t.getY(), e, layer);
 	}
@@ -71,8 +79,7 @@ public class GameBoard {
 		}
 		return false;
 	}
-	
-	
+		
 	public void removeEntity(int x, int y, int layer) {
 		ingameEntities.remove(board[x][y].getEntity(layer));
 		board[x][y].disconnectEntity(layer);
@@ -436,6 +443,14 @@ public class GameBoard {
 	public GameplayElement getGame() {
 		return GameplayElement;
 	}
+	
+	public void setGame(GameplayElement g){
+		this.GameplayElement = g;
+	}
+	
+	public void assignElement(GameplayElement g){
+		this.GameplayElement=g;
+	}
 
 	public boolean isIdle() {
 		for(int i=0; i<this.ingameEntities.size() ;i++){
@@ -446,4 +461,5 @@ public class GameBoard {
 		return true;
 	}
 
+	
 }

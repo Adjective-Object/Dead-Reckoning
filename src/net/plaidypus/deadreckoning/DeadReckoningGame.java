@@ -1,9 +1,11 @@
 package net.plaidypus.deadreckoning;
 
+import net.plaidypus.deadreckoning.board.MapGenerator;
 import net.plaidypus.deadreckoning.hudelements.*;
 import net.plaidypus.deadreckoning.state.ExclusiveHudLayersState;
 import net.plaidypus.deadreckoning.state.HudLayersState;
 import net.plaidypus.deadreckoning.state.MainMenuState;
+import net.plaidypus.deadreckoning.state.SaveSelectorState;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
@@ -33,16 +35,14 @@ public class DeadReckoningGame extends StateBasedGame
 		messages = new StringPutter(0,0,HudElement.BOTTOM_LEFT,0,80);
 		
 		this.addState(new MainMenuState(MAINMENUSTATE));
-		this.addState(new HudLayersState(SAVESELECTSTATE, new HudElement[] {
-				new TextButton(50,50,HudElement.TOP_LEFT,"mmyes",new UnicodeFont("/res/visitor.ttf", 20,true,false))
-		}));
+		this.addState(new SaveSelectorState(SAVESELECTSTATE));
 		this.addState(new HudLayersState(GAMEPLAYSTATE,new HudElement[] {
 				new GameplayElement(0),
 				new PlayerHudElement(10,10,HudElement.TOP_LEFT,0),
 				new StatusTrackerElement(10,120,HudElement.TOP_LEFT,0),
 				messages
 				} ));
-		this.addState(new ExclusiveHudLayersState(LOOTSTATE, new HudElement[] {
+		this.addState(new ExclusiveHudLayersState(LOOTSTATE, new HudElement[] { //TODO create custom state for this
 				new StillImageElement(0,0,HudElement.TOP_LEFT),
 				messages,
 				new ItemGridElement(-241,-132,HudElement.CENTER_CENTER),
@@ -80,6 +80,7 @@ public class DeadReckoningGame extends StateBasedGame
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
 		HudElement.calculateOffsets(container);
+		MapGenerator.init();
 	}
 	
 }

@@ -28,6 +28,9 @@ public class MoveEntityEffect extends GridEffect{
 	}
 	
 	public void update(int delta){
+		if(!destination.isVisible() || destination.lightLevel<0){
+			currentdown=0;
+		}
 		currentdown = currentdown/2;
 		if(currentdown <0.5){
 			this.setComplete(true);

@@ -12,7 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class PlayerHudElement extends HudElement{
 	
-	Player target;
+	GameplayElement target;
 	Image img;
 	int hookElement;
 	float displayHPValue, displayMPValue, displayEXPValue;
@@ -24,9 +24,9 @@ public class PlayerHudElement extends HudElement{
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-		displayHPValue += (target.HP - displayHPValue)*(float)(delta)/200;
-		displayMPValue += (target.MP - displayMPValue)*(float)(delta)/200;
-		displayEXPValue += (target.EXP - displayEXPValue)*(float)(delta)/200;
+		displayHPValue += (target.player.HP - displayHPValue)*(float)(delta)/200;
+		displayMPValue += (target.player.MP - displayMPValue)*(float)(delta)/200;
+		displayEXPValue += (target.player.EXP - displayEXPValue)*(float)(delta)/200;
 	}
 
 	@Override
@@ -36,8 +36,7 @@ public class PlayerHudElement extends HudElement{
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 		img = new Image("res/HUD/PlayerBox.png");
-		GameplayElement p = (GameplayElement)(this.getParent().getElement(hookElement));
-		this.target = p.player;
+		target = (GameplayElement)(this.getParent().getElement(hookElement));
 		displayHPValue=0;
 		displayMPValue=0;
 		displayEXPValue=0;
@@ -54,13 +53,13 @@ public class PlayerHudElement extends HudElement{
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
 		g.drawImage(img,getX(),getY());
-		g.drawImage(target.getProfession().getPortriat(),getX()+19,getY()+23);
+		g.drawImage(target.player.getProfession().getPortriat(),getX()+19,getY()+23);
 		g.setColor(new Color(200,70,70));
-		g.fillRect(getX()+126, getY()+25, 75*displayHPValue/target.maxHP, 9);
+		g.fillRect(getX()+126, getY()+25, 75*displayHPValue/target.player.maxHP, 9);
 		g.setColor(new Color(70,70,200));
-		g.fillRect(getX()+126, getY()+49, 75*displayMPValue/target.maxMP, 9);
+		g.fillRect(getX()+126, getY()+49, 75*displayMPValue/target.player.maxMP, 9);
 		g.setColor(new Color(200,200,70));
-		g.fillRect(getX()+126, getY()+74, 75*displayEXPValue/target.getEXPforLevel(), 9);
+		g.fillRect(getX()+126, getY()+74, 75*displayEXPValue/target.player.getEXPforLevel(), 9);
 	}
 
 }

@@ -13,7 +13,7 @@ import org.newdawn.slick.SlickException;
 public class BoardLoader {
 
 	public static GameBoard loadBoardFromSave(GameplayElement g, int saveNumber, int floorNumber) throws IOException, SlickException {
-		GameBoard b = new GameBoard(g, floorNumber);
+		GameBoard b = new GameBoard(g);
 		BufferedReader r = new BufferedReader(new FileReader("saves/"+saveNumber+"/floor"+floorNumber+".map"));
 		
 		b.width=(r.read()-48)*10+r.read()-48;

@@ -2,6 +2,7 @@ package net.plaidypus.deadreckoning.state;
 
 import java.util.ArrayList;
 
+import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.ItemGridElement;
 
@@ -15,6 +16,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class HudLayersState extends BasicGameState{
 	
 	int stateID;
+	DeadReckoningGame parent;
 	
 	ArrayList<HudElement> HudElements;
 	
@@ -75,6 +77,10 @@ public class HudLayersState extends BasicGameState{
 
 	public HudElement getElement(int index) {
 		return HudElements.get(index);
+	}
+	
+	public DeadReckoningGame getParent(){
+		return this.parent;
 	}
 	
 }

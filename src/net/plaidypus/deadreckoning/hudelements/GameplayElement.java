@@ -51,6 +51,7 @@ public class GameplayElement extends HudElement {
 	static Image backgroundScreen;
 	
 	GameBoard gb;
+	GameContainer gc;
 	
 	ArrayList<Action> actions;
 	
@@ -91,17 +92,22 @@ public class GameplayElement extends HudElement {
 		
 		gc.setTargetFrameRate(60);
 		gc.setVSync(true);
+		
+		this.gc=gc;
+		System.out.println(gc);
+
+	}
+	
+	public void setBoard(GameBoard b) {
+		this.gb = b;
+		gb.setGame(this);
+		
 		try {
-			gb = BoardLoader.loadBoardFromSave(this,saveNumber,0);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (IOException e){
+			player = new Player(gb.getTileAt(4,4), Tile.LAYER_ACTIVE, new Profession (0), input);
+		} catch (SlickException e) {
 			e.printStackTrace();
 		}
-		
-		player = new Player(gb.getTileAt(4,4), Tile.LAYER_ACTIVE, new Profession (0), input);
-		new Monster(gb.getTileAt(7, 4),Tile.LAYER_ACTIVE,"res/goblin.entity",1);
-		new Monster(gb.getTileAt(5, 4),Tile.LAYER_ACTIVE,"res/goblin.entity",2);
+				
 		cameraX = 0;
 		cameraY = 0;
 		cameraDestX = player.getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;
@@ -109,7 +115,7 @@ public class GameplayElement extends HudElement {
 		timeOn=0;
 		actions = new ArrayList<Action> (0);
 		
-		updateBoardEffects(gc, 0);
+		updateBoardEffects(gc,0);
 	}
 
 	/**
@@ -249,9 +255,6 @@ public class GameplayElement extends HudElement {
 	public int getHeight() {
 		return height;
 	}
-
-	@Override
-	public void makeFrom(Object o) {}//TODO making from integer saveNumber instead of passing that way cna be mde from selector
 	
 	public String getMessage(){
 		return this.message;
@@ -263,6 +266,12 @@ public class GameplayElement extends HudElement {
 
 	public void clearMessage() {
 		this.message=null;
+	}
+
+	@Override
+	public void makeFrom(Object o) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

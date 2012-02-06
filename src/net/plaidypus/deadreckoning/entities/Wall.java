@@ -15,7 +15,6 @@ public class Wall extends Entity{
 	public Wall(Tile targetTile, int layer){
 		super(targetTile, layer);
 		this.setTransparent(false);
-		targetTile.setTileFace(Tile.TILE_WALL);
 	}
 	
 	public Wall(String stringCode){
