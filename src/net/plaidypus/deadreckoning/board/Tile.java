@@ -157,6 +157,10 @@ public class Tile {
 	public boolean isVisible() {
 		return visibility;
 	}
+	
+	public boolean canBeSeen(){
+		return visibility && this.lightLevel>0;
+	}
 
 	public Tile getToLeft() {
 		return parent.getTileAt(

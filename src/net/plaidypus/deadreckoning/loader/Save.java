@@ -9,13 +9,15 @@ import java.io.IOException;
 import net.plaidypus.deadreckoning.board.GameBoard;
 
 public class Save {
-	String name;
 	String saveLocation;
+	String name;
+	int depth;
 	
 	public Save(String saveLocation){
 		try {
 			BufferedReader r = new BufferedReader(new FileReader(saveLocation+"/saveInformation.txt"));
 			name = r.readLine();
+			depth = Integer.parseInt(r.readLine());
 		}
 		catch (FileNotFoundException e) {e.printStackTrace();}
 		catch (IOException e) {e.printStackTrace();}

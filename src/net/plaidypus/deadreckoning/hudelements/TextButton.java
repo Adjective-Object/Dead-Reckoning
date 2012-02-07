@@ -30,7 +30,7 @@ public class TextButton extends HudElement{
 			throws SlickException {
 		int mx = gc.getInput().getMouseX(), my = gc.getInput().getMouseY();
 		
-		if(mx>getX() && mx<getX()+getWidth() && my>getY() && my<getY()+getHeight() && gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)){
+		if(gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)&& mx>getX() && mx<getX()+getWidth() && my>getY() && my<getY()+getHeight()){
 			pressed=true;
 		}
 		else{

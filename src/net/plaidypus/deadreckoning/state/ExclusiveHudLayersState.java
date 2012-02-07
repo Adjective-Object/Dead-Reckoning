@@ -64,6 +64,9 @@ public class ExclusiveHudLayersState extends HudLayersState{
 				HudElements.get(i).update(container,game,delta,true);
 			}
 		}
+		container.getInput().clearMousePressedRecord();
+		container.getInput().clearKeyPressedRecord();
+		container.getInput().clearControlPressedRecord();
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException{
