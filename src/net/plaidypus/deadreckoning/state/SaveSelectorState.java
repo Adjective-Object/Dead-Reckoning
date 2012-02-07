@@ -2,7 +2,6 @@ package net.plaidypus.deadreckoning.state;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -11,8 +10,6 @@ import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.state.StateBasedGame;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.board.MapGenerator;
-import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.hudelements.ColorFiller;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.GameplayElement;
@@ -32,15 +29,29 @@ public class SaveSelectorState extends ExclusiveHudLayersState{
 		if(this.focus!=-1){
 		TextButton currentPressed = (TextButton)this.HudElements.get(this.focus);
 			if(currentPressed.isPressed()){
-				HudLayersState h = (HudLayersState) DeadReckoningGame.instance.getState(DeadReckoningGame.GAMEPLAYSTATE);
-				GameplayElement g = (GameplayElement)(h.getElement(0));
-				if(this.focus>=2){
-					g.setBoard(saves[focus].loadMap());
-					DeadReckoningGame.instance.enterState(DeadReckoningGame.GAMEPLAYSTATE);
-				}
-				else if (this.focus==1){
-					g.setBoard(MapGenerator.generateMap(0));
-					DeadReckoningGame.instance.enterState(DeadReckoningGame.GAMEPLAYSTATE);
+				try {
+					HudLayersState h = (HudLayersState) DeadReckoningGame.instance.getState(DeadReckoningGame.GAMEPLAYSTATE);
+					GameplayElement g = (GameplayElement)(h.getElement(0));
+					if(this.focus>=2){
+						
+							saves[focus].loadGame( GameplayElement.class.cast(HudLayersState.class.cast(DeadReckoningGame.instance.getState(DeadReckoningGame.GAMEPLAYSTATE)).getElement(0) ));
+							DeadReckoningGame.instance.enterState(DeadReckoningGame.GAMEPLAYSTATE);
+						
+					}
+					else if (this.focus==1){
+						Save s = Save.makeNewSave("/saves/NewSave","New Save");
+						s.loadGame( GameplayElement.class.cast(HudLayersState.class.cast(DeadReckoningGame.instance.getState(DeadReckoningGame.GAMEPLAYSTATE)).getElement(0) ));
+						DeadReckoningGame.instance.enterState(DeadReckoningGame.GAMEPLAYSTATE);
+					}
+				
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				} catch (InstantiationException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
 				}
 			}
 		}

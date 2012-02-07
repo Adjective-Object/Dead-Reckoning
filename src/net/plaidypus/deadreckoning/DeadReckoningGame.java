@@ -1,6 +1,5 @@
 package net.plaidypus.deadreckoning;
 
-import net.plaidypus.deadreckoning.board.MapGenerator;
 import net.plaidypus.deadreckoning.hudelements.*;
 import net.plaidypus.deadreckoning.state.ExclusiveHudLayersState;
 import net.plaidypus.deadreckoning.state.HudLayersState;
@@ -80,7 +79,6 @@ public class DeadReckoningGame extends StateBasedGame
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
 		HudElement.calculateOffsets(container);
-		MapGenerator.init();
 	}
 	
 }

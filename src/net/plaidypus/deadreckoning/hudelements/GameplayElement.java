@@ -1,6 +1,5 @@
 package net.plaidypus.deadreckoning.hudelements;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
@@ -9,24 +8,19 @@ import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Chest;
 import net.plaidypus.deadreckoning.entities.Entity;
-import net.plaidypus.deadreckoning.entities.Monster;
-import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.entities.Torch;
 import net.plaidypus.deadreckoning.grideffects.DamageEffect;
-import net.plaidypus.deadreckoning.loader.BoardLoader;
 import net.plaidypus.deadreckoning.loader.EntityLoader;
 import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.skills.Fireball;
 import net.plaidypus.deadreckoning.status.OnFire;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class GameplayElement extends HudElement {
@@ -50,7 +44,7 @@ public class GameplayElement extends HudElement {
 	public Player player;
 	static Image backgroundScreen;
 	
-	GameBoard gb;
+	private GameBoard gb;
 	GameContainer gc;
 	
 	ArrayList<Action> actions;
@@ -60,7 +54,6 @@ public class GameplayElement extends HudElement {
 		super(0,0,HudElement.TOP_LEFT,true);
 		currentEntity = 0;
 		currentAction = 0;
-		saveNumber = saveNumber;
 	}
 
 	/**
@@ -133,28 +126,28 @@ public class GameplayElement extends HudElement {
 		cameraY = cameraY + (cameraDestY - cameraY) * cameraRate;
 		
 		if(gc.getInput().isKeyPressed(Input.KEY_Y)){
-			cameraDestX = gb.ingameEntities.get(currentEntity).getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;
-			cameraDestY = gb.ingameEntities.get(currentEntity).getAbsoluteY() - gc.getHeight() / 2 + DeadReckoningGame.tileSize/2;
+			cameraDestX = getBoard().ingameEntities.get(currentEntity).getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;
+			cameraDestY = getBoard().ingameEntities.get(currentEntity).getAbsoluteY() - gc.getHeight() / 2 + DeadReckoningGame.tileSize/2;
 		}
 			
-		gb.updateSelctor(input, -cameraX, -cameraY);
-		gb.updateAllTiles(gc, delta);
+		getBoard().updateSelctor(input, -cameraX, -cameraY);
+		getBoard().updateAllTiles(gc, delta);
 		updateActions(gc,delta);
 	}
 	
 	public void updateBoardEffects(GameContainer gc, int delta){
-		gb.HideAll();
-		gb.updateBoardEffects(gc, delta);
-		gb.revealFromEntity(player);//TODO replace with from player
+		getBoard().HideAll();
+		getBoard().updateBoardEffects(gc, delta);
+		getBoard().revealFromEntity(player);//TODO replace with from player
 	}
 	  
 	private void updateActions(GameContainer gc, int delta) {
 		if(actions.size()==0){
-			while(!gb.ingameEntities.get(currentEntity).isInteractive() ){
-				currentEntity = (currentEntity + 1) % gb.ingameEntities.size();
+			while(!getBoard().ingameEntities.get(currentEntity).isInteractive() ){
+				currentEntity = (currentEntity + 1) % getBoard().ingameEntities.size();
 			}
 			
-			Entity current = gb.ingameEntities.get(currentEntity);
+			Entity current = getBoard().ingameEntities.get(currentEntity);
 			
 			if (current.getLocation().isVisible() && current.getLocation().lightLevel>0 && actions.size()==0 && timeOn>500){
 				int nx = current.getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;
@@ -190,14 +183,14 @@ public class GameplayElement extends HudElement {
 					currentAction++;
 				}
 			}
-			if(currentAction==actions.size() && gb.isIdle() || !gb.ingameEntities.get(currentEntity).isInteractive()){
+			if(currentAction==actions.size() && getBoard().isIdle() || !getBoard().ingameEntities.get(currentEntity).isInteractive()){
 				currentAction=0;
 				if(actions.get(currentAction).takesTurn){
-					currentEntity = (currentEntity + 1) % gb.ingameEntities.size();	
+					currentEntity = (currentEntity + 1) % getBoard().ingameEntities.size();	
 				}
 				updateBoardEffects(gc, delta);
-				gb.clearHighlightedSquares();
-				gb.clearPrimaryHighlight();
+				getBoard().clearHighlightedSquares();
+				getBoard().clearPrimaryHighlight();
 				actions.clear();
 				input.clearKeyPressedRecord();
 			}
@@ -225,7 +218,7 @@ public class GameplayElement extends HudElement {
 	 */
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
 		g.clear();
-		gb.render(g, -cameraX, -cameraY);
+		getBoard().render(g, -cameraX, -cameraY);
 		gc.getGraphics().copyArea(backgroundScreen, 0, 0);
 	}
 
@@ -272,6 +265,10 @@ public class GameplayElement extends HudElement {
 	public void makeFrom(Object o) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public GameBoard getBoard() {
+		return gb;
 	}
 	
 }
