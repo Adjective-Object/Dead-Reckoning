@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.actions;
 
+import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 
@@ -32,7 +33,13 @@ public abstract class Action {
 	 *            the elapsed since the last call of apply in milliseconds
 	 * @return if the action is complete (will not continue to call apply once completed)
 	 */
-	protected abstract boolean apply(int delta);
+	protected void sendMessage(String message){
+		if(isNoticed()){
+			DeadReckoningGame.instance.messages.addMessage(message);
+		}
+	}
+
+	protected abstract boolean isNoticed();
 
 	public void applyAction(int delta) {
 		if (!completed) {
@@ -45,4 +52,6 @@ public abstract class Action {
 
 		return p[p.length-1]+" "+this.source+" -> "+this.target;
 	}
+
+	protected abstract boolean apply(int delta);
 }

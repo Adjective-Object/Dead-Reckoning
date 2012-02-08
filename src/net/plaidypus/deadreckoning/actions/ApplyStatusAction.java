@@ -19,13 +19,13 @@ public class ApplyStatusAction extends EntityTypeAction{
 	
 	protected boolean applyToEntity(LivingEntity e) {
 		e.addCondition(s);
+		sendMessage(target.getEntity(Tile.LAYER_ACTIVE).getName()+" become "+s.getName());
 		return true;
 	}
 	
 	protected boolean applyToEntity(InteractiveEntity e) {return true;}
-
-	public String getMessage() {
-		return source.getName()+" made "+target.getEntity(Tile.LAYER_ACTIVE).getName()+" become "+s.getName();
-	}
+	
+	
+	protected boolean isNoticed() {return target.canBeSeen() || source.getLocation().canBeSeen();}
 
 }

@@ -1,6 +1,5 @@
 package net.plaidypus.deadreckoning.actions;
 
-import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
@@ -49,7 +48,7 @@ public class AttackAction extends EntityTypeAction {
 	protected boolean applyToEntity(LivingEntity e) {
 
 			LivingEntity s = (LivingEntity) source;
-			if(animateSource && source.isVisible()){
+			if(animateSource && source.getLocation().canBeSeen()){
 				s.setCurrentAnimation(LivingEntity.ANIMATION_ATTACK);
 			}
 			if(physical){
@@ -70,7 +69,7 @@ public class AttackAction extends EntityTypeAction {
 			int xdiff = source.getX() - target.getX();
 			int ydiff = source.getY() - target.getY();
 			
-			if(e.getLocation().isVisible() && e.getLocation().lightLevel>0){
+			if(e.getLocation().canBeSeen()){
 				if ((xdiff < 0 ^ e.getFacing()) || (xdiff == 0 && ydiff > 0)) {
 					e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_BACK);
 				} else {
@@ -86,9 +85,14 @@ public class AttackAction extends EntityTypeAction {
 						new DamageEffect(target, Integer.toString(damage)));
 			}
 			
-			DeadReckoningGame.instance.messages.addMessage( source.getName()+" attacked "+target.getEntity(Tile.LAYER_ACTIVE).getName()+" for "+damage+" damage");
+			sendMessage(source.getName()+" attacked "+target.getEntity(Tile.LAYER_ACTIVE).getName()+" for "+damage+" damage");
 
 		return true;
 
+	}
+
+	@Override
+	protected boolean isNoticed() {
+		return source.getLocation().canBeSeen() || target.canBeSeen();
 	}
 }

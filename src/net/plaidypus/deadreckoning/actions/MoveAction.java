@@ -30,5 +30,8 @@ public class MoveAction extends Action{
 	public String getMessage() {
 		return null;
 	}
+
+	@Override
+	protected boolean isNoticed() {return false;}
 	
 }

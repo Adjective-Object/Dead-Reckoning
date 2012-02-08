@@ -204,7 +204,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 		for(int i=0; i<this.getLocation().getEntities().length; i++){
 			System.out.println(this.getLocation().getEntity(i));
 		}
-		this.getParent().placeEntity(this.getX(), this.getY(),new Corpse(this.getLocation(),Tile.LAYER_PASSIVE_PLAY,this), Tile.LAYER_PASSIVE_PLAY);
+		this.getParent().placeEntityNear(this.getX(), this.getY(),new Corpse(this.getLocation(),Tile.LAYER_PASSIVE_PLAY,this), Tile.LAYER_PASSIVE_PLAY);
 		System.out.println(this.getParent().ingameEntities);
 		for(int i=0; i<this.getLocation().getEntities().length; i++){
 			System.out.println(this.getLocation().getEntity(i));

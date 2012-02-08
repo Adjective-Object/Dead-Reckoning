@@ -2,6 +2,7 @@ package net.plaidypus.deadreckoning.loader;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -11,12 +12,14 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.GameState;
+import org.newdawn.slick.util.FileSystemLocation;
 
 import net.plaidypus.deadreckoning.biome.Biome;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.hudelements.GameplayElement;
+import net.plaidypus.deadreckoning.biome.Biome;
 
 public class Save {
 	String saveLocation;
@@ -55,7 +58,6 @@ public class Save {
 		r.readLine();
 		b.height=(r.read()-48)*10+r.read()-48;
 		r.readLine();
-		System.out.println("Map Dimensions: "+b.width+","+b.height);
 		b.board = new Tile[b.width][b.height];
 		for(int y=0; y<b.height; y++){
 			for(int x=0; x<b.width; x++){
@@ -64,13 +66,8 @@ public class Save {
 			}
 			r.readLine();
 		}
-		System.out.println(b.board.length);
-		for(int i=0; i<b.board.length; i++){
-			System.out.println(b.board[i].length);
-		}
 		
 		return b;
-		
 	}
 	
 	public static ArrayList<Entity> loadEntities(GameBoard target, BufferedReader r) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException{
@@ -85,15 +82,47 @@ public class Save {
 		}
 		return entities;
 	}
+	
+	public static void saveBoard(GameBoard b, BufferedWriter r) throws IOException{
+		r.write(b.width);r.newLine();
+		r.write(b.height);r.newLine();
+		
+		for(int y=0; y<b.height; y++){
+			for(int x=0; x<b.width; x++){
+				r.write(Integer.toString(b.getTileAt(x, y).getTileFace()));
+			}
+			r.newLine();
+		}
+	}
+	
+	public static void saveEntities(GameBoard b, BufferedWriter r) throws IOException{
+		for(int i=0; i<b.ingameEntities.size(); i++){
+			r.write(b.ingameEntities.get(i).saveToString());
+			r.newLine();
+		}
+	}
 
 	public static Save makeNewSave(String fileLocation, String nameofSave) throws IOException {
-		BufferedWriter b = new BufferedWriter(new FileWriter( fileLocation + "/saveInformation.txt"));
-		b.write(nameofSave);
-		b.newLine();
-		b.write("0");
 		
-		for(int i=0; i<2; i++){
-			
+		
+		File director = new File(fileLocation + "/saveInformation.txt");
+		System.out.println(director.getCanonicalPath());
+		director.createNewFile();
+		BufferedWriter r = new BufferedWriter(new FileWriter(director));
+		r.write(nameofSave);
+		r.newLine();
+		r.write("0");
+		r.close();
+		
+		//TODO biome loading
+		
+		for(int i=0; i<1; i++){
+			File floorFile = new File(fileLocation+"/floor"+i+".txt");
+			floorFile.createNewFile();
+			r = new BufferedWriter(new FileWriter(floorFile));
+			GameBoard gameBoard = Biome.getRandomBoard();
+			Save.saveBoard(gameBoard, r);
+			r.close();
 		}
 		
 		Save s = new Save(fileLocation);

@@ -20,4 +20,8 @@ public class WaitAction extends Action{
 		return source.getName()+" is useless";
 	}
 
+
+	@Override
+	protected boolean isNoticed() {return false;}
+
 }

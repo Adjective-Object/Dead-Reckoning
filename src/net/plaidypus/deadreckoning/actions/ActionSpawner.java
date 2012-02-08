@@ -21,4 +21,7 @@ public class ActionSpawner extends Action{
 		return true;
 	}
 
+	@Override
+	protected boolean isNoticed() {return false;}
+
 }

@@ -39,7 +39,7 @@ public class SaveSelectorState extends ExclusiveHudLayersState{
 						
 					}
 					else if (this.focus==1){
-						Save s = Save.makeNewSave("/saves/NewSave","New Save");
+						Save s = Save.makeNewSave("saves/NewSave/","New Save");
 						s.loadGame( GameplayElement.class.cast(HudLayersState.class.cast(DeadReckoningGame.instance.getState(DeadReckoningGame.GAMEPLAYSTATE)).getElement(0) ));
 						DeadReckoningGame.instance.enterState(DeadReckoningGame.GAMEPLAYSTATE);
 					}

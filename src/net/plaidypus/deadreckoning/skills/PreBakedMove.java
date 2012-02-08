@@ -21,7 +21,7 @@ public class PreBakedMove extends Movement{
 		if( source.getLocation().getRelativeTo(xoff,yoff).isOpen(source.getLayer())){
 			return new MoveAction(source, source.getLocation().getRelativeTo(xoff,yoff), source.getLayer());
 		}
-		return new WaitAction(source);
+		return null;
 	}
 	
 	public boolean isInstant(){

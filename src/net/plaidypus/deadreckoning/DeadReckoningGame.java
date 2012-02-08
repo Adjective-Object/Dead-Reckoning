@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning;
 
+import net.plaidypus.deadreckoning.biome.Biome;
 import net.plaidypus.deadreckoning.hudelements.*;
 import net.plaidypus.deadreckoning.state.ExclusiveHudLayersState;
 import net.plaidypus.deadreckoning.state.HudLayersState;
@@ -79,6 +80,7 @@ public class DeadReckoningGame extends StateBasedGame
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
 		HudElement.calculateOffsets(container);
+		Biome.init();
 	}
 	
 }

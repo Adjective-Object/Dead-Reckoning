@@ -28,7 +28,7 @@ public class MoveEntityEffect extends GridEffect{
 	}
 	
 	public void update(int delta){
-		if(!destination.isVisible() || destination.lightLevel<0){
+		if(destination.canBeSeen()){
 			currentdown=0;
 		}
 		currentdown = currentdown/2;
@@ -40,7 +40,9 @@ public class MoveEntityEffect extends GridEffect{
 	}
 	
 	public void render(Graphics g, float xoff, float yoff){
-		location.getEntity(layer).forceRender(g, destination.getX()*DeadReckoningGame.tileSize+xoff,destination.getY()*DeadReckoningGame.tileSize-(int)currentdown+yoff);
+		if(destination.canBeSeen()){
+			location.getEntity(layer).forceRender(g, destination.getX()*DeadReckoningGame.tileSize+xoff,destination.getY()*DeadReckoningGame.tileSize-(int)currentdown+yoff);
+		}
 	}
 	/*
 	Tile destination;

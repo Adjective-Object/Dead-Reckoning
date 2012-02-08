@@ -44,4 +44,7 @@ public class LootAction extends EntityTypeAction{ //TODO make it so you can loot
 		return true;
 	}
 
+	@Override
+	protected boolean isNoticed() {return true;}
+
 }
