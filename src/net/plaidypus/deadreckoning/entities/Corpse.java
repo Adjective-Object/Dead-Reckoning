@@ -14,10 +14,6 @@ public class Corpse extends InteractiveEntity{
 	
 	LivingEntity entity;
 	
-	public Corpse(String idCode){
-		super(idCode);
-	}
-	
 	public Corpse(Tile t,int layer,LivingEntity e) {
 		super(t, layer);
 		this.entity = e;

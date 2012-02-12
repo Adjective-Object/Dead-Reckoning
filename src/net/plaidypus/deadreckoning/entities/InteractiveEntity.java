@@ -14,6 +14,10 @@ public abstract class InteractiveEntity extends Entity{
 	ArrayList<Item> inventory;
 	int inventorySize = 5;
 	
+	//Exists only for the purpose of referencing methods that should be static,
+	// but need to be abstract, because fuck Java
+	public InteractiveEntity(){} 
+	
 	public InteractiveEntity(Tile targetTile, int layer){
 		this(targetTile, layer, new ArrayList<Item>(0));
 	}
@@ -22,8 +26,6 @@ public abstract class InteractiveEntity extends Entity{
 		super(targetTile,layer);
 		this.inventory=items;
 	}
-	
-	public InteractiveEntity(String stringCode){super(stringCode);}
 
 	@Override
 	public abstract void update(GameContainer gc, int delta);

@@ -19,9 +19,9 @@ public class Torch extends Entity{
 	static SpriteSheet img;
 	Animation ani;
 	
-	public Torch(String stringCode){
-		super(stringCode);
-	}
+	//Exists only for the purpose of referencing methods that should be static,
+	// but need to be abstract, because fuck Java
+	public Torch(){} 
 	
 	public Torch(Tile t, int layer, int areaofLight){
 		super(t, layer);
@@ -55,8 +55,7 @@ public class Torch extends Entity{
 	
 	@Override
 	public String saveToString() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getGenericSave()+":"+this.light;
 	}
 
 	@Override

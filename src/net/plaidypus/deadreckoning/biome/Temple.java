@@ -16,7 +16,7 @@ public class Temple extends Biome{
 
 	@Override
 	public GameBoard makeBoard(){
-		GameBoard gb = new GameBoard(Utilities.randInt(30,50),Utilities.randInt(30,50));
+		GameBoard gb = new GameBoard(Utilities.randInt(10,50),Utilities.randInt(10,50));
 		
 		for(int i=0; i<gb.width; i++){
 			gb.getTileAt(i, 0).setTileFace(Tile.TILE_WALL_DOWN);
@@ -32,19 +32,14 @@ public class Temple extends Biome{
 		gb.getTileAt(gb.getWidth()-1,0).setTileFace(Tile.TILE_WALL_UP_RIGHT);
 		gb.getTileAt(gb.getWidth()-1,gb.getHeight()-1).setTileFace(Tile.TILE_WALL_DOWN_RIGHT);
 		
-		new Monster(gb.getTileAt(7, 4),Tile.LAYER_ACTIVE,"res/goblin.entity",1);
-		new Monster(gb.getTileAt(7, 5),Tile.LAYER_ACTIVE,"res/goblin.entity",1);
-		new Monster(gb.getTileAt(7, 6),Tile.LAYER_ACTIVE,"res/goblin.entity",1);
-		new Monster(gb.getTileAt(7, 7),Tile.LAYER_ACTIVE,"res/goblin.entity",1);
-		new Monster(gb.getTileAt(7, 8),Tile.LAYER_ACTIVE,"res/goblin.entity",1);
-
+		for(int x=0; x<gb.getWidth(); x++){
+			for (int y=0; y<gb.getHeight(); y++){
+				if(Utilities.randFloat()<=0.01){
+					new Torch(gb.getTileAt(x,y),Tile.LAYER_PASSIVE_MAP,Utilities.randInt(2,7));
+				}
+			}
+		}
 		
-		new Monster(gb.getTileAt(9, 4),Tile.LAYER_ACTIVE,"res/goblin.entity",2);
-		new Monster(gb.getTileAt(9, 5),Tile.LAYER_ACTIVE,"res/goblin.entity",2);
-		new Monster(gb.getTileAt(9, 6),Tile.LAYER_ACTIVE,"res/goblin.entity",2);
-		new Monster(gb.getTileAt(9, 7),Tile.LAYER_ACTIVE,"res/goblin.entity",2);
-		new Monster(gb.getTileAt(9, 8),Tile.LAYER_ACTIVE,"res/goblin.entity",2);
-		//new Torch(gb.getTileAt(0,0),Tile.LAYER_PASSIVE_MAP,20);
 		
 		
 		return gb;

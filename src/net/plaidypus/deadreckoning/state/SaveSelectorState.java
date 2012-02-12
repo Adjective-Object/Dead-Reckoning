@@ -34,8 +34,8 @@ public class SaveSelectorState extends ExclusiveHudLayersState{
 					GameplayElement g = (GameplayElement)(h.getElement(0));
 					if(this.focus>=2){
 						
-							saves[focus].loadGame( GameplayElement.class.cast(HudLayersState.class.cast(DeadReckoningGame.instance.getState(DeadReckoningGame.GAMEPLAYSTATE)).getElement(0) ));
-							DeadReckoningGame.instance.enterState(DeadReckoningGame.GAMEPLAYSTATE);
+						saves[focus-2].loadGame( GameplayElement.class.cast(HudLayersState.class.cast(DeadReckoningGame.instance.getState(DeadReckoningGame.GAMEPLAYSTATE)).getElement(0) ));
+						DeadReckoningGame.instance.enterState(DeadReckoningGame.GAMEPLAYSTATE);
 						
 					}
 					else if (this.focus==1){

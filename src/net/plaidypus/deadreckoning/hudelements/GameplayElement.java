@@ -6,12 +6,8 @@ import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
-import net.plaidypus.deadreckoning.entities.Chest;
-import net.plaidypus.deadreckoning.entities.Entity;
-import net.plaidypus.deadreckoning.entities.Player;
-import net.plaidypus.deadreckoning.entities.Torch;
+import net.plaidypus.deadreckoning.entities.*;
 import net.plaidypus.deadreckoning.grideffects.DamageEffect;
-import net.plaidypus.deadreckoning.loader.EntityLoader;
 import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.skills.Fireball;
 import net.plaidypus.deadreckoning.status.OnFire;
@@ -79,7 +75,7 @@ public class GameplayElement extends HudElement {
 		Torch.init();
 		Chest.init();
 		OnFire.init();
-		EntityLoader.init();
+		Statue.init();
 		
 		backgroundScreen=new Image(gc.getWidth(),gc.getHeight());
 		

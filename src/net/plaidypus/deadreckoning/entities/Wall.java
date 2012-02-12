@@ -12,13 +12,13 @@ import org.newdawn.slick.Graphics;
 
 public class Wall extends Entity{
 
+	//Exists only for the purpose of referencing methods that should be static,
+	// but need to be abstract, because fuck Java
+	public Wall(){} 
+	
 	public Wall(Tile targetTile, int layer){
 		super(targetTile, layer);
 		this.setTransparent(false);
-	}
-	
-	public Wall(String stringCode){
-		super(stringCode);
 	}
 	
 	public void update(GameContainer gc, int delta) {}

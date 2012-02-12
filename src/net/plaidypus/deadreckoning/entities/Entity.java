@@ -9,6 +9,7 @@ import net.plaidypus.deadreckoning.board.Tile;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 /*
 
@@ -28,11 +29,9 @@ public abstract class Entity {
 	public int allignmnet;
 	public static final int ALLIGN_NEUTRAL = 0, ALLIGN_HOSTILE = 1, ALLIGN_FRIENDLY = 2;
 	
-	String stringCode;
-	
-	public Entity(String stringCode){
-		this.stringCode=stringCode;
-	}
+	//Exists only for the purpose of referencing methods that should be static,
+	// but need to be abstract, because fuck Java
+	public Entity(){} 
 	
 	public Entity(Tile t, int layer) {
 		this.visible=true;
@@ -236,6 +235,10 @@ public abstract class Entity {
 	
 	public abstract Entity makeFromString(GameBoard target, String[] attributes);
 	public abstract String saveToString();
+	
+	protected String getGenericSave() {
+		return this.getClass().getCanonicalName()+":"+this.getX()+":"+this.getY()+":"+this.getLayer();
+	}
 
 	public void setLayer(int layer) {
 		this.layer=layer;

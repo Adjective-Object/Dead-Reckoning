@@ -36,6 +36,10 @@ public abstract class LivingEntity extends InteractiveEntity {
 			ANIMATION_WALK = 2, ANIMATION_FLINCH_FRONT = 3,
 			ANIMATION_FLINCH_BACK = 4, ANIMATION_DEATH = 5;
 	
+	//Exists only for the purpose of referencing methods that should be static,
+	// but need to be abstract, because fuck Java
+	public LivingEntity(){} 
+	
 	/**
 	 * subclass of entity with some basic stats for damage calulcation and
 	 * health, etc. also animations

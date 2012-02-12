@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import org.newdawn.slick.SlickException;
@@ -18,6 +19,7 @@ import net.plaidypus.deadreckoning.biome.Biome;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
+import net.plaidypus.deadreckoning.entities.Statue;
 import net.plaidypus.deadreckoning.hudelements.GameplayElement;
 import net.plaidypus.deadreckoning.biome.Biome;
 
@@ -61,7 +63,7 @@ public class Save {
 		b.board = new Tile[b.width][b.height];
 		for(int y=0; y<b.height; y++){
 			for(int x=0; x<b.width; x++){
-				int q=(r.read()-48)*10+r.read()-48; // converts 2 characters into the integer equivalent (base 10)
+				int q=r.read();
 				b.board[x][y]=new Tile(b,x,y,q);
 			}
 			r.readLine();
@@ -76,20 +78,26 @@ public class Save {
 		ArrayList<Entity> entities = new ArrayList<Entity> (0);
 		while (definition!=null){
 			String[] defInfo = definition.split(":");
-			Class<? extends Entity> clas = c.loadClass(defInfo[0]).asSubclass(Entity.class);
-			clas.newInstance().makeFromString(target, defInfo);
+			try {
+				Class<? extends Entity> clas = c.loadClass(defInfo[0]).asSubclass(Entity.class);
+				clas.newInstance().makeFromString(target, defInfo);
+			}
+			catch (Exception e) {
+				entities.add(new Statue().makeFromString(target,defInfo));
+				e.printStackTrace();
+			}
 			definition = r.readLine();
 		}
 		return entities;
 	}
 	
 	public static void saveBoard(GameBoard b, BufferedWriter r) throws IOException{
-		r.write(b.width);r.newLine();
-		r.write(b.height);r.newLine();
+		r.write(Integer.toString(b.width));r.newLine();
+		r.write(Integer.toString(b.height));r.newLine();
 		
 		for(int y=0; y<b.height; y++){
 			for(int x=0; x<b.width; x++){
-				r.write(Integer.toString(b.getTileAt(x, y).getTileFace()));
+				r.write(b.getTileAt(x, y).getTileFace());
 			}
 			r.newLine();
 		}
@@ -97,31 +105,31 @@ public class Save {
 	
 	public static void saveEntities(GameBoard b, BufferedWriter r) throws IOException{
 		for(int i=0; i<b.ingameEntities.size(); i++){
+			System.out.println(b.ingameEntities.get(i));
 			r.write(b.ingameEntities.get(i).saveToString());
 			r.newLine();
 		}
 	}
 
 	public static Save makeNewSave(String fileLocation, String nameofSave) throws IOException {
-		
-		
+		new File(fileLocation).mkdir();
 		File director = new File(fileLocation + "/saveInformation.txt");
 		System.out.println(director.getCanonicalPath());
-		director.createNewFile();
 		BufferedWriter r = new BufferedWriter(new FileWriter(director));
 		r.write(nameofSave);
 		r.newLine();
 		r.write("0");
 		r.close();
 		
-		//TODO biome loading
-		
 		for(int i=0; i<1; i++){
-			File floorFile = new File(fileLocation+"/floor"+i+".txt");
+			//writing map files
+			File floorFile = new File(fileLocation+"/floor"+i+".map");
 			floorFile.createNewFile();
 			r = new BufferedWriter(new FileWriter(floorFile));
 			GameBoard gameBoard = Biome.getRandomBoard();
+			
 			Save.saveBoard(gameBoard, r);
+			Save.saveEntities(gameBoard, r);
 			r.close();
 		}
 		

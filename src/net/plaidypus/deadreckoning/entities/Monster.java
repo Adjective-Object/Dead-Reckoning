@@ -15,7 +15,11 @@ import org.newdawn.slick.GameContainer;
 public class Monster extends LivingEntity {
 
 	public Skill movement, attack;
-
+	
+	//Exists only for the purpose of referencing methods that should be static,
+	// but need to be abstract, because fuck Java
+	public Monster(){} 
+	
 	/**
 	 * a testing monster class
 	 */

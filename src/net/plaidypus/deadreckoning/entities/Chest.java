@@ -20,9 +20,9 @@ public class Chest extends InteractiveEntity{
 	
 	static Image chest;
 	
-	public Chest(String stringCode){
-		super(stringCode);
-	}
+	//Exists only for the purpose of referencing methods that should be static,
+	// but need to be abstract, because fuck Java
+	public Chest(){} 
 	
 	public Chest(Tile t, int layer, ArrayList<Item> items){
 		super(t, layer);

@@ -137,7 +137,7 @@ public class Tile {
 			if (renderLight == 0 || !this.isVisible()) {
 				renderLight = (float) 0.5;
 			}
-
+			//System.out.println(tileFace);
 			Image toDraw = tileTextures.getSprite(
 					tileFace % tileTextures.getHorizontalCount(), tileFace
 							/ tileTextures.getHorizontalCount());
