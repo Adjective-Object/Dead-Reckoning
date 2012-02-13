@@ -1,2 +1,2 @@
 New Save
-0
+floor0.map

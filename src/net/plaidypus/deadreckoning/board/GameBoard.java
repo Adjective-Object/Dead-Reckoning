@@ -26,6 +26,8 @@ public class GameBoard {
 	ArrayList<GridEffect> overEffects, underEffects;
 	
 	GameplayElement GameplayElement;
+
+	public int depth;
 	
 	static final Color primaryHighlightColor = new Color(255, 75, 23);
 	

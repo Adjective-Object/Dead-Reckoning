@@ -2,51 +2,58 @@ package net.plaidypus.deadreckoning.entities;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 
-public class Corpse extends InteractiveEntity{
-	
-	LivingEntity entity;
-	
-	public Corpse(Tile t,int layer,LivingEntity e) {
-		super(t, layer);
-		this.entity = e;
-		this.inventory=entity.getInventory();
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+
+public class Stair extends Entity{
+
+	public Stair(Tile target,int layer, String toMap){
+		super(target,layer);
 	}
 	
+	@Override
 	public void update(GameContainer gc, int delta) {
+		// TODO Auto-generated method stub
+		
 	}
-	
+
+	@Override
 	public void updateBoardEffects(GameContainer gc, int delta) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public Action chooseAction(GameContainer gc, int delta) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void forceRender(Graphics g, float x, float y) {
-		g.drawImage(entity.getAnimation(LivingEntity.ANIMATION_DEATH).getImage(entity.getAnimation(LivingEntity.ANIMATION_DEATH).getFrameCount()-1),x,y);
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public boolean isInteractive() {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public ArrayList<Action> advanceTurn() {
-		return new ArrayList<Action>(0);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public Entity makeFromString(GameBoard target, String[] attributes) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -57,6 +64,9 @@ public class Corpse extends InteractiveEntity{
 	}
 
 	@Override
-	public void onDeath() {}
+	public void onDeath() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

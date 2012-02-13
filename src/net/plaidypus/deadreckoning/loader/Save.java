@@ -26,13 +26,13 @@ import net.plaidypus.deadreckoning.biome.Biome;
 public class Save {
 	String saveLocation;
 	String name;
-	int depth;
+	String currentMap;
 	
 	public Save(String saveLocation){
 		try {
 			BufferedReader r = new BufferedReader(new FileReader(saveLocation+"/saveInformation.txt"));
 			name = r.readLine();
-			depth = Integer.parseInt(r.readLine());
+			currentMap = r.readLine();
 		}
 		catch (FileNotFoundException e) {e.printStackTrace();}
 		catch (IOException e) {e.printStackTrace();}
@@ -48,17 +48,18 @@ public class Save {
 	}
 
 	public void loadGame(GameplayElement state) throws IOException, SlickException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-		BufferedReader r = new BufferedReader(new FileReader(saveLocation+"/"+"floor"+depth+".map"));
+		BufferedReader r = new BufferedReader(new FileReader(saveLocation+"/"+currentMap));
 		state.setBoard(loadBoard(state,r));
 		loadEntities(state.getBoard(),r);
 	}
 	
 	public static GameBoard loadBoard(GameplayElement g, BufferedReader r) throws IOException, SlickException, ClassNotFoundException {
 		GameBoard b = new GameBoard(g);
-		
-		b.width=(r.read()-48)*10+r.read()-48;
+		b.depth=r.read();
 		r.readLine();
-		b.height=(r.read()-48)*10+r.read()-48;
+		b.width=r.read();
+		r.readLine();
+		b.height=r.read();
 		r.readLine();
 		b.board = new Tile[b.width][b.height];
 		for(int y=0; y<b.height; y++){
@@ -92,8 +93,9 @@ public class Save {
 	}
 	
 	public static void saveBoard(GameBoard b, BufferedWriter r) throws IOException{
-		r.write(Integer.toString(b.width));r.newLine();
-		r.write(Integer.toString(b.height));r.newLine();
+		r.write(b.depth);r.newLine();
+		r.write(b.width);r.newLine();
+		r.write(b.height);r.newLine();
 		
 		for(int y=0; y<b.height; y++){
 			for(int x=0; x<b.width; x++){
@@ -118,7 +120,7 @@ public class Save {
 		BufferedWriter r = new BufferedWriter(new FileWriter(director));
 		r.write(nameofSave);
 		r.newLine();
-		r.write("0");
+		r.write("floor0.map");
 		r.close();
 		
 		for(int i=0; i<1; i++){
