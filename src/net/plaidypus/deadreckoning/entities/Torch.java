@@ -29,7 +29,7 @@ public class Torch extends Entity{
 		ani = new Animation(img , new int []{0,0,1,0,2,0,3,0}, new int[] {60,60,60,60});
 	}
 	
-	public static void init() throws SlickException{
+	public void init() throws SlickException{
 		img = new SpriteSheet("res/torch.png", 32,32);
 	}
 	

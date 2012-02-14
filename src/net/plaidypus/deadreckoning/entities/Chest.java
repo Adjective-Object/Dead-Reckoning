@@ -32,8 +32,8 @@ public class Chest extends InteractiveEntity{
 		this.setName("a chest");
 	}
 	
-	public static void init() throws SlickException{
-		chest = new Image("res/chest.png");
+	public void init() throws SlickException{
+		Chest.chest = new Image("res/chest.png");
 		System.out.println(chest);
 	}
 	

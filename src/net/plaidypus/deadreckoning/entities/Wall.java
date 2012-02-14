@@ -9,6 +9,7 @@ import net.plaidypus.deadreckoning.board.Tile;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 public class Wall extends Entity{
 
@@ -37,28 +38,20 @@ public class Wall extends Entity{
 	public Entity makeFromString(GameBoard g, String[] toload) {
 		return new Wall(g.getTileAt(Integer.parseInt(toload[1]), Integer.parseInt(toload[2])), Integer.parseInt(toload[3]));
 		}
-	
 
 	@Override
-	public String saveToString() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public String saveToString() {return null;}
 
 	@Override
-	public ArrayList<Action> advanceTurn() {
-		return new ArrayList<Action>(0);
-	}
+	public ArrayList<Action> advanceTurn() {return new ArrayList<Action>(0);}
 
 	@Override
-	public boolean isInteractive() {
-		return false;
-	}
+	public boolean isInteractive() {return false;}
 
 	@Override
-	public void onDeath() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void onDeath() {}
+
+	@Override
+	public void init() throws SlickException {}
 
 }

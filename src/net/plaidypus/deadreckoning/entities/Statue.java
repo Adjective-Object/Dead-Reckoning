@@ -24,7 +24,7 @@ public class Statue extends Entity{
 		super(t, layer);
 	}
 	
-	public static void init() throws SlickException{
+	public void init() throws SlickException{
 		 i = new Image("res/statue.png");
 	}
 	

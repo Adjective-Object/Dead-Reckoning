@@ -8,11 +8,24 @@ import net.plaidypus.deadreckoning.board.Tile;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
-public class Stair extends Entity{
+public class Stair extends StaticImageEntity{
+	
+	String targetFloor;
+	static Image stairImage;
+	
+	public Stair(Tile target,int layer, String targetFloor){
+		super(target,layer,stairImage);
+		this.targetFloor = targetFloor;
+	}
+	
+	public Stair() {super();}
 
-	public Stair(Tile target,int layer, String toMap){
-		super(target,layer);
+	@Override
+	public void init() throws SlickException {
+		this.stairImage=new Image("res/statue.png");
 	}
 	
 	@Override
@@ -34,39 +47,23 @@ public class Stair extends Entity{
 	}
 
 	@Override
-	public void forceRender(Graphics g, float x, float y) {
-		// TODO Auto-generated method stub
-		
-	}
+	public boolean isInteractive() {return false;}
 
 	@Override
-	public boolean isInteractive() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public ArrayList<Action> advanceTurn() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public ArrayList<Action> advanceTurn() {return null;}
 
 	@Override
 	public Entity makeFromString(GameBoard target, String[] attributes) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Stair(target.getTileAt(Integer.parseInt(attributes[1]),Integer.parseInt(attributes[2])),
+				Integer.parseInt(attributes[3]),attributes[4] );
 	}
 
 	@Override
 	public String saveToString() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getGenericSave()+":"+targetFloor;
 	}
 
 	@Override
-	public void onDeath() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void onDeath() {}
 
 }

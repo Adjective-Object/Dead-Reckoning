@@ -10,11 +10,11 @@ import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.state.StateBasedGame;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
+import net.plaidypus.deadreckoning.Save;
 import net.plaidypus.deadreckoning.hudelements.ColorFiller;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.GameplayElement;
 import net.plaidypus.deadreckoning.hudelements.TextButton;
-import net.plaidypus.deadreckoning.loader.Save;
 
 public class SaveSelectorState extends ExclusiveHudLayersState{
 	

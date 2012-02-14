@@ -39,7 +39,7 @@ public class Tile {
 	static final Color[] highlightColors = new Color[] { new Color(0, 0, 0, 0),
 			new Color(255, 75, 23, 100), new Color(252, 125, 73, 100) };
 
-	static final float brightness = (float) (1.0);
+	static final float brightness = (float) (0.8);
 	public static final int HIGHLIGHT_NULL = 0, HIGHLIGHT_CONFIRM = 1,
 			HIGHLIGHT_DENY = 2;
 
@@ -135,14 +135,11 @@ public class Tile {
 			
 			float renderLight = this.lightLevel;
 			if (renderLight == 0 || !this.isVisible()) {
-				renderLight = (float) 0.5;
+				renderLight = (float)0.5;
 			}
 			//System.out.println(tileFace);
-			Image toDraw = tileTextures.getSprite(
-					tileFace % tileTextures.getHorizontalCount(), tileFace
-							/ tileTextures.getHorizontalCount());
-			toDraw.setAlpha(1 - (float) (numLightLevels - renderLight)
-					* brightness / numLightLevels);
+			Image toDraw = tileTextures.getSprite( tileFace % tileTextures.getHorizontalCount(), tileFace / tileTextures.getHorizontalCount());
+			toDraw.setAlpha(  ( 1- ( (float)(numLightLevels - renderLight) / (numLightLevels) ) )*brightness + (1-brightness) );
 			g.drawImage(toDraw, x, y);
 
 			if (this.highlighted != HIGHLIGHT_NULL) {

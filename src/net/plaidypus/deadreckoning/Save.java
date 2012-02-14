@@ -1,4 +1,5 @@
-package net.plaidypus.deadreckoning.loader;
+package net.plaidypus.deadreckoning;
+
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -15,13 +16,13 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.util.FileSystemLocation;
 
-import net.plaidypus.deadreckoning.biome.Biome;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.Statue;
+import net.plaidypus.deadreckoning.genrator.Biome;
+import net.plaidypus.deadreckoning.genrator.DungeonMap;
 import net.plaidypus.deadreckoning.hudelements.GameplayElement;
-import net.plaidypus.deadreckoning.biome.Biome;
 
 public class Save {
 	String saveLocation;
@@ -81,6 +82,7 @@ public class Save {
 			String[] defInfo = definition.split(":");
 			try {
 				Class<? extends Entity> clas = c.loadClass(defInfo[0]).asSubclass(Entity.class);
+				clas.newInstance().init();
 				clas.newInstance().makeFromString(target, defInfo);
 			}
 			catch (Exception e) {
@@ -113,7 +115,7 @@ public class Save {
 		}
 	}
 
-	public static Save makeNewSave(String fileLocation, String nameofSave) throws IOException {
+	public static Save makeNewSave(String fileLocation, String nameofSave) throws IOException, SlickException {
 		new File(fileLocation).mkdir();
 		File director = new File(fileLocation + "/saveInformation.txt");
 		System.out.println(director.getCanonicalPath());
@@ -123,12 +125,15 @@ public class Save {
 		r.write("floor0.map");
 		r.close();
 		
-		for(int i=0; i<1; i++){
-			//writing map files
-			File floorFile = new File(fileLocation+"/floor"+i+".map");
+		DungeonMap map = new DungeonMap(16);
+		
+		
+		for(int i=0; i<map.getDepth(); i++){
+			File floorFile = new File(fileLocation+map.getFloorName(i));
 			floorFile.createNewFile();
 			r = new BufferedWriter(new FileWriter(floorFile));
-			GameBoard gameBoard = Biome.getRandomBoard();
+			
+			GameBoard gameBoard = map.makeBoard(i);
 			
 			Save.saveBoard(gameBoard, r);
 			Save.saveEntities(gameBoard, r);

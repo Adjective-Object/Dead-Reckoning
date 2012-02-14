@@ -1,6 +1,6 @@
 package net.plaidypus.deadreckoning;
 
-import net.plaidypus.deadreckoning.biome.Biome;
+import net.plaidypus.deadreckoning.genrator.Biome;
 import net.plaidypus.deadreckoning.hudelements.*;
 import net.plaidypus.deadreckoning.state.ExclusiveHudLayersState;
 import net.plaidypus.deadreckoning.state.HudLayersState;

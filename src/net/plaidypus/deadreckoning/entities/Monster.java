@@ -11,6 +11,7 @@ import net.plaidypus.deadreckoning.skills.Attack;
 import net.plaidypus.deadreckoning.skills.Skill;
 
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.SlickException;
 
 public class Monster extends LivingEntity {
 
@@ -70,5 +71,8 @@ public class Monster extends LivingEntity {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public void init() throws SlickException {}
 	
 }

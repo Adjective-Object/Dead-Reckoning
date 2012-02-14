@@ -1,21 +1,17 @@
-package net.plaidypus.deadreckoning.biome;
-
-import java.io.IOException;
+package net.plaidypus.deadreckoning.genrator;
 
 import org.newdawn.slick.SlickException;
 
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
-import net.plaidypus.deadreckoning.entities.Monster;
-import net.plaidypus.deadreckoning.entities.Player;
+import net.plaidypus.deadreckoning.entities.Stair;
 import net.plaidypus.deadreckoning.entities.Torch;
-import net.plaidypus.deadreckoning.professions.Profession;
 
 public class Temple extends Biome{
 
 	@Override
-	public GameBoard makeBoard(){
+	public GameBoard makeBoard(String floorAbove, String floorBelow) throws SlickException{
 		GameBoard gb = new GameBoard(Utilities.randInt(10,50),Utilities.randInt(10,50));
 		
 		for(int i=0; i<gb.width; i++){
@@ -32,6 +28,9 @@ public class Temple extends Biome{
 		gb.getTileAt(gb.getWidth()-1,0).setTileFace(Tile.TILE_WALL_UP_RIGHT);
 		gb.getTileAt(gb.getWidth()-1,gb.getHeight()-1).setTileFace(Tile.TILE_WALL_DOWN_RIGHT);
 		
+		new Torch().init();
+		new Stair().init();
+		
 		for(int x=0; x<gb.getWidth(); x++){
 			for (int y=0; y<gb.getHeight(); y++){
 				if(Utilities.randFloat()<=0.01){
@@ -40,7 +39,8 @@ public class Temple extends Biome{
 			}
 		}
 		
-		
+		new Stair(gb.getTileAt(0,0),Tile.LAYER_ACTIVE,floorAbove);
+		new Stair(gb.getTileAt(gb.getWidth(),gb.getHeight()),Tile.LAYER_ACTIVE,floorBelow);
 		
 		return gb;
 	}

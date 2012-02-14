@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
@@ -58,5 +59,8 @@ public class Corpse extends InteractiveEntity{
 
 	@Override
 	public void onDeath() {}
+
+	@Override
+	public void init() throws SlickException {}
 
 }

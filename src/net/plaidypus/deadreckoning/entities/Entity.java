@@ -34,6 +34,8 @@ public abstract class Entity {
 		t.getParent().placeEntity(t, this, layer);
 	}
 	
+	public abstract void init() throws SlickException;
+	
 	/**
 	 * updates the entity. Used primarily for animation.
 	 * 

@@ -72,10 +72,6 @@ public class GameplayElement extends HudElement {
 		Fireball.init();
 		DamageEffect.init();
 		Tile.init("res\\wallTiles.png");
-		Torch.init();
-		Chest.init();
-		OnFire.init();
-		Statue.init();
 		
 		backgroundScreen=new Image(gc.getWidth(),gc.getHeight());
 		
