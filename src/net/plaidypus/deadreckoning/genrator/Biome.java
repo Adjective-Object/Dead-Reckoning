@@ -10,7 +10,7 @@ import net.plaidypus.deadreckoning.board.GameBoard;
 public abstract class Biome {
 	static ArrayList<Biome> biomes;
 	
-	public abstract GameBoard makeBoard(String floorAbove, String floorBelow) throws SlickException;
+	public abstract GameBoard makeBoard(int depth, ArrayList<String> floorLinks) throws SlickException;
 	
 	public static Biome getRandomBiome(){
 		return biomes.get(Utilities.randInt(0,biomes.size()));
@@ -20,4 +20,5 @@ public abstract class Biome {
 		biomes = new ArrayList<Biome>(0);
 		biomes.add(new Temple());
 	}
+	
 }

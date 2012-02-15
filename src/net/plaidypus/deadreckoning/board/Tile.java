@@ -64,11 +64,10 @@ public class Tile {
 				DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
 	}
 
-	public void setEntity(Entity e, int layer) {
+	protected void setEntity(Entity e, int layer) {
 		e.setLayer(layer);
+		e.setLocation(this);
 		containedEntities[layer] = e;
-		containedEntities[layer].setLocation(this);
-		containedEntities[layer].setLayer(layer);
 	}
 
 	public void disconnectEntity(int layer) {

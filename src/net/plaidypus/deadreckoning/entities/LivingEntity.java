@@ -38,7 +38,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	
 	//Exists only for the purpose of referencing methods that should be static,
 	// but need to be abstract, because fuck Java
-	public LivingEntity(){} 
+	public LivingEntity(){}
 	
 	/**
 	 * subclass of entity with some basic stats for damage calulcation and
@@ -206,14 +206,10 @@ public abstract class LivingEntity extends InteractiveEntity {
 	public void onDeath(){
 		this.getParent().removeEntity(this);
 		for(int i=0; i<this.getLocation().getEntities().length; i++){
-			System.out.println(this.getLocation().getEntity(i));
 		}
 		this.getParent().placeEntityNear(this.getX(), this.getY(),new Corpse(this.getLocation(),Tile.LAYER_PASSIVE_PLAY,this), Tile.LAYER_PASSIVE_PLAY);
-		System.out.println(this.getParent().ingameEntities);
 		for(int i=0; i<this.getLocation().getEntities().length; i++){
-			System.out.println(this.getLocation().getEntity(i));
 		}
-		System.out.println(this.getParent().ingameEntities);
 	}
 	
 	public boolean isInteractive(){

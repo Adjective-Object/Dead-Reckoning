@@ -78,6 +78,8 @@ public class GameplayElement extends HudElement {
 		gc.setTargetFrameRate(60);
 		gc.setVSync(true);
 		
+		player = new Player(null,Tile.LAYER_ACTIVE,new Profession (0), input);
+		
 		this.gc=gc;
 		System.out.println(gc);
 
@@ -87,20 +89,17 @@ public class GameplayElement extends HudElement {
 		this.gb = b;
 		gb.setGame(this);
 		
-		try {
-			player = new Player(gb.getTileAt(4,4), Tile.LAYER_ACTIVE, new Profession (0), input);
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
-				
-		cameraX = 0;
-		cameraY = 0;
+		b.placeEntity(b.getTileAt(5,5),player, Tile.LAYER_ACTIVE);
+		
 		cameraDestX = player.getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;
 		cameraDestY = player.getAbsoluteY() - gc.getHeight() / 2 + DeadReckoningGame.tileSize/2;
+		
 		timeOn=0;
 		actions = new ArrayList<Action> (0);
 		
 		updateBoardEffects(gc,0);
+		currentAction=0;
+		currentEntity=0;
 	}
 
 	/**
@@ -113,6 +112,7 @@ public class GameplayElement extends HudElement {
 	 */
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
+		
 		
 		cameraX = cameraX + (cameraDestX - cameraX) * cameraRate;
 		cameraY = cameraY + (cameraDestY - cameraY) * cameraRate;
@@ -130,7 +130,7 @@ public class GameplayElement extends HudElement {
 	public void updateBoardEffects(GameContainer gc, int delta){
 		getBoard().HideAll();
 		getBoard().updateBoardEffects(gc, delta);
-		getBoard().revealFromEntity(player);//TODO replace with from player
+		getBoard().revealFromEntity(player);//TODO replace with from player alligned units?
 	}
 	  
 	private void updateActions(GameContainer gc, int delta) {

@@ -5,22 +5,17 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.GameState;
-import org.newdawn.slick.util.FileSystemLocation;
 
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.Statue;
-import net.plaidypus.deadreckoning.genrator.Biome;
 import net.plaidypus.deadreckoning.genrator.DungeonMap;
 import net.plaidypus.deadreckoning.hudelements.GameplayElement;
 
@@ -50,12 +45,12 @@ public class Save {
 
 	public void loadGame(GameplayElement state) throws IOException, SlickException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 		BufferedReader r = new BufferedReader(new FileReader(saveLocation+"/"+currentMap));
-		state.setBoard(loadBoard(state,r));
+		state.setBoard(loadBoard(state,saveLocation,r));
 		loadEntities(state.getBoard(),r);
 	}
 	
-	public static GameBoard loadBoard(GameplayElement g, BufferedReader r) throws IOException, SlickException, ClassNotFoundException {
-		GameBoard b = new GameBoard(g);
+	public static GameBoard loadBoard(GameplayElement g, String saveLocation, BufferedReader r) throws IOException, SlickException, ClassNotFoundException {
+		GameBoard b = new GameBoard(g,saveLocation);
 		b.depth=r.read();
 		r.readLine();
 		b.width=r.read();
@@ -142,6 +137,17 @@ public class Save {
 		
 		Save s = new Save(fileLocation);
 		return s;
+	}
+
+	public static GameBoard loadGame(GameplayElement game, String saveLocation, String targetFloor) {
+		try {
+			BufferedReader r =   new BufferedReader( new FileReader( saveLocation+"/"+targetFloor ));
+			GameBoard b = loadBoard(game, saveLocation, r);
+			loadEntities(b,r);
+			return b;
+		} catch (Exception e){
+			return null;
+		}
 	}
 
 	

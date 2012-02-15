@@ -1,5 +1,7 @@
 package net.plaidypus.deadreckoning.genrator;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.SlickException;
 
 import net.plaidypus.deadreckoning.Utilities;
@@ -11,8 +13,10 @@ import net.plaidypus.deadreckoning.entities.Torch;
 public class Temple extends Biome{
 
 	@Override
-	public GameBoard makeBoard(String floorAbove, String floorBelow) throws SlickException{
+	public GameBoard makeBoard(int depth, ArrayList<String>  linkedLevels) throws SlickException{
 		GameBoard gb = new GameBoard(Utilities.randInt(10,50),Utilities.randInt(10,50));
+		
+		gb.depth=depth;
 		
 		for(int i=0; i<gb.width; i++){
 			gb.getTileAt(i, 0).setTileFace(Tile.TILE_WALL_DOWN);
@@ -39,8 +43,12 @@ public class Temple extends Biome{
 			}
 		}
 		
-		new Stair(gb.getTileAt(0,0),Tile.LAYER_ACTIVE,floorAbove);
-		new Stair(gb.getTileAt(gb.getWidth(),gb.getHeight()),Tile.LAYER_ACTIVE,floorBelow);
+		for(int i=0; i<linkedLevels.size(); i++){
+			int x=Utilities.randInt(0,gb.getWidth()), y=Utilities.randInt(0, gb.getHeight());
+			if(gb.getTileAt(x, y).isOpen(Tile.LAYER_PASSIVE_MAP)){
+				new Stair(gb.getTileAt(x,y),Tile.LAYER_PASSIVE_MAP,linkedLevels.get(i));
+			}
+		}
 		
 		return gb;
 	}

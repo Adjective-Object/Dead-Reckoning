@@ -8,10 +8,10 @@ public class SaveFilter implements FilenameFilter {
 	public SaveFilter(){
 		
 	}
-	
-	@Override
+
 	public boolean accept(File file, String name) {
 		return name.startsWith("SAVE") && file.isDirectory();
 	}
+
 	
 }

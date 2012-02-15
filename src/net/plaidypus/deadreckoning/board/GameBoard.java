@@ -29,11 +29,14 @@ public class GameBoard {
 
 	public int depth;
 	
+	public String saveID;
+	
 	static final Color primaryHighlightColor = new Color(255, 75, 23);
 	
-	public GameBoard(GameplayElement g){
+	public GameBoard(GameplayElement g, String saveID){
 		this();
 		this.GameplayElement=g;
+		this.saveID=saveID;
 	}
 	
 	public GameBoard(){
@@ -461,6 +464,10 @@ public class GameBoard {
 			}
 		}
 		return true;
+	}
+
+	public String getSaveID() {
+		return saveID;
 	}
 
 	

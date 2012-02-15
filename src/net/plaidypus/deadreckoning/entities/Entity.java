@@ -32,7 +32,9 @@ public abstract class Entity {
 		this.visible=true;
 		this.transparent=true;
 		this.allignmnet=0;
-		t.getParent().placeEntity(t, this, layer);
+		if(t!=null){
+			t.getParent().placeEntity(t, this, layer);
+		}
 	}
 	
 	public abstract void init() throws SlickException;

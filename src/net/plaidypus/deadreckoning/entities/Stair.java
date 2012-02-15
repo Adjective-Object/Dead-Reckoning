@@ -2,6 +2,7 @@ package net.plaidypus.deadreckoning.entities;
 
 import java.util.ArrayList;
 
+import net.plaidypus.deadreckoning.Save;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
@@ -21,11 +22,11 @@ public class Stair extends StaticImageEntity{
 		this.targetFloor = targetFloor;
 	}
 	
-	public Stair() {super();}
+	public Stair() {}
 
 	@Override
 	public void init() throws SlickException {
-		this.stairImage=new Image("res/statue.png");
+		this.stairImage=new Image("res/stairs.png");
 	}
 	
 	@Override
@@ -36,8 +37,9 @@ public class Stair extends StaticImageEntity{
 
 	@Override
 	public void updateBoardEffects(GameContainer gc, int delta) {
-		// TODO Auto-generated method stub
-		
+		if(!this.getLocation().isOpen(Tile.LAYER_ACTIVE) && this.getLocation().getEntity(Tile.LAYER_ACTIVE).getClass()==Player.class){
+			this.getParent().getGame().setBoard(Save.loadGame(this.getParent().getGame(),this.getParent().getSaveID(),targetFloor) );
+		}
 	}
 
 	@Override
