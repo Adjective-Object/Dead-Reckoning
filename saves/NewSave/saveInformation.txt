@@ -1,2 +1,2 @@
-New Save
+SAVE 0
 floor0.map

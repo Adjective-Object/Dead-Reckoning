@@ -1,6 +1,7 @@
 package net.plaidypus.deadreckoning.state;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 
 import org.newdawn.slick.Color;
@@ -11,6 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Save;
+import net.plaidypus.deadreckoning.SaveFilter;
 import net.plaidypus.deadreckoning.hudelements.ColorFiller;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.GameplayElement;
@@ -39,7 +41,7 @@ public class SaveSelectorState extends ExclusiveHudLayersState{
 						
 					}
 					else if (this.focus==1){
-						Save s = Save.makeNewSave("saves/NewSave/","New Save");
+						Save s = Save.makeNewSave("saves/SAVE 0/","New Game"); //TODO ENUMERATION AND ADDITION OF MORE SAVES
 						s.loadGame( GameplayElement.class.cast(HudLayersState.class.cast(DeadReckoningGame.instance.getState(DeadReckoningGame.GAMEPLAYSTATE)).getElement(0) ));
 						DeadReckoningGame.instance.enterState(DeadReckoningGame.GAMEPLAYSTATE);
 					}
@@ -60,7 +62,7 @@ public class SaveSelectorState extends ExclusiveHudLayersState{
 	private static HudElement[] makeElementsList() throws SlickException{
 		File f = new File("saves/");
 		System.out.println(f.list());
-		String[] savesList = f.list();
+		String[] savesList = f.list(new SaveFilter());
 		for(int i=0; i<savesList.length; i++){
 			System.out.println(savesList[i]);
 		}
@@ -74,10 +76,12 @@ public class SaveSelectorState extends ExclusiveHudLayersState{
 		
 		for(int i=0; i<savesList.length; i++)
 		{
+			System.out.println(savesList[i].substring(0, 1));
 			saves[i]= new Save("saves/"+savesList[i]);
 			buttons[i+2]=new TextButton(10,(i+2)*30,HudElement.TOP_LEFT,new Color(30,50,70),new Color(40,60,80),new Color(60,80,100),saves[i].getName(),font);
 		}
 		
 		return buttons;
 	}
+	
 }

@@ -10,7 +10,13 @@ public class WaitAction extends Action{
 		// TODO Auto-generated constructor stub
 	}
 
+	public WaitAction(Entity source,boolean takesTurn) {
+		super(source, source.getLocation());
+		this.takesTurn=takesTurn;
+		// TODO Auto-generated constructor stub
+	}
 
+	
 	protected boolean apply(int delta) {
 		return true;
 	}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.actions.Action;
+import net.plaidypus.deadreckoning.actions.WaitAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 
@@ -74,7 +75,12 @@ public abstract class Entity {
 	 * @param y
 	 */
 	public abstract void forceRender(Graphics g, float x, float y);
-
+	
+	public Action getUse(){
+		DeadReckoningGame.instance.messages.addMessage("That's Not Allowed");
+		return new WaitAction(this,false);
+	}
+	
 	/**
 	 * returns the tile this entity is standing on / is located in
 	 * 

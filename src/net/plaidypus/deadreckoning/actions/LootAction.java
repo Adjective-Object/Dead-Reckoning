@@ -19,6 +19,7 @@ public class LootAction extends EntityTypeAction{ //TODO make it so you can loot
 	
 	protected boolean applyToEntity(Entity entity){
 		DeadReckoningGame.instance.messages.addMessage("That's Not Allowed");
+		this.takesTurn=false;
 		return true;
 	}
 	
@@ -30,6 +31,7 @@ public class LootAction extends EntityTypeAction{ //TODO make it so you can loot
 	protected boolean applyToEntity(LivingEntity e){
 		if(e.isAlive()){
 			DeadReckoningGame.instance.messages.addMessage("That's Not Allowed");
+			this.takesTurn=false;
 			return true;
 		}
 		else{

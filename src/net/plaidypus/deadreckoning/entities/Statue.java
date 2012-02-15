@@ -12,7 +12,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-public class Statue extends Entity{
+public class Statue extends StaticImageEntity{
 	
 	static Image i;
 	
@@ -21,7 +21,7 @@ public class Statue extends Entity{
 	public Statue(){} 
 	
 	public Statue(Tile t, int layer) {
-		super(t, layer);
+		super(t, layer,i);
 	}
 	
 	public void init() throws SlickException{
