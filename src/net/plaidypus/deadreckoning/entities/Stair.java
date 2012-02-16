@@ -14,19 +14,24 @@ import org.newdawn.slick.SlickException;
 
 public class Stair extends StaticImageEntity{
 	
+	public static final int UP = 0, DOWN = 1, NULL = 2;
 	String targetFloor;
-	static Image stairImage;
+	static ArrayList<Image> stairImages;
+	int updownNull;
 	
-	public Stair(Tile target,int layer, String targetFloor){
-		super(target,layer,stairImage);
+	public Stair(Tile target,int layer, String targetFloor, int updownNull){
+		super(target,layer,stairImages.get(updownNull));
 		this.targetFloor = targetFloor;
+		this.updownNull=updownNull;
 	}
 	
 	public Stair() {}
 
 	@Override
 	public void init() throws SlickException {
-		this.stairImage=new Image("res/stairs.png");
+		stairImages = new ArrayList<Image>(0);
+		stairImages.add(new Image("res/stairs.png"));
+		stairImages.add(new Image("res/stairsDown.png"));
 	}
 	
 	@Override
@@ -57,12 +62,12 @@ public class Stair extends StaticImageEntity{
 	@Override
 	public Entity makeFromString(GameBoard target, String[] attributes) {
 		return new Stair(target.getTileAt(Integer.parseInt(attributes[1]),Integer.parseInt(attributes[2])),
-				Integer.parseInt(attributes[3]),attributes[4] );
+				Integer.parseInt(attributes[3]),attributes[4],Integer.parseInt(attributes[5]));
 	}
 
 	@Override
 	public String saveToString() {
-		return this.getGenericSave()+":"+targetFloor;
+		return this.getGenericSave()+":"+targetFloor+":"+updownNull;
 	}
 
 	@Override

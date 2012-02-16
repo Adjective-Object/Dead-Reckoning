@@ -6,11 +6,12 @@ import org.newdawn.slick.SlickException;
 
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.board.GameBoard;
+import net.plaidypus.deadreckoning.entities.Stair;
 
 public abstract class Biome {
 	static ArrayList<Biome> biomes;
 	
-	public abstract GameBoard makeBoard(int depth, ArrayList<String> floorLinks) throws SlickException;
+	public abstract GameBoard makeBoard(int depth, ArrayList<Stair> floorLinks) throws SlickException;
 	
 	public static Biome getRandomBiome(){
 		return biomes.get(Utilities.randInt(0,biomes.size()));

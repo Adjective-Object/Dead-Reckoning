@@ -6,6 +6,8 @@ import org.newdawn.slick.SlickException;
 
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.board.GameBoard;
+import net.plaidypus.deadreckoning.board.Tile;
+import net.plaidypus.deadreckoning.entities.Stair;
 
 public class DungeonMap {
 	
@@ -16,12 +18,12 @@ public class DungeonMap {
 	}
 
 	public GameBoard makeBoard(int depth) throws SlickException {
-		ArrayList<String> topass = new ArrayList<String>(0);
+		ArrayList<Stair> topass = new ArrayList<Stair>(0);
 		if(depth!=0){
-			topass.add("floor"+(depth-1)+".map");
+			topass.add(new Stair(null,Tile.LAYER_PASSIVE_MAP,"floor"+(depth-1)+".map",Stair.UP));
 		}
 		if(depth!=this.depth){
-			topass.add("floor"+(depth+1)+".map");
+			topass.add(new Stair(null,Tile.LAYER_PASSIVE_MAP,"floor"+(depth+1)+".map",Stair.DOWN));
 		}
 		return Biome.getRandomBiome().makeBoard(depth, topass );
 	}

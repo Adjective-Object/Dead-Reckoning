@@ -1,7 +1,8 @@
 package net.plaidypus.deadreckoning.skills;
 
+import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.actions.Action;
-import net.plaidypus.deadreckoning.actions.CheckInventoryAction;
+import net.plaidypus.deadreckoning.actions.ChangeStateAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
@@ -14,7 +15,7 @@ public class CheckInventory extends Skill{
 
 	@Override
 	public Action makeAction(Tile target) {
-		return new CheckInventoryAction(source,target);
+		return new ChangeStateAction(source,target,DeadReckoningGame.INVENTORYSTATE);
 	}
 
 	@Override

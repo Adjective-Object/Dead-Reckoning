@@ -13,7 +13,7 @@ import net.plaidypus.deadreckoning.entities.Torch;
 public class Temple extends Biome{
 
 	@Override
-	public GameBoard makeBoard(int depth, ArrayList<String>  linkedLevels) throws SlickException{
+	public GameBoard makeBoard(int depth, ArrayList<Stair>  linkedLevels) throws SlickException{
 		GameBoard gb = new GameBoard(Utilities.randInt(10,50),Utilities.randInt(10,50));
 		
 		gb.depth=depth;
@@ -33,7 +33,6 @@ public class Temple extends Biome{
 		gb.getTileAt(gb.getWidth()-1,gb.getHeight()-1).setTileFace(Tile.TILE_WALL_DOWN_RIGHT);
 		
 		new Torch().init();
-		new Stair().init();
 		
 		for(int x=0; x<gb.getWidth(); x++){
 			for (int y=0; y<gb.getHeight(); y++){
@@ -46,7 +45,7 @@ public class Temple extends Biome{
 		for(int i=0; i<linkedLevels.size(); i++){
 			int x=Utilities.randInt(0,gb.getWidth()), y=Utilities.randInt(0, gb.getHeight());
 			if(gb.getTileAt(x, y).isOpen(Tile.LAYER_PASSIVE_MAP)){
-				new Stair(gb.getTileAt(x,y),Tile.LAYER_PASSIVE_MAP,linkedLevels.get(i));
+				gb.placeEntity(gb.getTileAt(x, y),linkedLevels.get(i),Tile.LAYER_PASSIVE_MAP);
 			}
 		}
 		
