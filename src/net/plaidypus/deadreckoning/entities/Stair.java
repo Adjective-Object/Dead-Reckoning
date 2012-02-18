@@ -15,7 +15,7 @@ import org.newdawn.slick.SlickException;
 public class Stair extends StaticImageEntity{
 	
 	public static final int UP = 0, DOWN = 1, NULL = 2;
-	String targetFloor;
+	public String targetFloor;
 	static ArrayList<Image> stairImages;
 	int updownNull;
 	

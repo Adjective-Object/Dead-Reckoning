@@ -45,12 +45,12 @@ public class Save {
 
 	public void loadGame(GameplayElement state) throws IOException, SlickException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 		BufferedReader r = new BufferedReader(new FileReader(saveLocation+"/"+currentMap));
-		state.setBoard(loadBoard(state,saveLocation,r));
+		state.setBoard(loadBoard(state,saveLocation,currentMap,r));
 		loadEntities(state.getBoard(),r);
 	}
 	
-	public static GameBoard loadBoard(GameplayElement g, String saveLocation, BufferedReader r) throws IOException, SlickException, ClassNotFoundException {
-		GameBoard b = new GameBoard(g,saveLocation);
+	public static GameBoard loadBoard(GameplayElement g, String saveLocation, String mapID, BufferedReader r) throws IOException, SlickException, ClassNotFoundException {
+		GameBoard b = new GameBoard(g,saveLocation,mapID);
 		b.depth=r.read();
 		r.readLine();
 		b.width=r.read();
@@ -104,7 +104,6 @@ public class Save {
 	
 	public static void saveEntities(GameBoard b, BufferedWriter r) throws IOException{
 		for(int i=0; i<b.ingameEntities.size(); i++){
-			System.out.println(b.ingameEntities.get(i));
 			r.write(b.ingameEntities.get(i).saveToString());
 			r.newLine();
 		}
@@ -113,7 +112,6 @@ public class Save {
 	public static Save makeNewSave(String fileLocation, String nameofSave) throws IOException, SlickException {
 		new File(fileLocation).mkdir();
 		File director = new File(fileLocation + "/saveInformation.txt");
-		System.out.println(director.getCanonicalPath());
 		BufferedWriter r = new BufferedWriter(new FileWriter(director));
 		r.write(nameofSave);
 		r.newLine();
@@ -142,7 +140,7 @@ public class Save {
 	public static GameBoard loadGame(GameplayElement game, String saveLocation, String targetFloor) {
 		try {
 			BufferedReader r =   new BufferedReader( new FileReader( saveLocation+"/"+targetFloor ));
-			GameBoard b = loadBoard(game, saveLocation, r);
+			GameBoard b = loadBoard(game, saveLocation, targetFloor, r);
 			loadEntities(b,r);
 			return b;
 		} catch (Exception e){

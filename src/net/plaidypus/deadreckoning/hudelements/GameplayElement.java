@@ -10,7 +10,6 @@ import net.plaidypus.deadreckoning.entities.*;
 import net.plaidypus.deadreckoning.grideffects.DamageEffect;
 import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.skills.Fireball;
-import net.plaidypus.deadreckoning.status.OnFire;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -34,7 +33,7 @@ public class GameplayElement extends HudElement {
 
 	static final float cameraRate = (float) 0.2;
 	
-	public String message;
+	public String lastMap;
 	
 	Input input;
 	public Player player;
@@ -69,6 +68,8 @@ public class GameplayElement extends HudElement {
 		
 		input = gc.getInput();
 		
+		lastMap="";
+		
 		Fireball.init();
 		DamageEffect.init();
 		Tile.init("res\\wallTiles.png");
@@ -86,10 +87,34 @@ public class GameplayElement extends HudElement {
 	}
 	
 	public void setBoard(GameBoard b) {
-		this.gb = b;
-		gb.setGame(this);
+		if(this.gb!=null){
+			lastMap=this.gb.getMapID();
+		}
 		
-		b.placeEntity(b.getTileAt(5,5),player, Tile.LAYER_ACTIVE);
+		System.out.println(lastMap);
+		
+		b.setGame(this);
+		this.gb = b;
+		
+		Tile target= b.getTileAt(this.gb.getWidth()/2,this.gb.getHeight()/2);
+		
+		if(lastMap!=""){
+			for(int x=0; x<b.getWidth(); x++){
+				for(int y=0; y<b.getHeight(); y++){
+					if(!this.gb.getTileAt(x, y).isOpen(Tile.LAYER_PASSIVE_MAP)){
+						try{
+							LandingPad pad = LandingPad.class.cast(b.getTileAt(x, y).getEntity(Tile.LAYER_PASSIVE_MAP));
+							if(pad.fromFloor.equals(lastMap)){
+								target = this.gb.getTileAt(x, y);
+							}
+						}
+						catch(ClassCastException e){}
+					}
+				}
+			}
+		}
+		
+		gb.placeEntity(target, player, player.getLayer());
 		
 		cameraDestX = player.getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;
 		cameraDestY = player.getAbsoluteY() - gc.getHeight() / 2 + DeadReckoningGame.tileSize/2;
@@ -239,18 +264,6 @@ public class GameplayElement extends HudElement {
 	@Override
 	public int getHeight() {
 		return height;
-	}
-	
-	public String getMessage(){
-		return this.message;
-	}
-	
-	public void setMessage(String newMes){
-		this.message=newMes;
-	}
-
-	public void clearMessage() {
-		this.message=null;
 	}
 
 	@Override

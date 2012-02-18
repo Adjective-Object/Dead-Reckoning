@@ -7,6 +7,7 @@ import org.newdawn.slick.SlickException;
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
+import net.plaidypus.deadreckoning.entities.LandingPad;
 import net.plaidypus.deadreckoning.entities.Stair;
 import net.plaidypus.deadreckoning.entities.Torch;
 
@@ -14,7 +15,7 @@ public class Temple extends Biome{
 
 	@Override
 	public GameBoard makeBoard(int depth, ArrayList<Stair>  linkedLevels) throws SlickException{
-		GameBoard gb = new GameBoard(Utilities.randInt(10,50),Utilities.randInt(10,50));
+		GameBoard gb = new GameBoard(Utilities.randInt(10,20),Utilities.randInt(10,20));
 		
 		gb.depth=depth;
 		
@@ -43,9 +44,10 @@ public class Temple extends Biome{
 		}
 		
 		for(int i=0; i<linkedLevels.size(); i++){
-			int x=Utilities.randInt(0,gb.getWidth()), y=Utilities.randInt(0, gb.getHeight());
-			if(gb.getTileAt(x, y).isOpen(Tile.LAYER_PASSIVE_MAP)){
+			int x=Utilities.randInt(1,gb.getWidth()), y=Utilities.randInt(0, gb.getHeight());
+			if(gb.getTileAt(x, y).isOpen(Tile.LAYER_PASSIVE_MAP) && gb.getTileAt(x-1, y).isOpen(Tile.LAYER_PASSIVE_MAP) ){
 				gb.placeEntity(gb.getTileAt(x, y),linkedLevels.get(i),Tile.LAYER_PASSIVE_MAP);
+				gb.placeEntity(gb.getTileAt(x-1, y),new LandingPad(null,Tile.LAYER_PASSIVE_MAP,linkedLevels.get(i).targetFloor),Tile.LAYER_PASSIVE_MAP);
 			}
 		}
 		
