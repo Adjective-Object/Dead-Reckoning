@@ -14,7 +14,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class MiniMap extends HudElement{
 
-	int hookState, scale = 10;
+	int hookState, scale = 2;
 	GameBoard target;
 	
 	Image mapRender;
@@ -59,11 +59,11 @@ public class MiniMap extends HudElement{
 		return target.getHeight();
 	}
 	
-	private void renderTo(Graphics g){
+	private void renderTo(Graphics g, int xo, int yo){
 		g.setColor(Color.white);
-		g.fillRect(0,0,target.getWidth()*scale,target.getHeight()*scale);
+		g.fillRect(xo,yo,target.getWidth()*scale+1,target.getHeight()*scale+1);
 		g.setColor(Color.black);
-		g.fillRect(1,1,target.getWidth()*scale-2,target.getHeight()*scale-2);
+		g.fillRect(xo+1,yo+1,target.getWidth()*scale-1,target.getHeight()*scale-1);
 		
 		for(int x=0; x<target.getWidth(); x++){
 			for(int y=0; y<target.getHeight(); y++){
@@ -75,11 +75,13 @@ public class MiniMap extends HudElement{
 					else if(!target.getTileAt(x, y).isOpen(Tile.LAYER_PASSIVE_MAP) && target.getTileAt(x, y).canBeSeen()){
 						g.setColor(Color.gray);
 					}
+					else if(target.getTileAt(x, y).getTileFace()!=Tile.TILE_EMPTY){
+						g.setColor(Color.lightGray);
+					}
 					else{
 						g.setColor(Color.white);
-						
 					}
-					g.fillRect((x*scale)+1, (y*scale)+1, scale,scale);
+					g.fillRect((xo+x*scale)+1, (yo+y*scale)+1, scale,scale);
 				}
 			}
 		}
@@ -88,7 +90,7 @@ public class MiniMap extends HudElement{
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
 		g.drawImage(mapRender,getX()-mapRender.getWidth()/2,getY()-mapRender.getHeight()/2);
-		renderTo(g);
+		renderTo(g,getX(),getY());
 		
 	}
 

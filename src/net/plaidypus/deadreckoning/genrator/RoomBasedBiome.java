@@ -11,82 +11,59 @@ import org.newdawn.slick.SlickException;
 
 public abstract class RoomBasedBiome extends Biome{
 	
-	int minRoomSize,maxRoomSize,minTunnelLen,maxTunnelLen,numRooms;
+	int numRooms, roomSizeMin=5, roomSizeMax=10;
 	
 	public RoomBasedBiome(int numRooms){
-		this.numRooms=numRooms;
-		minRoomSize = 5;
-		maxRoomSize=20;
-		minTunnelLen=5;
-		maxTunnelLen=15;
+		this.numRooms = numRooms;
 	}
 	
-	public abstract GameBoard makeRoom(GameBoard target, int x, int y, int width, int height);
-	
-	public GameBoard makeBoard(int width, int height, ArrayList<int[]> rooms){
-		GameBoard g = new GameBoard(width,height);
+	public GameBoard populateBoard(GameBoard target, ArrayList<int[]> rooms){
 		for(int i=0; i<rooms.size(); i++){
-			makeRoom(g,rooms.get(i)[0],rooms.get(i)[1],rooms.get(i)[2],rooms.get(i)[3]);
+			for(int x=0; x<rooms.get(i)[2];x++){
+				for(int y=0; y<rooms.get(i)[3];y++){
+					target.getTileAt(rooms.get(i)[0]+x,rooms.get(i)[1]+y).setTileFace(Tile.TILE_WALL_DOWN_RIGHT);
+				}
+			}
 		}
-		return g;
+		
+		return target;
 	}
 	
-	public GameBoard makeBoard(int depth, ArrayList<Stair> floorLinks)
-			throws SlickException {
-		ArrayList<int[]> rooms = new ArrayList<int[]>(0); // x,y,width,height
+	public GameBoard makeBoard(int depth, ArrayList<Stair> floorLinks){
+		ArrayList<int[]> rooms = new ArrayList<int[]>(0);
 		
-		ArrayList<Integer> rowHeights = new ArrayList<Integer>(0),
-			rowWidths = new ArrayList<Integer>(0);
+		int roomWidth = 1, roomHeight = 1;
 		
-		rowWidths.add(0);
-		rowHeights.add(0);
-		
-		int currentRow=0;
-		
-		for(int i=0; i<numRooms; i++){
-			if(Utilities.randFloat()<=0.2){
-				currentRow++;
-				rowWidths.add(0);
-				rowHeights.add(0);
-			}
-			
-			int nWidth=Utilities.randInt(minRoomSize,maxRoomSize),
-				nHeight=Utilities.randInt(minRoomSize,maxRoomSize);
-			int nX=rowWidths.get(currentRow), nY=0;
-			for(int p=0; p<=currentRow; p++){
-				nY+=rowHeights.get(p);
-			}
-			
-			int tunnel = +Utilities.randInt(minTunnelLen, maxTunnelLen);
-			if(rowHeights.get(currentRow)<nHeight+tunnel){
-				rowHeights.set(currentRow,nHeight+tunnel);
-			}
-			rowWidths.set(currentRow,rowWidths.get(currentRow)+nWidth+tunnel);
-			
-			rooms.add(new int[] {nX,nY,nWidth,nHeight});
-			
-		}
-		
-		int height = 0;
-		for(int p=0; p<rowHeights.size(); p++){
-			height+=rowHeights.get(p);
-		}
-		
-		int width = 0;
-		for(int p=0; p<rowWidths.size(); p++){
-			if(rowWidths.get(p)>width){
-				width=rowWidths.get(p);
+		while( rooms.size()<numRooms ){
+			int[] newRoom = { Utilities.randInt(0,roomWidth+roomSizeMax), Utilities.randInt(0,roomHeight+roomSizeMax), Utilities.randInt(roomSizeMin, roomSizeMax) , Utilities.randInt(roomSizeMin, roomSizeMax) };
+			if(!checkforCollisions(newRoom,rooms)){
+				rooms.add(newRoom);
+				if( roomWidth<newRoom[0]+newRoom[2] ){
+					roomWidth = newRoom[0]+newRoom[2];
+				}
+				if( roomHeight<newRoom[1]+newRoom[3] ){
+					roomHeight = newRoom[1]+newRoom[3];
+				}
 			}
 		}
 		
-		System.out.println(rowWidths+" "+width+" && "+rowHeights+" "+height);
+		GameBoard gb = this.populateBoard(new GameBoard(roomWidth, roomHeight),rooms);
 		
-		GameBoard b =makeBoard(width,height,rooms);
-		b.depth=depth;
+		return gb;
 		
-		return b;
-		
-		
+	}
+	
+	public boolean checkforCollisions(int[] room, ArrayList<int[]> rooms){ //check for collisions with other rooms;
+		for(int i=0; i<rooms.size(); i++){
+			if( !( room[0]+room[2]<rooms.get(i)[0] ||
+				room[0]>rooms.get(i)[0]+rooms.get(i)[2] ||
+				room[1]+room[3]<rooms.get(i)[1] ||
+				room[1]>rooms.get(i)[1]+rooms.get(i)[3]
+					) ){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 }

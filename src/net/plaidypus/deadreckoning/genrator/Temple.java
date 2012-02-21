@@ -43,11 +43,13 @@ public class Temple extends Biome{
 			}
 		}
 		
-		for(int i=0; i<linkedLevels.size(); i++){
+		int i=0;
+		while(i<linkedLevels.size()){
 			int x=Utilities.randInt(1,gb.getWidth()), y=Utilities.randInt(0, gb.getHeight());
 			if(gb.getTileAt(x, y).isOpen(Tile.LAYER_PASSIVE_MAP) && gb.getTileAt(x-1, y).isOpen(Tile.LAYER_PASSIVE_MAP) ){
 				gb.placeEntity(gb.getTileAt(x, y),linkedLevels.get(i),Tile.LAYER_PASSIVE_MAP);
 				gb.placeEntity(gb.getTileAt(x-1, y),new LandingPad(null,Tile.LAYER_PASSIVE_MAP,linkedLevels.get(i).targetFloor),Tile.LAYER_PASSIVE_MAP);
+				i++;
 			}
 		}
 		

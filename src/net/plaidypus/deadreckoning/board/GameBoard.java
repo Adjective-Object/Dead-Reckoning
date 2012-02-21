@@ -27,7 +27,7 @@ public class GameBoard {
 	
 	GameplayElement GameplayElement;
 
-	public int depth;
+	public int depth, renderDistY=3, renderDistX=3;
 	
 	public String saveID, mapID;
 	
@@ -113,8 +113,17 @@ public class GameBoard {
 	}
 
 	public void render(Graphics g, float xoff, float yoff) {
-		for (int x = 0; x < board.length; x++) {
-			for (int y = 0; y < board[x].length; y++) {
+		
+		int 
+			lowX = (int) Utilities.limitTo(-xoff/DeadReckoningGame.tileSize-renderDistX, 0, this.getWidth()),
+			highX = (int) Utilities.limitTo(-xoff/DeadReckoningGame.tileSize+renderDistX, 0, this.getWidth()),
+			lowY = (int) Utilities.limitTo(-yoff/DeadReckoningGame.tileSize-renderDistY, 0, this.getHeight()),
+			highY = (int) Utilities.limitTo(-yoff/DeadReckoningGame.tileSize+renderDistY, 0, this.getHeight());
+		
+		System.out.println(lowX+" "+highX+" "+lowY+" "+highY+" ");
+		
+		for (int x=lowX; x<highX; x++) {
+			for (int y=lowY; y<highY; y++) {
 					board[x][y].render(g,
 							x*DeadReckoningGame.tileSize + xoff,
 							y*DeadReckoningGame.tileSize + yoff);
@@ -133,8 +142,8 @@ public class GameBoard {
 			underEffects.get(i).render(g, xoff, yoff);
 		}
 
-		for (int x = 0; x < board.length; x++) {
-			for (int y = 0; y < board[x].length; y++) {
+		for (int x=lowX; x<highX; x++) {
+			for (int y=lowY; y<highY; y++) {
 				for(int i=Tile.numLayers-1; i>=0; i--){
 					if (!board[x][y].isOpen(i) && board[x][y].lightLevel >= 1 && board[x][y].isVisible()) {
 						board[x][y].getEntity(i).render(g,

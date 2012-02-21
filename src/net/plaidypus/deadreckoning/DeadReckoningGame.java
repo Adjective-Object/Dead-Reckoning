@@ -1,6 +1,7 @@
 package net.plaidypus.deadreckoning;
 
 import net.plaidypus.deadreckoning.entities.Stair;
+import net.plaidypus.deadreckoning.entities.Torch;
 import net.plaidypus.deadreckoning.genrator.Biome;
 import net.plaidypus.deadreckoning.hudelements.*;
 import net.plaidypus.deadreckoning.state.ExclusiveHudLayersState;
@@ -59,7 +60,7 @@ public class DeadReckoningGame extends StateBasedGame
 		this.addState(new HudLayersState(INVENTORYSTATE, new HudElement[] {
 				new StillImageElement(0,0,HudElement.TOP_LEFT),
 				messages,
-				new MiniMap(0,0,HudElement.CENTER_LEFT,DeadReckoningGame.GAMEPLAYSTATE),
+				new MiniMap(0,0,HudElement.CENTER_CENTER,DeadReckoningGame.GAMEPLAYSTATE),
 				new ReturnToGameElement()}));
 		
 		this.enterState(MAINMENUSTATE);
@@ -88,6 +89,7 @@ public class DeadReckoningGame extends StateBasedGame
 	public void initStatesList(GameContainer container) throws SlickException {
 		HudElement.calculateOffsets(container);
 		Biome.init();
+		new Torch().init();
 		new Stair().init();
 	}
 	

@@ -75,14 +75,17 @@ public class Save {
 		ArrayList<Entity> entities = new ArrayList<Entity> (0);
 		while (definition!=null){
 			String[] defInfo = definition.split(":");
-			try {
-				Class<? extends Entity> clas = c.loadClass(defInfo[0]).asSubclass(Entity.class);
-				clas.newInstance().init();
-				clas.newInstance().makeFromString(target, defInfo);
-			}
-			catch (Exception e) {
-				entities.add(new Statue().makeFromString(target,defInfo));
-				e.printStackTrace();
+				try {
+					Class<? extends Entity> clas = c.loadClass(defInfo[0]).asSubclass(Entity.class);
+					clas.newInstance().init();
+					clas.newInstance().makeFromString(target, defInfo);
+				}
+				catch (ClassCastException e) {
+					e.printStackTrace();
+					entities.add(new Statue().makeFromString(target,defInfo));
+					e.printStackTrace();
+				} catch (SlickException e) {
+					e.printStackTrace();
 			}
 			definition = r.readLine();
 		}

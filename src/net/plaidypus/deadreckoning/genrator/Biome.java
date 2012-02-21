@@ -19,7 +19,7 @@ public abstract class Biome {
 	
 	public static void init(){
 		biomes = new ArrayList<Biome>(0);
-		biomes.add(new Hemple());
+		biomes.add(new Hemple(16));
 	}
 	
 }
