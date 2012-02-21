@@ -27,7 +27,7 @@ public class GameBoard {
 	
 	GameplayElement GameplayElement;
 
-	public int depth, renderDistY=3, renderDistX=3;
+	public int depth, renderDistY=20, renderDistX=40;
 	
 	public String saveID, mapID;
 	
@@ -115,12 +115,10 @@ public class GameBoard {
 	public void render(Graphics g, float xoff, float yoff) {
 		
 		int 
-			lowX = (int) Utilities.limitTo(-xoff/DeadReckoningGame.tileSize-renderDistX, 0, this.getWidth()),
+			lowX = (int) Utilities.limitTo(-xoff/DeadReckoningGame.tileSize, 0, this.getWidth()),
 			highX = (int) Utilities.limitTo(-xoff/DeadReckoningGame.tileSize+renderDistX, 0, this.getWidth()),
-			lowY = (int) Utilities.limitTo(-yoff/DeadReckoningGame.tileSize-renderDistY, 0, this.getHeight()),
+			lowY = (int) Utilities.limitTo(-yoff/DeadReckoningGame.tileSize, 0, this.getHeight()),
 			highY = (int) Utilities.limitTo(-yoff/DeadReckoningGame.tileSize+renderDistY, 0, this.getHeight());
-		
-		System.out.println(lowX+" "+highX+" "+lowY+" "+highY+" ");
 		
 		for (int x=lowX; x<highX; x++) {
 			for (int y=lowY; y<highY; y++) {

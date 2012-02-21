@@ -94,6 +94,9 @@ public class GameplayElement extends HudElement {
 		System.out.println(lastMap);
 		
 		b.setGame(this);
+		b.renderDistX=this.getWidth()/DeadReckoningGame.tileSize+2;
+		b.renderDistY=this.getHeight()/DeadReckoningGame.tileSize+2;
+		
 		this.gb = b;
 		
 		Tile target= b.getTileAt(this.gb.getWidth()/2,this.gb.getHeight()/2);
