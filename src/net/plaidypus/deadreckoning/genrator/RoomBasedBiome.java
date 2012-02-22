@@ -17,11 +17,16 @@ public abstract class RoomBasedBiome extends Biome{
 		this.numRooms = numRooms;
 	}
 	
-	public GameBoard populateBoard(GameBoard target, ArrayList<int[]> rooms){
-		for(int i=0; i<rooms.size(); i++){
-			for(int x=0; x<rooms.get(i)[2];x++){
-				for(int y=0; y<rooms.get(i)[3];y++){
-					target.getTileAt(rooms.get(i)[0]+x,rooms.get(i)[1]+y).setTileFace(Tile.TILE_WALL_DOWN_RIGHT);
+	public GameBoard populateBoard(GameBoard target, ArrayList<int[]>[][] rooms){
+		
+		for(int a=0; a<rooms.length; a++){
+			for(int b=0; b<rooms[a].length; b++){
+				for(int c=0; c<rooms[a][b].size(); c++){
+					for(int x=0; x<rooms[a][b].get(c)[2];x++){
+						for(int y=0; y<rooms[a][b].get(c)[3];y++){
+							target.getTileAt(rooms[a][b].get(c)[0]+x,rooms[a][b].get(c)[1]+y).setTileFace(Tile.TILE_WALL_DOWN_RIGHT);
+						}
+					}
 				}
 			}
 		}
@@ -47,12 +52,23 @@ public abstract class RoomBasedBiome extends Biome{
 			}
 		}
 		
-		GameBoard gb = this.populateBoard(new GameBoard(roomWidth, roomHeight),rooms);
+		GameBoard gb = this.populateBoard(new GameBoard(roomWidth, roomHeight),sortRooms(rooms,roomWidth,roomHeight,roomSizeMax));
 		
 		return gb;
 		
 	}
 	
+	private ArrayList<int[]>[][] sortRooms(ArrayList<int[]> rooms, int width, int height, int gridResolution) {
+		ArrayList<int []>[][] newRooms;
+		newRooms = {  };
+		for(int i=0; i<rooms.size(); i++){
+			newRooms[rooms.get(i)[0]/gridResolution][rooms.get(i)[1]/gridResolution].add(rooms.get(i));
+		}
+		new ArrayList<int[]>(0);
+		
+		return null;
+	}
+
 	public boolean checkforCollisions(int[] room, ArrayList<int[]> rooms){ //check for collisions with other rooms;
 		for(int i=0; i<rooms.size(); i++){
 			if( !( room[0]+room[2]<rooms.get(i)[0] ||
