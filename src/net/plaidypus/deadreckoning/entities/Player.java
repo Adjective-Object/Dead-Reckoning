@@ -49,12 +49,12 @@ public class Player extends LivingEntity {
 		super(targetTile,layer,p.getEntityFile(),Entity.ALLIGN_FRIENDLY);
 		this.input = i;
 
-		keyBinds = new int[] { Input.KEY_A, Input.KEY_D, Input.KEY_W, Input.KEY_S, Input.KEY_Q, Input.KEY_T, Input.KEY_P , Input.KEY_T, Input.KEY_C, Input.KEY_L, Input.KEY_F, Input.KEY_I, Input.KEY_M};
+		keyBinds = new int[] { Input.KEY_A, Input.KEY_D, Input.KEY_W, Input.KEY_S, Input.KEY_Q, Input.KEY_T, Input.KEY_P , Input.KEY_T, Input.KEY_C, Input.KEY_L, Input.KEY_F, Input.KEY_I, Input.KEY_M, Input.KEY_K};
 			skills = new Skill[] { new PreBakedMove(this,-1,0),
 					new PreBakedMove(this,1,0),new PreBakedMove(this,0,-1),
 					new PreBakedMove(this,0,1),new Attack(this),
 					new Wait(this), new PlaceWall(this), new PlaceTorch(this),
-					new PlaceChest(this), new Loot(this), new Fireball(this), new CheckInventory(this), new ViewMap(this)};
+					new PlaceChest(this), new Loot(this), new Fireball(this), new CheckInventory(this), new ViewMap(this), new ViewSkills(this)};
 			profession = p;
 	}
 
@@ -131,19 +131,19 @@ public class Player extends LivingEntity {
 	}
 
 	@Override
-	public Entity makeFromString(GameBoard g, String[] toload) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public Entity makeFromString(GameBoard g, String[] toload) {return null;}
 
 	@Override
 	public String saveToString() {
-		// TODO Auto-generated method stub
-		return null;
+		return "LOLGONNAPUTSOMETHINGHERELATER";
 	}
 	
 	@Override
 	public void init() throws SlickException {}
+
+	public void setInput(Input input) {
+		this.input=input;
+	}
 
 
 }

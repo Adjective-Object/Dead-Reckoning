@@ -12,7 +12,14 @@ import net.plaidypus.deadreckoning.entities.Stair;
 import net.plaidypus.deadreckoning.entities.Torch;
 
 public class Temple extends Biome{
-
+	
+	public Temple(){
+		requiredClasses = new Class[] {
+				Torch.class,
+				Stair.class
+		};
+	}
+	
 	@Override
 	public GameBoard makeBoard(int depth, ArrayList<Stair>  linkedLevels) throws SlickException{
 		GameBoard gb = new GameBoard(Utilities.randInt(10,20),Utilities.randInt(10,20));

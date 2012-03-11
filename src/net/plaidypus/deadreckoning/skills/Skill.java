@@ -2,6 +2,9 @@ package net.plaidypus.deadreckoning.skills;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
@@ -11,8 +14,14 @@ public abstract class Skill {
 	
 	int level;
 	
+	Image imageIcon;
+	
 	LivingEntity source;
-
+	
+	public Skill (Image icon){
+		this.imageIcon = icon;
+	}
+	
 	/**
 	 * Skills are a method of having arbitrary abilities on entites (able to be
 	 * stored in an arrayList) while keeping the Action class unique for each
@@ -27,7 +36,11 @@ public abstract class Skill {
 	/**
 	 * created to have unlinekd instances of a skill that can be later bound. planned to be used only in character creation
 	 */
-	public Skill(){}
+	public Skill(){
+		try{
+			this. imageIcon = new Image("res/noSkill.png");
+		}catch (SlickException e){}
+	}
 	
 	/**
 	 * binds the skill to a ceratain livingentity such that it is unecessary to constantly pass the correct livingentity to parse based off of.
@@ -98,5 +111,9 @@ public abstract class Skill {
 	
 	public void setLevel(int level){
 		this.level=level;
+	}
+
+	public Image getImage() {
+		return imageIcon;
 	}
 }

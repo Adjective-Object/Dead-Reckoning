@@ -3,6 +3,7 @@ package net.plaidypus.deadreckoning.skills;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
@@ -21,12 +22,17 @@ public class Fireball extends Skill{
 	
 	public static SpriteSheet fireball;
 	
+	private static Image image;
+	
+	public Fireball(){super(image);}
+	
 	public Fireball(LivingEntity source) {
 		super(source);
 	}
 	
 	public static void init() throws SlickException{
 		fireball = new SpriteSheet("res/FireBurst.png",DeadReckoningGame.tileSize,DeadReckoningGame.tileSize);
+		image = new Image("res/onFireIcon.png");
 	}
 	
 	public Action makeAction(Tile target) {

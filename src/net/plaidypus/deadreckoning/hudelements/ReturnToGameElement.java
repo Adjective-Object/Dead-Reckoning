@@ -19,6 +19,7 @@ public class ReturnToGameElement extends HudElement{
 			throws SlickException {
 		if(gc.getInput().isKeyPressed(Input.KEY_ESCAPE)){
 			DeadReckoningGame.instance.enterState(DeadReckoningGame.GAMEPLAYSTATE);
+			gc.getInput().clearKeyPressedRecord();
 		}
 	}
 

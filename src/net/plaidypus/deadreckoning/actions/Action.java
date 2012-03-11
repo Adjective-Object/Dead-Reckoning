@@ -35,7 +35,7 @@ public abstract class Action {
 	 */
 	protected void sendMessage(String message){
 		if(isNoticed()){
-			DeadReckoningGame.instance.messages.addMessage(message);
+			DeadReckoningGame.instance.getMessageElement().addMessage(message);
 		}
 	}
 

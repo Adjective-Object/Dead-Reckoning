@@ -8,7 +8,9 @@ import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.*;
 
 public class PlaceTorch extends Skill{
-
+	
+	public PlaceTorch(){super();}
+	
 	public PlaceTorch(LivingEntity source) {
 		super(source);
 	}

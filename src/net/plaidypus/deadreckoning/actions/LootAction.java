@@ -18,24 +18,24 @@ public class LootAction extends EntityTypeAction{ //TODO make it so you can loot
 	}
 	
 	protected boolean applyToEntity(Entity entity){
-		DeadReckoningGame.instance.messages.addMessage("That's Not Allowed");
+		DeadReckoningGame.instance.getMessageElement().addMessage("That's Not Allowed");
 		this.takesTurn=false;
 		return true;
 	}
 	
 	protected boolean applyToEntity(InteractiveEntity e){
-		DeadReckoningGame.instance.messages.addMessage(source.getName()+" looted "+target.getEntity(this.layer).getName());
+		DeadReckoningGame.instance.getMessageElement().addMessage(source.getName()+" looted "+target.getEntity(this.layer).getName());
 		return gotoLootScreen(((InteractiveEntity)source),e);
 	}
 	
 	protected boolean applyToEntity(LivingEntity e){
 		if(e.isAlive()){
-			DeadReckoningGame.instance.messages.addMessage("That's Not Allowed");
+			DeadReckoningGame.instance.getMessageElement().addMessage("That's Not Allowed");
 			this.takesTurn=false;
 			return true;
 		}
 		else{
-			DeadReckoningGame.instance.messages.addMessage(source.getName()+" looted "+target.getEntity(this.layer).getName());
+			DeadReckoningGame.instance.getMessageElement().addMessage(source.getName()+" looted "+target.getEntity(this.layer).getName());
 			return gotoLootScreen(((InteractiveEntity)source),e);
 		}
 	}

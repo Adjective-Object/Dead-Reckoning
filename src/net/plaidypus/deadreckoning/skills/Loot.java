@@ -8,7 +8,9 @@ import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 
 public class Loot extends Skill{
-
+	
+	public Loot(){super();}
+	
 	public Loot(LivingEntity source) {
 		super(source);
 	}

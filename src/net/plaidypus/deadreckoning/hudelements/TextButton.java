@@ -9,15 +9,14 @@ import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class TextButton extends HudElement{	
+public class TextButton extends Button{	
 	
 	String text;
 	UnicodeFont font;
-	boolean pressed;
 	Color c, c2, c3;
 	
 	public TextButton(int x, int y, int bindMethod, Color normalColor, Color highlightC, Color pressedC, String text, UnicodeFont font) throws SlickException{
-		super(x,y,bindMethod,true);
+		super(x,y,bindMethod);
 		this.text=text;
 		this.font=font;
 		this.c=normalColor;
@@ -26,16 +25,14 @@ public class TextButton extends HudElement{
 	}
 
 	@Override
+	public void update(GameContainer gc, StateBasedGame sbg, int delta, boolean hasFocus)
+			throws SlickException {
+		super.update(gc, sbg, delta, hasFocus);
+	}
+	
+	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-		int mx = gc.getInput().getMouseX(), my = gc.getInput().getMouseY();
-		
-		if(gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)&& mx>getX() && mx<getX()+getWidth() && my>getY() && my<getY()+getHeight()){
-			pressed=true;
-		}
-		else{
-			pressed=false;
-		}
 	}
 
 	@Override
@@ -57,10 +54,6 @@ public class TextButton extends HudElement{
 	@Override
 	public int getHeight() {
 		return font.getHeight(text)+4;
-	}
-	
-	public boolean isPressed(){
-		return pressed;
 	}
 	
 	@Override

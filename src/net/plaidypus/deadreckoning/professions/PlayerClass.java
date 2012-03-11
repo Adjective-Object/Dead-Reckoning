@@ -7,10 +7,10 @@ public class PlayerClass {
 	private Profession baseClass;
 	private SkillProgression[] activeTrees;
 	
-	public PlayerClass(Profession base, SkillProgression ... tree)
+	public PlayerClass(Profession base, SkillProgression[] skills)
 	{
 		baseClass = base;
-		activeTrees = tree;
+		activeTrees = skills;
 	}
 	
 	public int[] getLevelUpStats()
@@ -21,6 +21,10 @@ public class PlayerClass {
 	public Skill[] getAvailableSkills(int level)
 	{
 		return null;
+	}
+	
+	public Profession getBaseClass(){
+		return this.baseClass;
 	}
 
 }

@@ -23,7 +23,7 @@ public class ItemGridElement extends HudElement{
 	static Image tileimage;
 	
 	public ItemGridElement(int x, int y, int borderMeth){
-		this(new Color(60,40,50),x,y,borderMeth,5,8,2,10);
+		this(DeadReckoningGame.menuColor,x,y,borderMeth,5,8,2,10);
 	}
 	
 	public ItemGridElement(Color background,int x, int y, int borderMeth, int width, int height, int internalBorder,

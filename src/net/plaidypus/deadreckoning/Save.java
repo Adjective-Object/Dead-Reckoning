@@ -15,9 +15,12 @@ import org.newdawn.slick.SlickException;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
+import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.entities.Statue;
 import net.plaidypus.deadreckoning.genrator.DungeonMap;
 import net.plaidypus.deadreckoning.hudelements.GameplayElement;
+import net.plaidypus.deadreckoning.professions.PlayerClass;
+import net.plaidypus.deadreckoning.professions.Profession;
 
 public class Save {
 	String saveLocation;
@@ -44,11 +47,14 @@ public class Save {
 	}
 
 	public void loadGame(GameplayElement state) throws IOException, SlickException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+		state.setPlayer(loadPlayer(new BufferedReader(new FileReader(saveLocation+"/player.txt"))));
 		BufferedReader r = new BufferedReader(new FileReader(saveLocation+"/"+currentMap));
-		state.setBoard(loadBoard(state,saveLocation,currentMap,r));
-		loadEntities(state.getBoard(),r);
+		GameBoard g = loadBoard(state,saveLocation,currentMap,r);
+		loadEntities(g,r);
+		state.setBoard(g);
+		
 	}
-	
+
 	public static GameBoard loadBoard(GameplayElement g, String saveLocation, String mapID, BufferedReader r) throws IOException, SlickException, ClassNotFoundException {
 		GameBoard b = new GameBoard(g,saveLocation,mapID);
 		b.depth=r.read();
@@ -151,6 +157,9 @@ public class Save {
 		}
 	}
 
-	
+	private Player loadPlayer(BufferedReader r) throws SlickException {
+		//TODO actual player loading
+		return new Player(null,Tile.LAYER_PASSIVE_PLAY,new Profession(0),null);
+	}
 	
 }

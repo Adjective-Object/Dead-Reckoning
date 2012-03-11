@@ -7,7 +7,9 @@ import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 
 public class Wait extends Skill {
-
+	
+	public Wait(){super();}
+	
 	public Wait(LivingEntity l) {
 		super(l);
 	}

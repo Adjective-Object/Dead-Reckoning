@@ -79,11 +79,14 @@ public class GameplayElement extends HudElement {
 		gc.setTargetFrameRate(60);
 		gc.setVSync(true);
 		
-		player = new Player(null,Tile.LAYER_ACTIVE,new Profession (0), input);
-		
 		this.gc=gc;
 		System.out.println(gc);
 
+	}
+	
+	public void setPlayer(Player p){
+		player = p;
+		p.setInput(this.input);
 	}
 	
 	public void setBoard(GameBoard b) {
@@ -121,6 +124,8 @@ public class GameplayElement extends HudElement {
 		
 		cameraDestX = player.getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;
 		cameraDestY = player.getAbsoluteY() - gc.getHeight() / 2 + DeadReckoningGame.tileSize/2;
+		cameraX=cameraDestX;
+		cameraY=cameraDestY;
 		
 		timeOn=0;
 		actions = new ArrayList<Action> (0);
@@ -272,7 +277,6 @@ public class GameplayElement extends HudElement {
 	@Override
 	public void makeFrom(Object o) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public GameBoard getBoard() {

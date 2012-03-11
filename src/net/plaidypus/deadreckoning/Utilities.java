@@ -90,4 +90,9 @@ public class Utilities {
 	public static int roundDown(double d){
 		return roundDown((float)d);
 	}
+
+	public static double intBool(boolean b) {
+		if(b){return 1;}
+		return 0;
+	}
 }

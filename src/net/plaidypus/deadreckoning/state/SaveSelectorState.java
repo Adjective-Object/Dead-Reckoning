@@ -37,10 +37,9 @@ public class SaveSelectorState extends ExclusiveHudLayersState{
 					if(this.focus>=2){
 						saves[focus-2].loadGame( GameplayElement.class.cast(HudLayersState.class.cast(DeadReckoningGame.instance.getState(DeadReckoningGame.GAMEPLAYSTATE)).getElement(0) ));
 						DeadReckoningGame.instance.enterState(DeadReckoningGame.GAMEPLAYSTATE);
-						
 					}
 					else if (this.focus==1){
-						Save s = Save.makeNewSave("saves/SAVE 0/","New Game"); //TODO ENUMERATION AND ADDITION OF MORE SAVES
+						Save s = Save.makeNewSave("saves/SAVE 0/","SaveGame 1"); //TODO ENUMERATION AND ADDITION OF MORE SAVES
 						s.loadGame( GameplayElement.class.cast(HudLayersState.class.cast(DeadReckoningGame.instance.getState(DeadReckoningGame.GAMEPLAYSTATE)).getElement(0) ));
 						DeadReckoningGame.instance.enterState(DeadReckoningGame.GAMEPLAYSTATE);
 					}

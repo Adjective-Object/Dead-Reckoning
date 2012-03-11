@@ -13,7 +13,9 @@ import net.plaidypus.deadreckoning.items.EtcDrop;
 import net.plaidypus.deadreckoning.items.Item;
 
 public class PlaceChest extends Skill{
-
+	
+	public PlaceChest(){super();}
+	
 	public PlaceChest(LivingEntity source) {
 		super(source);
 	}

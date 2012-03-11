@@ -8,8 +8,10 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
 
 
 public class PreBakedMove extends Movement{
-
+	
 	int xoff, yoff;
+	
+	public PreBakedMove(){super();}
 	
 	public PreBakedMove(LivingEntity l, int xoff, int yoff) {
 		super(l);

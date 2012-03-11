@@ -55,9 +55,9 @@ public class PlayerHudElement extends HudElement{
 		g.drawImage(img,getX(),getY());
 		g.drawImage(target.player.getProfession().getPortriat(),getX()+19,getY()+23);
 		g.setColor(new Color(200,70,70));
-		g.fillRect(getX()+126, getY()+25, 75*displayHPValue/target.player.maxHP, 9);
+		g.fillRect(getX()+126, getY()+25, 75*displayHPValue/target.player.getMaxHP(), 9);
 		g.setColor(new Color(70,70,200));
-		g.fillRect(getX()+126, getY()+49, 75*displayMPValue/target.player.maxMP, 9);
+		g.fillRect(getX()+126, getY()+49, 75*displayMPValue/target.player.getMaxMP(), 9);
 		g.setColor(new Color(200,200,70));
 		g.fillRect(getX()+126, getY()+74, 75*displayEXPValue/target.player.getEXPforLevel(), 9);
 		g.drawString(Integer.toString(target.getBoard().depth) , getX(),getY()+getHeight()+40);

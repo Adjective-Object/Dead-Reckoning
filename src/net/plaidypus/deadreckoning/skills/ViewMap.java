@@ -8,7 +8,9 @@ import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 
 public class ViewMap extends Skill{
-
+	
+	public ViewMap(){super();}
+	
 	public ViewMap(LivingEntity source) {
 		super(source);
 	}

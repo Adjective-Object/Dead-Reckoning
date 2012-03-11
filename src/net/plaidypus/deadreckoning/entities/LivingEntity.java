@@ -24,7 +24,7 @@ import org.newdawn.slick.SpriteSheet;
 
 public abstract class LivingEntity extends InteractiveEntity {
 
-	public int maxHP, maxMP, STR, INT, AGI, level;
+	private int maxHP, maxMP, STR, INT, DEX, LUK, level;
 	public int HP, MP, width, height;
 	public Animation stand, basicAttack, walking, damageFront, damageBack,
 			death;
@@ -248,6 +248,23 @@ public abstract class LivingEntity extends InteractiveEntity {
 		return this.getCurrentAnimationID()==LivingEntity.ANIMATION_STAND || this.HP<=0;
 	}
 	
+	//TODO stat afflictions/ buffs from statuses
+	public int getDEX(){return this.DEX;}
+	public int getLUK(){return this.LUK;}
+	public int getSTR(){return this.STR;}
+	public int getINT(){return this.INT;}
+	
+	public int getMagDefense(){return this.INT;}
+	public int getWepDefense(){return this.STR;}
+	
+	public int getMaxHP() {return maxHP;}
+	public int getMaxMP() {return maxMP;}
+	
+	public int getBaseDEX(){return this.DEX;}
+	public int getBaseLUK(){return this.LUK;}
+	public int getBaseSTR(){return this.STR;}
+	public int getBaseINT(){return this.INT;}
+	
 	/**
 	 * Loads an entity from a text file. SO UGLY IT HURTS, but it didn't make
 	 * sense to break into subroutines
@@ -320,11 +337,12 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 		setName(info.get("NAME"));
 		
-		maxHP = stats.get("HP");
-		maxMP = stats.get("MP");
+		this.maxHP = (stats.get("HP"));
+		this.maxMP =(stats.get("MP"));
 		STR = stats.get("STR");
 		INT = stats.get("INT");
-		AGI = stats.get("AGI");
+		DEX = stats.get("DEX");
+		LUK = stats.get("LUK");
 		
 		width = stats.get("TILEX");
 		height = stats.get("TILEY");

@@ -1,5 +1,7 @@
 package net.plaidypus.deadreckoning.skills;
 
+import org.newdawn.slick.Image;
+
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.AttackAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
@@ -7,14 +9,16 @@ import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 
 public class Attack extends Skill {
-
+	
+	public Attack(){super();}
+	
 	public Attack(LivingEntity source) {
 		super(source);
 	}
 
 	@Override
 	public Action makeAction(Tile target) {
-		return new AttackAction(source, target, source.STR, false);
+		return new AttackAction(source, target, 20, false);
 	}
 
 	/**

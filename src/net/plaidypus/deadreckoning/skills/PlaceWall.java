@@ -7,7 +7,9 @@ import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.*;
 
 public class PlaceWall extends Skill{
-
+	
+	public PlaceWall(){super();}
+	
 	public PlaceWall(LivingEntity source) {
 		super(source);
 	}

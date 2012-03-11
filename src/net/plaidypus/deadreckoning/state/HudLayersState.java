@@ -61,7 +61,7 @@ public class HudLayersState extends BasicGameState{
 	
 	
 	public void makeFrom(Object[] objects){
-		System.out.println(HudElements.size());
+		System.out.println(stateID);
 		for(int i=0; i<objects.length; i++){
 			this.HudElements.get(i%HudElements.size()).makeFrom(objects[i]);
 		}

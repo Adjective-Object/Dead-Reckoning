@@ -79,7 +79,7 @@ public abstract class Entity {
 	public abstract void forceRender(Graphics g, float x, float y);
 	
 	public Action getUse(){
-		DeadReckoningGame.instance.messages.addMessage("That's Not Allowed");
+		DeadReckoningGame.instance.getMessageElement().addMessage("That's Not Allowed");
 		return new WaitAction(this,false);
 	}
 	
