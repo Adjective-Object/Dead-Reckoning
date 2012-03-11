@@ -12,7 +12,6 @@ public class StillImageElement extends HudElement{
 	
 	public StillImageElement(int x, int y, int bindMeth) {
 		super(x,y,bindMeth,false);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void makeFrom(Object o){
@@ -30,12 +29,18 @@ public class StillImageElement extends HudElement{
 
 	@Override
 	public int getWidth() {
-		return img.getWidth();
+		if(img!=null){
+			return img.getWidth();
+		}
+		return 0;
 	}
 
 	@Override
 	public int getHeight() {
-		return img.getHeight();
+		if(img!=null){
+			return img.getHeight();
+		}
+		return 0;
 	}
 
 	@Override

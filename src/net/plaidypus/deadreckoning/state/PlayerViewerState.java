@@ -44,6 +44,7 @@ public class PlayerViewerState extends HudLayersState{
 		}
 		
 		this.buttonPanel.makeFrom(objs);
+		this.statPanel.makeFrom( new Object[]{p.profession.getPortriat(),p.profession.getPortriat()} );
 		
 	}
 	
@@ -59,6 +60,7 @@ public class PlayerViewerState extends HudLayersState{
 		}
 		
 		playerWindow[0]= new StillImageElement(-200,164,HudElement.CENTER_RIGHT);
+		playerWindow[1]= new StillImageElement(-200,164,HudElement.CENTER_RIGHT);//TODO replace with stat display element;
 		
 		
 		elements.add(new Panel(skillButton));

@@ -88,6 +88,13 @@ public class Panel extends HudElement{
 		
 		bakeBorders();
 	}
+	
+	public void makeFrom(Object[] o) {
+		for(int i=0; i<contents.length; i++){
+			this.contents[i].makeFrom(o[i]);
+		}
+		bakeBorders();
+	}
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {}
