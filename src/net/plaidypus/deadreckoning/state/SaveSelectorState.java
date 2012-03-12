@@ -59,6 +59,11 @@ public class SaveSelectorState extends ExclusiveHudLayersState{
 	
 	private static HudElement[] makeElementsList() throws SlickException{
 		File f = new File("saves/");
+		try{
+			if(!f.exists()) f.mkdir();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		}
 		System.out.println(f.list());
 		String[] savesList = f.list(new SaveFilter());
 		for(int i=0; i<savesList.length; i++){
