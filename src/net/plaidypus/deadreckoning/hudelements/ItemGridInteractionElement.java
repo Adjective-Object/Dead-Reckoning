@@ -61,5 +61,5 @@ public class ItemGridInteractionElement extends HudElement{
 	public int getHeight() {return 0;}
 
 	@Override
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {}
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {}
 }

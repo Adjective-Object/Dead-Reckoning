@@ -48,7 +48,7 @@ public class StringPutter extends HudElement{
 	}
 
 	@Override
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		for(int i=0; i< messages.size(); i++){
 			g.setColor(new Color(255,255,255,alphas.get(i).intValue()));
 			g.drawString(messages.get(i),this.getX() ,this.getY()-( (messages.size()-i)*25 ));

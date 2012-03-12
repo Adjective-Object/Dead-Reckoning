@@ -6,8 +6,10 @@ import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.ItemGridElement;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -52,10 +54,15 @@ public class HudLayersState extends BasicGameState{
 		}
 	}
 	
-	public void render(GameContainer container, StateBasedGame game, Graphics g)
+	public void render(GameContainer gc, StateBasedGame game, Graphics g)
 			throws SlickException {
+		g.setColor(Color.black);
+		if(gc.getInput().isKeyDown(Input.KEY_0)){
+			g.setColor(Color.green);
+		}
+		g.fillRect(0,0,gc.getWidth(),gc.getHeight());
 		for(int i=0; i<HudElements.size(); i++){
-			HudElements.get(i).render(container,game,g);
+			HudElements.get(i).render(gc,game,g);
 		}
 	}
 	

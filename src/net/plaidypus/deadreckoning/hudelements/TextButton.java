@@ -57,7 +57,7 @@ public class TextButton extends Button{
 	}
 	
 	@Override
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		if(hasFocus){
 			g.setColor(c2);
 		}

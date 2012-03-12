@@ -11,11 +11,13 @@ import net.plaidypus.deadreckoning.grideffects.DamageEffect;
 import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.skills.Fireball;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.imageout.ImageOut;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class GameplayElement extends HudElement {
@@ -43,7 +45,6 @@ public class GameplayElement extends HudElement {
 	GameContainer gc;
 	
 	ArrayList<Action> actions;
-	
 	
 	public GameplayElement(int saveNumber) throws SlickException {
 		super(0,0,HudElement.TOP_LEFT,true);
@@ -146,7 +147,6 @@ public class GameplayElement extends HudElement {
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 		
-		
 		cameraX = cameraX + (cameraDestX - cameraX) * cameraRate;
 		cameraY = cameraY + (cameraDestY - cameraY) * cameraRate;
 		
@@ -240,11 +240,16 @@ public class GameplayElement extends HudElement {
 	 * @param gc
 	 * @param sbg
 	 * @param g
+	 * @throws SlickException 
 	 */
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+		
 		g.clear();
 		getBoard().render(g, -cameraX, -cameraY);
-		gc.getGraphics().copyArea(backgroundScreen, 0, 0);
+		backgroundScreen.getGraphics().setColor(Color.black);
+		backgroundScreen.getGraphics().fillRect(0,0,gc.getWidth(),gc.getHeight());
+		g.copyArea(backgroundScreen, 0, 0);
+		
 	}
 
 	public int getID() {

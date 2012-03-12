@@ -88,7 +88,7 @@ public class MiniMap extends HudElement{
 	}
 	
 	@Override
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		g.drawImage(mapRender,getX()-mapRender.getWidth()/2,getY()-mapRender.getHeight()/2);
 		renderTo(g,getX(),getY());
 		

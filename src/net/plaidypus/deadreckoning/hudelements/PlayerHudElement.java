@@ -51,7 +51,7 @@ public class PlayerHudElement extends HudElement{
 	}
 
 	@Override
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		g.drawImage(img,getX(),getY());
 		g.drawImage(target.player.getProfession().getPortriat(),getX()+19,getY()+23);
 		g.setColor(new Color(200,70,70));

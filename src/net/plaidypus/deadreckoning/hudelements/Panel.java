@@ -56,7 +56,7 @@ public class Panel extends HudElement{
 		return height;
 	}
 	
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g){
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{
 		g.setColor(DeadReckoningGame.menuColor);
 		g.fillRect(getX()-borderX, getY()-borderY, getWidth()+borderX*2, getHeight()+borderY*2);
 		g.setColor(Color.white);

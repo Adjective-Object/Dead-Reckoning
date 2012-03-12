@@ -43,7 +43,7 @@ public class StatusTrackerElement extends HudElement{
 	}
 
 	@Override
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		for(int i=0; i<target.player.statuses.size();i++){
 			g.drawImage(target.player.statuses.get(i).tileImage,getX()+i*37,getY()+2);
 		}

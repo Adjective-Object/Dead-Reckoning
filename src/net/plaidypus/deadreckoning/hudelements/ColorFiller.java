@@ -44,7 +44,7 @@ public class ColorFiller extends HudElement{
 	}
 
 	@Override
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{
 		g.setColor(this.color);
 		g.fillRect(0, 0, gc.getWidth(),gc.getHeight());
 	}

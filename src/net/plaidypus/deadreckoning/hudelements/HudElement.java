@@ -60,7 +60,7 @@ public abstract class HudElement {
 	public abstract int getWidth();
 	public abstract int getHeight();
 	
-	public abstract void render(GameContainer gc, StateBasedGame sbg, Graphics g);
+	public abstract void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException;
 
 	public int getX() {
 		return xoff+offsets[bindMethod][0];

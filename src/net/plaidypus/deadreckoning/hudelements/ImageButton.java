@@ -43,7 +43,7 @@ public class ImageButton extends Button{
 	}
 
 	@Override
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		g.drawImage(image, getX(), getY());
 		
 		if(hasFocus){

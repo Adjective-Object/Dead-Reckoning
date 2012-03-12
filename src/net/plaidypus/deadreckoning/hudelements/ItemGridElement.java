@@ -89,7 +89,7 @@ public class ItemGridElement extends HudElement{
 		return 2*externalBorder+height*(DeadReckoningGame.tileSize+internalBorder);
 	}
 	
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g){
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{
 		g.setColor(new Color(255,255,255));
 		
 		g.setColor(backgroundColor);
