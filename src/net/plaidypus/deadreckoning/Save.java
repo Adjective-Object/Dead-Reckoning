@@ -127,9 +127,6 @@ public class Save {
 		r.write("floor0.map");
 		r.close();
 		
-		File playerSave = new File(fileLocation + "/player.txt");
-		playerSave.createNewFile();
-		
 		DungeonMap map = new DungeonMap(16);
 		
 		
