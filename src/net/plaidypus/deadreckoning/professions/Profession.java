@@ -1,13 +1,19 @@
 package net.plaidypus.deadreckoning.professions;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import net.plaidypus.deadreckoning.items.Item;
 
-public class Profession {
+public class Profession extends StatMaster{
 	
-	private double[] statDist;
+	private double[] statDist;//HP, MP, STR, DEX, INT, LUK
 	
 	private Item mainWeapon;
 	
@@ -15,40 +21,58 @@ public class Profession {
 	
 	private Image portrait;
 	private int baseClassID;
+
+	public int level=1;
+	int baseHP = 50, baseMP = 20, baseStat= 4, spPerLevel = 5;
 	
 	public Profession(int baseClassID) throws SlickException{
-		skillTrees = new SkillProgression[] {	
+		this(baseClassID,
 			SkillProgression.loadFromFile("res/professions/"+Integer.toString(baseClassID)+"/tree1.txt"),
 			SkillProgression.loadFromFile("res/professions/"+Integer.toString(baseClassID)+"/tree2.txt"),
 			SkillProgression.loadFromFile("res/professions/"+Integer.toString(baseClassID)+"/tree3.txt")
-		};
-		this.baseClassID=baseClassID;
-		this.portrait=new Image("res/professions/"+baseClassID+"/Portrait.png");
+		);
 	}
 	
 	public Profession(int baseClassID, SkillProgression treeA, SkillProgression treeB, SkillProgression treeC) throws SlickException{
-		skillTrees = new SkillProgression[] {	
-				SkillProgression.loadFromFile("res/professions/"+Integer.toString(baseClassID)+"/tree1.txt"),
-				SkillProgression.loadFromFile("res/professions/"+Integer.toString(baseClassID)+"/tree2.txt"),
-				SkillProgression.loadFromFile("res/professions/"+Integer.toString(baseClassID)+"/tree3.txt")
+		super(0,0,0,0,0,0);
+		skillTrees = new SkillProgression[] {
+				treeA, treeB, treeC
 			};
 		this.baseClassID=baseClassID;
 		this.portrait=new Image("res/professions/"+baseClassID+"/Portrait.png");
+		this.statDist= parseStatDist(baseClassID);
 	}
 	
-	Profession(int baseClassID, SkillProgression skillsA, SkillProgression skillsB, SkillProgression skillsC,
-			double[] statDist, Item main) throws SlickException{
-		skillTrees = new SkillProgression[] {	
-				SkillProgression.loadFromFile("res/professions/"+Integer.toString(baseClassID)+"/tree1.txt"),
-				SkillProgression.loadFromFile("res/professions/"+Integer.toString(baseClassID)+"/tree2.txt"),
-				SkillProgression.loadFromFile("res/professions/"+Integer.toString(baseClassID)+"/tree3.txt")
-			};
-		this.mainWeapon=main;
-		this.statDist=statDist;
-		this.portrait=new Image("res/professions/"+baseClassID+"/Portrait.png");
+	private static double[] parseStatDist(int baseClassID) {
+		double[] stats = new double[6];
+		
+		try{
+			BufferedReader r = new BufferedReader(new FileReader(new File("res/professions/"+baseClassID+"/statDist.txt")));
+			for(int i=0; i<6 ; i++){
+				stats[i]=Double.parseDouble(r.readLine());
+			}
+		}
+		catch(FileNotFoundException e){ e.printStackTrace();}
+		catch (NumberFormatException e) {e.printStackTrace();}
+		catch (IOException e) {e.printStackTrace();}
+		
+		return stats;
 	}
+
+	public double getHPFrac(){return statDist[0];}
+	public double getMPFrac(){return statDist[1];}
+	public double getSTRFrac(){return statDist[2];}
+	public double getDEXFrac(){return statDist[3];}
+	public double getINTFrac(){return statDist[4];}
+	public double getLUKFrac(){return statDist[5];}
 	
-	public double[] getStatDist(){return statDist;}
+	public int getMaxHP(){return (int) (baseHP+statDist[0]*level*spPerLevel);}
+	public int getMaxMP(){return (int) (baseMP+statDist[1]*level*spPerLevel);}
+	public int getSTR(){return (int) (baseStat+statDist[2]*level*spPerLevel);}
+	public int getDEX(){return (int) (baseStat+statDist[3]*level*spPerLevel);}
+	public int getINT(){return (int) (baseStat+statDist[4]*level*spPerLevel);}
+	public int getLUK(){return (int) (baseStat+statDist[5]*level*spPerLevel);}
+	
 	public Item getMainWeapon(){return mainWeapon;}
 	
 	public SkillProgression[] getTrees(){return skillTrees;}

@@ -3,13 +3,6 @@ NAME=Goblin
 DESCRIPTION=Oh Shit, a Goblin!
 
 :STATS:
-HP=30
-MP=10
-
-STR=20
-INT=4
-DEX=4
-LUK=4
 
 TILEX=32
 TILEY=32

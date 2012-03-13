@@ -96,5 +96,9 @@ public class Panel extends HudElement{
 	}
 
 	@Override
-	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {}
+	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+		for(int i=0; i<contents.length; i++){
+			contents[i].init(gc, sbg);
+		}
+	}
 }

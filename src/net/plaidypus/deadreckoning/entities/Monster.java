@@ -6,6 +6,7 @@ import net.plaidypus.deadreckoning.actions.MoveAction;
 import net.plaidypus.deadreckoning.actions.WaitAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
+import net.plaidypus.deadreckoning.professions.StatMaster;
 import net.plaidypus.deadreckoning.skills.Attack;
 import net.plaidypus.deadreckoning.skills.Movement;
 import net.plaidypus.deadreckoning.skills.Skill;
@@ -24,8 +25,8 @@ public class Monster extends LivingEntity {
 	/**
 	 * a testing monster class
 	 */
-	public Monster(Tile targetTile, int layer, String entityFile, int allign) {
-		super (targetTile, layer, entityFile, allign);
+	public Monster(Tile targetTile, int layer, String entityFile, StatMaster stats, int allign) {
+		super (targetTile, layer, entityFile, stats, allign);
 		movement = new Movement(this);
 		attack = new Attack(this);
 	}

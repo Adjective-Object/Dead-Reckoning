@@ -31,7 +31,6 @@ public class Player extends LivingEntity {
 	public static Skill[] skills;
 
 	public int currentSkill;
-	public int level;
 	public int EXP;
 	
 	public Profession profession;
@@ -46,24 +45,26 @@ public class Player extends LivingEntity {
 	 * @throws SlickException
 	 */
 	public Player(Tile targetTile, int layer, Profession p, Input i) throws SlickException {
-		super(targetTile,layer,p.getEntityFile(),Entity.ALLIGN_FRIENDLY);
+		super(targetTile,layer,p.getEntityFile(),p,Entity.ALLIGN_FRIENDLY);
 		this.input = i;
 
 		keyBinds = new int[] { Input.KEY_A, Input.KEY_D, Input.KEY_W, Input.KEY_S, Input.KEY_Q, Input.KEY_T, Input.KEY_P , Input.KEY_T, Input.KEY_C, Input.KEY_L, Input.KEY_F, Input.KEY_I, Input.KEY_M, Input.KEY_K};
-			skills = new Skill[] { new PreBakedMove(this,-1,0),
+		skills = new Skill[] { new PreBakedMove(this,-1,0),
 					new PreBakedMove(this,1,0),new PreBakedMove(this,0,-1),
 					new PreBakedMove(this,0,1),new Attack(this),
 					new Wait(this), new PlaceWall(this), new PlaceTorch(this),
 					new PlaceChest(this), new Loot(this), new Fireball(this), new CheckInventory(this), new ViewMap(this), new ViewSkills(this)};
-			profession = p;
+		this.profession = p;
 	}
-
 	public boolean canSee(Tile t){
 		return this.getLocation().isVisible();
 	}
 	
 	public void update(GameContainer gc, int delta){
 		super.update(gc,delta);
+		if(gc.getInput().isKeyDown(Input.KEY_F12)){
+			this.EXP+=delta/10;
+		}
 	}
 	
 	public void updateBoardEffects(GameContainer gc, int delta){
@@ -71,7 +72,7 @@ public class Player extends LivingEntity {
 		this.getParent().lightInRadius(getLocation(), 2);//TODO visibility light radius thing?
 		if(this.EXP>=this.getEXPforLevel()){
 			this.EXP-=this.getEXPforLevel();
-			this.level++;
+			this.profession.level+=1;
 			Animation levelUp=new Animation(Fireball.fireball,100);//TODO actual level up animation
 			levelUp.setLooping(false);
 			this.getParent().addEffectOver(this.getLocation(),new AnimationEffect(this.getLocation(),levelUp));//TODO Level up Animation
@@ -119,8 +120,15 @@ public class Player extends LivingEntity {
 	}
 	
 	public int getEXPforLevel() {
-		return 100;
+		return this.profession.level*100;
 	}
+	
+	public int getMaxHP(){ return (int) this.profession.getMaxHP(); }
+	public int getMaxMP(){ return (int) this.profession.getMaxMP(); }
+	public int getINT(){ return (int) this.profession.getINT(); }
+	public int  getLUK(){ return (int) this.profession.getLUK(); }
+	public int getSTR(){ return (int) this.profession.getSTR(); }
+	public int getDEX(){ return (int) this.profession.getDEX(); }
 	
 	public Profession getProfession(){
 		return this.profession;

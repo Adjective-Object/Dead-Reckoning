@@ -149,6 +149,7 @@ public class GameplayElement extends HudElement {
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 		
+		
 		cameraX = cameraX + (cameraDestX - cameraX) * cameraRate;
 		cameraY = cameraY + (cameraDestY - cameraY) * cameraRate;
 		
@@ -156,7 +157,8 @@ public class GameplayElement extends HudElement {
 			cameraDestX = getBoard().ingameEntities.get(currentEntity).getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;
 			cameraDestY = getBoard().ingameEntities.get(currentEntity).getAbsoluteY() - gc.getHeight() / 2 + DeadReckoningGame.tileSize/2;
 		}
-			
+		
+		
 		getBoard().updateSelctor(input, -cameraX, -cameraY);
 		getBoard().updateAllTiles(gc, delta);
 		updateActions(gc,delta);
@@ -172,6 +174,7 @@ public class GameplayElement extends HudElement {
 		if(actions.size()==0){
 			while(!getBoard().ingameEntities.get(currentEntity).isInteractive() ){
 				currentEntity = (currentEntity + 1) % getBoard().ingameEntities.size();
+				//System.out.println(currentEntity);
 			}
 			
 			Entity current = getBoard().ingameEntities.get(currentEntity);

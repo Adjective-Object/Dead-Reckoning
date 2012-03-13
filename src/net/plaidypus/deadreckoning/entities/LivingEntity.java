@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.hudelements.GameplayElement;
 import net.plaidypus.deadreckoning.status.Status;
+import net.plaidypus.deadreckoning.professions.StatMaster;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
@@ -24,7 +24,6 @@ import org.newdawn.slick.SpriteSheet;
 
 public abstract class LivingEntity extends InteractiveEntity {
 
-	private int maxHP, maxMP, STR, INT, DEX, LUK, level;
 	public int HP, MP, width, height;
 	public Animation stand, basicAttack, walking, damageFront, damageBack,
 			death;
@@ -36,6 +35,8 @@ public abstract class LivingEntity extends InteractiveEntity {
 			ANIMATION_WALK = 2, ANIMATION_FLINCH_FRONT = 3,
 			ANIMATION_FLINCH_BACK = 4, ANIMATION_DEATH = 5;
 	
+	protected StatMaster statMaster;
+	
 	//Exists only for the purpose of referencing methods that should be static,
 	// but need to be abstract, because fuck Java
 	public LivingEntity(){}
@@ -46,7 +47,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * 
 	 * @param entityfile
 	 */
-	public LivingEntity(Tile targetTile, int layer, String entityfile, int allignment) {
+	public LivingEntity(Tile targetTile, int layer, String entityfile, StatMaster statMaster, int allignment) {
 		super(targetTile, layer);
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(new File(
@@ -59,7 +60,8 @@ public abstract class LivingEntity extends InteractiveEntity {
 		}
 		
 		currentAnimation = stand;
-
+		this.statMaster = statMaster;
+		
 		setFacing(false);
 		
 		this.setAllignment(allignment);
@@ -72,6 +74,9 @@ public abstract class LivingEntity extends InteractiveEntity {
 		animations.add(damageFront);
 		animations.add(damageBack);
 		animations.add(death);
+		
+		this.HP=this.statMaster.getMaxHP();
+		this.MP=this.statMaster.getMaxMP();
 	}
 
 	/**
@@ -248,22 +253,6 @@ public abstract class LivingEntity extends InteractiveEntity {
 		return this.getCurrentAnimationID()==LivingEntity.ANIMATION_STAND || this.HP<=0;
 	}
 	
-	//TODO stat afflictions/ buffs from statuses
-	public int getDEX(){return this.DEX;}
-	public int getLUK(){return this.LUK;}
-	public int getSTR(){return this.STR;}
-	public int getINT(){return this.INT;}
-	
-	public int getMagDefense(){return this.INT;}
-	public int getWepDefense(){return this.STR;}
-	
-	public int getMaxHP() {return maxHP;}
-	public int getMaxMP() {return maxMP;}
-	
-	public int getBaseDEX(){return this.DEX;}
-	public int getBaseLUK(){return this.LUK;}
-	public int getBaseSTR(){return this.STR;}
-	public int getBaseINT(){return this.INT;}
 	
 	/**
 	 * Loads an entity from a text file. SO UGLY IT HURTS, but it didn't make
@@ -337,19 +326,8 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 		setName(info.get("NAME"));
 		
-		this.maxHP = (stats.get("HP"));
-		this.maxMP =(stats.get("MP"));
-		STR = stats.get("STR");
-		INT = stats.get("INT");
-		DEX = stats.get("DEX");
-		LUK = stats.get("LUK");
-		
 		width = stats.get("TILEX");
 		height = stats.get("TILEY");
-		
-		
-		HP = maxHP;
-		MP = maxMP;
 
 		stand = animations.get("Stand");
 		basicAttack = animations.get("AttackBasic");
@@ -375,8 +353,8 @@ public abstract class LivingEntity extends InteractiveEntity {
 		return actions;
 	}
 
-	public int calculateEXPValue() {
-		return this.level*10;//TODO angus
+	public StatMaster getStatMaster(){
+		return this.statMaster;
 	}
 	
 	public String getName(){
@@ -385,6 +363,10 @@ public abstract class LivingEntity extends InteractiveEntity {
 			p+="'s corpse";
 		}
 		return p;
+	}
+
+	public int calculateEXPValue() {
+		return this.statMaster.calculateEXPValue();
 	}
 	
 }
