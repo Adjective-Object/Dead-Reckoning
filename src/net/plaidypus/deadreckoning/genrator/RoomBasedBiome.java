@@ -19,12 +19,26 @@ public abstract class RoomBasedBiome extends Biome{
 	
 	public GameBoard populateBoard(GameBoard target, ArrayList<int[]> rooms, ArrayList<Stair> linkedLevels){
 		for(int i=0; i<rooms.size(); i++){
-			for(int x=0; x<rooms.get(i)[2];x++){
-				for(int y=0; y<rooms.get(i)[3];y++){
-						target.getTileAt(rooms.get(i)[0]+x,rooms.get(i)[1]+y).setTileFace(Tile.TILE_WALL_DOWN_RIGHT);
-					}
+			for(int x=1; x<rooms.get(i)[2]-1; x++){
+				target.getTileAt(rooms.get(i)[0]+x,rooms.get(i)[1]).setTileFace(Tile.TILE_WALL_UP);
+				target.getTileAt(rooms.get(i)[0]+x,rooms.get(i)[1]+rooms.get(i)[3]-1).setTileFace(Tile.TILE_WALL_DOWN);
+			}
+			for(int y=1; y<rooms.get(i)[3]-1; y++){
+				target.getTileAt(rooms.get(i)[0],rooms.get(i)[1]+y).setTileFace(Tile.TILE_WALL_LEFT);
+				target.getTileAt(rooms.get(i)[0]+rooms.get(i)[2]-1,rooms.get(i)[1]+y).setTileFace(Tile.TILE_WALL_RIGHT);
+			}
+			
+			target.getTileAt(rooms.get(i)[0],rooms.get(i)[1]).setTileFace(Tile.TILE_WALL_UP_LEFT);
+			target.getTileAt(rooms.get(i)[0],rooms.get(i)[1]+rooms.get(i)[3]-1).setTileFace(Tile.TILE_WALL_DOWN_LEFT);
+			target.getTileAt(rooms.get(i)[0]+rooms.get(i)[2]-1,rooms.get(i)[1]).setTileFace(Tile.TILE_WALL_UP_RIGHT);
+			target.getTileAt(rooms.get(i)[0]+rooms.get(i)[2]-1,rooms.get(i)[1]+rooms.get(i)[3]-1).setTileFace(Tile.TILE_WALL_DOWN_RIGHT);
+			
+			for(int x=1; x<rooms.get(i)[2]-1;x++){
+				for(int y=1; y<rooms.get(i)[3]-1;y++){
+						target.getTileAt(rooms.get(i)[0]+x,rooms.get(i)[1]+y).setTileFace(Tile.TILE_EMPTY);
 				}
 			}
+		}
 		return target;
 	}
 	

@@ -20,6 +20,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.imageout.ImageOut;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.awt.Graphics2D;
+
 public class GameplayElement extends HudElement {
 
 	int stateID;
@@ -243,11 +245,8 @@ public class GameplayElement extends HudElement {
 	 * @throws SlickException 
 	 */
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-		
-		g.clear();
 		getBoard().render(g, -cameraX, -cameraY);
-		backgroundScreen.getGraphics().setColor(Color.black);
-		backgroundScreen.getGraphics().fillRect(0,0,gc.getWidth(),gc.getHeight());
+
 		g.copyArea(backgroundScreen, 0, 0);
 		
 	}

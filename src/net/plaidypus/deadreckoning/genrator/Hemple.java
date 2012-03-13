@@ -22,11 +22,12 @@ public class Hemple extends RoomBasedBiome{
 	
 	public GameBoard populateBoard(GameBoard target, ArrayList<int[]> rooms, ArrayList<Stair> linkedLevels){
 		super.populateBoard(target, rooms, linkedLevels);
-		System.out.println(target.getWidth()+" "+target.getHeight());
+		
 		for(int i=0; i<rooms.size(); i++){
 			target.placeEntity(target.getTileAt(rooms.get(i)[0]+rooms.get(i)[2]/2, rooms.get(i)[1]+rooms.get(i)[3]/2),
 					new Torch(null,Tile.LAYER_PASSIVE_MAP, 10 ), Tile.LAYER_PASSIVE_MAP);
 		}
+		
 		for(int i=0; i<linkedLevels.size(); i++){
 			while(true){
 				int[] room = rooms.get(Utilities.randInt(0,rooms.size()));

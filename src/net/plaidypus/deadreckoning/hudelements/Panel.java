@@ -85,7 +85,6 @@ public class Panel extends HudElement{
 			this.contents[p].makeFrom(i.next());
 			p++;
 		}
-		
 		bakeBorders();
 	}
 	

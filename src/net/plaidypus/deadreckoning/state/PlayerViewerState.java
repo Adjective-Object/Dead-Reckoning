@@ -15,6 +15,7 @@ import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.ImageButton;
 import net.plaidypus.deadreckoning.hudelements.Panel;
 import net.plaidypus.deadreckoning.hudelements.ReturnToGameElement;
+import net.plaidypus.deadreckoning.hudelements.StatDisplayElement;
 import net.plaidypus.deadreckoning.hudelements.StillImageElement;
 import net.plaidypus.deadreckoning.professions.SkillProgression;
 
@@ -44,7 +45,7 @@ public class PlayerViewerState extends HudLayersState{
 		}
 		
 		this.buttonPanel.makeFrom(objs);
-		this.statPanel.makeFrom( new Object[]{p.profession.getPortriat(),p.profession.getPortriat()} );
+		this.statPanel.makeFrom( new Object[]{p.profession.getPortriat(),p} );
 		
 	}
 	
@@ -59,8 +60,8 @@ public class PlayerViewerState extends HudLayersState{
 			}
 		}
 		
-		playerWindow[0]= new StillImageElement(-200,164,HudElement.CENTER_RIGHT);
-		playerWindow[1]= new StillImageElement(-200,164,HudElement.CENTER_RIGHT);//TODO replace with stat display element;
+		playerWindow[0]= new StillImageElement(-200,0,HudElement.CENTER_RIGHT);
+		playerWindow[1]= new StatDisplayElement(-200,69,HudElement.CENTER_RIGHT);//TODO replace with stat display element;
 		
 		
 		elements.add(new Panel(skillButton));
