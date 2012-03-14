@@ -7,6 +7,7 @@ import net.plaidypus.deadreckoning.skills.Fireball;
 import net.plaidypus.deadreckoning.state.ExclusiveHudLayersState;
 import net.plaidypus.deadreckoning.state.HudLayersState;
 import net.plaidypus.deadreckoning.state.MainMenuState;
+import net.plaidypus.deadreckoning.state.NewGameState;
 import net.plaidypus.deadreckoning.state.PlayerViewerState;
 import net.plaidypus.deadreckoning.state.SaveSelectorState;
 
@@ -14,26 +15,31 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.state.StateBasedGame;
 
 
 public class DeadReckoningGame extends StateBasedGame
 {
+	
+	public static final int LOOTSTATE		= 0;
+	public static final int INVENTORYSTATE 	= 1;
+	public static final int GAMEPLAYSTATE	= 2;
 	public static final int MAINMENUSTATE	= 3;
 	public static final int SAVESELECTSTATE	= 4;
-	public static final int GAMEPLAYSTATE	= 2;
-	public static final int LOOTSTATE		= 0;
-	public static final int SKILLSTATE 		= 6;
-	public static final int INVENTORYSTATE 	= 1;
 	public static final int MAPSTATE 		= 5;
+	public static final int SKILLSTATE 		= 6;
+	public static final int NEWGAMESTATE	= 7;
 	
 	public static final int tileSize = 32;
 	
 	public static DeadReckoningGame instance;
-	public static final Color menuColor = new Color(60,40,50,255);
+	public static final Color menuColor = new Color(60,40,50,255), menuBackgroundColor = new Color(20,40,60);
 	
 	protected StringPutter messages;
 	protected GameplayElement game;
+	
+	public static UnicodeFont menuFont;
 	
 	DeadReckoningGame() throws SlickException
 	{
@@ -68,14 +74,15 @@ public class DeadReckoningGame extends StateBasedGame
 	
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
-this.addState(new MainMenuState(MAINMENUSTATE));
+		
+		menuFont = new UnicodeFont("/res/visitor.ttf", 20,true,false);
 		
 		HudElement.calculateOffsets(container);
 		Biome.init();
 		Fireball.init();
 		new Chest().init();
-
-		this.addState(new SaveSelectorState(SAVESELECTSTATE));
+		
+		this.addState(new MainMenuState(MAINMENUSTATE));
 		
 		this.addState(new HudLayersState(GAMEPLAYSTATE,new HudElement[] {
 				game,
@@ -104,7 +111,9 @@ this.addState(new MainMenuState(MAINMENUSTATE));
 				new MiniMap(0,0,HudElement.CENTER_CENTER,DeadReckoningGame.GAMEPLAYSTATE),
 				new ReturnToGameElement()}));
 		
+		this.addState(new SaveSelectorState(SAVESELECTSTATE));
 		this.addState(new PlayerViewerState(SKILLSTATE));
+		this.addState(new NewGameState(NEWGAMESTATE));
 		
 		this.enterState(MAINMENUSTATE);
 	}

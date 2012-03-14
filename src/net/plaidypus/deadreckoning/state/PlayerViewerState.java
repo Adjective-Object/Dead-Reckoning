@@ -53,15 +53,15 @@ public class PlayerViewerState extends HudLayersState{
 		ArrayList<HudElement> elements = new ArrayList<HudElement>(0);
 		elements.add(new StillImageElement(0,0,HudElement.TOP_LEFT));
 		
-		HudElement[] skillButton = new HudElement[12], playerWindow = new HudElement[2];
+		ArrayList<HudElement> skillButton = new ArrayList<HudElement>(12), playerWindow = new ArrayList<HudElement>(2);
 		for(int i=0; i<4; i++){
 			for(int x=0; x<3; x++){
-				skillButton[i*3+x]=new ImageButton(ofX+50*x+5,ofY+5+60*i,HudElement.TOP_LEFT,null);
+				skillButton.add(new ImageButton(ofX+50*x+5,ofY+5+60*i,HudElement.TOP_LEFT,null));
 			}
 		}
 		
-		playerWindow[0]= new StillImageElement(-200,0,HudElement.CENTER_RIGHT);
-		playerWindow[1]= new StatDisplayElement(-200,69,HudElement.CENTER_RIGHT);//TODO replace with stat display element;
+		playerWindow.add( new StillImageElement(-200,0,HudElement.CENTER_RIGHT));
+		playerWindow.add( new StatDisplayElement(-200,69,HudElement.CENTER_RIGHT));//TODO replace with stat display element;
 		
 		
 		elements.add(new Panel(skillButton));

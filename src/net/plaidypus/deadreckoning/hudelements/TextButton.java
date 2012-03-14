@@ -23,16 +23,11 @@ public class TextButton extends Button{
 		this.c2=highlightC;
 		this.c3 = pressedC;
 	}
-
-	@Override
-	public void update(GameContainer gc, StateBasedGame sbg, int delta, boolean hasFocus)
-			throws SlickException {
-		super.update(gc, sbg, delta, hasFocus);
-	}
 	
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
+		super.update(gc, sbg, delta);
 	}
 
 	@Override
@@ -58,7 +53,7 @@ public class TextButton extends Button{
 	
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-		if(hasFocus){
+		if(moused){
 			g.setColor(c2);
 		}
 		if (pressed){

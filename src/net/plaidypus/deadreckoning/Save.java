@@ -21,6 +21,7 @@ import net.plaidypus.deadreckoning.genrator.DungeonMap;
 import net.plaidypus.deadreckoning.hudelements.GameplayElement;
 import net.plaidypus.deadreckoning.professions.PlayerClass;
 import net.plaidypus.deadreckoning.professions.Profession;
+import net.plaidypus.deadreckoning.professions.SkillProgression;
 
 public class Save {
 	String saveLocation;
@@ -117,8 +118,18 @@ public class Save {
 			r.newLine();
 		}
 	}
-
-	public static Save makeNewSave(String fileLocation, String nameofSave) throws IOException, SlickException {
+	
+	private static void savePlayer(BufferedWriter w, Profession p) throws IOException {
+		w.write(p.getBaseClass());
+		w.write(p.getTrees()[0].sourceClass);
+		w.write(p.getTrees()[0].sourceTree);
+		w.write(p.getTrees()[1].sourceClass);
+		w.write(p.getTrees()[1].sourceTree);
+		w.write(p.getTrees()[2].sourceClass);
+		w.write(p.getTrees()[2].sourceTree);
+	}
+	
+	public static Save makeNewSave(String fileLocation, String nameofSave, Profession p) throws IOException, SlickException {
 		new File(fileLocation).mkdir();
 		File director = new File(fileLocation + "/saveInformation.txt");
 		BufferedWriter r = new BufferedWriter(new FileWriter(director));
@@ -129,9 +140,11 @@ public class Save {
 		
 		File playerFile = new File(fileLocation + "/player.txt");
 		playerFile.createNewFile();
+		BufferedWriter w = new BufferedWriter(new FileWriter(playerFile));
+		savePlayer(w,p);
+		w.close();
 		
 		DungeonMap map = new DungeonMap(16);
-		
 		
 		for(int i=0; i<map.getDepth(); i++){
 			File floorFile = new File(fileLocation+map.getFloorName(i));
@@ -161,8 +174,29 @@ public class Save {
 	}
 
 	private Player loadPlayer(BufferedReader r) throws SlickException {
-		//TODO actual player loading
-		return new Player(null,Tile.LAYER_PASSIVE_PLAY,new Profession(0),null);
+		
+		Profession p = new Profession(0);
+		try {
+			int baseClass = r.read();
+			SkillProgression a = SkillProgression.loadTree(r.read(), r.read());
+			SkillProgression b = SkillProgression.loadTree(r.read(), r.read());
+			SkillProgression c = SkillProgression.loadTree(r.read(), r.read());
+			p = new Profession(baseClass,a,b,c);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return new Player(null,Tile.LAYER_PASSIVE_PLAY,p,null);
+	}
+	
+	public static int enumerateSaves(){
+		int numSaves = 0;
+		File f = new File("saves/SAVE "+numSaves+"/");
+		while(f.exists()){
+			numSaves++;
+			f=new File("saves/SAVE "+numSaves+"/");
+		}
+		return numSaves;
 	}
 	
 }

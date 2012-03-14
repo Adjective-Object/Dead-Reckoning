@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.hudelements;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -14,14 +15,14 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Panel extends HudElement{
 
 	int borderX, borderY, width, height;
-	HudElement[] contents;
+	ArrayList<HudElement> contents;
 	
-	public Panel(HudElement[] contents) {
+	public Panel(ArrayList<HudElement> contents) {
 		this(HudElement.TOP_LEFT, true, contents, 10, 10);
 	}
 	
-	public Panel(int bindMethod, boolean needFoc, HudElement[] contents, int borderX, int borderY) {
-		super(contents[0].getX(), contents[0].getY() , bindMethod, needFoc);
+	public Panel(int bindMethod, boolean needFoc, ArrayList<HudElement> contents, int borderX, int borderY) {
+		super(contents.get(0).getX(), contents.get(0).getY() , bindMethod, needFoc);
 		this.borderX=borderX;
 		this.borderY=borderY;
 		this.contents=contents;
@@ -32,11 +33,11 @@ public class Panel extends HudElement{
 	}
 
 	private void bakeBorders() {
-		for(int i=1; i<contents.length ; i++){
-			int nw = contents[i].getX()+contents[i].getWidth();
-			int nh = contents[i].getY()+contents[i].getHeight();
-			int nx = contents[i].getX();
-			int ny = contents[i].getY();
+		for(int i=0; i<contents.size() ; i++){
+			int nw = contents.get(i).getX()+contents.get(i).getWidth();
+			int nh = contents.get(i).getY()+contents.get(i).getHeight();
+			int nx = contents.get(i).getX();
+			int ny = contents.get(i).getY();
 			
 			if(nw>width){ width = nw; }
 			if(nh>height){ height = nh; }
@@ -62,8 +63,8 @@ public class Panel extends HudElement{
 		g.setColor(Color.white);
 		g.drawRect(getX()-borderX, getY()-borderY, getWidth()+borderX*2, getHeight()+borderY*2);
 		
-		for(int i=0; i<contents.length ; i++){
-			contents[i].render(gc, sbg, g);
+		for(int i=0; i<contents.size() ; i++){
+			contents.get(i).render(gc, sbg, g);
 		}
 		
 	}
@@ -71,8 +72,8 @@ public class Panel extends HudElement{
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-		for(int i=0; i<contents.length; i++){
-			this.contents[i].update(gc,sbg,delta);
+		for(int i=0; i<contents.size(); i++){
+			this.contents.get(i).update(gc,sbg,delta);
 		}
 	}
 
@@ -81,24 +82,24 @@ public class Panel extends HudElement{
 		Collection<HudElement> c  = (Collection<HudElement>) o;
 		Iterator<HudElement> i = c.iterator();
 		int p = 0;
-		while(i.hasNext() && p<contents.length){
-			this.contents[p].makeFrom(i.next());
+		while(i.hasNext() && p<contents.size()){
+			this.contents.get(p).makeFrom(i.next());
 			p++;
 		}
 		bakeBorders();
 	}
 	
 	public void makeFrom(Object[] o) {
-		for(int i=0; i<contents.length; i++){
-			this.contents[i].makeFrom(o[i]);
+		for(int i=0; i<contents.size(); i++){
+			this.contents.get(i).makeFrom(o[i]);
 		}
 		bakeBorders();
 	}
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		for(int i=0; i<contents.length; i++){
-			contents[i].init(gc, sbg);
+		for(int i=0; i<contents.size(); i++){
+			contents.get(i).init(gc, sbg);
 		}
 	}
 }

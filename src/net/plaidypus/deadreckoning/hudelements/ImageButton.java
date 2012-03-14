@@ -17,7 +17,9 @@ public class ImageButton extends Button{
 	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
-	throws SlickException {}
+	throws SlickException {
+		super.update(gc, sbg, delta);
+	}
 	
 	@Override
 	public void makeFrom(Object o) {
@@ -46,12 +48,12 @@ public class ImageButton extends Button{
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		g.drawImage(image, getX(), getY());
 		
-		if(hasFocus){
-			g.setColor(new Color(0,0,0,100));
+		if(moused){
+			g.setColor(new Color(255,255,255,100));
 			g.fillRect(getX(), getY(), getWidth(), getHeight());
 		}
 		else if (pressed){
-			g.setColor(new Color(0,0,0,255));
+			g.setColor(new Color(255,255,255,255));
 			g.drawRect(getX(), getY(), getWidth(), getHeight());
 		}
 	}

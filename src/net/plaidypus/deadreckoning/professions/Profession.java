@@ -23,13 +23,14 @@ public class Profession extends StatMaster{
 	private int baseClassID;
 
 	public int level=1;
+	public String name;
 	int baseHP = 50, baseMP = 20, baseStat= 4, spPerLevel = 5;
 	
 	public Profession(int baseClassID) throws SlickException{
 		this(baseClassID,
-			SkillProgression.loadFromFile("res/professions/"+Integer.toString(baseClassID)+"/tree1.txt"),
-			SkillProgression.loadFromFile("res/professions/"+Integer.toString(baseClassID)+"/tree2.txt"),
-			SkillProgression.loadFromFile("res/professions/"+Integer.toString(baseClassID)+"/tree3.txt")
+			SkillProgression.loadTree(baseClassID, 1),
+			SkillProgression.loadTree(baseClassID, 2),
+			SkillProgression.loadTree(baseClassID, 3)
 		);
 	}
 	
@@ -40,14 +41,15 @@ public class Profession extends StatMaster{
 			};
 		this.baseClassID=baseClassID;
 		this.portrait=new Image("res/professions/"+baseClassID+"/Portrait.png");
-		this.statDist= parseStatDist(baseClassID);
+		parseClassTraits(baseClassID);
 	}
 	
-	private static double[] parseStatDist(int baseClassID) {
+	private void parseClassTraits(int baseClassID) {
 		double[] stats = new double[6];
-		
 		try{
-			BufferedReader r = new BufferedReader(new FileReader(new File("res/professions/"+baseClassID+"/statDist.txt")));
+			BufferedReader r = new BufferedReader(new FileReader(new File("res/professions/"+baseClassID+"/ClassTraits.txt")));
+			this.name=r.readLine();
+			
 			for(int i=0; i<6 ; i++){
 				stats[i]=Double.parseDouble(r.readLine());
 			}
@@ -56,8 +58,24 @@ public class Profession extends StatMaster{
 		catch (NumberFormatException e) {e.printStackTrace();}
 		catch (IOException e) {e.printStackTrace();}
 		
-		return stats;
+		this.statDist=stats;
 	}
+	
+	public static Profession loadFromFile(File f) throws SlickException {
+		BufferedReader r;
+		try {
+			r = new BufferedReader(new FileReader(f));
+			r.readLine();
+			return new Profession(r.read(),SkillProgression.loadTree(r.read(), r.read()),
+					SkillProgression.loadTree(r.read(), r.read()),
+					SkillProgression.loadTree(r.read(), r.read())
+				);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new Profession(0);
+	}
+		
 
 	public double getHPFrac(){return statDist[0];}
 	public double getMPFrac(){return statDist[1];}
@@ -79,6 +97,14 @@ public class Profession extends StatMaster{
 	
 	public Image getPortriat(){return portrait;}
 	public String getEntityFile(){return "res/professions/"+baseClassID+"/Player.entity";}
+
+	public int getBaseClass() {
+		return this.baseClassID;
+	}
+	
+	public static int enumerateProfessions(){
+		return new File("res/professions/").list().length;
+	}
 	
 }
 	
