@@ -163,7 +163,7 @@ public class GameplayElement extends HudElement {
 	public void updateBoardEffects(GameContainer gc, int delta){
 		getBoard().HideAll();
 		getBoard().updateBoardEffects(gc, delta);
-		getBoard().revealFromEntity(player,5);//TODO replace with from player alligned units?
+		getBoard().revealFromEntity(player,50);//TODO replace with from player alligned units?
 	}
 	  
 	private void updateActions(GameContainer gc, int delta) {

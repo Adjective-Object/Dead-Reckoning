@@ -18,6 +18,12 @@ public abstract class RoomBasedBiome extends Biome{
 	}
 	
 	public GameBoard populateBoard(GameBoard target, ArrayList<int[]> rooms, ArrayList<Stair> linkedLevels){
+		
+		for(int i=0; i<rooms.size()-1; i++){
+			drawCooridor(target,rooms.get(i), rooms.get(i+1));
+		}
+		
+
 		for(int i=0; i<rooms.size(); i++){
 			for(int x=1; x<rooms.get(i)[2]-1; x++){
 				target.getTileAt(rooms.get(i)[0]+x,rooms.get(i)[1]).setTileFace(Tile.TILE_WALL_UP);
@@ -39,8 +45,66 @@ public abstract class RoomBasedBiome extends Biome{
 				}
 			}
 		}
+		
 		return target;
 	}
+	
+	public GameBoard drawCooridor(GameBoard target, int[] roomA, int[] roomB){
+		int x = roomA[0]+roomA[2]/2;
+		int y = roomA[1]+roomA[3]/2;
+		int xDiff =  (roomB[0]+roomB[2]/2)-x;
+		int yDiff =  (roomB[1]+roomB[3]/2)-y;
+		
+		if(Math.abs(xDiff)>=Math.abs(yDiff)&&
+			drawLine(target,x,y,xDiff/2,true)&&
+			drawLine(target,x+xDiff/2,y,yDiff,false)&&
+			drawLine(target,x+xDiff/2,y+yDiff,xDiff-xDiff/2,true)){}
+		else if (
+			drawLine(target,x,y,yDiff/2,false) &&
+			drawLine(target,x,y+yDiff/2,xDiff,true) &&
+			drawLine(target,x+xDiff,y+yDiff/2,yDiff-yDiff/2,false)){}
+			
+		return target;
+		
+		
+	}
+	
+	public boolean drawLine(GameBoard target, int ax, int ay, int length, boolean horizontal){
+		boolean willdr=true;
+		Tile previous = null;
+		Tile t = null;
+		for(int i=0; i!=length; i+=length/Math.abs(length)){
+			previous = t;
+			if(horizontal){
+				t  = target.getTileAt( ax+i ,  ay );
+			}
+			else{
+				t = target.getTileAt(ax, ay + i);
+			}
+			
+			int draw = 0;
+			if( t.getToDown().getTileFace()==Tile.TILE_SPECIAL ) {draw++;}
+			if( t.getToUp().getTileFace()==Tile.TILE_SPECIAL ) {draw++;}
+			if( t.getToLeft().getTileFace()==Tile.TILE_SPECIAL ) {draw++;}
+			if( t.getToRight().getTileFace()==Tile.TILE_SPECIAL ) {draw++;}
+			
+			
+			
+			//if(t.getTileFace()==Tile.TILE_SPECIAL){ return false; }
+			if(draw == 0 && !willdr){
+				willdr=true;
+				previous.setTileFace(Tile.TILE_SPECIAL);
+			}
+			if(willdr){
+				t.setTileFace(Tile.TILE_SPECIAL);
+			}
+			if(draw>1){
+				willdr=false;
+			}
+		}
+		return true;
+	}
+	
 	
 	public GameBoard makeBoard(int depth, ArrayList<Stair> floorLinks){
 		ArrayList<int[]> rooms = new ArrayList<int[]>(0);
