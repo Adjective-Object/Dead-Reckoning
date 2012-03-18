@@ -1,6 +1,7 @@
 package net.plaidypus.deadreckoning.generator;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.board.GameBoard;
@@ -55,32 +56,54 @@ public abstract class RoomBasedBiome extends Biome{
 		int xDiff =  (roomB[0]+roomB[2]/2)-x;
 		int yDiff =  (roomB[1]+roomB[3]/2)-y;
 		
-		if(Math.abs(xDiff)>=Math.abs(yDiff)&&
-			drawLine(target,x,y,xDiff/2,true)&&
-			drawLine(target,x+xDiff/2,y,yDiff,false)&&
-			drawLine(target,x+xDiff/2,y+yDiff,xDiff-xDiff/2,true)){}
-		else if (
-			drawLine(target,x,y,yDiff/2,false) &&
-			drawLine(target,x,y+yDiff/2,xDiff,true) &&
-			drawLine(target,x+xDiff,y+yDiff/2,yDiff-yDiff/2,false)){}
-			
+		ArrayList<int[]> points = new ArrayList<int[]>(Math.abs(xDiff)+Math.abs(yDiff));
+		
+		if(Math.abs(xDiff)>=Math.abs(yDiff)){
+			points.addAll(addLine(target,x,y,xDiff/2,true));
+			points.addAll(addLine(target,x+xDiff/2,y,yDiff,false));
+			points.addAll(addLine(target,x+xDiff/2,y+yDiff,xDiff-xDiff/2,true));}
+		else{
+			points.addAll(addLine(target,x,y,yDiff/2,false));
+			points.addAll(addLine(target,x,y+yDiff/2,xDiff,true));
+			points.addAll(addLine(target,x+xDiff,y+yDiff/2,yDiff-yDiff/2,false));}
+		
+		drawOnBoard(target,points);
+		
 		return target;
 		
 		
 	}
 	
-	public boolean drawLine(GameBoard target, int ax, int ay, int length, boolean horizontal){
+	public ArrayList<int[]> addLine(GameBoard target, int ax, int ay, int length, boolean horizontal){
+		
+		ArrayList<int[]> retPoints = new ArrayList<int[]>(Math.abs(length));
+		
+		for(int i=0; i!=length; i+=length/Math.abs(length)){
+				
+			if(horizontal){
+				retPoints.add(new int[] {ax+i ,  ay });
+			}
+			else{
+				retPoints.add(new int[] {ax ,  ay+i });
+			}
+			
+		}
+		return retPoints;
+	}
+	
+	public void drawOnBoard(GameBoard target, ArrayList<int[]> points){
 		boolean willdr=true;
 		Tile previous = null;
 		Tile t = null;
-		for(int i=0; i!=length; i+=length/Math.abs(length)){
+		
+		System.out.println();
+		for(int i=0; i<points.size(); i++){
+			
+			System.out.print("["+points.get(i)[0]+","+points.get(i)[1]+"]");
+			
 			previous = t;
-			if(horizontal){
-				t  = target.getTileAt( ax+i ,  ay );
-			}
-			else{
-				t = target.getTileAt(ax, ay + i);
-			}
+			
+			t=target.getTileAt(points.get(i)[0], points.get(i)[1]);
 			
 			int draw = 0;
 			if( t.getToDown().getTileFace()==Tile.TILE_SPECIAL ) {draw++;}
@@ -88,9 +111,6 @@ public abstract class RoomBasedBiome extends Biome{
 			if( t.getToLeft().getTileFace()==Tile.TILE_SPECIAL ) {draw++;}
 			if( t.getToRight().getTileFace()==Tile.TILE_SPECIAL ) {draw++;}
 			
-			
-			
-			//if(t.getTileFace()==Tile.TILE_SPECIAL){ return false; }
 			if(draw == 0 && !willdr){
 				willdr=true;
 				previous.setTileFace(Tile.TILE_SPECIAL);
@@ -101,8 +121,8 @@ public abstract class RoomBasedBiome extends Biome{
 			if(draw>1){
 				willdr=false;
 			}
+			
 		}
-		return true;
 	}
 	
 	
