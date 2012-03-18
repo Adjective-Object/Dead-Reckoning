@@ -1,7 +1,7 @@
 package net.plaidypus.deadreckoning;
 
 import net.plaidypus.deadreckoning.entities.Chest;
-import net.plaidypus.deadreckoning.genrator.Biome;
+import net.plaidypus.deadreckoning.generator.Biome;
 import net.plaidypus.deadreckoning.hudelements.*;
 import net.plaidypus.deadreckoning.skills.Fireball;
 import net.plaidypus.deadreckoning.state.ExclusiveHudLayersState;

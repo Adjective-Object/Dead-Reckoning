@@ -17,7 +17,7 @@ import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.entities.Statue;
-import net.plaidypus.deadreckoning.genrator.DungeonMap;
+import net.plaidypus.deadreckoning.generator.DungeonMap;
 import net.plaidypus.deadreckoning.hudelements.GameplayElement;
 import net.plaidypus.deadreckoning.professions.PlayerClass;
 import net.plaidypus.deadreckoning.professions.Profession;
