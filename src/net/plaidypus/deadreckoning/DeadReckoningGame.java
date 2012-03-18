@@ -34,7 +34,11 @@ public class DeadReckoningGame extends StateBasedGame
 	public static final int tileSize = 32;
 	
 	public static DeadReckoningGame instance;
-	public static final Color menuColor = new Color(60,40,50,255), menuBackgroundColor = new Color(20,40,60);
+	public static final Color
+	menuColor = new Color(60,40,50,255),
+	menuBackgroundColor = new Color(20,40,60),
+	menuTextColor = new Color(255,255,255),
+	menuTextBackgroundColor = new Color(0,0,0);
 	
 	protected StringPutter messages;
 	protected GameplayElement game;
@@ -76,7 +80,7 @@ public class DeadReckoningGame extends StateBasedGame
 	public void initStatesList(GameContainer container) throws SlickException {
 		
 		menuFont = new UnicodeFont("/res/visitor.ttf", 20,true,false);
-		
+			
 		HudElement.calculateOffsets(container);
 		Biome.init();
 		Fireball.init();

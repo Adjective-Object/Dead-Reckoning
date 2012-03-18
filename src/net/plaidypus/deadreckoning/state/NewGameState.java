@@ -22,6 +22,7 @@ import net.plaidypus.deadreckoning.hudelements.GameplayElement;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.Panel;
 import net.plaidypus.deadreckoning.hudelements.TextElement;
+import net.plaidypus.deadreckoning.hudelements.TextEntryBox;
 import net.plaidypus.deadreckoning.professions.Profession;
 
 public class NewGameState extends HudLayersState{
@@ -30,6 +31,7 @@ public class NewGameState extends HudLayersState{
 	public ArrayList<Profession> professions;
 	
 	public ImageButton newClassButton;
+	public TextEntryBox text;
 	
 	int columA = 15, columB = 300;
 	
@@ -90,9 +92,14 @@ public class NewGameState extends HudLayersState{
 			f = new File("classes/"+numClasses+".txt");
 		}
 		
+		ArrayList<HudElement> elimC = new ArrayList<HudElement>(0);
+		text = new TextEntryBox(-250, 50, HudElement.TOP_RIGHT, 200, 50);
+		elimC.add(text);
+		
 		this.HudElements.add(new ColorFiller(DeadReckoningGame.menuBackgroundColor));
 		this.HudElements.add(new Panel(elim) );
 		this.HudElements.add(new Panel(elimB));
+		this.HudElements.add(new Panel(elimC));
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException{
@@ -102,10 +109,9 @@ public class NewGameState extends HudLayersState{
 		}
 		
 		for(int i=0; i<classButtons.size(); i++){
-			//System.out.println(classButtons.get(i).isPressed());
-			if(classButtons.get(i).isPressed()){
+			if(classButtons.get(i).isPressed() && !text.getContent().equals("")){
 				try{
-					Save s = Save.makeNewSave("saves/SAVE "+(Save.enumerateSaves())+"/","SaveGame"+(Save.enumerateSaves()+1), professions.get(i));
+					Save s = Save.makeNewSave("saves/SAVE "+(Save.enumerateSaves())+"/",text.getContent(), professions.get(i));
 					s.loadGame( GameplayElement.class.cast(HudLayersState.class.cast(DeadReckoningGame.instance.getState(DeadReckoningGame.GAMEPLAYSTATE)).getElement(0) ));
 					game.enterState(DeadReckoningGame.GAMEPLAYSTATE);
 				}

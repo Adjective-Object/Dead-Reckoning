@@ -14,8 +14,16 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
+import rlforj.los.BresLos;
+import rlforj.los.PrecisePermissive;
+import rlforj.los.IConeFovAlgorithm;
+import rlforj.los.IFovAlgorithm;
+import rlforj.los.ILosAlgorithm;
+import rlforj.los.ILosBoard;
+import rlforj.los.ShadowCasting;
 
-public class GameBoard {
+
+public class GameBoard implements ILosBoard{
 
 	public ArrayList<Entity> ingameEntities;
 
@@ -306,83 +314,16 @@ public class GameBoard {
 		}
 	}
 
-	public void revealFromEntity(Entity entity) {
-		for(int i=0; i<width; i++){	revealAlongVector(entity.getLocation(),this.getTileAt(i,0)); }
-		for(int i=0; i<width; i++){	revealAlongVector(entity.getLocation(),this.getTileAt(i,height-1)); }
-		for(int i=0; i<height-2; i++){	revealAlongVector(entity.getLocation(),this.getTileAt(0,i+1)); }
-		for(int i=0; i<height-2; i++){	revealAlongVector(entity.getLocation(),this.getTileAt(width-1,i+1)); }
-	}
-	
-	/**
-	 * returns if the vision was blocked
-	 * @param a
-	 * @param b
-	 * @return
-	 */
-	public boolean revealAlongVector(Tile a, Tile b){//TODO it's a work in progress
-		if(a.getX()!=b.getX()){
-			double slope = (double)(a.getY()-b.getY())/(a.getX()-b.getX());
-			int iteration = (b.getX()-a.getX())/Math.abs(b.getX()-a.getX());
-			int lasty = a.getY();
-			for(int i=1; i<Math.abs(a.getX()-b.getX())+1;i++){
-					int x = a.getX()+(i*iteration);
-					int newy = (int) Math.round(a.getY()+i*iteration*slope);
-					if (revealAlongVector(getTileAt(x-iteration,lasty),getTileAt(x-iteration,newy)) || revealAlongVector(getTileAt(x,newy),getTileAt(x,newy))){
-						return true;
-					}
-					lasty=newy;
-			}
-		}
-		else if (a!=b){
-			int iteration = (b.getY()-a.getY())/Math.abs(b.getY()-a.getY());
-			for(int i=0; i<Math.abs(a.getY()-b.getY())+1; i++){
-				Tile target = a.getParent().getTileAt(a.getX(), a.getY()+i*iteration);
-				target.visibility=true;
-				if(target.lightLevel>0){
-					target.explored=true;
-				}
-				if(!target.isTransparent()){
-					return true;
-				}
-			}
-		}
-		else{
-			a.visibility=true;
-			if(a.lightLevel>0){
-				a.explored=true;
-			}
-			return false;
-		}
-		return false;
+	public void revealFromEntity(Entity entity, int sightDistance) {
+		IFovAlgorithm a=new PrecisePermissive();
+		entity.getLocation().visibility = true;
+		entity.getLocation().explored = true;
+		a.visitFieldOfView(this, entity.getX(), entity.getY(), sightDistance);
 	}
 
 	public boolean isLineofSight(Tile a, Tile b){
-		if(a.getX()!=b.getX()){
-			double slope = (double)(a.getY()-b.getY())/(a.getX()-b.getX());
-			int iteration = (b.getX()-a.getX())/Math.abs(b.getX()-a.getX());
-			int lasty = a.getY();
-			for(int i=1; i<Math.abs(a.getX()-b.getX())+1;i++){
-					int x = a.getX()+(i*iteration);
-					int newy = (int) Math.round(a.getY()+i*iteration*slope);
-					if (!isLineofSight(getTileAt(x-iteration,lasty),getTileAt(x-iteration,newy)) || !isLineofSight(getTileAt(x,newy),getTileAt(x,newy))){
-						return false;
-					}
-					lasty=newy;
-			}
-		}
-		else if (a!=b){
-			int iteration = (b.getY()-a.getY())/Math.abs(b.getY()-a.getY());
-			for(int i=0; i<Math.abs(a.getY()-b.getY()); i++){
-				Tile target = a.getParent().getTileAt(a.getX(), a.getY()+i*iteration);
-				if(!target.isTransparent()){
-					return false;
-				}
-			}
-		}
-		else{
-			return a.isTransparent();
-		}
-		return true;
+		ILosAlgorithm alg = new BresLos(false);
+		return alg.existsLineOfSight(this, a.getX(), a.getY(), b.getX() , b.getY(), false);
 	}
 	
 	public ArrayList<Tile> findAvailablePaths(Tile source, int wanderDist, int layer){//TODO limit generated array to dimensions of board
@@ -480,6 +421,23 @@ public class GameBoard {
 
 	public String getMapID() {
 		return mapID;
+	}
+
+	public boolean contains(int x, int y) {
+		return x<this.getWidth() && x>=0 && y<this.getHeight() && y>=0 &&
+		this.getTileAt(x, y).isOpen(Tile.LAYER_ACTIVE);
+	}
+
+	public boolean isObstacle(int x, int y) {
+		return  x<this.getWidth() && x>=0 && y<this.getHeight() && y>=0 &&
+			!this.getTileAt(x, y).isTransparent();
+	}
+
+	public void visit(int x, int y) {
+		if ( x<this.getWidth() && x>=0 && y<this.getHeight() && y>=0){
+			this.getTileAt(x, y).visibility=true;
+			this.getTileAt(x, y).explored=true;
+		}
 	}
 
 	
