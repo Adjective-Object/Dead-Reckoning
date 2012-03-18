@@ -1,5 +1,7 @@
 package net.plaidypus.deadreckoning;
 
+import java.io.File;
+
 import net.plaidypus.deadreckoning.entities.Chest;
 import net.plaidypus.deadreckoning.generator.Biome;
 import net.plaidypus.deadreckoning.hudelements.*;
@@ -53,6 +55,16 @@ public class DeadReckoningGame extends StateBasedGame
 		this.game = new GameplayElement(0);
 		
 		DeadReckoningGame.instance=this;
+		
+		String [] s = {"classes/" , "saves/"};
+		for(int i=0; i<s.length; i++){
+			File f = new File(s[i]);
+			try{
+				if(!f.exists()) f.mkdir();
+			} catch (SecurityException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public GameplayElement getGameElement(){return game;}
