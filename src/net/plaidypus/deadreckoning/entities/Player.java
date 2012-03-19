@@ -48,12 +48,12 @@ public class Player extends LivingEntity {
 		super(targetTile,layer,p.getEntityFile(),p,Entity.ALLIGN_FRIENDLY);
 		this.input = i;
 
-		keyBinds = new int[] { Input.KEY_A, Input.KEY_D, Input.KEY_W, Input.KEY_S, Input.KEY_Q, Input.KEY_T, Input.KEY_P , Input.KEY_T, Input.KEY_C, Input.KEY_L, Input.KEY_F, Input.KEY_I, Input.KEY_M, Input.KEY_K};
+		keyBinds = new int[] { Input.KEY_A, Input.KEY_D, Input.KEY_W, Input.KEY_S, Input.KEY_Q, Input.KEY_T, Input.KEY_P , Input.KEY_T, Input.KEY_C, Input.KEY_L, Input.KEY_F, Input.KEY_I, Input.KEY_M, Input.KEY_K, Input.KEY_E};
 		skills = new Skill[] { new PreBakedMove(this,-1,0),
 					new PreBakedMove(this,1,0),new PreBakedMove(this,0,-1),
 					new PreBakedMove(this,0,1),new Attack(this),
 					new Wait(this), new PlaceWall(this), new PlaceTorch(this),
-					new PlaceChest(this), new Loot(this), new Fireball(this), new CheckInventory(this), new ViewMap(this), new ViewSkills(this)};
+					new PlaceChest(this), new Loot(this), new Fireball(this), new CheckInventory(this), new ViewMap(this), new ViewSkills(this), new Interacter(this)};
 		this.profession = p;
 	}
 	public boolean canSee(Tile t){
@@ -151,6 +151,11 @@ public class Player extends LivingEntity {
 
 	public void setInput(Input input) {
 		this.input=input;
+	}
+	@Override
+	public Action onInteract(Entity e) {
+		// TODO this should never be called
+		return null;
 	}
 
 

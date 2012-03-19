@@ -20,34 +20,7 @@ public abstract class RoomBasedBiome extends Biome{
 		this.numRooms = numRooms;
 	}
 	
-	public GameBoard populateBoard(GameBoard target, ArrayList<int[]> rooms, ArrayList<Stair> linkedLevels){
-		
-		for(int i=0; i<rooms.size()-1; i++){
-			drawCooridor(target,rooms.get(i), rooms.get(i+1));
-		}
-		
-		for(int i=0; i<rooms.size(); i++){
-			outlineRoom(target, rooms.get(i));
-		}
-		
-		//placing stairs
-		for(int i=0; i<linkedLevels.size(); i++){
-			while(true){
-				int[] room = rooms.get(Utilities.randInt(0,rooms.size()));
-				Tile subject = target.getTileAt(room[0]+Utilities.randInt(1,room[2]-1), room[1]+Utilities.randInt(1,room[3]-1));
-				if(subject.isOpen(Tile.LAYER_PASSIVE_MAP)
-						&& subject.getToLeft().isOpen(Tile.LAYER_PASSIVE_MAP)){
-					target.placeEntity(subject, linkedLevels.get(i), Tile.LAYER_PASSIVE_MAP);
-					target.placeEntity(subject.getToLeft(), new LandingPad(subject.getToRight(), Tile.LAYER_PASSIVE_MAP, linkedLevels.get(i).targetFloor), Tile.LAYER_PASSIVE_MAP);
-					break;
-				}
-			}
-		}
-		
-		placeWallsOnNullBorders(target);
-		
-		return target;
-	}
+	public abstract GameBoard populateBoard(GameBoard target, ArrayList<int[]> rooms, ArrayList<Stair> linkedLevels);
 	
 	public void placeWallsOnNullBorders(GameBoard g){
 		for(int x=0; x<g.getWidth(); x++){
@@ -198,6 +171,32 @@ public abstract class RoomBasedBiome extends Biome{
 			}
 		}
 		return false;
+	}
+
+	public void genericPopulation(GameBoard target, ArrayList<int[]> rooms, ArrayList<Stair> linkedLevels) {
+		for(int i=0; i<rooms.size()-1; i++){
+			drawCooridor(target,rooms.get(i), rooms.get(i+1));
+		}
+		
+		for(int i=0; i<rooms.size(); i++){
+			outlineRoom(target, rooms.get(i));
+		}
+		
+		//placing stairs
+		for(int i=0; i<linkedLevels.size(); i++){
+			while(true){
+				int[] room = rooms.get(Utilities.randInt(0,rooms.size()));
+				Tile subject = target.getTileAt(room[0]+Utilities.randInt(1,room[2]-1), room[1]+Utilities.randInt(1,room[3]-1));
+				if(subject.isOpen(Tile.LAYER_PASSIVE_MAP)
+						&& subject.getToLeft().isOpen(Tile.LAYER_PASSIVE_MAP)){
+					target.placeEntity(subject, linkedLevels.get(i), Tile.LAYER_PASSIVE_MAP);
+					target.placeEntity(subject.getToLeft(), new LandingPad(subject.getToRight(), Tile.LAYER_PASSIVE_MAP, linkedLevels.get(i).targetFloor), Tile.LAYER_PASSIVE_MAP);
+					break;
+				}
+			}
+		}
+		
+		placeWallsOnNullBorders(target);
 	}
 	
 }

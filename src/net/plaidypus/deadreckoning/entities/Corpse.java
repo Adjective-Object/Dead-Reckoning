@@ -7,6 +7,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import net.plaidypus.deadreckoning.actions.Action;
+import net.plaidypus.deadreckoning.actions.LootAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 
@@ -62,5 +63,10 @@ public class Corpse extends InteractiveEntity{
 
 	@Override
 	public void init() throws SlickException {}
+
+	@Override
+	public Action onInteract(Entity e) {
+		return new LootAction(e,this.getLocation(),this.getLayer());
+	}
 
 }

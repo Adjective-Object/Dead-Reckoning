@@ -97,7 +97,6 @@ public class DeadReckoningGame extends StateBasedGame
 		HudElement.calculateOffsets(container);
 		Biome.init();
 		Fireball.init();
-		new Chest().init();
 		
 		this.addState(new MainMenuState(MAINMENUSTATE));
 		

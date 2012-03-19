@@ -318,7 +318,6 @@ public class GameBoard implements ILosBoard{
 		for(int i=0; i<board.length; i++){
 			for(int y=0; y<board[i].length; y++){
 				if(Utilities.getDistance(board[i][y], entity.getLocation())<=sightDistance &&
-						board[i][y].isTransparent() &&
 						isLineofSight(entity.getLocation(),board[i][y])){
 					board[i][y].visibility = true;
 					board[i][y].explored = true;

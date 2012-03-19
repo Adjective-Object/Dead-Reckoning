@@ -75,5 +75,11 @@ public class Monster extends LivingEntity {
 	
 	@Override
 	public void init() throws SlickException {}
+
+	@Override
+	public Action onInteract(Entity e) {
+		// TODO I don't know ehat to put here...
+		return null;
+	}
 	
 }

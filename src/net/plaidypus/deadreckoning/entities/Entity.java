@@ -18,6 +18,7 @@ public abstract class Entity {
 	private int layer;
 	
 	private String name = "NAMELESS ENTITY";
+	protected String description = "Too lazy to describe";
 	private boolean facing;
 	private boolean transparent, visible;
 	public boolean toKill;
@@ -158,11 +159,21 @@ public abstract class Entity {
 	 * old method, hold over from previous model of entity system. serves no
 	 * purpose. it should be abstract, if it will continue to exist at all
 	 * 
+	 * as of now, it provides a result for an interaction
+	 * 
 	 * @param e
 	 *            the entity with which to interact
 	 */
-	public void interact(Entity e) {
-
+	public abstract Action onInteract(Entity e);
+	
+	/**
+	 * returns a string description for the observe action
+	 * 
+	 * @param e
+	 * @return
+	 */
+	public String getDescription(Entity e){
+		return this.description;
 	}
 
 	/**

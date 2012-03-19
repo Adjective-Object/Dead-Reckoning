@@ -76,8 +76,10 @@ public class LandingPad extends Entity{
 
 	@Override
 	public void onDeath() {
-		// TODO Auto-generated method stub
-		
+		//TODO empty
 	}
+
+	@Override
+	public Action onInteract(Entity e) {return null;}
 
 }

@@ -22,6 +22,7 @@ public class Statue extends StaticImageEntity{
 	
 	public Statue(Tile t, int layer) {
 		super(t, layer,i);
+		this.description= "the placeholder object that loads when something glitches during load";
 	}
 	
 	public void init() throws SlickException{
@@ -65,5 +66,11 @@ public class Statue extends StaticImageEntity{
 
 	@Override
 	public void onDeath() {}
+
+	@Override
+	public Action onInteract(Entity e) {
+		// TODO nothing doing
+		return null;
+	}
 
 }

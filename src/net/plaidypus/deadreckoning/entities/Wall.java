@@ -20,6 +20,7 @@ public class Wall extends Entity{
 	public Wall(Tile targetTile, int layer){
 		super(targetTile, layer);
 		this.setTransparent(false);
+		this.description = "the walls are cracked and worn.";
 	}
 	
 	public void update(GameContainer gc, int delta) {}
@@ -53,5 +54,11 @@ public class Wall extends Entity{
 
 	@Override
 	public void init() throws SlickException {}
+
+	@Override
+	public Action onInteract(Entity e) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

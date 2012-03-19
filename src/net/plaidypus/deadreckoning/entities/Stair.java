@@ -73,4 +73,10 @@ public class Stair extends StaticImageEntity{
 	@Override
 	public void onDeath() {}
 
+	@Override
+	public Action onInteract(Entity e) {
+		// TODO this may in fact replace walking over the stairs for the floor transition
+		return null;
+	}
+
 }

@@ -2,7 +2,6 @@ package net.plaidypus.deadreckoning.entities;
 
 import java.util.ArrayList;
 
-import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
@@ -27,6 +26,7 @@ public class Torch extends Entity{
 		super(t, layer);
 		this.light = areaofLight;
 		ani = new Animation(img , new int []{0,0,1,0,2,0,3,0}, new int[] {60,60,60,60});
+		this.description= "the fire flickers mesmerizingly";
 	}
 	
 	public void init() throws SlickException{
@@ -69,4 +69,10 @@ public class Torch extends Entity{
 
 	@Override
 	public void onDeath() {}
+
+	@Override
+	public Action onInteract(Entity e) {
+		// TODO nothing doing here
+		return null;
+	}
 }

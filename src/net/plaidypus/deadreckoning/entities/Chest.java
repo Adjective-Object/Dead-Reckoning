@@ -3,6 +3,7 @@ package net.plaidypus.deadreckoning.entities;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.actions.Action;
+import net.plaidypus.deadreckoning.actions.LootAction;
 import net.plaidypus.deadreckoning.actions.WaitAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
@@ -30,6 +31,7 @@ public class Chest extends InteractiveEntity{
 		this.setVisible(true);
 		this.inventory.addAll(items);
 		this.setName("a chest");
+		this.description = "A creaky old chest.";
 	}
 	
 	public void init() throws SlickException{
@@ -84,6 +86,11 @@ public class Chest extends InteractiveEntity{
 	@Override
 	public void onDeath() {
 		this.getParent().addEffectOver(new FadeoutEffect(this.getLocation(),chest));
+	}
+
+	@Override
+	public Action onInteract(Entity observer) {
+		return new LootAction(observer,this.getLocation(),this.getLayer());
 	}
 
 }

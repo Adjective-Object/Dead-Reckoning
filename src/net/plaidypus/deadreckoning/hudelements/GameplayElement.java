@@ -271,7 +271,9 @@ public class GameplayElement extends HudElement {
 	}
 	
 	public void addAction(Action a){
-		this.actions.add(a);
+		if(a!=null){
+			this.actions.add(a);
+		}
 	}
 	
 	@Override

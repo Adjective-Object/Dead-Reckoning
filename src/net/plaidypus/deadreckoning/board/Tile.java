@@ -91,6 +91,10 @@ public class Tile {
 	public boolean isOpen(int layer) {
 		return this.containedEntities[layer]==null;
 	}
+	
+	public boolean isOpen() {
+		return this.containedEntities.length==0;//TODO not sure if this will work
+	}
 
 	public void clearTile(){
 		this.containedEntities= emptyEntityArray();
