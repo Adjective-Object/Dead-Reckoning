@@ -61,7 +61,7 @@ public class GameBoard implements ILosBoard{
 		board=new Tile[width][height];
 		for(int x=0; x<width; x++){
 			for(int y=0; y<height; y++){
-				try {board[x][y]=new Tile(this,x,y,Tile.TILE_EMPTY);}
+				try {board[x][y]=new Tile(this,x,y,Tile.TILE_NULL);}
 				catch (SlickException e) {e.printStackTrace();}
 			}
 		}
@@ -314,11 +314,17 @@ public class GameBoard implements ILosBoard{
 		}
 	}
 
-	public void revealFromEntity(Entity entity, int sightDistance) {
-		IFovAlgorithm a=new PrecisePermissive();
-		entity.getLocation().visibility = true;
-		entity.getLocation().explored = true;
-		a.visitFieldOfView(this, entity.getX(), entity.getY(), sightDistance);
+	public void revealFromEntity(Entity entity, int sightDistance) { //TODO temporary, only in place bcause I can't get the Rl4J version to work well.
+		for(int i=0; i<board.length; i++){
+			for(int y=0; y<board[i].length; y++){
+				if(Utilities.getDistance(board[i][y], entity.getLocation())<=sightDistance &&
+						board[i][y].isTransparent() &&
+						isLineofSight(entity.getLocation(),board[i][y])){
+					board[i][y].visibility = true;
+					board[i][y].explored = true;
+				}
+			}
+		}
 	}
 
 	public boolean isLineofSight(Tile a, Tile b){
@@ -429,8 +435,7 @@ public class GameBoard implements ILosBoard{
 	}
 
 	public boolean isObstacle(int x, int y) {
-		return  x<this.getWidth() && x>=0 && y<this.getHeight() && y>=0 &&
-			!this.getTileAt(x, y).isTransparent();
+		return  x<this.getWidth() && x>=0 && y<this.getHeight() && y>=0 && !board[x][y].isTransparent();
 	}
 
 	public void visit(int x, int y) {

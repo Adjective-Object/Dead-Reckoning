@@ -39,13 +39,15 @@ public class Tile {
 	static final Color[] highlightColors = new Color[] { new Color(0, 0, 0, 0),
 			new Color(255, 75, 23, 100), new Color(252, 125, 73, 100) };
 
-	static final float brightness = (float) (0.8);
+	static final float brightness = (float) (0.5);
 	public static final int HIGHLIGHT_NULL = 0, HIGHLIGHT_CONFIRM = 1,
 			HIGHLIGHT_DENY = 2;
 
 	static SpriteSheet tileTextures;
 
-	public static final int TILE_EMPTY = 4, TILE_WALL_UP = 1, TILE_WALL_DOWN = 7, TILE_WALL_LEFT = 3, TILE_WALL_RIGHT = 5, TILE_WALL_UP_RIGHT = 2, TILE_WALL_UP_LEFT = 0, TILE_WALL_DOWN_RIGHT = 8, TILE_WALL_DOWN_LEFT = 6, TILE_SPECIAL=9;
+	public static final int TILE_EMPTY = 4, TILE_WALL_UP = 1, TILE_WALL_DOWN = 7, TILE_WALL_LEFT = 3,
+	TILE_WALL_RIGHT = 5, TILE_WALL_UP_RIGHT = 2, TILE_WALL_UP_LEFT = 0, TILE_WALL_DOWN_RIGHT = 8, TILE_WALL_DOWN_LEFT = 6,
+	TILE_SPECIAL=9, TILE_NULL=10;
 
 	public Tile(GameBoard parent, int x, int y, int tileFace) throws SlickException {
 		this.parent = parent;

@@ -40,7 +40,7 @@ public class Wall extends Entity{
 		}
 
 	@Override
-	public String saveToString() {return null;}
+	public String saveToString() {return this.getGenericSave();}
 
 	@Override
 	public ArrayList<Action> advanceTurn() {return new ArrayList<Action>(0);}

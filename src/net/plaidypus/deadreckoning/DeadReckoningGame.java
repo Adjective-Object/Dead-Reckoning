@@ -78,6 +78,7 @@ public class DeadReckoningGame extends StateBasedGame
 			AppGameContainer app = new AppGameContainer(new DeadReckoningGame());
 				app.setDisplayMode(800, 600, false);
 				app.start();
+				app.getInput().enableKeyRepeat();
 		} catch(SlickException e) {
 			e.printStackTrace();
 		}

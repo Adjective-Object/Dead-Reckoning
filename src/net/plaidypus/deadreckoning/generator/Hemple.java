@@ -27,19 +27,6 @@ public class Hemple extends RoomBasedBiome{
 			target.placeEntity(target.getTileAt(rooms.get(i)[0]+rooms.get(i)[2]/2, rooms.get(i)[1]+rooms.get(i)[3]/2),
 					new Torch(null,Tile.LAYER_PASSIVE_MAP, 10 ), Tile.LAYER_PASSIVE_MAP);
 		}
-		
-		for(int i=0; i<linkedLevels.size(); i++){
-			while(true){
-				int[] room = rooms.get(Utilities.randInt(0,rooms.size()));
-				Tile subject = target.getTileAt(room[0]+Utilities.randInt(1,room[2]-1), room[1]+Utilities.randInt(1,room[3]-1));
-				if(subject.isOpen(Tile.LAYER_PASSIVE_MAP)
-						&& subject.getToLeft().isOpen(Tile.LAYER_PASSIVE_MAP)){
-					target.placeEntity(subject, linkedLevels.get(i), Tile.LAYER_PASSIVE_MAP);
-					target.placeEntity(subject.getToLeft(), new LandingPad(subject.getToRight(), Tile.LAYER_PASSIVE_MAP, linkedLevels.get(i).targetFloor), Tile.LAYER_PASSIVE_MAP);
-					break;
-				}
-			}
-		}
 		return target;
 	}
 	

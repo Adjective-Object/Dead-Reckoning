@@ -3,6 +3,7 @@ package net.plaidypus.deadreckoning.hudelements;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
+import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
@@ -101,7 +102,13 @@ public class GameplayElement extends HudElement {
 		
 		this.gb = b;
 		
-		Tile target= b.getTileAt(this.gb.getWidth()/2,this.gb.getHeight()/2);
+		Tile target= null;
+		while(target == null){
+			Tile t= gb.getTileAt(Utilities.randInt(0,gb.getWidth()),Utilities.randInt(0,gb.getHeight()));
+			if(t.getTileFace()!=Tile.TILE_NULL){
+				target = t;
+			}
+		}
 		
 		if(lastMap!=""){
 			for(int x=0; x<b.getWidth(); x++){
@@ -163,7 +170,7 @@ public class GameplayElement extends HudElement {
 	public void updateBoardEffects(GameContainer gc, int delta){
 		getBoard().HideAll();
 		getBoard().updateBoardEffects(gc, delta);
-		getBoard().revealFromEntity(player,50);//TODO replace with from player alligned units?
+		getBoard().revealFromEntity(player,4);//TODO replace with from player alligned units?
 	}
 	  
 	private void updateActions(GameContainer gc, int delta) {

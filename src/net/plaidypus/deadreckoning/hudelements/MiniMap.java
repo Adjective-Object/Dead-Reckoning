@@ -75,7 +75,7 @@ public class MiniMap extends HudElement{
 					else if(!target.getTileAt(x, y).isOpen(Tile.LAYER_PASSIVE_MAP) && target.getTileAt(x, y).canBeSeen()){
 						g.setColor(Color.gray);
 					}
-					else if(target.getTileAt(x, y).getTileFace()!=Tile.TILE_EMPTY){
+					else if(target.getTileAt(x, y).getTileFace()!=Tile.TILE_NULL){
 						g.setColor(Color.lightGray);
 					}
 					else{

@@ -6,7 +6,9 @@ import java.util.LinkedList;
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
+import net.plaidypus.deadreckoning.entities.LandingPad;
 import net.plaidypus.deadreckoning.entities.Stair;
+import net.plaidypus.deadreckoning.entities.Wall;
 
 import org.newdawn.slick.SlickException;
 
@@ -24,30 +26,67 @@ public abstract class RoomBasedBiome extends Biome{
 			drawCooridor(target,rooms.get(i), rooms.get(i+1));
 		}
 		
-
 		for(int i=0; i<rooms.size(); i++){
-			for(int x=1; x<rooms.get(i)[2]-1; x++){
-				target.getTileAt(rooms.get(i)[0]+x,rooms.get(i)[1]).setTileFace(Tile.TILE_WALL_UP);
-				target.getTileAt(rooms.get(i)[0]+x,rooms.get(i)[1]+rooms.get(i)[3]-1).setTileFace(Tile.TILE_WALL_DOWN);
-			}
-			for(int y=1; y<rooms.get(i)[3]-1; y++){
-				target.getTileAt(rooms.get(i)[0],rooms.get(i)[1]+y).setTileFace(Tile.TILE_WALL_LEFT);
-				target.getTileAt(rooms.get(i)[0]+rooms.get(i)[2]-1,rooms.get(i)[1]+y).setTileFace(Tile.TILE_WALL_RIGHT);
-			}
-			
-			target.getTileAt(rooms.get(i)[0],rooms.get(i)[1]).setTileFace(Tile.TILE_WALL_UP_LEFT);
-			target.getTileAt(rooms.get(i)[0],rooms.get(i)[1]+rooms.get(i)[3]-1).setTileFace(Tile.TILE_WALL_DOWN_LEFT);
-			target.getTileAt(rooms.get(i)[0]+rooms.get(i)[2]-1,rooms.get(i)[1]).setTileFace(Tile.TILE_WALL_UP_RIGHT);
-			target.getTileAt(rooms.get(i)[0]+rooms.get(i)[2]-1,rooms.get(i)[1]+rooms.get(i)[3]-1).setTileFace(Tile.TILE_WALL_DOWN_RIGHT);
-			
-			for(int x=1; x<rooms.get(i)[2]-1;x++){
-				for(int y=1; y<rooms.get(i)[3]-1;y++){
-						target.getTileAt(rooms.get(i)[0]+x,rooms.get(i)[1]+y).setTileFace(Tile.TILE_EMPTY);
+			outlineRoom(target, rooms.get(i));
+		}
+		
+		//placing stairs
+		for(int i=0; i<linkedLevels.size(); i++){
+			while(true){
+				int[] room = rooms.get(Utilities.randInt(0,rooms.size()));
+				Tile subject = target.getTileAt(room[0]+Utilities.randInt(1,room[2]-1), room[1]+Utilities.randInt(1,room[3]-1));
+				if(subject.isOpen(Tile.LAYER_PASSIVE_MAP)
+						&& subject.getToLeft().isOpen(Tile.LAYER_PASSIVE_MAP)){
+					target.placeEntity(subject, linkedLevels.get(i), Tile.LAYER_PASSIVE_MAP);
+					target.placeEntity(subject.getToLeft(), new LandingPad(subject.getToRight(), Tile.LAYER_PASSIVE_MAP, linkedLevels.get(i).targetFloor), Tile.LAYER_PASSIVE_MAP);
+					break;
 				}
 			}
 		}
 		
+		placeWallsOnNullBorders(target);
+		
 		return target;
+	}
+	
+	public void placeWallsOnNullBorders(GameBoard g){
+		for(int x=0; x<g.getWidth(); x++){
+			for(int y = 0; y<g.getHeight(); y++){
+				if(g.getTileAt(x, y).getTileFace()==Tile.TILE_NULL&& 
+						(g.getTileAt(Utilities.limitTo(x+1, 0, g.getWidth()), y).getTileFace()!=Tile.TILE_NULL ||
+						g.getTileAt(Utilities.limitTo(x-1, 0, g.getWidth()), y).getTileFace()!=Tile.TILE_NULL ||
+						g.getTileAt(x, Utilities.limitTo(y-1, 0, g.getHeight()) ).getTileFace()!=Tile.TILE_NULL ||
+						g.getTileAt(x, Utilities.limitTo(y+1, 0, g.getHeight()) ).getTileFace()!=Tile.TILE_NULL||
+						g.getTileAt(Utilities.limitTo(x-1, 0, g.getWidth()), Utilities.limitTo(y+1, 0, g.getHeight()) ).getTileFace()!=Tile.TILE_NULL||
+						g.getTileAt(Utilities.limitTo(x+1, 0, g.getWidth()), Utilities.limitTo(y+1, 0, g.getHeight()) ).getTileFace()!=Tile.TILE_NULL||
+						g.getTileAt(Utilities.limitTo(x-1, 0, g.getWidth()), Utilities.limitTo(y-1, 0, g.getHeight()) ).getTileFace()!=Tile.TILE_NULL||
+						g.getTileAt(Utilities.limitTo(x+1, 0, g.getWidth()), Utilities.limitTo(y-1, 0, g.getHeight()) ).getTileFace()!=Tile.TILE_NULL) ){
+					g.placeEntity(g.getTileAt(x, y), new Wall(), Tile.LAYER_ACTIVE);
+				}
+			}
+		}
+	}
+	
+	public void outlineRoom(GameBoard target, int[] room){
+		for(int x=1; x<room[2]-1; x++){
+			target.getTileAt(room[0]+x,room[1]).setTileFace(Tile.TILE_WALL_UP);
+			target.getTileAt(room[0]+x,room[1]+room[3]-1).setTileFace(Tile.TILE_WALL_DOWN);
+		}
+		for(int y=1; y<room[3]-1; y++){
+			target.getTileAt(room[0],room[1]+y).setTileFace(Tile.TILE_WALL_LEFT);
+			target.getTileAt(room[0]+room[2]-1,room[1]+y).setTileFace(Tile.TILE_WALL_RIGHT);
+		}
+		
+		target.getTileAt(room[0],room[1]).setTileFace(Tile.TILE_WALL_UP_LEFT);
+		target.getTileAt(room[0],room[1]+room[3]-1).setTileFace(Tile.TILE_WALL_DOWN_LEFT);
+		target.getTileAt(room[0]+room[2]-1,room[1]).setTileFace(Tile.TILE_WALL_UP_RIGHT);
+		target.getTileAt(room[0]+room[2]-1,room[1]+room[3]-1).setTileFace(Tile.TILE_WALL_DOWN_RIGHT);
+		
+		for(int x=1; x<room[2]-1;x++){
+			for(int y=1; y<room[3]-1;y++){
+					target.getTileAt(room[0]+x,room[1]+y).setTileFace(Tile.TILE_EMPTY);
+			}
+		}
 	}
 	
 	public GameBoard drawCooridor(GameBoard target, int[] roomA, int[] roomB){
@@ -96,10 +135,7 @@ public abstract class RoomBasedBiome extends Biome{
 		Tile previous = null;
 		Tile t = null;
 		
-		System.out.println();
 		for(int i=0; i<points.size(); i++){
-			
-			System.out.print("["+points.get(i)[0]+","+points.get(i)[1]+"]");
 			
 			previous = t;
 			

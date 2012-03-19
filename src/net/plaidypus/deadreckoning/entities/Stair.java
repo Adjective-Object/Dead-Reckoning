@@ -17,7 +17,7 @@ public class Stair extends StaticImageEntity{
 	public static final int UP = 0, DOWN = 1, NULL = 2;
 	public String targetFloor;
 	static ArrayList<Image> stairImages;
-	int updownNull;
+	public int updownNull;
 	
 	public Stair(Tile target,int layer, String targetFloor, int updownNull){
 		super(target,layer,stairImages.get(updownNull));
