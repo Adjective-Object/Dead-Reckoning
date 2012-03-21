@@ -27,6 +27,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	public int HP, MP, width, height;
 	public Animation stand, basicAttack, walking, damageFront, damageBack,
 			death;
+	public String entityFile;
 	public Animation currentAnimation;
 	public ArrayList<Animation> animations;
 	public ArrayList<Status> statuses;
@@ -47,20 +48,20 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * 
 	 * @param entityfile
 	 */
-	public LivingEntity(Tile targetTile, int layer, String entityfile, StatMaster statMaster, int allignment) {
+	public LivingEntity(Tile targetTile, int layer, String entityFile, StatMaster statMaster, int allignment) {
 		super(targetTile, layer);
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(new File(
-					entityfile)));
+					entityFile)));
 			loadFromFile(reader);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (SlickException e) {
-			e.printStackTrace();
+		} catch (Exception e){
+			DeadReckoningGame.instance.flashException(e);
 		}
 		
 		currentAnimation = stand;
 		this.statMaster = statMaster;
+		
+		this.entityFile=entityFile;
 		
 		setFacing(false);
 		

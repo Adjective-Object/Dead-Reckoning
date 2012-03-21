@@ -2,10 +2,9 @@ package net.plaidypus.deadreckoning;
 
 import java.io.File;
 
-import net.plaidypus.deadreckoning.entities.Chest;
+import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.generator.Biome;
 import net.plaidypus.deadreckoning.hudelements.*;
-import net.plaidypus.deadreckoning.skills.Fireball;
 import net.plaidypus.deadreckoning.state.ExclusiveHudLayersState;
 import net.plaidypus.deadreckoning.state.HudLayersState;
 import net.plaidypus.deadreckoning.state.MainMenuState;
@@ -23,15 +22,15 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class DeadReckoningGame extends StateBasedGame
 {
-	
-	public static final int LOOTSTATE		= 0;
-	public static final int INVENTORYSTATE 	= 1;
-	public static final int GAMEPLAYSTATE	= 2;
-	public static final int MAINMENUSTATE	= 3;
-	public static final int SAVESELECTSTATE	= 4;
-	public static final int MAPSTATE 		= 5;
-	public static final int SKILLSTATE 		= 6;
-	public static final int NEWGAMESTATE	= 7;
+	public static final int LOOTSTATE		= 0,
+							INVENTORYSTATE 	= 1,
+							GAMEPLAYSTATE	= 2,
+							MAINMENUSTATE	= 3,
+							SAVESELECTSTATE	= 4,
+							MAPSTATE 		= 5,
+							SKILLSTATE 		= 6,
+							NEWGAMESTATE	= 7,
+							ERRORSTATE 		= 8;
 	
 	public static final int tileSize = 32;
 	
@@ -93,10 +92,9 @@ public class DeadReckoningGame extends StateBasedGame
 	public void initStatesList(GameContainer container) throws SlickException {
 		
 		menuFont = new UnicodeFont("/res/visitor.ttf", 20,true,false);
-			
 		HudElement.calculateOffsets(container);
 		Biome.init();
-		Fireball.init();
+		new Player().init();
 		
 		this.addState(new MainMenuState(MAINMENUSTATE));
 		
@@ -127,11 +125,22 @@ public class DeadReckoningGame extends StateBasedGame
 				new MiniMap(0,0,HudElement.CENTER_CENTER,DeadReckoningGame.GAMEPLAYSTATE),
 				new ReturnToGameElement()}));
 		
+		this.addState(new HudLayersState(ERRORSTATE, new HudElement[] {
+				new ColorFiller(menuBackgroundColor),
+				new TextElement(0,0,HudElement.TOP_LEFT,"",menuTextColor,menuFont)
+		}));
+		
 		this.addState(new SaveSelectorState(SAVESELECTSTATE));
 		this.addState(new PlayerViewerState(SKILLSTATE));
 		this.addState(new NewGameState(NEWGAMESTATE));
 		
 		this.enterState(MAINMENUSTATE);
+	}
+
+	public void flashException(Exception e) {
+		HudLayersState s = (HudLayersState) this.getState(ERRORSTATE);
+		s.makeFrom(new Object[] {null,e.getStackTrace().toString()});
+		this.enterState(ERRORSTATE);
 	}
 	
 }

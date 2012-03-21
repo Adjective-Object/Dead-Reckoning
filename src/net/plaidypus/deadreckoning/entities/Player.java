@@ -10,6 +10,7 @@ import net.plaidypus.deadreckoning.grideffects.AnimationEffect;
 import net.plaidypus.deadreckoning.items.Equip;
 import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.skills.*;
+import net.plaidypus.deadreckoning.status.OnFire;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
@@ -36,6 +37,8 @@ public class Player extends LivingEntity {
 	public Profession profession;
 	
 	ArrayList<Equip> epuips;
+	
+	public Player(){}
 	
 	/**
 	 * subclass of living entity that is controlled by user input
@@ -147,7 +150,15 @@ public class Player extends LivingEntity {
 	}
 	
 	@Override
-	public void init() throws SlickException {}
+	public boolean isInteractive(){
+		return true;
+	}
+	
+	@Override
+	public void init() throws SlickException {
+		OnFire.init();
+		Fireball.init();
+	}
 
 	public void setInput(Input input) {
 		this.input=input;

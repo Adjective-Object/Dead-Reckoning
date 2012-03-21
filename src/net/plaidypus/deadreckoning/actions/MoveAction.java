@@ -7,24 +7,22 @@ import net.plaidypus.deadreckoning.grideffects.MoveEntityEffect;
 
 public class MoveAction extends Action{
 	
-	GridEffect moveEffect;
 	boolean animate;
+	int layerOfInterest;
 	
 	public MoveAction(Entity source, Tile destination, int layerOfInterest){
 		super(source,destination);
-		moveEffect = new MoveEntityEffect(source.getLocation(), layerOfInterest, destination);
 		animate=false;
 		if(destination.isVisible() || source.isVisible()){
-			source.getParent().addEffectOver(source.getLocation(),moveEffect);
 			animate=true;
 		}
+		this.layerOfInterest=layerOfInterest;
 	}
 	
 	public boolean apply(int delta) {
-		if( moveEffect.isComplete() || !animate){
-			return true;
-		}
-		return false;
+		this.source.getParent().removeEntity(source);
+		this.source.getParent().placeEntity(target, source, layerOfInterest);
+		return true;
 	}
 
 	public String getMessage() {
@@ -32,6 +30,6 @@ public class MoveAction extends Action{
 	}
 
 	@Override
-	protected boolean isNoticed() {return false;}
+	protected boolean isNoticed() {return true;}
 	
 }

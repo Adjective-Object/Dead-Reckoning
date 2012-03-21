@@ -18,7 +18,7 @@ public class Attack extends Skill {
 
 	@Override
 	public Action makeAction(Tile target) {
-		return new AttackAction(source, target, 20, false);
+		return new AttackAction(source, target, source.getStatMaster().getSTR(), false);
 	}
 
 	/**

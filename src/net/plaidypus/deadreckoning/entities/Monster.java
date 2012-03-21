@@ -63,14 +63,19 @@ public class Monster extends LivingEntity {
 
 	@Override
 	public Entity makeFromString(GameBoard g, String[] toload) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Monster(g.getTileAt(Integer.parseInt(toload[1]),Integer.parseInt(toload[2])),Integer.parseInt(toload[3]),
+				toload[4],new StatMaster(
+							Integer.parseInt(toload[5]),
+							Integer.parseInt(toload[6]),
+							Integer.parseInt(toload[7]),
+							Integer.parseInt(toload[8]),
+							Integer.parseInt(toload[9]),
+							Integer.parseInt(toload[10])), Integer.parseInt(toload[11]));
 	}
 	
 	@Override
 	public String saveToString() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getGenericSave()+":"+this.entityFile+":"+this.statMaster.toString()+":"+this.allignmnet;
 	}
 	
 	@Override

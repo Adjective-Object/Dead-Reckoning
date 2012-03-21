@@ -72,7 +72,11 @@ public class SaveSelectorState extends ExclusiveHudLayersState{
 		for(int i=0; i<savesList.length; i++)
 		{
 			saves[i]= new Save("saves/"+savesList[i]);
-			buttons[i+2]=new TextButton(10,(i+2)*30,HudElement.TOP_LEFT,new Color(30,50,70),new Color(40,60,80),new Color(60,80,100),saves[i].getName(),DeadReckoningGame.menuFont);
+			buttons[i+2]=new TextButton(
+					10+ (i*30)/(DeadReckoningGame.instance.getContainer().getHeight()-60)* 150,
+					60 +(i*30)%(DeadReckoningGame.instance.getContainer().getHeight()-60),
+					HudElement.TOP_LEFT,
+					new Color(30,50,70),new Color(40,60,80),new Color(60,80,100),saves[i].getName(),DeadReckoningGame.menuFont);
 		}
 		
 		return buttons;

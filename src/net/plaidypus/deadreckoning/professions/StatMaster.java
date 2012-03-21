@@ -6,7 +6,7 @@ public class StatMaster {
 	
 	public StatMaster(int hp, int mp, int str, int dex, int INT, int luk){
 		this.mHP=hp;
-		this.mHP=mp;
+		this.mMP=mp;
 		this.STR=str;
 		this.DEX=dex;
 		this.INT=INT;
@@ -26,6 +26,10 @@ public class StatMaster {
 
 	public int calculateEXPValue() {
 		return this.getDEX()+this.getINT()+this.getLUK()+this.getSTR();
+	}
+	
+	public String toString(){
+		return mHP+":"+mMP+":"+STR+":"+DEX+":"+INT+":"+LUK;
 	}
 	
 }

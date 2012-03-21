@@ -188,8 +188,8 @@ public class Tile {
 	
 	public Tile getRelativeTo(int xoff, int yoff) {
 		return parent.getTileAt(
-				Utilities.limitTo(getX() + xoff, 0, this.parent.getWidth()),
-				Utilities.limitTo(getY() + yoff, 0, this.parent.getHeight()));
+				Utilities.limitTo(getX() + xoff, 0, this.parent.getWidth()-1),
+				Utilities.limitTo(getY() + yoff, 0, this.parent.getHeight()-1));
 	}
 
 
