@@ -174,34 +174,36 @@ public class GameplayElement extends HudElement {
 	}
 	  
 	private void updateActions(GameContainer gc, int delta) {
-		if(actions.size() == 0){
-			if(this.getBoard().ingameEntities.get(currentEntity).getLocation().canBeSeen()){
-				alertCameraTo(this.getBoard().ingameEntities.get(currentEntity));
+		if(actions.size() == 0){// if the current entity is in the middle of being parsed..
+			while(!getBoard().ingameEntities.get(this.currentEntity).getLocation().canBeSeen() || !getBoard().ingameEntities.get(this.currentEntity).isInteractive() ){// iterate through all invisible entities
+				if(getBoard().ingameEntities.get(this.currentEntity).isInteractive()){
+					getActions(delta);//get their actions
+					System.out.println(currentEntity+" "+actions+" a");
+					while(!actionsComplete()){//apply all the actions until completion
+						applyAllActions(delta);
+					}
+				}
+				advanceEntity();
 			}
-			advanceEntity();
-			if(cameraIsFocused()){
-				getActions(delta);
-			}
+			
+			//when it hits an entity that is on screen and is interactive (takes multiple updateActions calls)
+			getActions(delta);
+			alertCameraTo(this.getBoard().ingameEntities.get(currentEntity));
 		}
-		if(!actionsComplete()){
-			if(currentAction<actions.size()){
-				applyAllActions(delta);
-			}
-			if(currentAction==actions.size() && getBoard().isIdle() || !getBoard().ingameEntities.get(currentEntity).isInteractive()){
+		else if(cameraIsFocused()){
+			System.out.println(currentEntity+" "+actions+" b");
+			applyAllActions(delta);
+			if(actionsComplete() && actionsTakeTurn()){
 				finalizeTurn(delta);
 			}
 		}
 	}
 
 	private void finalizeTurn(int delta){
-		currentAction=0;
-		if(actions.get(currentAction).takesTurn){
-			currentEntity = (currentEntity + 1) % getBoard().ingameEntities.size();	
-		}
+		advanceEntity();
 		updateBoardEffects(gc, delta);
 		getBoard().clearHighlightedSquares();
 		getBoard().clearPrimaryHighlight();
-		actions.clear();
 		input.clearKeyPressedRecord();
 	}
 	
@@ -210,6 +212,15 @@ public class GameplayElement extends HudElement {
 		if(actions.get(currentAction).completed){
 			currentAction++;
 		}
+	}
+	
+	private boolean actionsTakeTurn(){
+		for(int i=0; i<this.actions.size() ; i++){
+			if(this.actions.get(i).takesTurn){
+				return true;
+			}
+		}
+		return actions.size()==0;
 	}
 	
 	private void getActions(int delta){
@@ -223,29 +234,32 @@ public class GameplayElement extends HudElement {
 	}
 	
 	private boolean cameraIsFocused(){
-		return (Math.abs(cameraDestX)-Math.abs(cameraX)<0.5 &&
-		Math.abs(cameraDestY)-Math.abs(cameraY)<0.5)  ||
-		!this.getBoard().ingameEntities.get(currentEntity).getLocation().canBeSeen();
+		return (Math.abs(cameraDestX-cameraX)<0.5 &&
+				Math.abs(cameraDestY-cameraY)<0.5)  ||
+				!this.getBoard().ingameEntities.get(currentEntity).getLocation().canBeSeen();
 	}
 	
 	
 	private void alertCameraTo(Entity e){
 		int nx = e.getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;
 		int ny = e.getAbsoluteY() - gc.getHeight() / 2 + DeadReckoningGame.tileSize/2;
-		if	( Math.abs( cameraDestX-nx )>gc.getWidth()/3 ){
+		if	( Math.abs( cameraDestX-nx )>gc.getWidth()/4 ){
 			cameraDestX = nx;
 			timeOn=0;
 		}
-		if( Math.abs( cameraDestY-ny )>gc.getHeight()/3 ){
+		if( Math.abs( cameraDestY-ny )>gc.getHeight()/4 ){
 			cameraDestY = ny;
 			timeOn=0;
 		}
 	}
 	
 	private void advanceEntity(){
+		currentEntity = (currentEntity + 1) % getBoard().ingameEntities.size();
 		while(!getBoard().ingameEntities.get(currentEntity).isInteractive() ){
 			currentEntity = (currentEntity + 1) % getBoard().ingameEntities.size();
 		}
+		actions.clear();
+		currentAction=0;
 	}
 	
 	private boolean actionsComplete() {
@@ -253,9 +267,6 @@ public class GameplayElement extends HudElement {
 			if(!actions.get(i).completed){
 				return false;
 			}
-		}
-		if(actions.size()>0){
-			return false;
 		}
 		return true;
 	}

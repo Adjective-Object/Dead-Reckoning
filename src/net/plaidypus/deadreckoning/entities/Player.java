@@ -168,6 +168,10 @@ public class Player extends LivingEntity {
 		// TODO this should never be called
 		return null;
 	}
+	
+	public String toString(){
+		return "Player["+this.getX()+","+this.getY()+"]";
+	}
 
 
 }

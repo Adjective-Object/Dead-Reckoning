@@ -73,11 +73,11 @@ public class Tile {
 	}
 
 	public void disconnectEntity(int layer) {
-		containedEntities[layer] = null;
+		this.containedEntities[layer] = null;
 	}
 	
 	public void disconnectEntities() {
-		containedEntities = emptyEntityArray();
+		this.containedEntities= emptyEntityArray();
 	}
 
 	public Entity[] getEntities() {
@@ -94,14 +94,6 @@ public class Tile {
 	
 	public boolean isOpen() {
 		return this.containedEntities.length==0;//TODO not sure if this will work
-	}
-
-	public void clearTile(){
-		this.containedEntities= emptyEntityArray();
-	}
-	
-	public void clearTile(int i) {
-		this.containedEntities[i]=null;
 	}
 	
 	public static Entity[] emptyEntityArray(){

@@ -32,10 +32,10 @@ public class MoveEntityEffect extends GridEffect{
 			currentdown=0;
 		}
 		currentdown = currentdown/2;
-		if(currentdown <0.5){
+		if(currentdown <0.5 || (!destination.canBeSeen() && !location.canBeSeen())){
 			this.setComplete(true);
 			location.getEntity(layer).setVisible(true);
-			location.getParent().moveEntity(location,destination,layer);
+			location.getParent().moveEntity(location.getEntity(layer),destination,layer);
 		}
 	}
 	

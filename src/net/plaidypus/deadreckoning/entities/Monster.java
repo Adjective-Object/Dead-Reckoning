@@ -78,6 +78,10 @@ public class Monster extends LivingEntity {
 		return this.getGenericSave()+":"+this.entityFile+":"+this.statMaster.toString()+":"+this.allignmnet;
 	}
 	
+	public String toString(){
+		return "Monster["+this.getX()+","+this.getY()+"]";
+	}
+	
 	@Override
 	public void init() throws SlickException {}
 

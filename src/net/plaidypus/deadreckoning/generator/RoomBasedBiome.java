@@ -34,7 +34,7 @@ public abstract class RoomBasedBiome extends Biome{
 						g.getTileAt(Utilities.limitTo(x+1, 0, g.getWidth()), Utilities.limitTo(y+1, 0, g.getHeight()) ).getTileFace()!=Tile.TILE_NULL||
 						g.getTileAt(Utilities.limitTo(x-1, 0, g.getWidth()), Utilities.limitTo(y-1, 0, g.getHeight()) ).getTileFace()!=Tile.TILE_NULL||
 						g.getTileAt(Utilities.limitTo(x+1, 0, g.getWidth()), Utilities.limitTo(y-1, 0, g.getHeight()) ).getTileFace()!=Tile.TILE_NULL) ){
-					g.placeEntity(g.getTileAt(x, y), new Wall(), Tile.LAYER_ACTIVE);
+					//g.placeEntity(g.getTileAt(x, y), new Wall(), Tile.LAYER_ACTIVE);
 				}
 			}
 		}

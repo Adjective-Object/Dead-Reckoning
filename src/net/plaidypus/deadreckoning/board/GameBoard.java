@@ -111,9 +111,9 @@ public class GameBoard implements ILosBoard{
 		board[x][y].disconnectEntities();
 	}
 
-	public void moveEntity(Tile source, Tile target, int layer) {
-		target.setEntity(source.getEntity(layer),layer);
-		source.disconnectEntity(layer);
+	public void moveEntity(Entity source, Tile target, int layer) {
+		source.getLocation().disconnectEntity(layer);
+		target.setEntity(source,layer);
 	}
 
 	public Tile getTileAt(int x, int y) {
@@ -200,7 +200,7 @@ public class GameBoard implements ILosBoard{
 						board[x][y].getEntity(i).update(gc, delta);
 						if(board[x][y].getEntity(i).toKill){
 							board[x][y].getEntity(i).onDeath();
-							board[x][y].clearTile(i);
+							board[x][y].disconnectEntity(i);
 						}
 					}
 				}
