@@ -1,4 +1,5 @@
-package net.plaidypus.deadreckoning.hudelements;
+package net.plaidypus.deadreckoning.hudelements.button;
+
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -36,9 +37,6 @@ public class TextButton extends Button{
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
-		this.font.addNeheGlyphs();
-		this.font.getEffects().add(new ColorEffect(java.awt.Color.WHITE)); 
-		this.font.loadGlyphs();
 	}
 
 	@Override

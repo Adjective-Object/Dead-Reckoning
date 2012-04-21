@@ -22,6 +22,7 @@ public class Door extends Entity{
 	public Door(Tile t, int layer) {
 		super(t,layer);
 		open=false;
+		this.isTerrain=true;
 	}
 	
 	@Override

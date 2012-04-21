@@ -1,4 +1,6 @@
-package net.plaidypus.deadreckoning.hudelements;
+package net.plaidypus.deadreckoning.hudelements.button;
+
+import net.plaidypus.deadreckoning.hudelements.HudElement;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;

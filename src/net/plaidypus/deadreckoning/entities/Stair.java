@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.Save;
 import net.plaidypus.deadreckoning.actions.Action;
+import net.plaidypus.deadreckoning.actions.ChangeBoardAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 
@@ -41,20 +42,13 @@ public class Stair extends StaticImageEntity{
 	}
 
 	@Override
-	public void updateBoardEffects(GameContainer gc, int delta) {
-		if(!this.getLocation().isOpen(Tile.LAYER_ACTIVE) && this.getLocation().getEntity(Tile.LAYER_ACTIVE).getClass()==Player.class){
-			this.getParent().getGame().setBoard(Save.loadGame(this.getParent().getGame(),this.getParent().getSaveID(),targetFloor) );
-		}
-	}
+	public void updateBoardEffects(GameContainer gc, int delta) {}
 
 	@Override
 	public Action chooseAction(GameContainer gc, int delta) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public boolean isInteractive() {return false;}
 
 	@Override
 	public ArrayList<Action> advanceTurn() {return null;}
@@ -75,8 +69,7 @@ public class Stair extends StaticImageEntity{
 
 	@Override
 	public Action onInteract(Entity e) {
-		// TODO this may in fact replace walking over the stairs for the floor transition
-		return null;
+		return new ChangeBoardAction(this.getParent().getGame().player,targetFloor);
 	}
 
 }

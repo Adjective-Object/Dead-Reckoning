@@ -75,7 +75,7 @@ public class Player extends LivingEntity {
 		this.getParent().lightInRadius(getLocation(), 2);//TODO visibility light radius thing?
 		if(this.EXP>=this.getEXPforLevel()){
 			this.EXP-=this.getEXPforLevel();
-			this.profession.level+=1;
+			this.profession.levelUp();
 			Animation levelUp=new Animation(Fireball.fireball,100);//TODO actual level up animation
 			levelUp.setLooping(false);
 			this.getParent().addEffectOver(this.getLocation(),new AnimationEffect(this.getLocation(),levelUp));//TODO Level up Animation
@@ -123,7 +123,7 @@ public class Player extends LivingEntity {
 	}
 	
 	public int getEXPforLevel() {
-		return this.profession.level*100;
+		return this.profession.getLevel()*100;
 	}
 	
 	public int getMaxHP(){ return (int) this.profession.getMaxHP(); }

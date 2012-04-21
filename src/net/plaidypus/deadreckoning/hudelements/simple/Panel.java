@@ -1,10 +1,11 @@
-package net.plaidypus.deadreckoning.hudelements;
+package net.plaidypus.deadreckoning.hudelements.simple;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
+import net.plaidypus.deadreckoning.hudelements.HudElement;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -32,7 +33,7 @@ public class Panel extends HudElement{
 		bakeBorders();
 	}
 
-	private void bakeBorders() {
+	public void bakeBorders() {
 		for(int i=0; i<contents.size() ; i++){
 			int nw = contents.get(i).getX()+contents.get(i).getWidth();
 			int nh = contents.get(i).getY()+contents.get(i).getHeight();
@@ -68,6 +69,12 @@ public class Panel extends HudElement{
 		}
 		
 	}
+	
+	public void renderMouseOver(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{
+		for(int i=0; i<contents.size() ; i++){
+			contents.get(i).renderMouseOver(gc, sbg, g);
+		}
+	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
@@ -101,5 +108,9 @@ public class Panel extends HudElement{
 		for(int i=0; i<contents.size(); i++){
 			contents.get(i).init(gc, sbg);
 		}
+	}
+	
+	public ArrayList<HudElement> getContents(){
+		return this.contents;
 	}
 }

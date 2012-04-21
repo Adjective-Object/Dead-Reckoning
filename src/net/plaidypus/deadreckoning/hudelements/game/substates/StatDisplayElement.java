@@ -1,7 +1,9 @@
-package net.plaidypus.deadreckoning.hudelements;
+package net.plaidypus.deadreckoning.hudelements.game.substates;
 
+import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.entities.Player;
+import net.plaidypus.deadreckoning.hudelements.HudElement;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -18,6 +20,7 @@ public class StatDisplayElement extends HudElement{
 	
 	public StatDisplayElement(int x, int y, int bindMethod){
 		super(x,y,bindMethod,false);
+		this.setMouseoverText("STATS");
 	}
 		
 	@Override
@@ -48,6 +51,7 @@ public class StatDisplayElement extends HudElement{
 	@Override	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
+		g.setColor(DeadReckoningGame.menuTextColor);
 		g.drawImage(statIcons.getSprite(0, 0), getX(), getY());
 		g.drawString( Integer.toString(target.getStatMaster().getMaxHP()), getX()+ 21, getY());
 		g.drawImage(statIcons.getSprite(1, 0), getX(), getY()+20);

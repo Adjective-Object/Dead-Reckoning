@@ -8,7 +8,7 @@ import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
-import net.plaidypus.deadreckoning.hudelements.GameplayElement;
+import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
 import net.plaidypus.deadreckoning.items.Item;
 
 public class LootAction extends EntityTypeAction{ //TODO make it so you can loot entities on other layers?

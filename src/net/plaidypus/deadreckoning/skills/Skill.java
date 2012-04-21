@@ -1,7 +1,5 @@
 package net.plaidypus.deadreckoning.skills;
 
-import java.util.ArrayList;
-
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -13,6 +11,7 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
 public abstract class Skill {
 	
 	int level;
+	String name = "NO_NAME", description="NO_DESC";
 	
 	Image imageIcon;
 	
@@ -115,5 +114,25 @@ public abstract class Skill {
 
 	public Image getImage() {
 		return imageIcon;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+	
+	public void setName(String name){
+		this.name=name;
+	}
+	
+	public void setDescriptor(String description){
+		this.description=description;
+	}
+
+	public void levelUp() {
+		this.level++;
 	}
 }

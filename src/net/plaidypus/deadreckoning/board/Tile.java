@@ -39,7 +39,7 @@ public class Tile {
 	static final Color[] highlightColors = new Color[] { new Color(0, 0, 0, 0),
 			new Color(255, 75, 23, 100), new Color(252, 125, 73, 100) };
 
-	static final float brightness = (float) (0.5);
+	static final float brightness = 0.8F;
 	public static final int HIGHLIGHT_NULL = 0, HIGHLIGHT_CONFIRM = 1,
 			HIGHLIGHT_DENY = 2;
 

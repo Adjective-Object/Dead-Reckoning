@@ -11,11 +11,11 @@ import org.newdawn.slick.state.StateBasedGame;
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Save;
 import net.plaidypus.deadreckoning.SaveFilter;
-import net.plaidypus.deadreckoning.hudelements.Button;
-import net.plaidypus.deadreckoning.hudelements.ColorFiller;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
-import net.plaidypus.deadreckoning.hudelements.GameplayElement;
-import net.plaidypus.deadreckoning.hudelements.TextButton;
+import net.plaidypus.deadreckoning.hudelements.button.Button;
+import net.plaidypus.deadreckoning.hudelements.button.TextButton;
+import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
+import net.plaidypus.deadreckoning.hudelements.simple.ColorFiller;
 
 public class SaveSelectorState extends ExclusiveHudLayersState{
 	

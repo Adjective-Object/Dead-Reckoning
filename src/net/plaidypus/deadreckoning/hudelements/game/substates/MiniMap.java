@@ -1,8 +1,10 @@
-package net.plaidypus.deadreckoning.hudelements;
+package net.plaidypus.deadreckoning.hudelements.game.substates;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
+import net.plaidypus.deadreckoning.hudelements.HudElement;
+import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
 import net.plaidypus.deadreckoning.state.HudLayersState;
 
 import org.newdawn.slick.Color;

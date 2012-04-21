@@ -21,6 +21,7 @@ public abstract class Entity {
 	protected String description = "Too lazy to describe";
 	private boolean facing;
 	private boolean transparent, visible;
+	protected boolean isTerrain, isInteractive;
 	public boolean toKill;
 	public int allignmnet;
 	public static final int ALLIGN_NEUTRAL = 0, ALLIGN_HOSTILE = 1, ALLIGN_FRIENDLY = 2;
@@ -220,7 +221,9 @@ public abstract class Entity {
 		this.allignmnet=allign;
 	}
 	
-	public abstract boolean isInteractive();
+	public boolean isInteractive(){
+		return isInteractive;
+	}
 
 	public boolean isVisible() {
 		return visible;
@@ -264,5 +267,9 @@ public abstract class Entity {
 	}
 
 	public abstract void onDeath();
+
+	public boolean isTerrain() {
+		return isTerrain;
+	}
 
 }

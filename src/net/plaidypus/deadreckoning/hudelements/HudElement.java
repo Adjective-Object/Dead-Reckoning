@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.hudelements;
 
+import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.state.HudLayersState;
 
 import org.newdawn.slick.GameContainer;
@@ -9,9 +10,12 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public abstract class HudElement {
 	
-	int xoff, yoff, bindMethod;
-	boolean hasFocus;
+	static final int cursorSize = 10;
+	
+	public int xoff, yoff, bindMethod;
+	public boolean hasFocus;
 	public boolean needsFocus;
+	String mouseoverText = null;
 	
 	HudLayersState parentState;
 	
@@ -55,12 +59,30 @@ public abstract class HudElement {
 		}
 	}
 	
+	public void setMouseoverText(String text){
+		this.mouseoverText = text;
+	}
+	
 	public abstract void init(GameContainer gc, StateBasedGame sbg) throws SlickException;
 	
 	public abstract int getWidth();
 	public abstract int getHeight();
 	
 	public abstract void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException;
+	
+	public void renderMouseOver(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{
+		int mx = gc.getInput().getMouseX(), my = gc.getInput().getMouseY();
+		
+		g.setFont(DeadReckoningGame.menuSmallFont);
+		
+		if (mx>getX() && mx<getX()+getWidth() && my>getY() && my<getY()+getHeight() && mouseoverText!=null){
+			g.setColor(DeadReckoningGame.mouseoverBoxColor);
+			g.fillRect(cursorSize+gc.getInput().getMouseX(), cursorSize+gc.getInput().getMouseY(),g.getFont().getWidth(mouseoverText)+10, g.getFont().getHeight(mouseoverText)+10);
+			g.setColor(DeadReckoningGame.mouseoverTextColor);
+			g.drawRect(cursorSize+gc.getInput().getMouseX(), cursorSize+gc.getInput().getMouseY(),g.getFont().getWidth(mouseoverText)+10, g.getFont().getHeight(mouseoverText)+10);
+			g.drawString(mouseoverText, cursorSize+5+gc.getInput().getMouseX(), cursorSize+5+gc.getInput().getMouseY());
+		}
+	}
 
 	public int getX() {
 		return xoff+offsets[bindMethod][0];

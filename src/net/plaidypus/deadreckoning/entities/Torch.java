@@ -27,6 +27,7 @@ public class Torch extends Entity{
 		this.light = areaofLight;
 		ani = new Animation(img , new int []{0,0,1,0,2,0,3,0}, new int[] {60,60,60,60});
 		this.description= "the fire flickers mesmerizingly";
+		this.isTerrain=true;
 	}
 	
 	public void init() throws SlickException{

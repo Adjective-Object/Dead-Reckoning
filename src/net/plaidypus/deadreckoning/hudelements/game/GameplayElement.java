@@ -1,4 +1,4 @@
-package net.plaidypus.deadreckoning.hudelements;
+package net.plaidypus.deadreckoning.hudelements.game;
 
 import java.util.ArrayList;
 
@@ -9,6 +9,7 @@ import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.*;
 import net.plaidypus.deadreckoning.grideffects.DamageEffect;
+import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.skills.Fireball;
 
 import org.newdawn.slick.GameContainer;
@@ -178,7 +179,6 @@ public class GameplayElement extends HudElement {
 			while(!getBoard().ingameEntities.get(this.currentEntity).getLocation().canBeSeen() || !getBoard().ingameEntities.get(this.currentEntity).isInteractive() ){// iterate through all invisible entities
 				if(getBoard().ingameEntities.get(this.currentEntity).isInteractive()){
 					getActions(delta);//get their actions
-					System.out.println(currentEntity+" "+actions+" a");
 					while(!actionsComplete()){//apply all the actions until completion
 						applyAllActions(delta);
 					}
@@ -191,10 +191,15 @@ public class GameplayElement extends HudElement {
 			alertCameraTo(this.getBoard().ingameEntities.get(currentEntity));
 		}
 		else if(cameraIsFocused()){
-			System.out.println(currentEntity+" "+actions+" b");
 			applyAllActions(delta);
-			if(actionsComplete() && actionsTakeTurn()){
-				finalizeTurn(delta);
+			if(actionsComplete()){
+				if(actionsTakeTurn()){
+					finalizeTurn(delta);
+				}
+				else{
+					currentAction = 0;
+					actions.clear();
+				}
 			}
 		}
 	}
@@ -243,7 +248,7 @@ public class GameplayElement extends HudElement {
 	private void alertCameraTo(Entity e){
 		int nx = e.getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;
 		int ny = e.getAbsoluteY() - gc.getHeight() / 2 + DeadReckoningGame.tileSize/2;
-		if	( Math.abs( cameraDestX-nx )>gc.getWidth()/4 ){
+		if	( Math.abs( cameraDestX-nx )>gc.getWidth()/4d ){
 			cameraDestX = nx;
 			timeOn=0;
 		}

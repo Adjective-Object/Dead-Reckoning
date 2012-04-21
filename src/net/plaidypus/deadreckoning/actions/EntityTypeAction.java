@@ -5,7 +5,7 @@ import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.grideffects.DamageEffect;
-import net.plaidypus.deadreckoning.hudelements.GameplayElement;
+import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
 
 public abstract class EntityTypeAction extends Action{
 

@@ -55,7 +55,6 @@ public class Hemple extends RoomBasedBiome{
 		
 		
 		for(int i=0; i<rooms.size(); i++){
-			
 			int s=0;
 			while(s<1){
 				Tile t = target.getTileAt((int)(rooms.get(i)[0]+rooms.get(i)[2]*Utilities.randFloat()), (int)(rooms.get(i)[1]+rooms.get(i)[3]*Utilities.randFloat()));
@@ -67,7 +66,7 @@ public class Hemple extends RoomBasedBiome{
 			}
 			
 			target.placeEntity(target.getTileAt(rooms.get(i)[0]+rooms.get(i)[2]/2, rooms.get(i)[1]+rooms.get(i)[3]/2),
-					new Torch(null,Tile.LAYER_PASSIVE_MAP, Utilities.randInt(1,5) ), Tile.LAYER_PASSIVE_MAP);
+					new Torch(null,Tile.LAYER_PASSIVE_MAP, Utilities.randInt(4,6) ), Tile.LAYER_PASSIVE_MAP);
 		}
 		
 		return target;

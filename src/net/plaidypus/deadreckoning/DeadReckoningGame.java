@@ -5,6 +5,17 @@ import java.io.File;
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.generator.Biome;
 import net.plaidypus.deadreckoning.hudelements.*;
+import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
+import net.plaidypus.deadreckoning.hudelements.game.PlayerHudElement;
+import net.plaidypus.deadreckoning.hudelements.game.StatusTrackerElement;
+import net.plaidypus.deadreckoning.hudelements.game.substates.ItemGridElement;
+import net.plaidypus.deadreckoning.hudelements.game.substates.ItemGridInteractionElement;
+import net.plaidypus.deadreckoning.hudelements.game.substates.MiniMap;
+import net.plaidypus.deadreckoning.hudelements.game.substates.ReturnToGameElement;
+import net.plaidypus.deadreckoning.hudelements.simple.ColorFiller;
+import net.plaidypus.deadreckoning.hudelements.simple.StillImageElement;
+import net.plaidypus.deadreckoning.hudelements.simple.StringPutter;
+import net.plaidypus.deadreckoning.hudelements.simple.TextElement;
 import net.plaidypus.deadreckoning.state.ExclusiveHudLayersState;
 import net.plaidypus.deadreckoning.state.HudLayersState;
 import net.plaidypus.deadreckoning.state.MainMenuState;
@@ -17,6 +28,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.StateBasedGame;
 
 
@@ -39,12 +51,15 @@ public class DeadReckoningGame extends StateBasedGame
 	menuColor = new Color(60,40,50,255),
 	menuBackgroundColor = new Color(20,40,60),
 	menuTextColor = new Color(255,255,255),
-	menuTextBackgroundColor = new Color(0,0,0);
+	menuTextBackgroundColor = new Color(0,0,0),
+	mouseoverBoxColor = new Color(50,30,50,200),
+	mouseoverTextColor = new Color(255,255,255,200);
+	
 	
 	protected StringPutter messages;
 	protected GameplayElement game;
 	
-	public static UnicodeFont menuFont;
+	public static UnicodeFont menuFont, menuSmallFont;
 	
 	DeadReckoningGame() throws SlickException
 	{
@@ -92,6 +107,15 @@ public class DeadReckoningGame extends StateBasedGame
 	public void initStatesList(GameContainer container) throws SlickException {
 		
 		menuFont = new UnicodeFont("/res/visitor.ttf", 20,true,false);
+		menuFont.addNeheGlyphs();
+		menuFont.getEffects().add(new ColorEffect(java.awt.Color.WHITE)); 
+		menuFont.loadGlyphs();
+		menuSmallFont = new UnicodeFont("/res/visitor.ttf", 18,true,false);
+		menuSmallFont.addNeheGlyphs();
+		menuSmallFont.getEffects().add(new ColorEffect(java.awt.Color.WHITE)); 
+		menuSmallFont.loadGlyphs();
+		
+		
 		HudElement.calculateOffsets(container);
 		Biome.init();
 		new Player().init();

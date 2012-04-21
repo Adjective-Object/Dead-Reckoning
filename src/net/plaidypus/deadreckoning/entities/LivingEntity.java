@@ -10,7 +10,7 @@ import java.util.HashMap;
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.Tile;
-import net.plaidypus.deadreckoning.hudelements.GameplayElement;
+import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
 import net.plaidypus.deadreckoning.status.Status;
 import net.plaidypus.deadreckoning.professions.StatMaster;
 

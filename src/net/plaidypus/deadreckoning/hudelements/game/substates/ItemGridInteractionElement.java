@@ -1,4 +1,4 @@
-package net.plaidypus.deadreckoning.hudelements;
+package net.plaidypus.deadreckoning.hudelements.game.substates;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -6,6 +6,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
+import net.plaidypus.deadreckoning.hudelements.HudElement;
 
 public class ItemGridInteractionElement extends HudElement{
 

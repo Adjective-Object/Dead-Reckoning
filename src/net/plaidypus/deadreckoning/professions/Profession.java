@@ -22,9 +22,11 @@ public class Profession extends StatMaster{
 	private Image portrait;
 	private int baseClassID;
 
-	public int level=1;
+	private int level=1;
 	public String name;
 	int baseHP = 50, baseMP = 20, baseStat= 4, spPerLevel = 5;
+
+	public int skillPoints;
 	
 	public Profession(int baseClassID) throws SlickException{
 		this(baseClassID,
@@ -104,6 +106,15 @@ public class Profession extends StatMaster{
 	
 	public static int enumerateProfessions(){
 		return new File("res/professions/").list().length;
+	}
+	
+	public void levelUp(){
+		this.level+=1;
+		this.skillPoints+=1;
+	}
+
+	public int getLevel() {
+		return this.level;
 	}
 	
 }

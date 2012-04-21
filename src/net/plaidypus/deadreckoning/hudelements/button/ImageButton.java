@@ -1,4 +1,5 @@
-package net.plaidypus.deadreckoning.hudelements;
+package net.plaidypus.deadreckoning.hudelements.button;
+
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -10,10 +11,16 @@ import org.newdawn.slick.state.StateBasedGame;
 public class ImageButton extends Button{
 	
 	Image image;
+	Image altImage;
 	
 	public ImageButton(int x, int y, int bindMethod, Image image) {
+		this(x,y,bindMethod,image,null);
+	}
+	
+	public ImageButton(int x, int y, int bindMethod, Image image, Image altimage) {
 		super(x, y, bindMethod);
 		this.image=image;
+		this.altImage=altimage;
 	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
@@ -46,11 +53,19 @@ public class ImageButton extends Button{
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-		g.drawImage(image, getX(), getY());
 		
+		if(!moused){
+			g.drawImage(image, getX(), getY());
+		}
 		if(moused){
-			g.setColor(new Color(255,255,255,100));
-			g.fillRect(getX(), getY(), getWidth(), getHeight());
+			if(altImage==null){
+				g.drawImage(image, getX(), getY());
+				g.setColor(new Color(255,255,255,100));
+				g.fillRect(getX(), getY(), getWidth(), getHeight());
+			}
+			else{
+				g.drawImage(altImage, getX(), getY());
+			}
 		}
 		else if (pressed){
 			g.setColor(new Color(255,255,255,255));

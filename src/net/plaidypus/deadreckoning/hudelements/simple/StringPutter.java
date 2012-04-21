@@ -1,8 +1,9 @@
-package net.plaidypus.deadreckoning.hudelements;
+package net.plaidypus.deadreckoning.hudelements.simple;
 
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.Utilities;
+import net.plaidypus.deadreckoning.hudelements.HudElement;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;

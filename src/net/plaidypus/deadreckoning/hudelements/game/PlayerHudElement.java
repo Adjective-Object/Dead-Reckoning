@@ -1,7 +1,7 @@
-package net.plaidypus.deadreckoning.hudelements;
+package net.plaidypus.deadreckoning.hudelements.game;
 
 import net.plaidypus.deadreckoning.entities.Player;
-import net.plaidypus.deadreckoning.hudelements.GameplayElement;
+import net.plaidypus.deadreckoning.hudelements.HudElement;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -60,7 +60,7 @@ public class PlayerHudElement extends HudElement{
 		g.fillRect(getX()+126, getY()+49, 75*displayMPValue/target.player.getMaxMP(), 9);
 		g.setColor(new Color(200,200,70));
 		g.fillRect(getX()+126, getY()+74, 75*displayEXPValue/target.player.getEXPforLevel(), 9);
-		g.drawString(Integer.toString(target.player.getProfession().level) , getX(),getY()+getHeight()+20);
+		g.drawString(Integer.toString(target.player.getProfession().getLevel()) , getX(),getY()+getHeight()+20);
 		g.drawString(Integer.toString(target.getBoard().depth) , getX(),getY()+getHeight()+40);
 	}
 

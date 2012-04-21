@@ -6,7 +6,7 @@ import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.grideffects.GridEffect;
-import net.plaidypus.deadreckoning.hudelements.GameplayElement;
+import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -151,7 +151,7 @@ public class GameBoard implements ILosBoard{
 		for (int x=lowX; x<highX; x++) {
 			for (int y=lowY; y<highY; y++) {
 				for(int i=Tile.numLayers-1; i>=0; i--){
-					if (!board[x][y].isOpen(i) && board[x][y].lightLevel >= 1 && board[x][y].isVisible()) {
+					if (!board[x][y].isOpen(i) && ((board[x][y].lightLevel >= 1 && board[x][y].isVisible()) || (board[x][y].getEntity(i).isTerrain() && board[x][y].explored)) ) {
 						board[x][y].getEntity(i).render(g,
 								x*DeadReckoningGame.tileSize + xoff,
 								y*DeadReckoningGame.tileSize + yoff);

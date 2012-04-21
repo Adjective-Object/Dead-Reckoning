@@ -1,4 +1,4 @@
-package net.plaidypus.deadreckoning.hudelements;
+package net.plaidypus.deadreckoning.hudelements.game.substates;
 
 import java.util.ArrayList;
 
@@ -13,6 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
+import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.items.Item;
 
 public class ItemGridElement extends HudElement{

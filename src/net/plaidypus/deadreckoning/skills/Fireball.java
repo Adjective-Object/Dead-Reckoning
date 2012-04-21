@@ -24,10 +24,16 @@ public class Fireball extends Skill{
 	
 	private static Image image;
 	
-	public Fireball(){super(image);}
+	public Fireball(){
+		super(image);
+		this.setName("Fireball");
+		this.setDescriptor("sets target living entity\non fire, dealing damage\nover time");
+	}
 	
 	public Fireball(LivingEntity source) {
 		super(source);
+		this.setName("fireball");
+		this.setDescriptor("sets target living entity on fire, dealing damage over time");
 	}
 	
 	public static void init() throws SlickException{
@@ -39,7 +45,7 @@ public class Fireball extends Skill{
 		ArrayList<Action> toRet = new ArrayList<Action>(0);
 		Animation an = new Animation(fireball,40);
 		an.setLooping(false);
-		toRet.add(new ApplyStatusAction(source, target, Tile.LAYER_ACTIVE, new OnFire(this.source, 2, 2)));
+		toRet.add(new ApplyStatusAction(source, target, Tile.LAYER_ACTIVE, new OnFire(this.source, 2, 2*this.level)));
 		toRet.add(new AttackAction(source, target, 2, true, true, null,null,new AnimationEffect(target,an),null));
 		return new ActionSpawner(source, toRet);
 	}

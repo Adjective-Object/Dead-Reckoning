@@ -1,6 +1,8 @@
-package net.plaidypus.deadreckoning.hudelements;
+package net.plaidypus.deadreckoning.hudelements.menuItems;
 
 import java.io.File;
+
+import net.plaidypus.deadreckoning.hudelements.HudElement;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;

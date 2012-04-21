@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
-import net.plaidypus.deadreckoning.hudelements.ItemGridElement;
+import net.plaidypus.deadreckoning.hudelements.game.substates.ItemGridElement;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -63,6 +63,9 @@ public class HudLayersState extends BasicGameState{
 		g.fillRect(0,0,gc.getWidth(),gc.getHeight());
 		for(int i=0; i<HudElements.size(); i++){
 			HudElements.get(i).render(gc,game,g);
+		}
+		for(int i=0; i<HudElements.size(); i++){
+			HudElements.get(i).renderMouseOver(gc,game,g);
 		}
 	}
 	

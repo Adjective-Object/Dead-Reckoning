@@ -15,14 +15,14 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Save;
-import net.plaidypus.deadreckoning.hudelements.Button;
-import net.plaidypus.deadreckoning.hudelements.ColorFiller;
-import net.plaidypus.deadreckoning.hudelements.ImageButton;
-import net.plaidypus.deadreckoning.hudelements.GameplayElement;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
-import net.plaidypus.deadreckoning.hudelements.Panel;
-import net.plaidypus.deadreckoning.hudelements.TextElement;
-import net.plaidypus.deadreckoning.hudelements.TextEntryBox;
+import net.plaidypus.deadreckoning.hudelements.button.Button;
+import net.plaidypus.deadreckoning.hudelements.button.ImageButton;
+import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
+import net.plaidypus.deadreckoning.hudelements.simple.ColorFiller;
+import net.plaidypus.deadreckoning.hudelements.simple.Panel;
+import net.plaidypus.deadreckoning.hudelements.simple.TextElement;
+import net.plaidypus.deadreckoning.hudelements.simple.TextEntryBox;
 import net.plaidypus.deadreckoning.professions.Profession;
 
 public class NewGameState extends HudLayersState{

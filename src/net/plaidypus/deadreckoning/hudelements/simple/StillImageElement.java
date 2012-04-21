@@ -1,4 +1,6 @@
-package net.plaidypus.deadreckoning.hudelements;
+package net.plaidypus.deadreckoning.hudelements.simple;
+
+import net.plaidypus.deadreckoning.hudelements.HudElement;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -13,6 +15,11 @@ public class StillImageElement extends HudElement{
 	
 	public StillImageElement(int x, int y, int bindMeth) {
 		super(x,y,bindMeth,false);
+	}
+	
+	public StillImageElement(int x, int y, int bindMeth, Image img) {
+		super(x,y,bindMeth,false);
+		this.img = img;
 	}
 	
 	public void makeFrom(Object o){
