@@ -24,6 +24,7 @@ public class Stair extends StaticImageEntity{
 		super(target,layer,stairImages.get(updownNull));
 		this.targetFloor = targetFloor;
 		this.updownNull=updownNull;
+		this.isTerrain=true;
 	}
 	
 	public Stair() {}
@@ -38,7 +39,6 @@ public class Stair extends StaticImageEntity{
 	@Override
 	public void update(GameContainer gc, int delta) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

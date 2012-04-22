@@ -85,7 +85,9 @@ public class AttackAction extends EntityTypeAction {
 						new DamageEffect(target, Integer.toString(damage)));
 			}
 			
-			sendMessage(source.getName()+" attacked "+target.getEntity(Tile.LAYER_ACTIVE).getName()+" for "+damage+" damage");
+			if(damage>0){
+				sendMessage(source.getName()+" attacked "+target.getEntity(Tile.LAYER_ACTIVE).getName()+" for "+damage+" damage");
+			}
 
 		return true;
 

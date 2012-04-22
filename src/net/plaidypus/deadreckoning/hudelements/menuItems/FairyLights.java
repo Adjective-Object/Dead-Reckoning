@@ -41,23 +41,24 @@ public class FairyLights extends HudElement{
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 		for(int i=0; i<particles.length; i++){
-			particles[i][3]+=(Utilities.randFloat()-Utilities.randFloat())*delta/1000;
+			particles[i][3]+=(Utilities.randFloat()-Utilities.randFloat())*delta/1000;//Momentum
 			particles[i][4]+=(Utilities.randFloat()-Utilities.randFloat())*delta/1000;
 			
-			particles[i][1]+=particles[i][3]*5*delta/1000;
+			particles[i][1]+=particles[i][3]*5*delta/1000;//Movement
 			particles[i][2]+=particles[i][4]*5*delta/1000;
 			
-			if (particles[i][1]<0 || particles[i][1]>width || particles[i][2]<0 || particles[i][2]>height){
+			if (particles[i][1]<0 || particles[i][1]>width){//Bounding
 				particles[i][3]=0;
+			}
+			if(particles[i][2]<0 || particles[i][2]>height){
 				particles[i][4]=0;
 			}
-			
 			particles[i][1] = Utilities.limitTo(particles[i][1], 0, width);
 			particles[i][2] = Utilities.limitTo(particles[i][2], 0, height);
 			
-			particles[i][6]= (particles[i][2]+Utilities.randFloat()-Utilities.randFloat()*delta/1000)%360;
+			particles[i][6]= (particles[i][2]+Utilities.randFloat()-Utilities.randFloat()*delta/1000)%360;//Rotation
 			
-			particles[i][5]=Utilities.limitTo( particles[i][5]*(1+Utilities.randFloat()/30-Utilities.randFloat()/30) ,0,1);
+			particles[i][5]=Utilities.limitTo( particles[i][5]*(1+Utilities.randFloat()/30-Utilities.randFloat()/30) ,0,1);//flicker
 
 		}
 	}

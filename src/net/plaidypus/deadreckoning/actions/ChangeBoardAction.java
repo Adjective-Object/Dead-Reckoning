@@ -6,11 +6,11 @@ import net.plaidypus.deadreckoning.entities.Entity;
 
 public class ChangeBoardAction extends Action{
 	
-	String tileFloor;
+	String targetFloor;
 	
-	public ChangeBoardAction(Entity source, String tileFloor) {
+	public ChangeBoardAction(Entity source, String targetFloor) {
 		super(source, source.getLocation());
-		this.tileFloor=tileFloor;
+		this.targetFloor=targetFloor;
 	}
 
 	@Override
@@ -20,7 +20,7 @@ public class ChangeBoardAction extends Action{
 
 	@Override
 	protected boolean apply(int delta) {
-		source.getParent().getGame().setBoard(Save.loadGame(source.getParent().getGame(),source.getParent().getSaveID(),tileFloor) );
+		source.getParent().getGame().setBoard(Save.loadGame(source.getParent().getGame(),source.getParent().getSaveID(),targetFloor) );
 		return true;
 	}
 

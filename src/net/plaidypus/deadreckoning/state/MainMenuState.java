@@ -35,8 +35,8 @@ public class MainMenuState extends HudLayersState {
 		ArrayList<HudElement> elements = new ArrayList<HudElement> (0);
 
 		elements.add( new StillImageElement(0,0,HudElement.TOP_LEFT,new Image("res/menu/background.png")));
-		elements.add(new FairyLights(-50,-300,HudElement.BOTTOM_LEFT,850,250,40,new SpriteSheet(new Image("res/menu/particles.png"),50,50)));
-		elements.add(new FairyLights(-50,-200,HudElement.BOTTOM_LEFT,850,150,80,new SpriteSheet(new Image("res/menu/particles.png"),50,50)));
+		elements.add(new FairyLights(-50,-300,HudElement.BOTTOM_LEFT,850,250,80,new SpriteSheet(new Image("res/menu/particles.png"),50,50)));
+		elements.add(new FairyLights(-50,-200,HudElement.BOTTOM_LEFT,850,150,100,new SpriteSheet(new Image("res/menu/particles.png"),50,50)));
 		elements.add(new FairyLights(-50,-100,HudElement.BOTTOM_LEFT,850,100,120,new SpriteSheet(new Image("res/menu/particles.png"),50,50)));
 		elements.add( new StillImageElement(150,450,HudElement.TOP_LEFT, new Image("res/menu/artBar.png")));
 		

@@ -44,7 +44,7 @@ public class GameplayElement extends HudElement {
 	private GameBoard gb;
 	GameContainer gc;
 	
-	ArrayList<Action> actions;
+	ArrayList<Action> actions = new ArrayList<Action>(0);
 	
 	public GameplayElement(int saveNumber) throws SlickException {
 		super(0,0,HudElement.TOP_LEFT,true);
@@ -95,7 +95,7 @@ public class GameplayElement extends HudElement {
 			lastMap=this.gb.getMapID();
 		}
 		
-		System.out.println(lastMap);
+		System.out.println(lastMap+" -> "+b.getMapID());
 		
 		b.setGame(this);
 		b.renderDistX=this.getWidth()/DeadReckoningGame.tileSize+2;
@@ -135,11 +135,11 @@ public class GameplayElement extends HudElement {
 		cameraY=cameraDestY;
 		
 		timeOn=0;
-		actions = new ArrayList<Action> (0);
+		actions.clear();
 		
 		updateBoardEffects(gc,0);
-		currentAction=0;
-		currentEntity=0;
+		this.currentAction=0;
+		this.currentEntity=0;
 	}
 
 	/**
@@ -214,7 +214,7 @@ public class GameplayElement extends HudElement {
 	
 	private void applyAllActions(int delta){
 		actions.get(currentAction).applyAction(delta);
-		if(actions.get(currentAction).completed){
+		if(actions.size()>0 && actions.get(currentAction).completed){
 			currentAction++;
 		}
 	}
@@ -248,7 +248,7 @@ public class GameplayElement extends HudElement {
 	private void alertCameraTo(Entity e){
 		int nx = e.getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;
 		int ny = e.getAbsoluteY() - gc.getHeight() / 2 + DeadReckoningGame.tileSize/2;
-		if	( Math.abs( cameraDestX-nx )>gc.getWidth()/4d ){
+		if	( Math.abs( cameraDestX-nx )>gc.getWidth()/3 ){
 			cameraDestX = nx;
 			timeOn=0;
 		}
