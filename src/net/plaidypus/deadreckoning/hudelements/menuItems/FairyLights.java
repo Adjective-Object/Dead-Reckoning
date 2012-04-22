@@ -26,9 +26,13 @@ public class FairyLights extends HudElement{
 		this.particles = new float[numParticles][4];//PARTICLE_ID,X,Y,xMomentum,yMomentum,OPACITY,ROTATION
 		
 		for(int i=0; i<numParticles; i++){
-			this.particles[i] = new float[] {Utilities.randInt(0, particles.getVerticalCount()*particles.getHorizontalCount()),
-					Utilities.randFloat()*this.width,Utilities.randFloat()*this.height,
-					0F,0F,255F,Utilities.randFloat()*360F};
+			this.particles[i] = new float[] {
+					Utilities.randInt(0, particles.getVerticalCount()*particles.getHorizontalCount()),
+					Utilities.randFloat()*this.width,
+					Utilities.randFloat()*this.height,
+					0F,0F,
+					Utilities.randFloat(),
+					Utilities.randFloat()*360F};
 		}
 		
 	}
@@ -53,7 +57,7 @@ public class FairyLights extends HudElement{
 			
 			particles[i][6]= (particles[i][2]+Utilities.randFloat()-Utilities.randFloat()*delta/1000)%360;
 			
-			//particles[i][5]+=Utilities.randFloat()*5*delta/1000-Utilities.randFloat()*5*delta/1000;
+			particles[i][5]=Utilities.limitTo( particles[i][5]*(1+Utilities.randFloat()/30-Utilities.randFloat()/30) ,0,1);
 
 		}
 	}
@@ -74,10 +78,10 @@ public class FairyLights extends HudElement{
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		for(int i=0; i<particles.length; i++){
-			this.particleSheet.setAlpha(particles[i][5]);
 			Image img = this.particleSheet.getSprite(
 					(int)particles[i][0]%this.particleSheet.getHorizontalCount(),
 					(int)particles[i][0]/this.particleSheet.getVerticalCount()) .getFlippedCopy(false, false);
+			img.setAlpha(particles[i][5]);
 			img.rotate(particles[i][6]);
 			g.drawImage(img,
 					this.getX()+particles[i][1],this.getY()+particles[i][2]);
