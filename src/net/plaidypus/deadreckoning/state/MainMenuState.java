@@ -23,10 +23,11 @@ public class MainMenuState extends HudLayersState {
 
 	public MainMenuState(int stateID) throws SlickException {
 		super(stateID ,makeContents());
-		this.startButton = (Button) this.getElement(3);
-		this.optionsButton = (Button) this.getElement(4);
-		this.creditsButton = (Button) this.getElement(5);
-		this.quitButton = (Button) this.getElement(6);
+		int x=5;
+		this.startButton = (Button) this.getElement(x);
+		this.optionsButton = (Button) this.getElement(x+1);
+		this.creditsButton = (Button) this.getElement(x+2);
+		this.quitButton = (Button) this.getElement(x+3);
 	}
 	
 	public static ArrayList<HudElement> makeContents() throws SlickException{
@@ -34,7 +35,9 @@ public class MainMenuState extends HudLayersState {
 		ArrayList<HudElement> elements = new ArrayList<HudElement> (0);
 
 		elements.add( new StillImageElement(0,0,HudElement.TOP_LEFT,new Image("res/menu/background.png")));
-		elements.add(new FairyLights(0,-100,HudElement.BOTTOM_LEFT,750,50,120,new SpriteSheet(new Image("res/menu/particles.png"),50,50)));
+		elements.add(new FairyLights(-50,-300,HudElement.BOTTOM_LEFT,850,250,40,new SpriteSheet(new Image("res/menu/particles.png"),50,50)));
+		elements.add(new FairyLights(-50,-200,HudElement.BOTTOM_LEFT,850,150,80,new SpriteSheet(new Image("res/menu/particles.png"),50,50)));
+		elements.add(new FairyLights(-50,-100,HudElement.BOTTOM_LEFT,850,100,120,new SpriteSheet(new Image("res/menu/particles.png"),50,50)));
 		elements.add( new StillImageElement(150,450,HudElement.TOP_LEFT, new Image("res/menu/artBar.png")));
 		
 		elements.add( new ImageButton(154,198,HudElement.TOP_LEFT,new Image("res/menu/start.png"), new Image("res/menu/startHighlight.png")));
