@@ -1,6 +1,7 @@
 package net.plaidypus.deadreckoning;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.generator.Biome;
@@ -12,6 +13,7 @@ import net.plaidypus.deadreckoning.hudelements.game.substates.ItemGridElement;
 import net.plaidypus.deadreckoning.hudelements.game.substates.ItemGridInteractionElement;
 import net.plaidypus.deadreckoning.hudelements.game.substates.MiniMap;
 import net.plaidypus.deadreckoning.hudelements.game.substates.ReturnToGameElement;
+import net.plaidypus.deadreckoning.hudelements.menuItems.FairyLights;
 import net.plaidypus.deadreckoning.hudelements.simple.ColorFiller;
 import net.plaidypus.deadreckoning.hudelements.simple.StillImageElement;
 import net.plaidypus.deadreckoning.hudelements.simple.StringPutter;
@@ -26,7 +28,9 @@ import net.plaidypus.deadreckoning.state.SaveSelectorState;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.StateBasedGame;
@@ -53,9 +57,10 @@ public class DeadReckoningGame extends StateBasedGame
 	menuTextColor = new Color(255,255,255),
 	menuTextBackgroundColor = new Color(0,0,0),
 	mouseoverBoxColor = new Color(50,30,50,200),
-	mouseoverTextColor = new Color(255,255,255,200);
+	mouseoverTextColor = new Color(255,255,255,200),
+	menuHighlightColor = new Color(210,210,0);
 	
-	
+	protected ArrayList<HudElement> menuBackground;
 	protected StringPutter messages;
 	protected GameplayElement game;
 	
@@ -67,6 +72,8 @@ public class DeadReckoningGame extends StateBasedGame
 		
 		this.messages = new StringPutter(0,0,HudElement.BOTTOM_LEFT,0,80);
 		this.game = new GameplayElement(0);
+		
+		
 		
 		DeadReckoningGame.instance=this;
 		
@@ -106,6 +113,13 @@ public class DeadReckoningGame extends StateBasedGame
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
 		
+		this.menuBackground = new ArrayList<HudElement>(0);
+		SpriteSheet particles = new SpriteSheet(new Image("res/menu/particles.png"),50,50);
+		menuBackground.add( new StillImageElement(0,0,HudElement.TOP_LEFT,new Image("res/menu/background.png")));
+		menuBackground.add(new FairyLights(-50,-300,HudElement.BOTTOM_LEFT,850,250,80,particles));
+		menuBackground.add(new FairyLights(-50,-200,HudElement.BOTTOM_LEFT,850,150,100,particles));
+		menuBackground.add(new FairyLights(-50,-100,HudElement.BOTTOM_LEFT,850,100,120,particles));
+		
 		menuFont = new UnicodeFont("/res/visitor.ttf", 20,true,false);
 		menuFont.addNeheGlyphs();
 		menuFont.getEffects().add(new ColorEffect(java.awt.Color.WHITE)); 
@@ -120,7 +134,7 @@ public class DeadReckoningGame extends StateBasedGame
 		Biome.init();
 		new Player().init();
 		
-		this.addState(new MainMenuState(MAINMENUSTATE));
+		this.addState(new MainMenuState(MAINMENUSTATE,this.menuBackground));
 		
 		this.addState(new HudLayersState(GAMEPLAYSTATE,new HudElement[] {
 				game,
@@ -154,13 +168,13 @@ public class DeadReckoningGame extends StateBasedGame
 				new TextElement(0,0,HudElement.TOP_LEFT,"",menuTextColor,menuFont)
 		}));
 		
-		this.addState(new SaveSelectorState(SAVESELECTSTATE));
+		this.addState(new SaveSelectorState(SAVESELECTSTATE,menuBackground));
 		this.addState(new PlayerViewerState(SKILLSTATE));
-		this.addState(new NewGameState(NEWGAMESTATE));
+		this.addState(new NewGameState(NEWGAMESTATE,menuBackground));
 		
 		this.enterState(MAINMENUSTATE);
 	}
-
+	
 	public void flashException(Exception e) {
 		HudLayersState s = (HudLayersState) this.getState(ERRORSTATE);
 		s.makeFrom(new Object[] {null,e.getStackTrace().toString()});

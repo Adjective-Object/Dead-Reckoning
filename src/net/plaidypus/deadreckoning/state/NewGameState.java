@@ -35,15 +35,12 @@ public class NewGameState extends HudLayersState{
 	
 	int columA = 15, columB = 300;
 	
-	public NewGameState(int stateID) throws SlickException{
-		super(stateID, new HudElement[0]);
-		
+	public NewGameState(int stateID, ArrayList<HudElement> background) throws SlickException{
+		super(stateID, (ArrayList<HudElement>)(background.clone()));
 		loadClasses();
 	}
 	
 	public void loadClasses() throws SlickException{
-		this.HudElements= new ArrayList<HudElement>(0);
-		
 		classButtons = new ArrayList<ImageButton>(0);
 		ArrayList<HudElement> elim = new ArrayList<HudElement>(0);
 		ArrayList<HudElement> elimB = new ArrayList<HudElement>(0);
@@ -96,7 +93,6 @@ public class NewGameState extends HudLayersState{
 		text = new TextEntryBox(-250, 50, HudElement.TOP_RIGHT, 200, 50);
 		elimC.add(text);
 		
-		this.HudElements.add(new ColorFiller(DeadReckoningGame.menuBackgroundColor));
 		this.HudElements.add(new Panel(elim) );
 		this.HudElements.add(new Panel(elimB));
 		this.HudElements.add(new Panel(elimC));

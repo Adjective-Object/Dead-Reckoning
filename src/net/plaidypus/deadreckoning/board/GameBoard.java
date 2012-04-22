@@ -70,10 +70,19 @@ public class GameBoard implements ILosBoard{
 	public void placeEntity(Tile t, Entity e, int layer) {
 		placeEntity(t.getX(), t.getY(), e, layer);
 	}
+	
+	public void insertEntity(int index, Tile t, Entity e, int layer) {
+		insertEntity(index, t.getX(), t.getY(), e, layer);
+	}
 
 	public void placeEntity(int x, int y, Entity e, int layer) {
 		board[x][y].setEntity(e,layer);
 		ingameEntities.add(e);
+	}
+	
+	public void insertEntity(int index, int x, int y, Entity e, int layer){
+		board[x][y].setEntity(e,layer);
+		this.ingameEntities.add(index, e);
 	}
 	
 	public boolean placeEntityNear(int x, int y, Entity e, int layer) {

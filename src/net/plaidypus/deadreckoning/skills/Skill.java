@@ -10,7 +10,8 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
 
 public abstract class Skill {
 	
-	int level;
+	int level, levelcap;
+	int cooldown;
 	String name = "NO_NAME", description="NO_DESC";
 	
 	Image imageIcon;
@@ -134,5 +135,19 @@ public abstract class Skill {
 
 	public void levelUp() {
 		this.level++;
+	}
+	
+	public boolean canBeCast(){return cooldown<=0;}
+	
+	public void updateSkill(){//called on turn advance
+		this.cooldown-=1;
+	}
+
+	public int getLevelCap() {
+		return this.levelcap;
+	}
+
+	public int getLevelReq() {
+		return 0;
 	}
 }

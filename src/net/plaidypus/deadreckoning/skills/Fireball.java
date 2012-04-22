@@ -47,9 +47,15 @@ public class Fireball extends Skill{
 		an.setLooping(false);
 		toRet.add(new ApplyStatusAction(source, target, Tile.LAYER_ACTIVE, new OnFire(this.source, 2, 2*this.level)));
 		toRet.add(new AttackAction(source, target, 2, true, true, null,null,new AnimationEffect(target,an),null));
+		this.cooldown=10;
 		return new ActionSpawner(source, toRet);
 	}
-
+	
+	public void updateSkill(){
+		super.updateSkill();
+		this.levelcap=(this.source.getStatMaster().getLevel()-1)*1;
+	}
+	
 	public boolean canTargetTile(Tile t) {
 		if( !t.isOpen(Tile.LAYER_ACTIVE) && !(t.getX() == source.getX() && t.getY() == source.getY())){
 			return  t.getEntity(Tile.LAYER_ACTIVE).isInteractive();

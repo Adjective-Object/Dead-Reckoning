@@ -11,6 +11,7 @@ import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
+import net.plaidypus.deadreckoning.skills.Skill;
 import net.plaidypus.deadreckoning.status.Status;
 import net.plaidypus.deadreckoning.professions.StatMaster;
 
@@ -31,6 +32,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	public Animation currentAnimation;
 	public ArrayList<Animation> animations;
 	public ArrayList<Status> statuses;
+	public ArrayList<Skill> skills = new ArrayList<Skill>(0);
 	int currentAnimationID;
 	public static final int ANIMATION_STAND = 0, ANIMATION_ATTACK = 1,
 			ANIMATION_WALK = 2, ANIMATION_FLINCH_FRONT = 3,
@@ -101,8 +103,30 @@ public abstract class LivingEntity extends InteractiveEntity {
 	/**
 	 * still abstract because different livingEntities will have differing AIs
 	 */
-	public abstract Action chooseAction(GameContainer gc, int delta);
+	public Action chooseAction(GameContainer gc, int delta){
+		return parseFinishedAction(decideNextAction(gc,delta));
+	}
+	
+	/**
+	 * necessary for the automatic usage of parsefinishedAction
+	 */
+	protected abstract Action decideNextAction(GameContainer gc, int delta);
 
+	/**
+	 * enacts something (be default, the updating of skill cooldowns) based on the return value of a
+	 * 
+	 * @param a the action to return
+	 * @return a
+	 */
+	protected Action parseFinishedAction(Action a){
+		if(a!=null){
+			for(int i=0; i<this.skills.size(); i++){
+				this.skills.get(i).updateSkill();
+			}
+		}
+		return a;
+	}
+	
 	/**
 	 * deals the entity some amount of physical damage. This method takes the
 	 * raw damage, and applies the physical defense of the livingentity to it

@@ -2,7 +2,10 @@ package net.plaidypus.deadreckoning.state;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -18,6 +21,7 @@ import net.plaidypus.deadreckoning.hudelements.simple.StillImageElement;
 import net.plaidypus.deadreckoning.hudelements.simple.TextElement;
 import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.professions.SkillProgression;
+import net.plaidypus.deadreckoning.skills.Skill;
 
 public class PlayerViewerState extends HudLayersState{
 	
@@ -26,6 +30,8 @@ public class PlayerViewerState extends HudLayersState{
 	Panel buttonPanel, statPanel;
 	
 	Profession sourceProf;
+	
+	Image[][] images = new Image[3][12];//dimmed,highlighted, both
 	
 	public PlayerViewerState(int stateID) {
 		super(stateID, makeState());
@@ -38,9 +44,13 @@ public class PlayerViewerState extends HudLayersState{
 		
 		for(int i=0; i<buttonPanel.getContents().size()-1; i++){
 			Button b = (Button)(buttonPanel.getContents().get(i));
-			if(b.isPressed() && sourceProf.skillPoints>0){
+			Skill siq = sourceProf.getTrees()[i/4].getSkills()[i%4];
+			if(b.isPressed() && sourceProf.skillPoints>0 &&
+					siq.getLevelCap()>siq.getLevel() &&
+					this.sourceProf.getLevel()>siq.getLevelReq()&&
+					(i%4==0 || sourceProf.getTrees()[i/4].getSkills()[i%4-1].getLevel()>0) ){
 				sourceProf.skillPoints--;
-				sourceProf.getTrees()[i/4].getSkills()[i%4].levelUp();
+				siq.levelUp();
 				bakeFromProfession(sourceProf);
 			}
 		}
@@ -52,6 +62,37 @@ public class PlayerViewerState extends HudLayersState{
 		System.out.println(p);
 		this.sourceProf = p.getProfession();
 		
+		ArrayList<Skill> skills = this.sourceProf.getSkillList();
+		for(int i=0; i<skills.size(); i++){
+			Image img = skills.get(i).getImage().getFlippedCopy(false, false);
+			try{
+				Graphics g = img.getGraphics();
+				g.drawString(Integer.toString(i), 0, 0);
+				g.setColor(new Color(0,0,0,80));
+				g.fillRect(0,0,32,32);
+				images[0][i]=img;
+			}catch(SlickException e){}
+			
+			img = skills.get(i).getImage().getFlippedCopy(false, false);
+			try{
+				Graphics g = img.getGraphics();
+				g.setColor(new Color(0,0,0,80));
+				g.fillRect(0,0,32,32);
+				g.setColor(DeadReckoningGame.menuHighlightColor);
+				g.drawRect(0, 0, 31, 31);
+				images[2][i]=img;
+			}catch(SlickException e){}
+			
+			
+			img = skills.get(i).getImage().getFlippedCopy(false, false);
+			try{
+				Graphics g = img.getGraphics();
+				g.setColor(DeadReckoningGame.menuHighlightColor);
+				g.drawRect(0, 0, 31, 31);
+				images[1][i]=img;
+			}catch(SlickException e){}
+		}
+		
 		bakeFromProfession(sourceProf);
 		
 		this.buttonPanel.bakeBorders();
@@ -60,11 +101,36 @@ public class PlayerViewerState extends HudLayersState{
 	}
 	
 	public void bakeFromProfession(Profession p){
-		for(int i=0; i<p.getTrees().length; i++){
+		for(int i=0; i<3; i++){
 			SkillProgression prog = p.getTrees()[i];
-			for(int s=0; s<prog.getSkills().length; s++){
-				this.buttonPanel.getContents().get(i*prog.getSkills().length+s).makeFrom(prog.getSkills()[s].getImage());
-				this.buttonPanel.getContents().get(i*prog.getSkills().length+s).setMouseoverText(
+			for(int s=0; s<4; s++){
+				Image img;
+				
+				if(sourceProf.skillPoints>0 &&
+						(s==0 || prog.getSkills()[s-1].getLevel()>0) &&
+						p.getLevel()>=prog.getSkills()[s].getLevelReq() &&
+						prog.getSkills()[s].getLevel()<prog.getSkills()[s].getLevelCap()){ //Should be highlighted
+					
+					if(prog.getSkills()[s].getLevel()>=1){
+						img=images[1][i*4+s];	
+					}
+					else{
+						img=images[2][i*4+s];
+					}
+				}
+				else{ //else
+					if(prog.getSkills()[s].getLevel()>=1){
+						img=prog.getSkills()[s].getImage();					
+					}
+					else{
+						img = images[0][i*4+s];
+					}
+				}
+				
+				System.out.println(img);
+				
+				this.buttonPanel.getContents().get(i*4+s).makeFrom(img);
+				this.buttonPanel.getContents().get(i*4+s).setMouseoverText(
 						prog.getSkills()[s].getName()+" ("+prog.getSkills()[s].getLevel()+")\n"+prog.getSkills()[s].getDescription());
 			}
 		}
@@ -78,8 +144,8 @@ public class PlayerViewerState extends HudLayersState{
 		elements.add(new StillImageElement(0,0,HudElement.TOP_LEFT));
 		
 		ArrayList<HudElement> skillButton = new ArrayList<HudElement>(12), playerWindow = new ArrayList<HudElement>(2);
-		for(int i=0; i<4; i++){
-			for(int x=0; x<3; x++){
+		for(int x=0; x<3; x++){
+			for(int i=0; i<4; i++){
 				skillButton.add(new ImageButton(ofX+55*x+5,ofY+5+60*i,HudElement.TOP_LEFT,null));
 			}
 		}

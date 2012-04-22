@@ -5,11 +5,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.items.Item;
+import net.plaidypus.deadreckoning.skills.Skill;
 
 public class Profession extends StatMaster{
 	
@@ -22,7 +25,6 @@ public class Profession extends StatMaster{
 	private Image portrait;
 	private int baseClassID;
 
-	private int level=1;
 	public String name;
 	int baseHP = 50, baseMP = 20, baseStat= 4, spPerLevel = 5;
 
@@ -32,12 +34,13 @@ public class Profession extends StatMaster{
 		this(baseClassID,
 			SkillProgression.loadTree(baseClassID, 1),
 			SkillProgression.loadTree(baseClassID, 2),
-			SkillProgression.loadTree(baseClassID, 3)
+			SkillProgression.loadTree(baseClassID, 3),
+			1
 		);
 	}
 	
-	public Profession(int baseClassID, SkillProgression treeA, SkillProgression treeB, SkillProgression treeC) throws SlickException{
-		super(0,0,0,0,0,0);
+	public Profession(int baseClassID, SkillProgression treeA, SkillProgression treeB, SkillProgression treeC, int level) throws SlickException{
+		super(0,0,0,0,0,0, level);
 		skillTrees = new SkillProgression[] {
 				treeA, treeB, treeC
 			};
@@ -70,7 +73,8 @@ public class Profession extends StatMaster{
 			r.readLine();
 			return new Profession(r.read(),SkillProgression.loadTree(r.read(), r.read()),
 					SkillProgression.loadTree(r.read(), r.read()),
-					SkillProgression.loadTree(r.read(), r.read())
+					SkillProgression.loadTree(r.read(), r.read()),
+					1//TODO reading and writing level of player to this shiznit
 				);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -110,11 +114,29 @@ public class Profession extends StatMaster{
 	
 	public void levelUp(){
 		this.level+=1;
-		this.skillPoints+=1;
+		this.skillPoints+=this.spPerLevel;
 	}
 
 	public int getLevel() {
 		return this.level;
+	}
+
+	public ArrayList<Skill> getSkillList() {
+		ArrayList<Skill> toRet = new ArrayList<Skill>(0);
+		for(int i=0; i<3;i++){
+			for(int x=0; x<4;x++){
+				toRet.add(this.getTrees()[i].getSkills()[x]);
+			}
+		}
+		return toRet;
+	}
+	
+	public void parentTo(LivingEntity e){
+		for(int i=0; i<3;i++){
+			for(int x=0; x<4;x++){
+				this.getTrees()[i].getSkills()[x].bindTo(e);
+			}
+		}
 	}
 	
 }

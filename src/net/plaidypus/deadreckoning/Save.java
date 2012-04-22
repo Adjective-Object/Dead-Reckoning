@@ -181,7 +181,7 @@ public class Save {
 			SkillProgression a = SkillProgression.loadTree(r.read(), r.read());
 			SkillProgression b = SkillProgression.loadTree(r.read(), r.read());
 			SkillProgression c = SkillProgression.loadTree(r.read(), r.read());
-			p = new Profession(baseClass,a,b,c);
+			p = new Profession(baseClass,a,b,c,1);//TODO read/write player level to savefile
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

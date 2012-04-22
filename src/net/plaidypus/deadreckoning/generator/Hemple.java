@@ -33,21 +33,21 @@ public class Hemple extends RoomBasedBiome{
 			int[] room = rooms.get(i);
 			for(int x=room[0]; x<room[0]+room[2]; x++){
 				Tile t = target.getTileAt(x, Utilities.limitTo(room[1]-1,0,target.getHeight()));
-				if(t.getX()!=0 && t.getTileFace()!=Tile.TILE_NULL){
+				if(t.getX()!=0 && t.getTileFace()==Tile.TILE_SPECIAL){
 					target.placeEntity(t, new Door(t,Tile.LAYER_ACTIVE), Tile.LAYER_ACTIVE);
 				}
 				t = target.getTileAt(x, Utilities.limitTo(room[1]+room[3],0,target.getHeight()));
-				if(t.getX()!=target.getWidth() && t.getTileFace()!=Tile.TILE_NULL){
+				if(t.getX()!=target.getWidth() && t.getTileFace()==Tile.TILE_SPECIAL){
 					target.placeEntity(t, new Door(t,Tile.LAYER_ACTIVE), Tile.LAYER_ACTIVE);
 				}
 			}
 			for(int y=room[1];y<room[1]+room[3]; y++){
 				Tile t = target.getTileAt(Utilities.limitTo(room[0]-1,0,target.getWidth()),y);
-				if(t.getY()!=0 && t.getTileFace()!=Tile.TILE_NULL){
+				if(t.getY()!=0 && t.getTileFace()==Tile.TILE_SPECIAL){
 					target.placeEntity(t, new Door(t,Tile.LAYER_ACTIVE), Tile.LAYER_ACTIVE);
 				}
 				t = target.getTileAt(Utilities.limitTo(room[0]+room[2],0,target.getWidth()),y);
-				if(t.getY()!=target.getHeight() &&  t.getTileFace()!=Tile.TILE_NULL){
+				if(t.getY()!=target.getHeight() &&  t.getTileFace()==Tile.TILE_SPECIAL){
 					target.placeEntity(t, new Door(t,Tile.LAYER_ACTIVE), Tile.LAYER_ACTIVE);
 				}
 			}
@@ -61,7 +61,7 @@ public class Hemple extends RoomBasedBiome{
 				if(t.isOpen(Tile.LAYER_ACTIVE)){
 					s++;
 					target.placeEntity(t, new Monster(t,Tile.LAYER_ACTIVE,"res/goblin.entity",
-							new StatMaster(50,50,4,4,4,4),Entity.ALLIGN_HOSTILE), Tile.LAYER_ACTIVE);
+							new StatMaster(50,50,4,4,4,4,1),Entity.ALLIGN_HOSTILE), Tile.LAYER_ACTIVE);
 				}
 			}
 			

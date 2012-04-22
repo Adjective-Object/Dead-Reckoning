@@ -2,15 +2,16 @@ package net.plaidypus.deadreckoning.professions;
 
 public class StatMaster {
 	
-	protected int mHP, mMP, STR, DEX, INT, LUK;
+	protected int mHP, mMP, STR, DEX, INT, LUK, level;
 	
-	public StatMaster(int hp, int mp, int str, int dex, int INT, int luk){
+	public StatMaster(int hp, int mp, int str, int dex, int INT, int luk, int level){
 		this.mHP=hp;
 		this.mMP=mp;
 		this.STR=str;
 		this.DEX=dex;
 		this.INT=INT;
 		this.LUK=luk;
+		this.level = level;
 	}
 	
 	public int getDEX(){return this.DEX;}
@@ -29,7 +30,11 @@ public class StatMaster {
 	}
 	
 	public String toString(){
-		return mHP+":"+mMP+":"+STR+":"+DEX+":"+INT+":"+LUK;
+		return mHP+":"+mMP+":"+STR+":"+DEX+":"+INT+":"+LUK+":"+level;
+	}
+
+	public int getLevel() {
+		return this.level;
 	}
 	
 }

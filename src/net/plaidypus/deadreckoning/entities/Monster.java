@@ -29,12 +29,14 @@ public class Monster extends LivingEntity {
 		super (targetTile, layer, entityFile, stats, allign);
 		movement = new Movement(this);
 		attack = new Attack(this);
+		this.skills.add(movement);
+		this.skills.add(attack);
 	}
 
 	/**
 	 * if something is blocking its path, it will turn left
 	 */
-	public Action chooseAction(GameContainer gc, int delta) {
+	public Action decideNextAction(GameContainer gc, int delta) {
 		
 		for(int i=-1; i<2; i++){
 			for(int q=-1; q<2; q++){
@@ -70,7 +72,9 @@ public class Monster extends LivingEntity {
 							Integer.parseInt(toload[7]),
 							Integer.parseInt(toload[8]),
 							Integer.parseInt(toload[9]),
-							Integer.parseInt(toload[10])), Integer.parseInt(toload[11]));
+							Integer.parseInt(toload[10]),
+							Integer.parseInt(toload[11])
+							), Integer.parseInt(toload[12]));
 	}
 	
 	@Override

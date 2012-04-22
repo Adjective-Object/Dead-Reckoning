@@ -127,7 +127,7 @@ public class GameplayElement extends HudElement {
 			}
 		}
 		
-		gb.placeEntity(target, player, player.getLayer());
+		gb.insertEntity(0,target, player, player.getLayer());
 		
 		cameraDestX = player.getAbsoluteX() - gc.getWidth() / 2 + DeadReckoningGame.tileSize/2;
 		cameraDestY = player.getAbsoluteY() - gc.getHeight() / 2 + DeadReckoningGame.tileSize/2;
