@@ -3,28 +3,27 @@ package net.plaidypus.deadreckoning.actions;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 
-public class MoveAction extends Action{
-	
+public class MoveAction extends Action {
+
 	boolean animate;
 	int destLayer;
-	
-	public MoveAction(Entity source, Tile destination, int destLayer){
-		super(source,destination);
-		animate=false;
-		if(destination.isVisible() || source.isVisible()){
-			animate=true;
+
+	public MoveAction(Entity source, Tile destination, int destLayer) {
+		super(source, destination);
+		animate = false;
+		if (destination.isVisible() || source.isVisible()) {
+			animate = true;
 		}
-		this.destLayer=destLayer;
+		this.destLayer = destLayer;
 	}
-	
+
 	public boolean apply(int delta) {
-		if(target.getX()<source.getX()){
+		if (target.getX() < source.getX()) {
 			source.setFacing(false);
-		}
-		else if(target.getX()>source.getX()){
+		} else if (target.getX() > source.getX()) {
 			source.setFacing(true);
 		}
-		source.getParent().moveEntity(source,target,destLayer);		
+		source.getParent().moveEntity(source, target, destLayer);
 		return true;
 	}
 
@@ -33,6 +32,8 @@ public class MoveAction extends Action{
 	}
 
 	@Override
-	protected boolean isNoticed() {return true;}
-	
+	protected boolean isNoticed() {
+		return true;
+	}
+
 }

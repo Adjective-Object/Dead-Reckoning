@@ -10,33 +10,34 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-public class LandingPad extends Entity{
-	
+public class LandingPad extends Entity {
+
 	public String fromFloor;
-	
-	public LandingPad(){}
-	
-	public LandingPad(Tile t, int layer, String fromFloor){
-		super(t,layer);
-		this.fromFloor=fromFloor;
+
+	public LandingPad() {
 	}
-	
+
+	public LandingPad(Tile t, int layer, String fromFloor) {
+		super(t, layer);
+		this.fromFloor = fromFloor;
+	}
+
 	@Override
 	public void init() throws SlickException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void update(GameContainer gc, int delta) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void updateBoardEffects(GameContainer gc, int delta) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -48,7 +49,7 @@ public class LandingPad extends Entity{
 	@Override
 	public void forceRender(Graphics g, float x, float y) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -65,21 +66,24 @@ public class LandingPad extends Entity{
 
 	@Override
 	public Entity makeFromString(GameBoard target, String[] attributes) {
-		return new LandingPad(target.getTileAt(Integer.parseInt(attributes[1]),Integer.parseInt(attributes[2])), Integer.parseInt(attributes[3]),
-				attributes[4]);
+		return new LandingPad(target.getTileAt(Integer.parseInt(attributes[1]),
+				Integer.parseInt(attributes[2])),
+				Integer.parseInt(attributes[3]), attributes[4]);
 	}
 
 	@Override
 	public String saveToString() {
-		return this.getGenericSave()+":"+fromFloor;
+		return this.getGenericSave() + ":" + fromFloor;
 	}
 
 	@Override
 	public void onDeath() {
-		//TODO empty
+		// TODO empty
 	}
 
 	@Override
-	public Action onInteract(Entity e) {return null;}
+	public Action onInteract(Entity e) {
+		return null;
+	}
 
 }

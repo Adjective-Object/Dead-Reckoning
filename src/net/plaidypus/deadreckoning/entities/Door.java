@@ -11,20 +11,22 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-public class Door extends Entity{
-	
+public class Door extends Entity {
+
 	boolean open;
-	
-	static Image openImg,closeImg;
-	
-	public Door(){super();}
-	
-	public Door(Tile t, int layer) {
-		super(t,layer);
-		open=false;
-		this.isTerrain=true;
+
+	static Image openImg, closeImg;
+
+	public Door() {
+		super();
 	}
-	
+
+	public Door(Tile t, int layer) {
+		super(t, layer);
+		open = false;
+		this.isTerrain = true;
+	}
+
 	@Override
 	public void init() throws SlickException {
 		openImg = new Image("res/doorOpen.png");
@@ -37,7 +39,8 @@ public class Door extends Entity{
 	}
 
 	@Override
-	public void updateBoardEffects(GameContainer gc, int delta) {}
+	public void updateBoardEffects(GameContainer gc, int delta) {
+	}
 
 	@Override
 	public Action chooseAction(GameContainer gc, int delta) {
@@ -46,28 +49,32 @@ public class Door extends Entity{
 
 	@Override
 	public void forceRender(Graphics g, float x, float y) {
-		if(open){
+		if (open) {
 			g.drawImage(openImg, x, y);
-		}
-		else{
+		} else {
 			g.drawImage(closeImg, x, y);
 		}
 	}
-	
-	@Override
-	public boolean isTransparent(){
-		return this.open;
-	}
-	
-	@Override
-	public boolean isInteractive() {return false;}
 
 	@Override
-	public ArrayList<Action> advanceTurn() {return null;}
+	public boolean isTransparent() {
+		return this.open;
+	}
+
+	@Override
+	public boolean isInteractive() {
+		return false;
+	}
+
+	@Override
+	public ArrayList<Action> advanceTurn() {
+		return null;
+	}
 
 	@Override
 	public Entity makeFromString(GameBoard target, String[] toload) {
-		return new Door(target.getTileAt(Integer.parseInt(toload[1]),Integer.parseInt(toload[2])),Integer.parseInt(toload[3]));
+		return new Door(target.getTileAt(Integer.parseInt(toload[1]),
+				Integer.parseInt(toload[2])), Integer.parseInt(toload[3]));
 	}
 
 	@Override
@@ -76,17 +83,17 @@ public class Door extends Entity{
 	}
 
 	@Override
-	public void onDeath() {}
+	public void onDeath() {
+	}
 
 	@Override
 	public Action onInteract(Entity e) {
 		this.open = !open;
 		Tile t = this.getLocation();
 		t.getParent().removeEntity(this);
-		if(open){
+		if (open) {
 			t.getParent().placeEntity(t, this, Tile.LAYER_PASSIVE_MAP);
-		}
-		else{
+		} else {
 			t.getParent().placeEntity(t, this, Tile.LAYER_ACTIVE);
 		}
 		return null;

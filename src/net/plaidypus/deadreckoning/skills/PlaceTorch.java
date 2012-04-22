@@ -5,19 +5,24 @@ import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.ChangeMapAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
-import net.plaidypus.deadreckoning.entities.*;
+import net.plaidypus.deadreckoning.entities.LivingEntity;
+import net.plaidypus.deadreckoning.entities.Torch;
 
-public class PlaceTorch extends Skill{
-	
-	public PlaceTorch(){super();}
-	
+public class PlaceTorch extends Skill {
+
+	public PlaceTorch() {
+		super();
+	}
+
 	public PlaceTorch(LivingEntity source) {
 		super(source);
 	}
 
 	@Override
 	public Action makeAction(Tile target) {
-		return new ChangeMapAction(source,target,Tile.LAYER_PASSIVE_MAP,new Torch(target,Tile.LAYER_PASSIVE_MAP,Utilities.randInt(2, 5)));
+		return new ChangeMapAction(source, target, Tile.LAYER_PASSIVE_MAP,
+				new Torch(target, Tile.LAYER_PASSIVE_MAP, Utilities.randInt(2,
+						5)));
 	}
 
 	@Override
@@ -27,11 +32,11 @@ public class PlaceTorch extends Skill{
 
 	@Override
 	public void highlightRange(GameBoard board) {
-		for(int y=0; y<board.getHeight(); y++){
-			for(int x=0; x<board.getWidth(); x++){
+		for (int y = 0; y < board.getHeight(); y++) {
+			for (int x = 0; x < board.getWidth(); x++) {
 				board.highlightSquare(x, y);
 			}
 		}
 	}
-	
+
 }

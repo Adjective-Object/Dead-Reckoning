@@ -11,9 +11,9 @@ import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
+import net.plaidypus.deadreckoning.professions.StatMaster;
 import net.plaidypus.deadreckoning.skills.Skill;
 import net.plaidypus.deadreckoning.status.Status;
-import net.plaidypus.deadreckoning.professions.StatMaster;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
@@ -21,7 +21,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
-
 
 public abstract class LivingEntity extends InteractiveEntity {
 
@@ -37,39 +36,41 @@ public abstract class LivingEntity extends InteractiveEntity {
 	public static final int ANIMATION_STAND = 0, ANIMATION_ATTACK = 1,
 			ANIMATION_WALK = 2, ANIMATION_FLINCH_FRONT = 3,
 			ANIMATION_FLINCH_BACK = 4, ANIMATION_DEATH = 5;
-	
+
 	protected StatMaster statMaster;
-	
-	//Exists only for the purpose of referencing methods that should be static,
+
+	// Exists only for the purpose of referencing methods that should be static,
 	// but need to be abstract, because fuck Java
-	public LivingEntity(){}
-	
+	public LivingEntity() {
+	}
+
 	/**
 	 * subclass of entity with some basic stats for damage calulcation and
 	 * health, etc. also animations
 	 * 
 	 * @param entityfile
 	 */
-	public LivingEntity(Tile targetTile, int layer, String entityFile, StatMaster statMaster, int allignment) {
+	public LivingEntity(Tile targetTile, int layer, String entityFile,
+			StatMaster statMaster, int allignment) {
 		super(targetTile, layer);
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(new File(
 					entityFile)));
 			loadFromFile(reader);
-		} catch (Exception e){
+		} catch (Exception e) {
 			DeadReckoningGame.instance.flashException(e);
 		}
-		
+
 		currentAnimation = stand;
 		this.statMaster = statMaster;
-		
-		this.entityFile=entityFile;
-		
+
+		this.entityFile = entityFile;
+
 		setFacing(false);
-		
+
 		this.setAllignment(allignment);
-		this.statuses=new ArrayList<Status>(0);
-		
+		this.statuses = new ArrayList<Status>(0);
+
 		animations = new ArrayList<Animation>(0);
 		animations.add(stand);
 		animations.add(basicAttack);
@@ -77,9 +78,9 @@ public abstract class LivingEntity extends InteractiveEntity {
 		animations.add(damageFront);
 		animations.add(damageBack);
 		animations.add(death);
-		
-		this.HP=this.statMaster.getMaxHP();
-		this.MP=this.statMaster.getMaxMP();
+
+		this.HP = this.statMaster.getMaxHP();
+		this.MP = this.statMaster.getMaxMP();
 	}
 
 	/**
@@ -90,43 +91,45 @@ public abstract class LivingEntity extends InteractiveEntity {
 		if (this.currentAnimation.isStopped()) {
 			this.setCurrentAnimation(ANIMATION_STAND);
 		}
-		
-		for(int i=0; i<this.statuses.size(); i++){
+
+		for (int i = 0; i < this.statuses.size(); i++) {
 			statuses.get(i).update(this, delta);
 		}
-		
-		if(this.HP<=0){
+
+		if (this.HP <= 0) {
 			this.kill();
 		}
 	}
-	
+
 	/**
 	 * still abstract because different livingEntities will have differing AIs
 	 */
-	public Action chooseAction(GameContainer gc, int delta){
-		return parseFinishedAction(decideNextAction(gc,delta));
+	public Action chooseAction(GameContainer gc, int delta) {
+		return parseFinishedAction(decideNextAction(gc, delta));
 	}
-	
+
 	/**
 	 * necessary for the automatic usage of parsefinishedAction
 	 */
 	protected abstract Action decideNextAction(GameContainer gc, int delta);
 
 	/**
-	 * enacts something (be default, the updating of skill cooldowns) based on the return value of a
+	 * enacts something (be default, the updating of skill cooldowns) based on
+	 * the return value of a
 	 * 
-	 * @param a the action to return
+	 * @param a
+	 *            the action to return
 	 * @return a
 	 */
-	protected Action parseFinishedAction(Action a){
-		if(a!=null){
-			for(int i=0; i<this.skills.size(); i++){
+	protected Action parseFinishedAction(Action a) {
+		if (a != null) {
+			for (int i = 0; i < this.skills.size(); i++) {
 				this.skills.get(i).updateSkill();
 			}
 		}
 		return a;
 	}
-	
+
 	/**
 	 * deals the entity some amount of physical damage. This method takes the
 	 * raw damage, and applies the physical defense of the livingentity to it
@@ -159,9 +162,11 @@ public abstract class LivingEntity extends InteractiveEntity {
 	public void forceRender(Graphics g, float x, float y) {
 		g.drawImage(
 				currentAnimation.getCurrentFrame().getFlippedCopy(getFacing(),
-						false), (int)x+DeadReckoningGame.tileSize/2-this.width/2, (int)y+DeadReckoningGame.tileSize-this.height);
-		for(int i=0; i<statuses.size();i++){
-			statuses.get(i).render(g,(int)x, (int)y);
+						false), (int) x + DeadReckoningGame.tileSize / 2
+						- this.width / 2, (int) y + DeadReckoningGame.tileSize
+						- this.height);
+		for (int i = 0; i < statuses.size(); i++) {
+			statuses.get(i).render(g, (int) x, (int) y);
 		}
 	}
 
@@ -176,12 +181,12 @@ public abstract class LivingEntity extends InteractiveEntity {
 		this.currentAnimation.restart();
 		this.currentAnimation = this.animations.get(id);
 	}
-	
-	public Animation getCurrentAntimation(){
+
+	public Animation getCurrentAntimation() {
 		return this.animations.get(currentAnimationID);
 	}
-	
-	public Animation getAnimation(int ID){
+
+	public Animation getAnimation(int ID) {
 		return animations.get(ID);
 	}
 
@@ -194,10 +199,11 @@ public abstract class LivingEntity extends InteractiveEntity {
 		return currentAnimationID;
 	}
 
-
 	/**
 	 * checks to see if a living entity can see a certain entity
-	 * @param e the entity to check against
+	 * 
+	 * @param e
+	 *            the entity to check against
 	 * @return if the entity can see it
 	 */
 	public boolean canSee(Entity e) {
@@ -206,54 +212,60 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 	/**
 	 * checks to see if a living entity can see a certain tile
-	 * @param t the tile to check against
+	 * 
+	 * @param t
+	 *            the tile to check against
 	 * @return if the entity can see it
 	 */
 	public boolean canSee(Tile t) {
-		return t.lightLevel<0 && this.getParent().isLineofSight(this.getLocation(), t);
+		return t.lightLevel < 0
+				&& this.getParent().isLineofSight(this.getLocation(), t);
 	}
-	
+
 	// STAT referencing
 
 	/**
-	 * gets the range the entity can attack with its default attack
-	 * (STAT MANAGEMENT)
+	 * gets the range the entity can attack with its default attack (STAT
+	 * MANAGEMENT)
 	 * 
 	 * @return the number of tiles away the entity can target
 	 */
 	public int getAttackRange() {
 		return 1;
 	}
-	
+
 	/**
 	 * is the entity still alive?
+	 * 
 	 * @return if the HP>0
 	 */
 	public boolean isAlive() {
-		return this.HP>0;
+		return this.HP > 0;
 	}
-	
-	public void onDeath(){
+
+	public void onDeath() {
 		this.getParent().removeEntity(this);
-		for(int i=0; i<this.getLocation().getEntities().length; i++){
+		for (int i = 0; i < this.getLocation().getEntities().length; i++) {
 		}
-		this.getParent().placeEntityNear(this.getX(), this.getY(),new Corpse(this.getLocation(),Tile.LAYER_PASSIVE_PLAY,this), Tile.LAYER_PASSIVE_PLAY);
-		for(int i=0; i<this.getLocation().getEntities().length; i++){
+		this.getParent().placeEntityNear(this.getX(), this.getY(),
+				new Corpse(this.getLocation(), Tile.LAYER_PASSIVE_PLAY, this),
+				Tile.LAYER_PASSIVE_PLAY);
+		for (int i = 0; i < this.getLocation().getEntities().length; i++) {
 		}
 	}
-	
-	public boolean isInteractive(){
+
+	public boolean isInteractive() {
 		return this.isAlive();
 	}
-	
-	public ArrayList<Status> getConditions(){
+
+	public ArrayList<Status> getConditions() {
 		return this.statuses;
 	}
-	
-	public void addCondition(Status s){
-		int i=0;
-		while(i<this.statuses.size()){
-			if(this.statuses.get(i).identifier.equals(s.identifier)){
+
+	public void addCondition(Status s) {
+		int i = 0;
+		while (i < this.statuses.size()) {
+			if (this.statuses.get(i).identifier.equals(s.identifier)) {
 				Status p = s.collapseWithStatus(statuses.get(i));
 				p.applyToEntity(this);
 				this.statuses.remove(i);
@@ -261,24 +273,24 @@ public abstract class LivingEntity extends InteractiveEntity {
 			}
 			i++;
 		}
-		if(i==this.statuses.size()){
+		if (i == this.statuses.size()) {
 			this.statuses.add(s);
 			s.applyToEntity(this);
 		}
 	}
-	
-	public void clearConditions(){
-		for(int i=0; i<statuses.size(); i++){
+
+	public void clearConditions() {
+		for (int i = 0; i < statuses.size(); i++) {
 			statuses.get(i).removeFromEntity(this);
 		}
 		statuses.clear();
 	}
-	
-	public boolean isIdle(){
-		return this.getCurrentAnimationID()==LivingEntity.ANIMATION_STAND || this.HP<=0;
+
+	public boolean isIdle() {
+		return this.getCurrentAnimationID() == LivingEntity.ANIMATION_STAND
+				|| this.HP <= 0;
 	}
-	
-	
+
 	/**
 	 * Loads an entity from a text file. SO UGLY IT HURTS, but it didn't make
 	 * sense to break into subroutines
@@ -290,14 +302,14 @@ public abstract class LivingEntity extends InteractiveEntity {
 	public void loadFromFile(BufferedReader reader) throws IOException,
 			SlickException {
 		String ParsingMode = "";
-		
+
 		HashMap<String, String> info = new HashMap<String, String>();
 		HashMap<String, Integer> stats = new HashMap<String, Integer>();
 		HashMap<String, SpriteSheet> images = new HashMap<String, SpriteSheet>();
 		HashMap<String, Animation> animations = new HashMap<String, Animation>();
 
 		String in = "";
-		
+
 		while (!ParsingMode.equals(":EXIT:") && in != null) {
 			// OH FUCK MY MIND SHITSHTISHIT
 			// THIS IS SO UGLY. BUT IT WORKS
@@ -350,7 +362,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 		}
 
 		setName(info.get("NAME"));
-		
+
 		width = stats.get("TILEX");
 		height = stats.get("TILEY");
 
@@ -369,23 +381,23 @@ public abstract class LivingEntity extends InteractiveEntity {
 	public GameplayElement getGame() {
 		return this.getParent().getGame();
 	}
-	
-	public ArrayList<Action> advanceTurn(){
+
+	public ArrayList<Action> advanceTurn() {
 		ArrayList<Action> actions = new ArrayList<Action>(0);
-		for (int i=0; i<statuses.size(); i++){
+		for (int i = 0; i < statuses.size(); i++) {
 			actions.addAll(statuses.get(i).advanceTurnEffects(this));
 		}
 		return actions;
 	}
 
-	public StatMaster getStatMaster(){
+	public StatMaster getStatMaster() {
 		return this.statMaster;
 	}
-	
-	public String getName(){
+
+	public String getName() {
 		String p = super.getName();
-		if(!this.isAlive()){
-			p+="'s corpse";
+		if (!this.isAlive()) {
+			p += "'s corpse";
 		}
 		return p;
 	}
@@ -393,5 +405,5 @@ public abstract class LivingEntity extends InteractiveEntity {
 	public int calculateEXPValue() {
 		return this.statMaster.calculateEXPValue();
 	}
-	
+
 }

@@ -7,9 +7,11 @@ import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 
 public class Movement extends Skill {
-	
-	public Movement(){super();}
-	
+
+	public Movement() {
+		super();
+	}
+
 	/**
 	 * movement subclass of skill allows for easy generation of MoveAction
 	 * Actions
@@ -25,11 +27,12 @@ public class Movement extends Skill {
 	}
 
 	public Action makeAction(Tile target) {
-		return new MoveAction(source, target,source.getLayer());
+		return new MoveAction(source, target, source.getLayer());
 	}
 
 	public void highlightRange(GameBoard board) {
-		board.highLightAvailablePaths( source.getLocation(), 1, Tile.LAYER_ACTIVE);
+		board.highLightAvailablePaths(source.getLocation(), 1,
+				Tile.LAYER_ACTIVE);
 	}
 
 }

@@ -4,11 +4,9 @@ import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.LootAction;
-import net.plaidypus.deadreckoning.actions.WaitAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.grideffects.FadeoutEffect;
-import net.plaidypus.deadreckoning.items.Equip;
 import net.plaidypus.deadreckoning.items.EtcDrop;
 import net.plaidypus.deadreckoning.items.Item;
 
@@ -17,15 +15,16 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-public class Chest extends InteractiveEntity{
-	
+public class Chest extends InteractiveEntity {
+
 	static Image chest;
-	
-	//Exists only for the purpose of referencing methods that should be static,
+
+	// Exists only for the purpose of referencing methods that should be static,
 	// but need to be abstract, because fuck Java
-	public Chest(){} 
-	
-	public Chest(Tile t, int layer, ArrayList<Item> items){
+	public Chest() {
+	}
+
+	public Chest(Tile t, int layer, ArrayList<Item> items) {
 		super(t, layer);
 		this.setLocation(t);
 		this.setVisible(true);
@@ -33,17 +32,17 @@ public class Chest extends InteractiveEntity{
 		this.setName("a chest");
 		this.description = "A creaky old chest.";
 	}
-	
-	public void init() throws SlickException{
+
+	public void init() throws SlickException {
 		Chest.chest = new Image("res/chest.png");
 		System.out.println(chest);
 	}
-	
+
 	public void update(GameContainer gc, int delta) {
 	}
-	
-	public void updateBoardEffects(GameContainer gc, int delta){
-		if(this.inventory.isEmpty()){
+
+	public void updateBoardEffects(GameContainer gc, int delta) {
+		if (this.inventory.isEmpty()) {
 			this.kill();
 		}
 	}
@@ -55,16 +54,20 @@ public class Chest extends InteractiveEntity{
 
 	@Override
 	public void forceRender(Graphics g, float x, float y) {
-		g.drawImage(chest, x,y);
+		g.drawImage(chest, x, y);
 	}
 
 	@Override
 	public Entity makeFromString(GameBoard g, String[] toload) {
 		ArrayList<Item> content = new ArrayList<Item>(0);
-		for(int i=4; i<toload.length; i++){
-			content.add(new EtcDrop(Integer.parseInt(toload[i]),1));//TODO equip parsing
+		for (int i = 4; i < toload.length; i++) {
+			content.add(new EtcDrop(Integer.parseInt(toload[i]), 1));// TODO
+																		// equip
+																		// parsing
 		}
-		return new Chest(g.getTileAt(Integer.parseInt(toload[1]),Integer.parseInt(toload[2])),Integer.parseInt(toload[3]),content);
+		return new Chest(g.getTileAt(Integer.parseInt(toload[1]),
+				Integer.parseInt(toload[2])), Integer.parseInt(toload[3]),
+				content);
 	}
 
 	@Override
@@ -85,12 +88,13 @@ public class Chest extends InteractiveEntity{
 
 	@Override
 	public void onDeath() {
-		this.getParent().addEffectOver(new FadeoutEffect(this.getLocation(),chest));
+		this.getParent().addEffectOver(
+				new FadeoutEffect(this.getLocation(), chest));
 	}
 
 	@Override
 	public Action onInteract(Entity observer) {
-		return new LootAction(observer,this.getLocation(),this.getLayer());
+		return new LootAction(observer, this.getLocation(), this.getLayer());
 	}
 
 }

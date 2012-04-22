@@ -7,28 +7,31 @@ import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 
-public class CheckInventory extends Skill{
-	
-	public CheckInventory(){super();}
-	
+public class CheckInventory extends Skill {
+
+	public CheckInventory() {
+		super();
+	}
+
 	public CheckInventory(LivingEntity source) {
 		super(source);
 	}
 
 	@Override
 	public Action makeAction(Tile target) {
-		return new ChangeStateAction(source,target,DeadReckoningGame.INVENTORYSTATE);
+		return new ChangeStateAction(source, target,
+				DeadReckoningGame.INVENTORYSTATE);
 	}
-		
+
 	@Override
 	public boolean canTargetTile(Tile t) {
-		return t==source.getLocation();
+		return t == source.getLocation();
 	}
-	
-	public boolean isInstant(){
+
+	public boolean isInstant() {
 		return true;
 	}
-	
+
 	@Override
 	public void highlightRange(GameBoard board) {
 		highlightRadial(board, 0);

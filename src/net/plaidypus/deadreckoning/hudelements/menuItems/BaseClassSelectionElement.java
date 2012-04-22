@@ -11,25 +11,27 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class BaseClassSelectionElement extends HudElement{
-	
-	int currentClass=0;
+public class BaseClassSelectionElement extends HudElement {
+
+	int currentClass = 0;
 	int numClasses;
-	
+
 	Image iconImage;
-	
-	public BaseClassSelectionElement(int x, int y, int bindMethod) throws SlickException{
-		super(x,y,bindMethod,true);
+
+	public BaseClassSelectionElement(int x, int y, int bindMethod)
+			throws SlickException {
+		super(x, y, bindMethod, true);
 		numClasses = enumerateClasses();
-		iconImage = new Image("res/professions/"+currentClass+"/Portrait.png");
+		iconImage = new Image("res/professions/" + currentClass
+				+ "/Portrait.png");
 	}
 
 	private int enumerateClasses() {
 		int numClass = 0;
-		File f = new File("res/professions/"+numClass);
-		while(f.exists()){
+		File f = new File("res/professions/" + numClass);
+		while (f.exists()) {
 			numClass++;
-			f = new File("res/professions/"+numClass);
+			f = new File("res/professions/" + numClass);
 		}
 		return numClass;
 	}
@@ -37,25 +39,29 @@ public class BaseClassSelectionElement extends HudElement{
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-		if(this.hasFocus){
-			if(gc.getInput().isKeyPressed(Input.KEY_LEFT)){
-				currentClass = (currentClass+numClasses-1)%numClasses;
-				iconImage = new Image("res/professions/"+currentClass+"/Portrait.png");
+		if (this.hasFocus) {
+			if (gc.getInput().isKeyPressed(Input.KEY_LEFT)) {
+				currentClass = (currentClass + numClasses - 1) % numClasses;
+				iconImage = new Image("res/professions/" + currentClass
+						+ "/Portrait.png");
 			}
-			if(gc.getInput().isKeyPressed(Input.KEY_RIGHT)){
-				currentClass = (currentClass+1)%numClasses;
-				iconImage = new Image("res/professions/"+currentClass+"/Portrait.png");
+			if (gc.getInput().isKeyPressed(Input.KEY_RIGHT)) {
+				currentClass = (currentClass + 1) % numClasses;
+				iconImage = new Image("res/professions/" + currentClass
+						+ "/Portrait.png");
 			}
 		}
 	}
 
 	@Override
-	public void makeFrom(Object o) {}
+	public void makeFrom(Object o) {
+	}
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
-			throws SlickException {}
-	
+			throws SlickException {
+	}
+
 	public int getWidth() {
 		return iconImage.getWidth();
 	}
@@ -68,7 +74,7 @@ public class BaseClassSelectionElement extends HudElement{
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		g.drawImage(iconImage,getX(),getY());
+		g.drawImage(iconImage, getX(), getY());
 	}
-	
+
 }

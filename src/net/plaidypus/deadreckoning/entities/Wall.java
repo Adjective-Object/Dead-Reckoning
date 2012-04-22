@@ -11,49 +11,61 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-public class Wall extends Entity{
+public class Wall extends Entity {
 
-	//Exists only for the purpose of referencing methods that should be static,
+	// Exists only for the purpose of referencing methods that should be static,
 	// but need to be abstract, because fuck Java
-	public Wall(){} 
-	
-	public Wall(Tile targetTile, int layer){
+	public Wall() {
+	}
+
+	public Wall(Tile targetTile, int layer) {
 		super(targetTile, layer);
 		this.setTransparent(false);
 		this.description = "the walls are cracked and worn.";
 	}
-	
-	public void update(GameContainer gc, int delta) {}
-	
-	public void updateBoardEffects(GameContainer gc, int delta){
+
+	public void update(GameContainer gc, int delta) {
 	}
-	
+
+	public void updateBoardEffects(GameContainer gc, int delta) {
+	}
+
 	@Override
 	public Action chooseAction(GameContainer gc, int delta) {
 		return new WaitAction(this);
 	}
 
-	public void forceRender(Graphics g, float x, float y) {}
+	public void forceRender(Graphics g, float x, float y) {
+	}
 
 	@Override
 	public Entity makeFromString(GameBoard g, String[] toload) {
-		return new Wall(g.getTileAt(Integer.parseInt(toload[1]), Integer.parseInt(toload[2])), Integer.parseInt(toload[3]));
-		}
+		return new Wall(g.getTileAt(Integer.parseInt(toload[1]),
+				Integer.parseInt(toload[2])), Integer.parseInt(toload[3]));
+	}
 
 	@Override
-	public String saveToString() {return this.getGenericSave();}
+	public String saveToString() {
+		return this.getGenericSave();
+	}
 
 	@Override
-	public ArrayList<Action> advanceTurn() {return new ArrayList<Action>(0);}
+	public ArrayList<Action> advanceTurn() {
+		return new ArrayList<Action>(0);
+	}
 
 	@Override
-	public boolean isInteractive() {return false;}
+	public boolean isInteractive() {
+		return false;
+	}
 
 	@Override
-	public void onDeath() {}
+	public void onDeath() {
+	}
 
 	@Override
-	public void init() throws SlickException {}
+	public void init() throws SlickException {
+	}
 
 	@Override
 	public Action onInteract(Entity e) {

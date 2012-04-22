@@ -1,19 +1,19 @@
 package net.plaidypus.deadreckoning.actions;
 
-import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 
-public class ChangeMapAction extends Action{
-	
+public class ChangeMapAction extends Action {
+
 	Entity toWrite;
 	int layer;
-	
-	public ChangeMapAction(Entity source, Tile target, int layer, Entity toOverWrite) {
+
+	public ChangeMapAction(Entity source, Tile target, int layer,
+			Entity toOverWrite) {
 		super(source, target);
 		toWrite = toOverWrite;
 		this.layer = layer;
-		takesTurn=false;
+		takesTurn = false;
 	}
 
 	protected boolean apply(int delta) {
@@ -22,5 +22,7 @@ public class ChangeMapAction extends Action{
 	}
 
 	@Override
-	protected boolean isNoticed() {return false;}
+	protected boolean isNoticed() {
+		return false;
+	}
 }

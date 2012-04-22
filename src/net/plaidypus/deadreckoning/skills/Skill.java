@@ -1,27 +1,27 @@
 package net.plaidypus.deadreckoning.skills;
 
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+
 public abstract class Skill {
-	
+
 	int level, levelcap;
-	int cooldown;
-	String name = "NO_NAME", description="NO_DESC";
-	
+	private int cooldown;
+	String name = "NO_NAME", description = "NO_DESC";
+
 	Image imageIcon;
-	
+
 	LivingEntity source;
-	
-	public Skill (Image icon){
+
+	public Skill(Image icon) {
 		this.imageIcon = icon;
 	}
-	
+
 	/**
 	 * Skills are a method of having arbitrary abilities on entites (able to be
 	 * stored in an arrayList) while keeping the Action class unique for each
@@ -32,24 +32,28 @@ public abstract class Skill {
 	public Skill(LivingEntity source) {
 		this.source = source;
 	}
-	
+
 	/**
-	 * created to have unlinekd instances of a skill that can be later bound. planned to be used only in character creation
+	 * created to have unlinekd instances of a skill that can be later bound.
+	 * planned to be used only in character creation
 	 */
-	public Skill(){
-		try{
-			this. imageIcon = new Image("res/noSkill.png");
-		}catch (SlickException e){}
+	public Skill() {
+		try {
+			this.imageIcon = new Image("res/noSkill.png");
+		} catch (SlickException e) {
+		}
 	}
-	
+
 	/**
-	 * binds the skill to a ceratain livingentity such that it is unecessary to constantly pass the correct livingentity to parse based off of.
+	 * binds the skill to a ceratain livingentity such that it is unecessary to
+	 * constantly pass the correct livingentity to parse based off of.
+	 * 
 	 * @param source
 	 */
-	public void bindTo(LivingEntity source){
-		this.source=source;
+	public void bindTo(LivingEntity source) {
+		this.source = source;
 	}
-	
+
 	/**
 	 * generates an action targeted at a tile. Usually to be assigned to the
 	 * source entity
@@ -91,10 +95,13 @@ public abstract class Skill {
 			for (int vx = 0; vx < board.getWidth(); vx++) {
 				if (Math.sqrt(Math.pow(source.getX() - vx, 2)
 						+ Math.pow(source.getY() - vy, 2)) <= range) {
-					if (canTargetTile(board.getTileAt(vx, vy)) && board.getTileAt(vx, vy).lightLevel>=1) {
-						board.getTileAt(vx, vy).setHighlighted(Tile.HIGHLIGHT_CONFIRM);
+					if (canTargetTile(board.getTileAt(vx, vy))
+							&& board.getTileAt(vx, vy).lightLevel >= 1) {
+						board.getTileAt(vx, vy).setHighlighted(
+								Tile.HIGHLIGHT_CONFIRM);
 					} else {
-						board.getTileAt(vx, vy).setHighlighted(Tile.HIGHLIGHT_DENY);
+						board.getTileAt(vx, vy).setHighlighted(
+								Tile.HIGHLIGHT_DENY);
 					}
 				}
 			}
@@ -104,13 +111,13 @@ public abstract class Skill {
 	public boolean isInstant() {
 		return false;
 	}
-	
-	public int getLevel(){
+
+	public int getLevel() {
 		return level;
 	}
-	
-	public void setLevel(int level){
-		this.level=level;
+
+	public void setLevel(int level) {
+		this.level = level;
 	}
 
 	public Image getImage() {
@@ -124,23 +131,25 @@ public abstract class Skill {
 	public String getDescription() {
 		return description;
 	}
-	
-	public void setName(String name){
-		this.name=name;
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	
-	public void setDescriptor(String description){
-		this.description=description;
+
+	public void setDescriptor(String description) {
+		this.description = description;
 	}
 
 	public void levelUp() {
 		this.level++;
 	}
-	
-	public boolean canBeCast(){return cooldown<=0;}
-	
-	public void updateSkill(){//called on turn advance
-		this.cooldown-=1;
+
+	public boolean canBeCast() {
+		return getCooldown() <= 0;
+	}
+
+	public void updateSkill() {// called on turn advance
+		this.setCooldown(this.getCooldown() - 1);
 	}
 
 	public int getLevelCap() {
@@ -149,5 +158,13 @@ public abstract class Skill {
 
 	public int getLevelReq() {
 		return 0;
+	}
+
+	public void setCooldown(int cooldown) {
+		this.cooldown = cooldown;
+	}
+
+	public int getCooldown() {
+		return cooldown;
 	}
 }

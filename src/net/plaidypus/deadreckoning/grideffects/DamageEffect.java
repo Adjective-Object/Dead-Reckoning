@@ -9,7 +9,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 
-public class DamageEffect extends GridEffect{
+public class DamageEffect extends GridEffect {
 
 	static UnicodeFont font;
 	static float gravity = (float) 0.05;
@@ -25,8 +25,8 @@ public class DamageEffect extends GridEffect{
 	 */
 	public DamageEffect(Tile t, String damage) {
 		super(t);
-		this.x=Utilities.randInt(0, DeadReckoningGame.tileSize);
-		this.y=Utilities.randInt(0, DeadReckoningGame.tileSize);
+		this.x = Utilities.randInt(0, DeadReckoningGame.tileSize);
+		this.y = Utilities.randInt(0, DeadReckoningGame.tileSize);
 		this.xMove = 0;
 		this.yMove = -1;
 		this.visibility = (float) 1.0;
@@ -64,6 +64,7 @@ public class DamageEffect extends GridEffect{
 	 */
 	public void render(Graphics g, float xOff, float yOff) {
 		g.setColor(new Color(200, 0, 0, 255 * visibility));
-		g.drawString(damage, location.getX()*DeadReckoningGame.tileSize + x + xOff, location.getY()*DeadReckoningGame.tileSize  + y + yOff);
+		g.drawString(damage, location.getX() * DeadReckoningGame.tileSize + x
+				+ xOff, location.getY() * DeadReckoningGame.tileSize + y + yOff);
 	}
 }

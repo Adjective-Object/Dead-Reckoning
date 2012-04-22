@@ -2,28 +2,28 @@ package net.plaidypus.deadreckoning.entities;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
-
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.LootAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 
-public class Corpse extends InteractiveEntity{
-	
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
+
+public class Corpse extends InteractiveEntity {
+
 	LivingEntity entity;
-	
-	public Corpse(Tile t,int layer,LivingEntity e) {
+
+	public Corpse(Tile t, int layer, LivingEntity e) {
 		super(t, layer);
 		this.entity = e;
-		this.inventory=entity.getInventory();
+		this.inventory = entity.getInventory();
 	}
-	
+
 	public void update(GameContainer gc, int delta) {
 	}
-	
+
 	public void updateBoardEffects(GameContainer gc, int delta) {
 	}
 
@@ -34,7 +34,10 @@ public class Corpse extends InteractiveEntity{
 
 	@Override
 	public void forceRender(Graphics g, float x, float y) {
-		g.drawImage(entity.getAnimation(LivingEntity.ANIMATION_DEATH).getImage(entity.getAnimation(LivingEntity.ANIMATION_DEATH).getFrameCount()-1),x,y);
+		g.drawImage(
+				entity.getAnimation(LivingEntity.ANIMATION_DEATH).getImage(
+						entity.getAnimation(LivingEntity.ANIMATION_DEATH)
+								.getFrameCount() - 1), x, y);
 	}
 
 	@Override
@@ -59,14 +62,16 @@ public class Corpse extends InteractiveEntity{
 	}
 
 	@Override
-	public void onDeath() {}
+	public void onDeath() {
+	}
 
 	@Override
-	public void init() throws SlickException {}
+	public void init() throws SlickException {
+	}
 
 	@Override
 	public Action onInteract(Entity e) {
-		return new LootAction(e,this.getLocation(),this.getLayer());
+		return new LootAction(e, this.getLocation(), this.getLayer());
 	}
 
 }

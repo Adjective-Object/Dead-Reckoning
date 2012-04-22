@@ -2,13 +2,6 @@ package net.plaidypus.deadreckoning.state;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.StateBasedGame;
-
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
@@ -23,146 +16,167 @@ import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.professions.SkillProgression;
 import net.plaidypus.deadreckoning.skills.Skill;
 
-public class PlayerViewerState extends HudLayersState{
-	
-	static final int ofX=50, ofY=50;
-	
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
+
+public class PlayerViewerState extends HudLayersState {
+
+	static final int ofX = 50, ofY = 50;
+
 	Panel buttonPanel, statPanel;
-	
+
 	Profession sourceProf;
-	
-	Image[][] images = new Image[3][12];//dimmed,highlighted, both
-	
+
+	Image[][] images = new Image[3][12];// dimmed,highlighted, both
+
 	public PlayerViewerState(int stateID) {
 		super(stateID, makeState());
-		this.buttonPanel=(Panel) this.HudElements.get(1);
+		this.buttonPanel = (Panel) this.HudElements.get(1);
 		this.statPanel = (Panel) this.HudElements.get(2);
 	}
-	
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException{
-		super.update(container,game,delta);
-		
-		for(int i=0; i<buttonPanel.getContents().size()-1; i++){
-			Button b = (Button)(buttonPanel.getContents().get(i));
-			Skill siq = sourceProf.getTrees()[i/4].getSkills()[i%4];
-			if(b.isPressed() && sourceProf.skillPoints>0 &&
-					siq.getLevelCap()>siq.getLevel() &&
-					this.sourceProf.getLevel()>siq.getLevelReq()&&
-					(i%4==0 || sourceProf.getTrees()[i/4].getSkills()[i%4-1].getLevel()>0) ){
+
+	public void update(GameContainer container, StateBasedGame game, int delta)
+			throws SlickException {
+		super.update(container, game, delta);
+
+		for (int i = 0; i < buttonPanel.getContents().size() - 1; i++) {
+			Button b = (Button) (buttonPanel.getContents().get(i));
+			Skill siq = sourceProf.getTrees()[i / 4].getSkills()[i % 4];
+			if (b.isPressed()
+					&& sourceProf.skillPoints > 0
+					&& siq.getLevelCap() > siq.getLevel()
+					&& this.sourceProf.getLevel() > siq.getLevelReq()
+					&& (i % 4 == 0 || sourceProf.getTrees()[i / 4].getSkills()[i % 4 - 1]
+							.getLevel() > 0)) {
 				sourceProf.skillPoints--;
 				siq.levelUp();
 				bakeFromProfession(sourceProf);
 			}
 		}
 	}
-	
-	public void makeFrom(Object[] args){
+
+	public void makeFrom(Object[] args) {
 		this.HudElements.get(0).makeFrom(args[0]);
-		Player p = (Player)(args[1]);
+		Player p = (Player) (args[1]);
 		System.out.println(p);
 		this.sourceProf = p.getProfession();
-		
+
 		ArrayList<Skill> skills = this.sourceProf.getSkillList();
-		for(int i=0; i<skills.size(); i++){
+		for (int i = 0; i < skills.size(); i++) {
 			Image img = skills.get(i).getImage().getFlippedCopy(false, false);
-			try{
+			try {
 				Graphics g = img.getGraphics();
-				g.drawString(Integer.toString(i), 0, 0);
-				g.setColor(new Color(0,0,0,80));
-				g.fillRect(0,0,32,32);
-				images[0][i]=img;
-			}catch(SlickException e){}
-			
+				g.setColor(new Color(0, 0, 0, 80));
+				g.fillRect(0, 0, 32, 32);
+				images[0][i] = img;
+			} catch (SlickException e) {
+			}
+
 			img = skills.get(i).getImage().getFlippedCopy(false, false);
-			try{
+			try {
 				Graphics g = img.getGraphics();
-				g.setColor(new Color(0,0,0,80));
-				g.fillRect(0,0,32,32);
+				g.setColor(DeadReckoningGame.skillInvalidColor);
+				g.fillRect(0, 0, 32, 32);
 				g.setColor(DeadReckoningGame.menuHighlightColor);
 				g.drawRect(0, 0, 31, 31);
-				images[2][i]=img;
-			}catch(SlickException e){}
-			
-			
+				images[2][i] = img;
+			} catch (SlickException e) {
+			}
+
 			img = skills.get(i).getImage().getFlippedCopy(false, false);
-			try{
+			try {
 				Graphics g = img.getGraphics();
 				g.setColor(DeadReckoningGame.menuHighlightColor);
 				g.drawRect(0, 0, 31, 31);
-				images[1][i]=img;
-			}catch(SlickException e){}
+				images[1][i] = img;
+			} catch (SlickException e) {
+			}
 		}
-		
+
 		bakeFromProfession(sourceProf);
-		
+
 		this.buttonPanel.bakeBorders();
-		this.statPanel.makeFrom( new Object[]{p.profession.getPortriat(),p} );
-		
-	}
-	
-	public void bakeFromProfession(Profession p){
-		for(int i=0; i<3; i++){
-			SkillProgression prog = p.getTrees()[i];
-			for(int s=0; s<4; s++){
-				Image img;
-				
-				if(sourceProf.skillPoints>0 &&
-						(s==0 || prog.getSkills()[s-1].getLevel()>0) &&
-						p.getLevel()>=prog.getSkills()[s].getLevelReq() &&
-						prog.getSkills()[s].getLevel()<prog.getSkills()[s].getLevelCap()){ //Should be highlighted
-					
-					if(prog.getSkills()[s].getLevel()>=1){
-						img=images[1][i*4+s];	
-					}
-					else{
-						img=images[2][i*4+s];
-					}
-				}
-				else{ //else
-					if(prog.getSkills()[s].getLevel()>=1){
-						img=prog.getSkills()[s].getImage();					
-					}
-					else{
-						img = images[0][i*4+s];
-					}
-				}
-				
-				System.out.println(img);
-				
-				this.buttonPanel.getContents().get(i*4+s).makeFrom(img);
-				this.buttonPanel.getContents().get(i*4+s).setMouseoverText(
-						prog.getSkills()[s].getName()+" ("+prog.getSkills()[s].getLevel()+")\n"+prog.getSkills()[s].getDescription());
-			}
-		}
-		
-		this.buttonPanel.getContents().get(this.buttonPanel.getContents().size()-1).makeFrom("Remaining SP: "+Integer.toString(p.skillPoints));
-		
-	}
-	
-	public static ArrayList<HudElement> makeState(){
-		ArrayList<HudElement> elements = new ArrayList<HudElement>(0);
-		elements.add(new StillImageElement(0,0,HudElement.TOP_LEFT));
-		
-		ArrayList<HudElement> skillButton = new ArrayList<HudElement>(12), playerWindow = new ArrayList<HudElement>(2);
-		for(int x=0; x<3; x++){
-			for(int i=0; i<4; i++){
-				skillButton.add(new ImageButton(ofX+55*x+5,ofY+5+60*i,HudElement.TOP_LEFT,null));
-			}
-		}
-		
-		skillButton.add(new TextElement(50,270,HudElement.TOP_LEFT, "", DeadReckoningGame.menuTextColor, DeadReckoningGame.menuSmallFont));
-		
-		playerWindow.add( new StillImageElement(-200,0,HudElement.CENTER_RIGHT));
-		playerWindow.add( new StatDisplayElement(-200,69,HudElement.CENTER_RIGHT));//TODO replace with stat display element;
-		
-		
-		elements.add(new Panel(skillButton));
-		elements.add(new Panel(playerWindow));
-		
-		elements.add(new ReturnToGameElement());
-	
-		return elements;
+		this.statPanel.makeFrom(new Object[] { p.profession.getPortriat(), p });
+
 	}
 
+	public void bakeFromProfession(Profession p) {
+		for (int i = 0; i < 3; i++) {
+			SkillProgression prog = p.getTrees()[i];
+			for (int s = 0; s < 4; s++) {
+				Image img;
+
+				if (sourceProf.skillPoints > 0
+						&& (s == 0 || prog.getSkills()[s - 1].getLevel() > 0)
+						&& p.getLevel() >= prog.getSkills()[s].getLevelReq()
+						&& prog.getSkills()[s].getLevel() < prog.getSkills()[s]
+								.getLevelCap()) { // Should be highlighted
+
+					if (prog.getSkills()[s].getLevel() >= 1) {
+						img = images[1][i * 4 + s];
+					} else {
+						img = images[2][i * 4 + s];
+					}
+				} else { // else
+					if (prog.getSkills()[s].getLevel() >= 1) {
+						img = prog.getSkills()[s].getImage();
+					} else {
+						img = images[0][i * 4 + s];
+					}
+				}
+
+				System.out.println(img);
+
+				this.buttonPanel.getContents().get(i * 4 + s).makeFrom(img);
+				this.buttonPanel
+						.getContents()
+						.get(i * 4 + s)
+						.setMouseoverText(
+								prog.getSkills()[s].getName() + " ("
+										+ prog.getSkills()[s].getLevel()
+										+ ")\n"
+										+ prog.getSkills()[s].getDescription());
+			}
+		}
+
+		this.buttonPanel.getContents()
+				.get(this.buttonPanel.getContents().size() - 1)
+				.makeFrom("Remaining SP: " + Integer.toString(p.skillPoints));
+
+	}
+
+	public static ArrayList<HudElement> makeState() {
+		ArrayList<HudElement> elements = new ArrayList<HudElement>(0);
+		elements.add(new StillImageElement(0, 0, HudElement.TOP_LEFT));
+
+		ArrayList<HudElement> skillButton = new ArrayList<HudElement>(12), playerWindow = new ArrayList<HudElement>(
+				2);
+		for (int x = 0; x < 3; x++) {
+			for (int i = 0; i < 4; i++) {
+				skillButton.add(new ImageButton(ofX + 55 * x + 5, ofY + 5 + 60
+						* i, HudElement.TOP_LEFT, null));
+			}
+		}
+
+		skillButton.add(new TextElement(50, 270, HudElement.TOP_LEFT, "",
+				DeadReckoningGame.menuTextColor, DeadReckoningGame.menuFont));
+
+		playerWindow
+				.add(new StillImageElement(-200, 0, HudElement.CENTER_RIGHT));
+		playerWindow.add(new StatDisplayElement(-200, 69,
+				HudElement.CENTER_RIGHT));// TODO replace with stat display
+											// element;
+
+		elements.add(new Panel(skillButton));
+		elements.add(new Panel(playerWindow));
+
+		elements.add(new ReturnToGameElement());
+
+		return elements;
+	}
 
 }

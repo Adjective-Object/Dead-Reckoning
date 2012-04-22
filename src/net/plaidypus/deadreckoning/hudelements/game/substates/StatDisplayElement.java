@@ -2,7 +2,6 @@ package net.plaidypus.deadreckoning.hudelements.game.substates;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
-import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 
 import org.newdawn.slick.GameContainer;
@@ -12,30 +11,31 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class StatDisplayElement extends HudElement{
-	
+public class StatDisplayElement extends HudElement {
+
 	LivingEntity target;
-	
+
 	static SpriteSheet statIcons;
-	
-	public StatDisplayElement(int x, int y, int bindMethod){
-		super(x,y,bindMethod,false);
+
+	public StatDisplayElement(int x, int y, int bindMethod) {
+		super(x, y, bindMethod, false);
 		this.setMouseoverText("STATS");
 	}
-		
+
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
-			throws SlickException {}
+			throws SlickException {
+	}
 
 	@Override
 	public void makeFrom(Object o) {
-		this.target=(LivingEntity)o;
+		this.target = (LivingEntity) o;
 	}
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
-		statIcons = new SpriteSheet(new Image("res/statIcons.png"),16,16);
+		statIcons = new SpriteSheet(new Image("res/statIcons.png"), 16, 16);
 	}
 
 	@Override
@@ -48,26 +48,31 @@ public class StatDisplayElement extends HudElement{
 		return 81;
 	}
 
-	@Override	
+	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
+		g.setFont(DeadReckoningGame.menuFont);
 		g.setColor(DeadReckoningGame.menuTextColor);
 		g.drawImage(statIcons.getSprite(0, 0), getX(), getY());
-		g.drawString( Integer.toString(target.getStatMaster().getMaxHP()), getX()+ 21, getY());
-		g.drawImage(statIcons.getSprite(1, 0), getX(), getY()+20);
-		g.drawString( Integer.toString(target.getStatMaster().getMaxMP()), getX()+ 21, getY()+20);		
-		
-		
-		g.drawImage(statIcons.getSprite(2, 0), getX(), getY()+45);
-		g.drawString( Integer.toString(target.getStatMaster().getSTR()), getX()+ 20, getY()+45);
-		g.drawImage(statIcons.getSprite(3, 0), getX(), getY()+65);
-		g.drawString( Integer.toString(target.getStatMaster().getDEX()), getX()+ 20, getY()+65);
-		
+		g.drawString(Integer.toString(target.getStatMaster().getMaxHP()),
+				getX() + 21, getY());
+		g.drawImage(statIcons.getSprite(1, 0), getX(), getY() + 20);
+		g.drawString(Integer.toString(target.getStatMaster().getMaxMP()),
+				getX() + 21, getY() + 20);
 
-		g.drawImage(statIcons.getSprite(4, 0), getX()+60, getY()+45);
-		g.drawString( Integer.toString(target.getStatMaster().getINT()), getX()+ 81, getY()+45);
-		g.drawImage(statIcons.getSprite(5, 0), getX()+60, getY()+65);
-		g.drawString( Integer.toString(target.getStatMaster().getLUK()), getX()+ 81, getY()+65);
+		g.drawImage(statIcons.getSprite(2, 0), getX(), getY() + 45);
+		g.drawString(Integer.toString(target.getStatMaster().getSTR()),
+				getX() + 20, getY() + 45);
+		g.drawImage(statIcons.getSprite(3, 0), getX(), getY() + 65);
+		g.drawString(Integer.toString(target.getStatMaster().getDEX()),
+				getX() + 20, getY() + 65);
+
+		g.drawImage(statIcons.getSprite(4, 0), getX() + 60, getY() + 45);
+		g.drawString(Integer.toString(target.getStatMaster().getINT()),
+				getX() + 81, getY() + 45);
+		g.drawImage(statIcons.getSprite(5, 0), getX() + 60, getY() + 65);
+		g.drawString(Integer.toString(target.getStatMaster().getLUK()),
+				getX() + 81, getY() + 65);
 	}
-	
+
 }

@@ -23,7 +23,7 @@ public abstract class Action {
 		this.source = source;
 		this.target = target;
 		completed = false;
-		takesTurn=true;
+		takesTurn = true;
 	}
 
 	/**
@@ -31,12 +31,11 @@ public abstract class Action {
 	 * 
 	 * @param delta
 	 *            the elapsed since the last call of apply in milliseconds
-	 * @return if the action is complete (will not continue to call apply once completed)
+	 * @return if the action is complete (will not continue to call apply once
+	 *         completed)
 	 */
-	protected void sendMessage(String message){
-		if(isNoticed()){
-			DeadReckoningGame.instance.getMessageElement().addMessage(message);
-		}
+	public static void sendMessage(String message) {
+		DeadReckoningGame.instance.getMessageElement().addMessage(message);
 	}
 
 	protected abstract boolean isNoticed();
@@ -46,11 +45,11 @@ public abstract class Action {
 			completed = apply(delta);
 		}
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		String[] p = this.getClass().toString().split("actions.");
 
-		return p[p.length-1]+" "+this.source+" -> "+this.target;
+		return p[p.length - 1] + " " + this.source + " -> " + this.target;
 	}
 
 	protected abstract boolean apply(int delta);

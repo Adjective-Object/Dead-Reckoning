@@ -6,29 +6,29 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.imageout.ImageOut;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class StillImageElement extends HudElement{
-	
+public class StillImageElement extends HudElement {
+
 	Image img;
-	
+
 	public StillImageElement(int x, int y, int bindMeth) {
-		super(x,y,bindMeth,false);
+		super(x, y, bindMeth, false);
 	}
-	
+
 	public StillImageElement(int x, int y, int bindMeth, Image img) {
-		super(x,y,bindMeth,false);
+		super(x, y, bindMeth, false);
 		this.img = img;
 	}
-	
-	public void makeFrom(Object o){
-		this.img=(Image)(o);
+
+	public void makeFrom(Object o) {
+		this.img = (Image) (o);
 	}
-	
+
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
-			throws SlickException {}
+			throws SlickException {
+	}
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
@@ -37,7 +37,7 @@ public class StillImageElement extends HudElement{
 
 	@Override
 	public int getWidth() {
-		if(img!=null){
+		if (img != null) {
 			return img.getWidth();
 		}
 		return 0;
@@ -45,15 +45,16 @@ public class StillImageElement extends HudElement{
 
 	@Override
 	public int getHeight() {
-		if(img!=null){
+		if (img != null) {
 			return img.getHeight();
 		}
 		return 0;
 	}
 
 	@Override
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-		g.drawImage(img,this.getX(),this.getY());
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
+			throws SlickException {
+		g.drawImage(img, this.getX(), this.getY());
 	}
 
 }

@@ -12,50 +12,56 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
-public class Torch extends Entity{
-	
+public class Torch extends Entity {
+
 	int light;
 	static SpriteSheet img;
 	Animation ani;
-	
-	//Exists only for the purpose of referencing methods that should be static,
+
+	// Exists only for the purpose of referencing methods that should be static,
 	// but need to be abstract, because fuck Java
-	public Torch(){} 
-	
-	public Torch(Tile t, int layer, int areaofLight){
+	public Torch() {
+	}
+
+	public Torch(Tile t, int layer, int areaofLight) {
 		super(t, layer);
 		this.light = areaofLight;
-		ani = new Animation(img , new int []{0,0,1,0,2,0,3,0}, new int[] {60,60,60,60});
-		this.description= "the fire flickers mesmerizingly";
-		this.isTerrain=true;
+		ani = new Animation(img, new int[] { 0, 0, 1, 0, 2, 0, 3, 0 },
+				new int[] { 60, 60, 60, 60 });
+		this.description = "the fire flickers mesmerizingly";
+		this.isTerrain = true;
 	}
-	
-	public void init() throws SlickException{
-		img = new SpriteSheet("res/torch.png", 32,32);
+
+	public void init() throws SlickException {
+		img = new SpriteSheet("res/torch.png", 32, 32);
 	}
-	
+
 	public void update(GameContainer gc, int delta) {
 		this.ani.update(delta);
 	}
-	
-	public void updateBoardEffects(GameContainer gc, int delta){
+
+	public void updateBoardEffects(GameContainer gc, int delta) {
 		this.getParent().lightInRadius(getLocation(), this.light);
 	}
-	
-	public Action chooseAction(GameContainer gc, int delta) {return null;}
+
+	public Action chooseAction(GameContainer gc, int delta) {
+		return null;
+	}
 
 	public void forceRender(Graphics g, float x, float y) {
-		g.drawImage(ani.getCurrentFrame(),x,y);
+		g.drawImage(ani.getCurrentFrame(), x, y);
 	}
 
 	@Override
 	public Entity makeFromString(GameBoard g, String[] toload) {
-		return new Torch(g.getTileAt(Integer.parseInt(toload[1]),Integer.parseInt(toload[2])),Integer.parseInt(toload[3]),Integer.parseInt(toload[4]));
+		return new Torch(g.getTileAt(Integer.parseInt(toload[1]),
+				Integer.parseInt(toload[2])), Integer.parseInt(toload[3]),
+				Integer.parseInt(toload[4]));
 	}
-	
+
 	@Override
 	public String saveToString() {
-		return this.getGenericSave()+":"+this.light;
+		return this.getGenericSave() + ":" + this.light;
 	}
 
 	@Override
@@ -69,7 +75,8 @@ public class Torch extends Entity{
 	}
 
 	@Override
-	public void onDeath() {}
+	public void onDeath() {
+	}
 
 	@Override
 	public Action onInteract(Entity e) {

@@ -12,11 +12,10 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-
 public abstract class Entity {
 	private Tile location;
 	private int layer;
-	
+
 	private String name = "NAMELESS ENTITY";
 	protected String description = "Too lazy to describe";
 	private boolean facing;
@@ -24,23 +23,25 @@ public abstract class Entity {
 	protected boolean isTerrain, isInteractive;
 	public boolean toKill;
 	public int allignmnet;
-	public static final int ALLIGN_NEUTRAL = 0, ALLIGN_HOSTILE = 1, ALLIGN_FRIENDLY = 2;
-	
-	//Exists only for the purpose of referencing methods that should be static,
+	public static final int ALLIGN_NEUTRAL = 0, ALLIGN_HOSTILE = 1,
+			ALLIGN_FRIENDLY = 2;
+
+	// Exists only for the purpose of referencing methods that should be static,
 	// but need to be abstract, because fuck Java
-	public Entity(){} 
-	
+	public Entity() {
+	}
+
 	public Entity(Tile t, int layer) {
-		this.visible=true;
-		this.transparent=true;
-		this.allignmnet=0;
-		if(t!=null){
+		this.visible = true;
+		this.transparent = true;
+		this.allignmnet = 0;
+		if (t != null) {
 			t.getParent().placeEntity(t, this, layer);
 		}
 	}
-	
+
 	public abstract void init() throws SlickException;
-	
+
 	/**
 	 * updates the entity. Used primarily for animation.
 	 * 
@@ -59,18 +60,20 @@ public abstract class Entity {
 	 *            the elapsed milliseconds since the last call of update
 	 * @return
 	 */
-	
+
 	public abstract void updateBoardEffects(GameContainer gc, int delta);
+
 	public abstract Action chooseAction(GameContainer gc, int delta);
-	
+
 	/**
-	 * renders to Graphics only if this.visible
-	 * calls this.forceRender()
+	 * renders to Graphics only if this.visible calls this.forceRender()
 	 **/
-	public void render(Graphics g, float x, float y){
-		if(this.visible){forceRender(g,x,y);}
+	public void render(Graphics g, float x, float y) {
+		if (this.visible) {
+			forceRender(g, x, y);
+		}
 	}
-	
+
 	/**
 	 * renders the entity to a Graphics at a certain X and Y
 	 * 
@@ -79,12 +82,13 @@ public abstract class Entity {
 	 * @param y
 	 */
 	public abstract void forceRender(Graphics g, float x, float y);
-	
-	public Action getUse(){
-		DeadReckoningGame.instance.getMessageElement().addMessage("That's Not Allowed");
-		return new WaitAction(this,false);
+
+	public Action getUse() {
+		DeadReckoningGame.instance.getMessageElement().addMessage(
+				"That's Not Allowed");
+		return new WaitAction(this, false);
 	}
-	
+
 	/**
 	 * returns the tile this entity is standing on / is located in
 	 * 
@@ -115,7 +119,7 @@ public abstract class Entity {
 	public void setLocation(Tile t) {
 		location = t;
 	}
-	
+
 	/**
 	 * returns the X position of the entity (in the XY coordinate plane of the
 	 * tilesystem)
@@ -166,14 +170,14 @@ public abstract class Entity {
 	 *            the entity with which to interact
 	 */
 	public abstract Action onInteract(Entity e);
-	
+
 	/**
 	 * returns a string description for the observe action
 	 * 
 	 * @param e
 	 * @return
 	 */
-	public String getDescription(Entity e){
+	public String getDescription(Entity e) {
 		return this.description;
 	}
 
@@ -190,15 +194,15 @@ public abstract class Entity {
 	/**
 	 * gets the facing direction of the entity (if true, flip the sprite)
 	 * 
-	 * @return facing
-	 *            facing left or right (true = right, left = false)
+	 * @return facing facing left or right (true = right, left = false)
 	 */
 	public boolean getFacing() {
 		return facing;
 	}
-	
+
 	/**
 	 * sets if the entity is "see through" (light passes through it)
+	 * 
 	 * @param transparent
 	 */
 	public void setTransparent(boolean transparent) {
@@ -206,22 +210,23 @@ public abstract class Entity {
 	}
 
 	/**
-	 *gets if the entity is "see through" (light passes through it)
+	 * gets if the entity is "see through" (light passes through it)
+	 * 
 	 * @param transparent
 	 */
 	public boolean isTransparent() {
 		return transparent;
 	}
-		
-	public int getAllignment(){
+
+	public int getAllignment() {
 		return this.allignmnet;
 	}
-	
-	public void setAllignment(int allign){
-		this.allignmnet=allign;
+
+	public void setAllignment(int allign) {
+		this.allignmnet = allign;
 	}
-	
-	public boolean isInteractive(){
+
+	public boolean isInteractive() {
 		return isInteractive;
 	}
 
@@ -232,17 +237,17 @@ public abstract class Entity {
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
-	
-	public void kill(){
-		this.toKill=true;
+
+	public void kill() {
+		this.toKill = true;
 	}
-	
+
 	public String getName() {
 		return this.name;
 	}
-	
-	public void setName(String n){
-		this.name=n;
+
+	public void setName(String n) {
+		this.name = n;
 	}
 
 	public abstract ArrayList<Action> advanceTurn();
@@ -250,19 +255,21 @@ public abstract class Entity {
 	public boolean isIdle() {
 		return true;
 	}
-	
+
 	public abstract Entity makeFromString(GameBoard target, String[] attributes);
+
 	public abstract String saveToString();
-	
+
 	protected String getGenericSave() {
-		return this.getClass().getCanonicalName()+":"+this.getX()+":"+this.getY()+":"+this.getLayer();
+		return this.getClass().getCanonicalName() + ":" + this.getX() + ":"
+				+ this.getY() + ":" + this.getLayer();
 	}
 
 	public void setLayer(int layer) {
-		this.layer=layer;
+		this.layer = layer;
 	}
-	
-	public int getLayer(){
+
+	public int getLayer() {
 		return layer;
 	}
 

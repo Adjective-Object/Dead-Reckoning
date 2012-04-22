@@ -7,9 +7,11 @@ import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 
 public class Wait extends Skill {
-	
-	public Wait(){super();}
-	
+
+	public Wait() {
+		super();
+	}
+
 	public Wait(LivingEntity l) {
 		super(l);
 	}
@@ -28,8 +30,8 @@ public class Wait extends Skill {
 	public void highlightRange(GameBoard board) {
 		highlightRadial(board, 0);
 	}
-	
-	public boolean isInstant(){
+
+	public boolean isInstant() {
 		return true;
 	}
 
