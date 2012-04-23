@@ -9,18 +9,40 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PlayerHudElement.
+ */
 public class PlayerHudElement extends HudElement {
 
+	/** The target. */
 	GameplayElement target;
+	
+	/** The img. */
 	Image img;
+	
+	/** The hook element. */
 	int hookElement;
+	
+	/** The display exp value. */
 	float displayHPValue, displayMPValue, displayEXPValue;
 
+	/**
+	 * Instantiates a new player hud element.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @param bindMethod the bind method
+	 * @param hookElement the hook element
+	 */
 	public PlayerHudElement(int x, int y, int bindMethod, int hookElement) {
 		super(x, y, bindMethod, false);
 		this.hookElement = hookElement;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	 */
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 		displayHPValue += (target.player.HP - displayHPValue) * (float) (delta)
@@ -31,10 +53,16 @@ public class PlayerHudElement extends HudElement {
 				* (float) (delta) / 200;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(java.lang.Object)
+	 */
 	@Override
 	public void makeFrom(Object o) {
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#init(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame)
+	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
@@ -45,14 +73,23 @@ public class PlayerHudElement extends HudElement {
 		displayEXPValue = 0;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getWidth()
+	 */
 	public int getWidth() {
 		return img.getWidth();
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getHeight()
+	 */
 	public int getHeight() {
 		return img.getHeight();
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#render(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, org.newdawn.slick.Graphics)
+	 */
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {

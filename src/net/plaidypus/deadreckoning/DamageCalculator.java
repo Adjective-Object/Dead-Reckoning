@@ -1,6 +1,13 @@
+/*
+ * 
+ */
 package net.plaidypus.deadreckoning;
 
 
+/**
+ * The Class DamageCalculator.
+ * In the future, all Damage calculations will be piped through this, but for now, it serves no purpose
+ */
 public class DamageCalculator {
 	/*
 	 * public static boolean checkHits(LivingEntity attacker, LivingEntity

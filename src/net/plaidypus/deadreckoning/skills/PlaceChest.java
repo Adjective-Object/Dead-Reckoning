@@ -12,16 +12,31 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.items.EtcDrop;
 import net.plaidypus.deadreckoning.items.Item;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PlaceChest.
+ */
 public class PlaceChest extends Skill {
 
+	/**
+	 * Instantiates a new place chest.
+	 */
 	public PlaceChest() {
 		super();
 	}
 
+	/**
+	 * Instantiates a new place chest.
+	 *
+	 * @param source the source
+	 */
 	public PlaceChest(LivingEntity source) {
 		super(source);
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.skills.Skill#makeAction(net.plaidypus.deadreckoning.board.Tile)
+	 */
 	@Override
 	public Action makeAction(Tile target) {
 		ArrayList<Item> inv = new ArrayList<Item>(0);
@@ -30,11 +45,17 @@ public class PlaceChest extends Skill {
 				new Chest(target, Tile.LAYER_ACTIVE, inv));
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.skills.Skill#canTargetTile(net.plaidypus.deadreckoning.board.Tile)
+	 */
 	@Override
 	public boolean canTargetTile(Tile t) {
 		return !t.isOpen(Tile.LAYER_ACTIVE);
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.skills.Skill#highlightRange(net.plaidypus.deadreckoning.board.GameBoard)
+	 */
 	@Override
 	public void highlightRange(GameBoard board) {
 		for (int y = 0; y < board.getHeight(); y++) {

@@ -22,16 +22,34 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class NewGameState.
+ */
 public class NewGameState extends HudLayersState {
 
+	/** The class buttons. */
 	public ArrayList<ImageButton> classButtons;
+	
+	/** The professions. */
 	public ArrayList<Profession> professions;
 
+	/** The new class button. */
 	public ImageButton newClassButton;
+	
+	/** The text. */
 	public TextEntryBox text;
 
+	/** The colum b. */
 	int columA = 15, columB = 300;
 
+	/**
+	 * Instantiates a new new game state.
+	 *
+	 * @param stateID the state id
+	 * @param background the background
+	 * @throws SlickException the slick exception
+	 */
 	@SuppressWarnings("unchecked")
 	public NewGameState(int stateID, ArrayList<HudElement> background)
 			throws SlickException {
@@ -39,6 +57,11 @@ public class NewGameState extends HudLayersState {
 		loadClasses();
 	}
 
+	/**
+	 * Load classes.
+	 *
+	 * @throws SlickException the slick exception
+	 */
 	public void loadClasses() throws SlickException {
 		classButtons = new ArrayList<ImageButton>(0);
 		ArrayList<HudElement> elim = new ArrayList<HudElement>(0);
@@ -108,6 +131,9 @@ public class NewGameState extends HudLayersState {
 		this.HudElements.add(new Panel(elimC));
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.state.HudLayersState#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	 */
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		super.update(container, game, delta);

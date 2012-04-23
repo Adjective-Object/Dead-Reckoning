@@ -6,17 +6,33 @@ import net.plaidypus.deadreckoning.board.Tile;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FadeoutEffect.
+ */
 public class FadeoutEffect extends GridEffect {
 
+	/** The alpha. */
 	float alpha;
+	
+	/** The image. */
 	Image image;
 
+	/**
+	 * Instantiates a new fadeout effect.
+	 *
+	 * @param location the location
+	 * @param image the image
+	 */
 	public FadeoutEffect(Tile location, Image image) {
 		super(location);
 		this.image = image;
 		alpha = 255;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.grideffects.GridEffect#update(int)
+	 */
 	@Override
 	public void update(int delta) {
 		alpha -= (delta / 4);
@@ -25,6 +41,9 @@ public class FadeoutEffect extends GridEffect {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.grideffects.GridEffect#render(org.newdawn.slick.Graphics, float, float)
+	 */
 	@Override
 	public void render(Graphics g, float xOff, float yOff) {
 		image.setAlpha(alpha / 255);

@@ -13,13 +13,31 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class OnFire.
+ */
 public class OnFire extends AnimatedStatus {
 
+	/** The power. */
 	int duration, power;
+	
+	/** The image. */
 	static Image image;
+	
+	/** The details. */
 	static String details;
+	
+	/** The sprite. */
 	static SpriteSheet sprite;
 
+	/**
+	 * Instantiates a new on fire.
+	 *
+	 * @param source the source
+	 * @param duration the duration
+	 * @param power the power
+	 */
 	public OnFire(InteractiveEntity source, int duration, int power) {
 		super(source, image, details, "OnFire", new Animation(sprite, 60));
 		this.duration = duration;
@@ -27,6 +45,11 @@ public class OnFire extends AnimatedStatus {
 		this.statusID = Status.STATUS_ONFIRE;
 	}
 
+	/**
+	 * Inits the.
+	 *
+	 * @throws SlickException the slick exception
+	 */
 	public static void init() throws SlickException {
 		image = new Image("res/onFireIcon.png");
 		details = "OH SHIT, YOU'RE ON FIRE";
@@ -34,12 +57,18 @@ public class OnFire extends AnimatedStatus {
 				DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.status.Status#applyToEntity(net.plaidypus.deadreckoning.entities.LivingEntity)
+	 */
 	@Override
 	public void applyToEntity(LivingEntity target) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.status.Status#advanceTurnEffects(net.plaidypus.deadreckoning.entities.LivingEntity)
+	 */
 	@Override
 	public ArrayList<Action> advanceTurnEffects(LivingEntity target) {
 		ArrayList<Action> actions = new ArrayList<Action>(0);
@@ -50,16 +79,25 @@ public class OnFire extends AnimatedStatus {
 		return actions;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.status.Status#removeFromEntity(net.plaidypus.deadreckoning.entities.LivingEntity)
+	 */
 	@Override
 	public void removeFromEntity(LivingEntity target) {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.status.Status#isFinished()
+	 */
 	@Override
 	public boolean isFinished() {
 		return duration <= 0;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.status.Status#getName()
+	 */
 	@Override
 	public String getName() {
 		return "On Fire!";

@@ -11,25 +11,50 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ExclusiveHudLayersState.
+ */
 public class ExclusiveHudLayersState extends HudLayersState {
 
+	/** The omy. */
 	int focus = -1, omx = -1, omy = -1;
+	
+	/** The mouse set. */
 	boolean mouseSet = true;
 
+	/**
+	 * Instantiates a new exclusive hud layers state.
+	 *
+	 * @param stateID the state id
+	 * @param elements the elements
+	 */
 	public ExclusiveHudLayersState(int stateID, ArrayList<HudElement> elements) {
 		super(stateID, elements);
 	}
 
+	/**
+	 * Instantiates a new exclusive hud layers state.
+	 *
+	 * @param stateID the state id
+	 * @param elements the elements
+	 */
 	public ExclusiveHudLayersState(int stateID, HudElement[] elements) {
 		super(stateID, elements);
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.state.HudLayersState#makeFrom(java.lang.Object[])
+	 */
 	public void makeFrom(Object[] objects) {
 		super.makeFrom(objects);
 		focus = -1;
 		advanceFocus();
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.state.HudLayersState#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	 */
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 
@@ -69,6 +94,9 @@ public class ExclusiveHudLayersState extends HudLayersState {
 		container.getInput().clearControlPressedRecord();
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.state.HudLayersState#render(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, org.newdawn.slick.Graphics)
+	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 		super.render(container, game, g);
@@ -80,6 +108,9 @@ public class ExclusiveHudLayersState extends HudLayersState {
 		}
 	}
 
+	/**
+	 * Advance focus.
+	 */
 	private void advanceFocus() {
 		clearFoci();
 		for (int i = 0; i < this.HudElements.size(); i++) {
@@ -91,6 +122,9 @@ public class ExclusiveHudLayersState extends HudLayersState {
 		}
 	}
 
+	/**
+	 * Clear foci.
+	 */
 	private void clearFoci() {
 		for (int i = 0; i < this.HudElements.size(); i++) {
 			this.HudElements.get(i).setFocus(false);

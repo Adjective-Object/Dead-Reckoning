@@ -8,24 +8,65 @@ import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.grideffects.DamageEffect;
 import net.plaidypus.deadreckoning.grideffects.GridEffect;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AttackAction.
+ */
 public class AttackAction extends EntityTypeAction {
 
+	/** The damage. */
 	int damage;
+	
+	/** The animate source. */
 	boolean animateSource;
+	
+	/** The physical. */
 	boolean physical;
+	
+	/** The source effect bottom. */
 	GridEffect targetEffectTop, targetEffectBottom, sourceEffectTop,
 			sourceEffectBottom;
 
+	/**
+	 * Instantiates a new attack action.
+	 *
+	 * @param source the source
+	 * @param target the target
+	 * @param damage the damage
+	 * @param physical the physical
+	 */
 	public AttackAction(Entity source, Tile target, int damage, boolean physical) {
 		this(source, target, damage, physical, true, null, null, null, null);
 	}
 
+	/**
+	 * Instantiates a new attack action.
+	 *
+	 * @param source the source
+	 * @param target the target
+	 * @param damage the damage
+	 * @param physical the physical
+	 * @param animateSource the animate source
+	 */
 	public AttackAction(Entity source, Tile target, int damage,
 			boolean physical, boolean animateSource) {
 		this(source, target, damage, physical, animateSource, null, null, null,
 				null);
 	}
 
+	/**
+	 * Instantiates a new attack action.
+	 *
+	 * @param source the source
+	 * @param target the target
+	 * @param damage the damage
+	 * @param physical the physical
+	 * @param animateSource the animate source
+	 * @param sourceTopEffect the source top effect
+	 * @param sourceBottomEffect the source bottom effect
+	 * @param targetTopEffect the target top effect
+	 * @param targetBottomEffect the target bottom effect
+	 */
 	public AttackAction(Entity source, Tile target, int damage,
 			boolean physical, boolean animateSource,
 			GridEffect sourceTopEffect, GridEffect sourceBottomEffect,
@@ -40,14 +81,23 @@ public class AttackAction extends EntityTypeAction {
 		this.targetEffectBottom = targetBottomEffect;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net.plaidypus.deadreckoning.entities.Entity)
+	 */
 	protected boolean applyToEntity(Entity entity) {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net.plaidypus.deadreckoning.entities.InteractiveEntity)
+	 */
 	protected boolean applyToEntity(InteractiveEntity e) {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net.plaidypus.deadreckoning.entities.LivingEntity)
+	 */
 	protected boolean applyToEntity(LivingEntity e) {
 
 		LivingEntity s = (LivingEntity) source;
@@ -99,6 +149,9 @@ public class AttackAction extends EntityTypeAction {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.actions.Action#isNoticed()
+	 */
 	@Override
 	protected boolean isNoticed() {
 		return source.getLocation().canBeSeen() || target.canBeSeen();

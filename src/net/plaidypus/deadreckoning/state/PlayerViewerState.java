@@ -23,22 +23,38 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PlayerViewerState.
+ */
 public class PlayerViewerState extends HudLayersState {
 
+	/** The Constant ofY. */
 	static final int ofX = 50, ofY = 50;
 
+	/** The stat panel. */
 	Panel buttonPanel, statPanel;
 
+	/** The source prof. */
 	Profession sourceProf;
 
+	/** The images. */
 	Image[][] images = new Image[3][12];// dimmed,highlighted, both
 
+	/**
+	 * Instantiates a new player viewer state.
+	 *
+	 * @param stateID the state id
+	 */
 	public PlayerViewerState(int stateID) {
 		super(stateID, makeState());
 		this.buttonPanel = (Panel) this.HudElements.get(1);
 		this.statPanel = (Panel) this.HudElements.get(2);
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.state.HudLayersState#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	 */
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		super.update(container, game, delta);
@@ -59,6 +75,9 @@ public class PlayerViewerState extends HudLayersState {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.state.HudLayersState#makeFrom(java.lang.Object[])
+	 */
 	public void makeFrom(Object[] args) {
 		this.HudElements.get(0).makeFrom(args[0]);
 		Player p = (Player) (args[1]);
@@ -104,6 +123,11 @@ public class PlayerViewerState extends HudLayersState {
 
 	}
 
+	/**
+	 * Bake from profession.
+	 *
+	 * @param p the p
+	 */
 	public void bakeFromProfession(Profession p) {
 		for (int i = 0; i < 3; i++) {
 			SkillProgression prog = p.getTrees()[i];
@@ -149,6 +173,11 @@ public class PlayerViewerState extends HudLayersState {
 
 	}
 
+	/**
+	 * Make state.
+	 *
+	 * @return the array list
+	 */
 	public static ArrayList<HudElement> makeState() {
 		ArrayList<HudElement> elements = new ArrayList<HudElement>(0);
 		elements.add(new StillImageElement(0, 0, HudElement.TOP_LEFT));

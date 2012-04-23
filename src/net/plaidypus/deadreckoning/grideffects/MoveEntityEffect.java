@@ -5,11 +5,28 @@ import net.plaidypus.deadreckoning.board.Tile;
 
 import org.newdawn.slick.Graphics;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MoveEntityEffect.
+ */
 public class MoveEntityEffect extends GridEffect {
+	
+	/** The destination. */
 	Tile destination;
+	
+	/** The currentdown. */
 	double currentdown;
+	
+	/** The layer. */
 	int layer;
 
+	/**
+	 * Instantiates a new move entity effect.
+	 *
+	 * @param location the location
+	 * @param layer the layer
+	 * @param targetLocation the target location
+	 */
 	public MoveEntityEffect(Tile location, int layer, Tile targetLocation) {
 		super(location);
 		this.layer = layer;
@@ -25,6 +42,9 @@ public class MoveEntityEffect extends GridEffect {
 		currentdown = 5.0;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.grideffects.GridEffect#update(int)
+	 */
 	public void update(int delta) {
 		if (destination.canBeSeen()) {
 			currentdown = 0;
@@ -39,6 +59,9 @@ public class MoveEntityEffect extends GridEffect {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.grideffects.GridEffect#render(org.newdawn.slick.Graphics, float, float)
+	 */
 	public void render(Graphics g, float xoff, float yoff) {
 		if (destination.canBeSeen()) {
 			location.getEntity(layer).forceRender(

@@ -21,32 +21,66 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class GameplayElement.
+ */
 public class GameplayElement extends HudElement {
 
+	/** The state id. */
 	int stateID;
+	
+	/** The current action. */
 	int currentEntity, currentAction;
+	
+	/** The save number. */
 	int saveNumber;
+	
+	/** The time on. */
 	int timeOn;
 
+	/** The width. */
 	private int width;
+	
+	/** The height. */
 	private int height;
 
+	/** The camera y. */
 	public static float cameraX, cameraY;
+	
+	/** The camera dest y. */
 	public static float cameraDestX, cameraDestY;
 
+	/** The Constant cameraRate. */
 	static final float cameraRate = (float) 0.2;
 
+	/** The last map. */
 	public String lastMap;
 
+	/** The input. */
 	Input input;
+	
+	/** The player. */
 	public Player player;
+	
+	/** The background screen. */
 	static Image backgroundScreen;
 
+	/** The gb. */
 	private GameBoard gb;
+	
+	/** The gc. */
 	GameContainer gc;
 
+	/** The actions. */
 	ArrayList<Action> actions = new ArrayList<Action>(0);
 
+	/**
+	 * Instantiates a new gameplay element.
+	 *
+	 * @param saveNumber the save number
+	 * @throws SlickException the slick exception
+	 */
 	public GameplayElement(int saveNumber) throws SlickException {
 		super(0, 0, HudElement.TOP_LEFT, true);
 		currentEntity = 0;
@@ -54,11 +88,11 @@ public class GameplayElement extends HudElement {
 	}
 
 	/**
-	 * initializes the gameplay state
-	 * 
-	 * @param gc
-	 * @param sbg
-	 * @throws SlickException
+	 * initializes the gameplay state.
+	 *
+	 * @param gc the gc
+	 * @param sbg the sbg
+	 * @throws SlickException the slick exception
 	 */
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
@@ -86,11 +120,21 @@ public class GameplayElement extends HudElement {
 
 	}
 
+	/**
+	 * Sets the player.
+	 *
+	 * @param p the new player
+	 */
 	public void setPlayer(Player p) {
 		player = p;
 		p.setInput(this.input);
 	}
 
+	/**
+	 * Sets the board.
+	 *
+	 * @param b the new board
+	 */
 	public void setBoard(GameBoard b) {
 		if (this.gb != null) {
 			lastMap = this.gb.getMapID();
@@ -148,12 +192,12 @@ public class GameplayElement extends HudElement {
 	}
 
 	/**
-	 * updates the gamestate (called automagically by slick)
-	 * 
-	 * @param gc
-	 * @param sbg
-	 * @param delta
-	 * @throws SlickException
+	 * updates the gamestate (called automagically by slick).
+	 *
+	 * @param gc the gc
+	 * @param sbg the sbg
+	 * @param delta the delta
+	 * @throws SlickException the slick exception
 	 */
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
@@ -179,6 +223,12 @@ public class GameplayElement extends HudElement {
 		updateActions(gc, delta);
 	}
 
+	/**
+	 * Update board effects.
+	 *
+	 * @param gc the gc
+	 * @param delta the delta
+	 */
 	public void updateBoardEffects(GameContainer gc, int delta) {
 		getBoard().HideAll();
 		getBoard().updateBoardEffects(gc, delta);
@@ -186,6 +236,12 @@ public class GameplayElement extends HudElement {
 												// alligned units?
 	}
 
+	/**
+	 * Update actions.
+	 *
+	 * @param gc the gc
+	 * @param delta the delta
+	 */
 	private void updateActions(GameContainer gc, int delta) {
 		if (actions.size() == 0) {// if the current entity is in the middle of
 									// being parsed..
@@ -222,6 +278,11 @@ public class GameplayElement extends HudElement {
 		}
 	}
 
+	/**
+	 * Finalize turn.
+	 *
+	 * @param delta the delta
+	 */
 	private void finalizeTurn(int delta) {
 		advanceEntity();
 		updateBoardEffects(gc, delta);
@@ -230,6 +291,11 @@ public class GameplayElement extends HudElement {
 		input.clearKeyPressedRecord();
 	}
 
+	/**
+	 * Apply all actions.
+	 *
+	 * @param delta the delta
+	 */
 	private void applyAllActions(int delta) {
 		actions.get(currentAction).applyAction(delta);
 		if (actions.size() > 0 && actions.get(currentAction).completed) {
@@ -237,6 +303,11 @@ public class GameplayElement extends HudElement {
 		}
 	}
 
+	/**
+	 * Actions take turn.
+	 *
+	 * @return true, if successful
+	 */
 	private boolean actionsTakeTurn() {
 		for (int i = 0; i < this.actions.size(); i++) {
 			if (this.actions.get(i).takesTurn) {
@@ -246,6 +317,12 @@ public class GameplayElement extends HudElement {
 		return actions.size() == 0;
 	}
 
+	/**
+	 * Gets the actions.
+	 *
+	 * @param delta the delta
+	 * @return the actions
+	 */
 	private void getActions(int delta) {
 		Action a = this.getBoard().ingameEntities.get(currentEntity)
 				.chooseAction(gc, delta);
@@ -258,6 +335,11 @@ public class GameplayElement extends HudElement {
 		}
 	}
 
+	/**
+	 * Camera is focused.
+	 *
+	 * @return true, if successful
+	 */
 	private boolean cameraIsFocused() {
 		return (Math.abs(cameraDestX - cameraX) < 0.5 && Math.abs(cameraDestY
 				- cameraY) < 0.5)
@@ -265,6 +347,11 @@ public class GameplayElement extends HudElement {
 						.getLocation().canBeSeen();
 	}
 
+	/**
+	 * Alert camera to.
+	 *
+	 * @param e the e
+	 */
 	private void alertCameraTo(Entity e) {
 		int nx = e.getAbsoluteX() - gc.getWidth() / 2
 				+ DeadReckoningGame.tileSize / 2;
@@ -280,6 +367,9 @@ public class GameplayElement extends HudElement {
 		}
 	}
 
+	/**
+	 * Advance entity.
+	 */
 	private void advanceEntity() {
 		currentEntity = (currentEntity + 1) % getBoard().ingameEntities.size();
 		while (!getBoard().ingameEntities.get(currentEntity).isInteractive()) {
@@ -290,6 +380,11 @@ public class GameplayElement extends HudElement {
 		currentAction = 0;
 	}
 
+	/**
+	 * Actions complete.
+	 *
+	 * @return true, if successful
+	 */
 	private boolean actionsComplete() {
 		for (int i = 0; i < actions.size(); i++) {
 			if (!actions.get(i).completed) {
@@ -300,12 +395,12 @@ public class GameplayElement extends HudElement {
 	}
 
 	/**
-	 * renders the gamestate (gameboard and particless)
-	 * 
-	 * @param gc
-	 * @param sbg
-	 * @param g
-	 * @throws SlickException
+	 * renders the gamestate (gameboard and particless).
+	 *
+	 * @param gc the gc
+	 * @param sbg the sbg
+	 * @param g the g
+	 * @throws SlickException the slick exception
 	 */
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
@@ -315,41 +410,64 @@ public class GameplayElement extends HudElement {
 
 	}
 
+	/**
+	 * Gets the iD.
+	 *
+	 * @return the iD
+	 */
 	public int getID() {
 		return stateID;
 	}
 
 	/**
-	 * adds a particle to the particle list in game
-	 * 
-	 * @param p
-	 *            the particle to add
+	 * adds a particle to the particle list in game.
+	 *
+	 * @return the image
 	 */
 
 	public static Image getImage() {
 		return backgroundScreen;
 	}
 
+	/**
+	 * Adds the action.
+	 *
+	 * @param a the a
+	 */
 	public void addAction(Action a) {
 		if (a != null) {
 			this.actions.add(a);
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getWidth()
+	 */
 	@Override
 	public int getWidth() {
 		return width;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getHeight()
+	 */
 	@Override
 	public int getHeight() {
 		return height;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(java.lang.Object)
+	 */
 	@Override
 	public void makeFrom(Object o) {
 	}
 
+	/**
+	 * Gets the board.
+	 *
+	 * @return the board
+	 */
 	public GameBoard getBoard() {
 		return gb;
 	}

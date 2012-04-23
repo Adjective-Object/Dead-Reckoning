@@ -8,16 +8,32 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Skill.
+ */
 public abstract class Skill {
 
+	/** The levelcap. */
 	int level, levelcap;
+	
+	/** The cooldown. */
 	private int cooldown;
+	
+	/** The description. */
 	String name = "NO_NAME", description = "NO_DESC";
 
+	/** The image icon. */
 	Image imageIcon;
 
+	/** The source. */
 	LivingEntity source;
 
+	/**
+	 * Instantiates a new skill.
+	 *
+	 * @param icon the icon
+	 */
 	public Skill(Image icon) {
 		this.imageIcon = icon;
 	}
@@ -26,8 +42,8 @@ public abstract class Skill {
 	 * Skills are a method of having arbitrary abilities on entites (able to be
 	 * stored in an arrayList) while keeping the Action class unique for each
 	 * execution of an action.
-	 * 
-	 * @param source
+	 *
+	 * @param source the source
 	 */
 	public Skill(LivingEntity source) {
 		this.source = source;
@@ -47,8 +63,8 @@ public abstract class Skill {
 	/**
 	 * binds the skill to a ceratain livingentity such that it is unecessary to
 	 * constantly pass the correct livingentity to parse based off of.
-	 * 
-	 * @param source
+	 *
+	 * @param source the source
 	 */
 	public void bindTo(LivingEntity source) {
 		this.source = source;
@@ -57,19 +73,18 @@ public abstract class Skill {
 	/**
 	 * generates an action targeted at a tile. Usually to be assigned to the
 	 * source entity
-	 * 
-	 * @param target
-	 * @return
+	 *
+	 * @param target the target
+	 * @return the action
 	 */
 	public abstract Action makeAction(Tile target);
 
 	/**
 	 * method for checking if a certain tile is highlight-able. used in
 	 * highlightRadial && other highlighting methods.
-	 * 
-	 * @param t
-	 *            the tile that must be checked if it can be targeted
-	 * @return
+	 *
+	 * @param t the tile that must be checked if it can be targeted
+	 * @return true, if successful
 	 */
 	public abstract boolean canTargetTile(Tile t);
 
@@ -77,17 +92,17 @@ public abstract class Skill {
 	 * method for highlighting all the tiles that a skill can target. made
 	 * abstract so not all skills need to have attack ranges of certain shapes,
 	 * etc.
-	 * 
-	 * @param board
+	 *
+	 * @param board the board
 	 */
 	public abstract void highlightRange(GameBoard board);
 
 	/**
 	 * highlights all the tiles within a certain range of the skill's source.
 	 * (radial). made to be called by highlightRange(GameBoard board);
-	 * 
-	 * @param board
-	 * @param range
+	 *
+	 * @param board the board
+	 * @param range the range
 	 */
 	public void highlightRadial(GameBoard board, int range) {
 		board.clearHighlightedSquares();
@@ -108,62 +123,133 @@ public abstract class Skill {
 		}
 	}
 
+	/**
+	 * Checks if is instant.
+	 *
+	 * @return true, if is instant
+	 */
 	public boolean isInstant() {
 		return false;
 	}
 
+	/**
+	 * Gets the level.
+	 *
+	 * @return the level
+	 */
 	public int getLevel() {
 		return level;
 	}
 
+	/**
+	 * Sets the level.
+	 *
+	 * @param level the new level
+	 */
 	public void setLevel(int level) {
 		this.level = level;
 	}
 
+	/**
+	 * Gets the image.
+	 *
+	 * @return the image
+	 */
 	public Image getImage() {
 		return imageIcon;
 	}
 
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Gets the description.
+	 *
+	 * @return the description
+	 */
 	public String getDescription() {
 		return description;
 	}
 
+	/**
+	 * Sets the name.
+	 *
+	 * @param name the new name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Sets the descriptor.
+	 *
+	 * @param description the new descriptor
+	 */
 	public void setDescriptor(String description) {
 		this.description = description;
 	}
 
+	/**
+	 * Level up.
+	 */
 	public void levelUp() {
 		this.level++;
 	}
 
+	/**
+	 * Can be cast.
+	 *
+	 * @return true, if successful
+	 */
 	public boolean canBeCast() {
 		return getCooldown() <= 0;
 	}
 
+	/**
+	 * Update skill.
+	 */
 	public void updateSkill() {// called on turn advance
 		this.setCooldown(this.getCooldown() - 1);
 	}
 
+	/**
+	 * Gets the level cap.
+	 *
+	 * @return the level cap
+	 */
 	public int getLevelCap() {
 		return this.levelcap;
 	}
 
+	/**
+	 * Gets the level req.
+	 *
+	 * @return the level req
+	 */
 	public int getLevelReq() {
 		return 0;
 	}
 
+	/**
+	 * Sets the cooldown.
+	 *
+	 * @param cooldown the new cooldown
+	 */
 	public void setCooldown(int cooldown) {
 		this.cooldown = cooldown;
 	}
 
+	/**
+	 * Gets the cooldown.
+	 *
+	 * @return the cooldown
+	 */
 	public int getCooldown() {
 		return cooldown;
 	}

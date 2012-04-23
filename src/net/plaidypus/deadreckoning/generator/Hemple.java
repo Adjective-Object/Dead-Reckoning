@@ -12,13 +12,25 @@ import net.plaidypus.deadreckoning.entities.Stair;
 import net.plaidypus.deadreckoning.entities.Torch;
 import net.plaidypus.deadreckoning.professions.StatMaster;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Hemple.
+ */
 public class Hemple extends RoomBasedBiome {
 
+	/**
+	 * Instantiates a new hemple.
+	 *
+	 * @param numRooms the num rooms
+	 */
 	public Hemple(int numRooms) {
 		super(numRooms);
 		requiredClasses = new Class[] { Torch.class, Stair.class, Door.class };
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.generator.RoomBasedBiome#populateBoard(net.plaidypus.deadreckoning.board.GameBoard, java.util.ArrayList, java.util.ArrayList)
+	 */
 	public GameBoard populateBoard(GameBoard target, ArrayList<int[]> rooms,
 			ArrayList<Stair> linkedLevels) {
 		super.genericPopulation(target, rooms, linkedLevels);

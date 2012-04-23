@@ -11,13 +11,29 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class BaseClassSelectionElement.
+ */
 public class BaseClassSelectionElement extends HudElement {
 
+	/** The current class. */
 	int currentClass = 0;
+	
+	/** The num classes. */
 	int numClasses;
 
+	/** The icon image. */
 	Image iconImage;
 
+	/**
+	 * Instantiates a new base class selection element.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @param bindMethod the bind method
+	 * @throws SlickException the slick exception
+	 */
 	public BaseClassSelectionElement(int x, int y, int bindMethod)
 			throws SlickException {
 		super(x, y, bindMethod, true);
@@ -26,6 +42,11 @@ public class BaseClassSelectionElement extends HudElement {
 				+ "/Portrait.png");
 	}
 
+	/**
+	 * Enumerate classes.
+	 *
+	 * @return the int
+	 */
 	private int enumerateClasses() {
 		int numClass = 0;
 		File f = new File("res/professions/" + numClass);
@@ -36,6 +57,9 @@ public class BaseClassSelectionElement extends HudElement {
 		return numClass;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
@@ -53,24 +77,39 @@ public class BaseClassSelectionElement extends HudElement {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(java.lang.Object)
+	 */
 	@Override
 	public void makeFrom(Object o) {
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#init(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame)
+	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getWidth()
+	 */
 	public int getWidth() {
 		return iconImage.getWidth();
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getHeight()
+	 */
 	@Override
 	public int getHeight() {
 		return iconImage.getHeight();
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#render(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, org.newdawn.slick.Graphics)
+	 */
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {

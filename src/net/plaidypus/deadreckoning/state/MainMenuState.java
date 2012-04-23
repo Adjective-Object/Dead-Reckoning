@@ -14,14 +14,28 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MainMenuState.
+ */
 public class MainMenuState extends HudLayersState {
 
+	/** The state id. */
 	int stateID;
 
+	/** The quit button. */
 	Button startButton, optionsButton, creditsButton, quitButton;
 
+	/** The lights. */
 	static FairyLights lights;
 
+	/**
+	 * Instantiates a new main menu state.
+	 *
+	 * @param stateID the state id
+	 * @param background the background
+	 * @throws SlickException the slick exception
+	 */
 	@SuppressWarnings("unchecked")
 	public MainMenuState(int stateID, ArrayList<HudElement> background)
 			throws SlickException {
@@ -34,6 +48,12 @@ public class MainMenuState extends HudLayersState {
 		this.quitButton = (Button) this.getElement(x + 3);
 	}
 
+	/**
+	 * Make contents.
+	 *
+	 * @return the array list
+	 * @throws SlickException the slick exception
+	 */
 	public static ArrayList<HudElement> makeContents() throws SlickException {
 		System.out.println("Building MainMenuState");
 		ArrayList<HudElement> elements = new ArrayList<HudElement>(0);
@@ -55,6 +75,9 @@ public class MainMenuState extends HudLayersState {
 		return elements;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.state.HudLayersState#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	 */
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		super.update(container, game, delta);

@@ -13,17 +13,31 @@ import net.plaidypus.deadreckoning.skills.Skill;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Monster.
+ */
 public class Monster extends LivingEntity {
 
+	/** The attack. */
 	public Skill movement, attack;
 
 	// Exists only for the purpose of referencing methods that should be static,
 	// but need to be abstract, because fuck Java
+	/**
+	 * Instantiates a new monster.
+	 */
 	public Monster() {
 	}
 
 	/**
-	 * a testing monster class
+	 * a testing monster class.
+	 *
+	 * @param targetTile the target tile
+	 * @param layer the layer
+	 * @param entityFile the entity file
+	 * @param stats the stats
+	 * @param allign the allign
 	 */
 	public Monster(Tile targetTile, int layer, String entityFile,
 			StatMaster stats, int allign) {
@@ -35,7 +49,11 @@ public class Monster extends LivingEntity {
 	}
 
 	/**
-	 * if something is blocking its path, it will turn left
+	 * if something is blocking its path, it will turn left.
+	 *
+	 * @param gc the gc
+	 * @param delta the delta
+	 * @return the action
 	 */
 	public Action decideNextAction(GameContainer gc, int delta) {
 
@@ -69,9 +87,15 @@ public class Monster extends LivingEntity {
 		return new WaitAction(this);
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.entities.InteractiveEntity#updateBoardEffects(org.newdawn.slick.GameContainer, int)
+	 */
 	public void updateBoardEffects(GameContainer gc, int delta) {
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.entities.Entity#makeFromString(net.plaidypus.deadreckoning.board.GameBoard, java.lang.String[])
+	 */
 	@Override
 	public Entity makeFromString(GameBoard g, String[] toload) {
 		return new Monster(g.getTileAt(Integer.parseInt(toload[1]),
@@ -86,20 +110,32 @@ public class Monster extends LivingEntity {
 				Integer.parseInt(toload[12]));
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.entities.Entity#saveToString()
+	 */
 	@Override
 	public String saveToString() {
 		return this.getGenericSave() + ":" + this.entityFile + ":"
 				+ this.statMaster.toString() + ":" + this.allignmnet;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString() {
 		return "Monster[" + this.getX() + "," + this.getY() + "]";
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.entities.Entity#init()
+	 */
 	@Override
 	public void init() throws SlickException {
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.entities.Entity#onInteract(net.plaidypus.deadreckoning.entities.Entity)
+	 */
 	@Override
 	public Action onInteract(Entity e) {
 		// TODO I don't know ehat to put here...

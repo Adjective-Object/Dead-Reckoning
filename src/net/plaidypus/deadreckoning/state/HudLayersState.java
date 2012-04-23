@@ -13,13 +13,27 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class HudLayersState.
+ */
 public class HudLayersState extends BasicGameState {
 
+	/** The state id. */
 	int stateID;
+	
+	/** The parent. */
 	DeadReckoningGame parent;
 
+	/** The Hud elements. */
 	ArrayList<HudElement> HudElements;
 
+	/**
+	 * Instantiates a new hud layers state.
+	 *
+	 * @param stateID the state id
+	 * @param elements the elements
+	 */
 	public HudLayersState(int stateID, ArrayList<HudElement> elements) {
 		this.stateID = stateID;
 		this.HudElements = elements;
@@ -28,6 +42,12 @@ public class HudLayersState extends BasicGameState {
 		}
 	}
 
+	/**
+	 * Instantiates a new hud layers state.
+	 *
+	 * @param stateID the state id
+	 * @param elementsarr the elementsarr
+	 */
 	public HudLayersState(int stateID, HudElement[] elementsarr) {
 		this.stateID = stateID;
 		HudElements = new ArrayList<HudElement>(0);
@@ -38,6 +58,9 @@ public class HudLayersState extends BasicGameState {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.newdawn.slick.state.GameState#init(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame)
+	 */
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
 		for (int i = 0; i < this.HudElements.size(); i++) {
@@ -45,6 +68,9 @@ public class HudLayersState extends BasicGameState {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.newdawn.slick.state.GameState#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	 */
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		for (int i = 0; i < HudElements.size(); i++) {
@@ -52,6 +78,9 @@ public class HudLayersState extends BasicGameState {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.newdawn.slick.state.GameState#render(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, org.newdawn.slick.Graphics)
+	 */
 	public void render(GameContainer gc, StateBasedGame game, Graphics g)
 			throws SlickException {
 		g.setColor(Color.black);
@@ -67,6 +96,11 @@ public class HudLayersState extends BasicGameState {
 		}
 	}
 
+	/**
+	 * Make from.
+	 *
+	 * @param objects the objects
+	 */
 	public void makeFrom(Object[] objects) {
 		System.out.println(stateID);
 		for (int i = 0; i < objects.length; i++) {
@@ -74,18 +108,37 @@ public class HudLayersState extends BasicGameState {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.newdawn.slick.state.BasicGameState#getID()
+	 */
 	public int getID() {
 		return this.stateID;
 	}
 
+	/**
+	 * Gets the elements.
+	 *
+	 * @return the elements
+	 */
 	public ArrayList<HudElement> getElements() {
 		return HudElements;
 	}
 
+	/**
+	 * Gets the element.
+	 *
+	 * @param index the index
+	 * @return the element
+	 */
 	public HudElement getElement(int index) {
 		return HudElements.get(index);
 	}
 
+	/**
+	 * Gets the parent.
+	 *
+	 * @return the parent
+	 */
 	public DeadReckoningGame getParent() {
 		return this.parent;
 	}

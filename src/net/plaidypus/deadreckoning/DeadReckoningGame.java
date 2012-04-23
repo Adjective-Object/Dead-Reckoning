@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package net.plaidypus.deadreckoning;
 
 import java.io.File;
@@ -36,14 +39,27 @@ import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * The Class DeadReckoningGame.
+ * the Central Game class of the DeadReckoningGame.
+ * It manages several HudLayersStates (an extention of the BasicStates provided by Slick).
+ * It also holds important constants (UI colors, indicies of stored states, size of tiles)
+ * 
+ * Only once instance of a DeadReckoningGame can be active at any time.
+ * This is kind of an ugly hackish workaround for a few problems encountered deeper in, but
+ * the limitations it imposes are mostly minimal.
+ */
 public class DeadReckoningGame extends StateBasedGame {
+	
+	/** The Constants that guide the referencing of states. */
 	public static final int LOOTSTATE = 0, INVENTORYSTATE = 1,
 			GAMEPLAYSTATE = 2, MAINMENUSTATE = 3, SAVESELECTSTATE = 4,
 			MAPSTATE = 5, SKILLSTATE = 6, NEWGAMESTATE = 7, ERRORSTATE = 8;
 
+	/** The Constant tileSize, that governs the size of the tiles in the game (32x32)*/
 	public static final int tileSize = 32;
-
-	public static DeadReckoningGame instance;
+	
+	/** The Constants that control the User Interface Colors*/
 	public static final Color menuColor = new Color(60, 40, 50, 255),
 			menuBackgroundColor = new Color(20, 40, 60),
 			menuTextColor = new Color(255, 255, 255),
@@ -52,13 +68,33 @@ public class DeadReckoningGame extends StateBasedGame {
 			mouseoverTextColor = new Color(255, 255, 255, 200),
 			menuHighlightColor = new Color(210, 210, 0),
 			skillInvalidColor = new Color(0, 0, 0, 80);
-
+	
+	/** The active instance of DeadReckoningGame. */
+	public static DeadReckoningGame instance;
+	
+	/** The menu background.
+	 * This is to maintain the same particles and other graphical polishes across several states,
+	 * along with it just being easier to deal with this way (no need for repetition)*/
 	protected ArrayList<HudElement> menuBackground;
+	
+	/** The StringPutter object
+	 * This that tracks global "announcement" messages.
+	 * These are usually sent by actions in GameplayElement,
+	 * but are theoretically sendable by anything, anywhere. */
 	protected StringPutter messages;
+	
+	/** The main game element.
+	 * kept here for easier referencing*/
 	protected GameplayElement game;
 
+	/** The various menu fonts. */
 	public static UnicodeFont menuFont, menuSmallFont;
 
+	/**
+	 * Instantiates a new dead reckoning game.
+	 * 
+	 * @throws SlickException Slick Custom Exception. Encompasses several IO and Graphical errors within Slick objects
+	 */
 	DeadReckoningGame() throws SlickException {
 		super("Dead Reckoning");
 
@@ -79,14 +115,31 @@ public class DeadReckoningGame extends StateBasedGame {
 		}
 	}
 
+	/**
+	 * Gets the game element.
+	 *
+	 * @return the game element
+	 */
 	public GameplayElement getGameElement() {
 		return game;
 	}
 
+	/**
+	 * Gets the message element.
+	 *
+	 * @return the message element
+	 */
 	public StringPutter getMessageElement() {
 		return messages;
 	}
 
+	/**
+	 * The main method.
+	 * Creates a game container (A slick window) and puts a new DeadReckoningGame inside it
+	 *
+	 * @param args included in Java by default. have no meaning here.
+	 * @throws SlickException the slick exception
+	 */
 	public static void main(String[] args) throws SlickException {
 		try {
 			AppGameContainer app = new AppGameContainer(new DeadReckoningGame());
@@ -99,10 +152,24 @@ public class DeadReckoningGame extends StateBasedGame {
 
 	}
 
+	/**
+	 * Gets a state stored at a certain index, cast to the HudState type
+	 * Useful because the BasicGameState does not specify that the contents must extend the HudState class.
+	 *
+	 * @param id the id of the gamestate referenced. Usually just called with one of the gamestate constants defined in DeadReckoningGame
+	 * @return the hud state
+	 */
 	public HudLayersState getHudState(int id) {
 		return (HudLayersState) (getState(id));
 	}
 
+	/**
+	 * this initializes the states list for the game.
+	 * creates the various HudElement states in the DeadReckoningGame.
+	 * 
+	 * @param container the GameContainer object (window from slick) that the game takes place in
+	 * @see org.newdawn.slick.state.StateBasedGame#initStatesList(org.newdawn.slick.GameContainer)
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
@@ -178,6 +245,12 @@ public class DeadReckoningGame extends StateBasedGame {
 		this.enterState(MAINMENUSTATE);
 	}
 
+	/**
+	 * Flashes the error screen exception.
+	 * It does this on a different gameState (unimplemented across game)
+	 *
+	 * @param e the exception who's stack trace will be flashed
+	 */
 	public void flashException(Exception e) {
 		HudLayersState s = (HudLayersState) this.getState(ERRORSTATE);
 		s.makeFrom(new Object[] { null, e.getStackTrace().toString() });

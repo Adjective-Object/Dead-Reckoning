@@ -9,19 +9,32 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DamageEffect.
+ */
 public class DamageEffect extends GridEffect {
 
+	/** The font. */
 	static UnicodeFont font;
+	
+	/** The gravity. */
 	static float gravity = (float) 0.05;
+	
+	/** The fadeout. */
 	static float fadeout = (float) 0.8;
+	
+	/** The visibility. */
 	float x, y, xMove, yMove, visibility;
+	
+	/** The damage. */
 	String damage;
 
 	/**
-	 * easy constructor for making DamageParticles off of the tile system
-	 * 
-	 * @param t
-	 * @param damage
+	 * easy constructor for making DamageParticles off of the tile system.
+	 *
+	 * @param t the t
+	 * @param damage the damage
 	 */
 	public DamageEffect(Tile t, String damage) {
 		super(t);
@@ -36,15 +49,17 @@ public class DamageEffect extends GridEffect {
 	/**
 	 * initializes the variables needed for damageparticle (called once, in
 	 * StatebasedGame.init())
-	 * 
-	 * @throws SlickException
+	 *
+	 * @throws SlickException the slick exception
 	 */
 	public static void init() throws SlickException {
 		font = new UnicodeFont("res/visitor.ttf", 7, false, false);
 	}
 
 	/**
-	 * updates the damage particle (gravity, momentum, you know the drill)
+	 * updates the damage particle (gravity, momentum, you know the drill).
+	 *
+	 * @param delta the delta
 	 */
 	public void update(int delta) {
 		visibility = visibility * fadeout;
@@ -60,7 +75,11 @@ public class DamageEffect extends GridEffect {
 
 	/**
 	 * renders the damage particle onto a graphics object with x and y offsets
-	 * (camera X and camera Y, usually)
+	 * (camera X and camera Y, usually).
+	 *
+	 * @param g the g
+	 * @param xOff the x off
+	 * @param yOff the y off
 	 */
 	public void render(Graphics g, float xOff, float yOff) {
 		g.setColor(new Color(200, 0, 0, 255 * visibility));

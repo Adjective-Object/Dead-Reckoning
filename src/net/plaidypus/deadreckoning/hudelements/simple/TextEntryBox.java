@@ -9,8 +9,13 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TextEntryBox.
+ */
 public class TextEntryBox extends HudElement {
 
+	/** The input values. */
 	int[] inputValues = new int[] { Input.KEY_A, Input.KEY_B, Input.KEY_C,
 			Input.KEY_D, Input.KEY_E, Input.KEY_F, Input.KEY_G, Input.KEY_H,
 			Input.KEY_I, Input.KEY_J, Input.KEY_K, Input.KEY_L, Input.KEY_M,
@@ -18,16 +23,30 @@ public class TextEntryBox extends HudElement {
 			Input.KEY_S, Input.KEY_T, Input.KEY_U, Input.KEY_V, Input.KEY_W,
 			Input.KEY_X, Input.KEY_Y, Input.KEY_Z, };
 
+	/** The content. */
 	String content = "";
 
+	/** The height. */
 	int width, height;
 
+	/**
+	 * Instantiates a new text entry box.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @param bindMethod the bind method
+	 * @param width the width
+	 * @param height the height
+	 */
 	public TextEntryBox(int x, int y, int bindMethod, int width, int height) {
 		super(x, y, bindMethod, true);
 		this.width = width;
 		this.height = height;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
@@ -52,27 +71,42 @@ public class TextEntryBox extends HudElement {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(java.lang.Object)
+	 */
 	@Override
 	public void makeFrom(Object o) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#init(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame)
+	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getWidth()
+	 */
 	@Override
 	public int getWidth() {
 		return this.width;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getHeight()
+	 */
 	@Override
 	public int getHeight() {
 		return this.height;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#render(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, org.newdawn.slick.Graphics)
+	 */
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
@@ -90,6 +124,11 @@ public class TextEntryBox extends HudElement {
 		g.clearClip();
 	}
 
+	/**
+	 * Gets the content.
+	 *
+	 * @return the content
+	 */
 	public String getContent() {
 		return this.content;
 	}

@@ -18,24 +18,46 @@ import rlforj.los.BresLos;
 import rlforj.los.ILosAlgorithm;
 import rlforj.los.ILosBoard;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class GameBoard.
+ */
 public class GameBoard implements ILosBoard {
 
+	/** The ingame entities. */
 	public ArrayList<Entity> ingameEntities;
 
+	/** The board. */
 	public Tile[][] board;
+	
+	/** The primary highlight. */
 	Tile primaryHighlight;
+	
+	/** The height. */
 	public int width, height;
 
+	/** The under effects. */
 	ArrayList<GridEffect> overEffects, underEffects;
 
+	/** The Gameplay element. */
 	GameplayElement GameplayElement;
 
+	/** The render dist x. */
 	public int depth, renderDistY = 20, renderDistX = 40;
 
+	/** The map id. */
 	public String saveID, mapID;
 
+	/** The Constant primaryHighlightColor. */
 	static final Color primaryHighlightColor = new Color(255, 75, 23);
 
+	/**
+	 * Instantiates a new game board.
+	 *
+	 * @param g the g
+	 * @param saveID the save id
+	 * @param mapID the map id
+	 */
 	public GameBoard(GameplayElement g, String saveID, String mapID) {
 		this();
 		this.GameplayElement = g;
@@ -43,12 +65,21 @@ public class GameBoard implements ILosBoard {
 		this.mapID = mapID;
 	}
 
+	/**
+	 * Instantiates a new game board.
+	 */
 	public GameBoard() {
 		ingameEntities = new ArrayList<Entity>(0);
 		overEffects = new ArrayList<GridEffect>(0);
 		underEffects = new ArrayList<GridEffect>(0);
 	}
 
+	/**
+	 * Instantiates a new game board.
+	 *
+	 * @param width the width
+	 * @param height the height
+	 */
 	public GameBoard(int width, int height) {
 		this();
 		this.width = width;
@@ -65,24 +96,65 @@ public class GameBoard implements ILosBoard {
 		}
 	}
 
+	/**
+	 * Place entity.
+	 *
+	 * @param t the t
+	 * @param e the e
+	 * @param layer the layer
+	 */
 	public void placeEntity(Tile t, Entity e, int layer) {
 		placeEntity(t.getX(), t.getY(), e, layer);
 	}
 
+	/**
+	 * Insert entity.
+	 *
+	 * @param index the index
+	 * @param t the t
+	 * @param e the e
+	 * @param layer the layer
+	 */
 	public void insertEntity(int index, Tile t, Entity e, int layer) {
 		insertEntity(index, t.getX(), t.getY(), e, layer);
 	}
 
+	/**
+	 * Place entity.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @param e the e
+	 * @param layer the layer
+	 */
 	public void placeEntity(int x, int y, Entity e, int layer) {
 		board[x][y].setEntity(e, layer);
 		ingameEntities.add(e);
 	}
 
+	/**
+	 * Insert entity.
+	 *
+	 * @param index the index
+	 * @param x the x
+	 * @param y the y
+	 * @param e the e
+	 * @param layer the layer
+	 */
 	public void insertEntity(int index, int x, int y, Entity e, int layer) {
 		board[x][y].setEntity(e, layer);
 		this.ingameEntities.add(index, e);
 	}
 
+	/**
+	 * Place entity near.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @param e the e
+	 * @param layer the layer
+	 * @return true, if successful
+	 */
 	public boolean placeEntityNear(int x, int y, Entity e, int layer) {
 		for (int scanRadius = 0; scanRadius < 10; scanRadius++) {
 			for (int i = -scanRadius + 1; i < scanRadius; i++) {
@@ -101,16 +173,34 @@ public class GameBoard implements ILosBoard {
 		return false;
 	}
 
+	/**
+	 * Removes the entity.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @param layer the layer
+	 */
 	public void removeEntity(int x, int y, int layer) {
 		ingameEntities.remove(board[x][y].getEntity(layer));
 		board[x][y].disconnectEntity(layer);
 	}
 
+	/**
+	 * Removes the entity.
+	 *
+	 * @param e the e
+	 */
 	public void removeEntity(Entity e) {
 		ingameEntities.remove(e);
 		e.getLocation().disconnectEntity(e.getLayer());
 	}
 
+	/**
+	 * Clear tile.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 */
 	public void clearTile(int x, int y) {
 		for (int i = 0; i < Tile.numLayers; i++) {
 			ingameEntities.remove(board[x][y].getEntity(i));
@@ -118,15 +208,36 @@ public class GameBoard implements ILosBoard {
 		board[x][y].disconnectEntities();
 	}
 
+	/**
+	 * Move entity.
+	 *
+	 * @param source the source
+	 * @param target the target
+	 * @param layer the layer
+	 */
 	public void moveEntity(Entity source, Tile target, int layer) {
 		source.getLocation().disconnectEntity(layer);
 		target.setEntity(source, layer);
 	}
 
+	/**
+	 * Gets the tile at.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @return the tile at
+	 */
 	public Tile getTileAt(int x, int y) {
 		return board[x][y];
 	}
 
+	/**
+	 * Render.
+	 *
+	 * @param g the g
+	 * @param xoff the xoff
+	 * @param yoff the yoff
+	 */
 	public void render(Graphics g, float xoff, float yoff) {
 
 		int lowX = (int) Utilities.limitTo(-xoff / DeadReckoningGame.tileSize,
@@ -176,6 +287,13 @@ public class GameBoard implements ILosBoard {
 		}
 	}
 
+	/**
+	 * Update selctor.
+	 *
+	 * @param i the i
+	 * @param xOff the x off
+	 * @param yOff the y off
+	 */
 	public void updateSelctor(Input i, float xOff, float yOff) {
 
 		if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
@@ -202,6 +320,12 @@ public class GameBoard implements ILosBoard {
 		}
 	}
 
+	/**
+	 * Update all tiles.
+	 *
+	 * @param gc the gc
+	 * @param delta the delta
+	 */
 	public void updateAllTiles(GameContainer gc, int delta) {
 
 		for (int y = 0; y < this.height; y++) {
@@ -235,6 +359,12 @@ public class GameBoard implements ILosBoard {
 		}
 	}
 
+	/**
+	 * Update board effects.
+	 *
+	 * @param gc the gc
+	 * @param delta the delta
+	 */
 	public void updateBoardEffects(GameContainer gc, int delta) {
 		for (int y = 0; y < this.height; y++) {
 			for (int x = 0; x < this.width; x++) {
@@ -247,26 +377,52 @@ public class GameBoard implements ILosBoard {
 		}
 	}
 
+	/**
+	 * Gets the height.
+	 *
+	 * @return the height
+	 */
 	public int getHeight() {
 		return height;
 	}
 
+	/**
+	 * Gets the width.
+	 *
+	 * @return the width
+	 */
 	public int getWidth() {
 		return width;
 	}
 
+	/**
+	 * Adds the effect under.
+	 *
+	 * @param g the g
+	 */
 	public void addEffectUnder(GridEffect g) {
 		if (g != null) {
 			this.underEffects.add(g);
 		}
 	}
 
+	/**
+	 * Adds the effect over.
+	 *
+	 * @param g the g
+	 */
 	public void addEffectOver(GridEffect g) {
 		if (g != null) {
 			this.overEffects.add(g);
 		}
 	}
 
+	/**
+	 * Adds the effect under.
+	 *
+	 * @param t the t
+	 * @param g the g
+	 */
 	public void addEffectUnder(Tile t, GridEffect g) {
 		if (g != null) {
 			g.setLocation(t);
@@ -274,6 +430,12 @@ public class GameBoard implements ILosBoard {
 		}
 	}
 
+	/**
+	 * Adds the effect over.
+	 *
+	 * @param t the t
+	 * @param g the g
+	 */
 	public void addEffectOver(Tile t, GridEffect g) {
 		if (g != null) {
 			g.setLocation(t);
@@ -281,30 +443,65 @@ public class GameBoard implements ILosBoard {
 		}
 	}
 
+	/**
+	 * Highlight square.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 */
 	public void highlightSquare(int x, int y) {
 		board[x][y].setHighlighted(Tile.HIGHLIGHT_CONFIRM);
 	}
 
+	/**
+	 * Checks if is tile highlighted.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @return true, if is tile highlighted
+	 */
 	public boolean isTileHighlighted(int x, int y) {
 		return board[x][y].getHighlighted() == 1;
 	}
 
+	/**
+	 * Sets the primairy highlight.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 */
 	public void setPrimairyHighlight(int x, int y) {
 		this.primaryHighlight = board[x][y];
 	}
 
+	/**
+	 * Sets the primairy highlight.
+	 *
+	 * @param t the new primairy highlight
+	 */
 	public void setPrimairyHighlight(Tile t) {
 		this.primaryHighlight = t;
 	}
 
+	/**
+	 * Gets the primairy highlight.
+	 *
+	 * @return the primairy highlight
+	 */
 	public Tile getPrimairyHighlight() {
 		return primaryHighlight;
 	}
 
+	/**
+	 * Clear primary highlight.
+	 */
 	public void clearPrimaryHighlight() {
 		this.primaryHighlight = null;
 	}
 
+	/**
+	 * Clear highlighted squares.
+	 */
 	public void clearHighlightedSquares() {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
@@ -314,6 +511,12 @@ public class GameBoard implements ILosBoard {
 	}
 
 	// TODO block light based on transparency / vision
+	/**
+	 * Light in radius.
+	 *
+	 * @param location the location
+	 * @param VIS the vIS
+	 */
 	public void lightInRadius(Tile location, float VIS) {
 		for (int x = 0; x < board.length; x++) {
 			for (int y = 0; y < board[x].length; y++) {
@@ -330,6 +533,12 @@ public class GameBoard implements ILosBoard {
 		}
 	}
 
+	/**
+	 * Reveal from entity.
+	 *
+	 * @param entity the entity
+	 * @param sightDistance the sight distance
+	 */
 	public void revealFromEntity(Entity entity, int sightDistance) { // TODO
 																		// temporary,
 																		// only
@@ -356,12 +565,27 @@ public class GameBoard implements ILosBoard {
 		}
 	}
 
+	/**
+	 * Checks if is lineof sight.
+	 *
+	 * @param a the a
+	 * @param b the b
+	 * @return true, if is lineof sight
+	 */
 	public boolean isLineofSight(Tile a, Tile b) {
 		ILosAlgorithm alg = new BresLos(false);
 		return alg.existsLineOfSight(this, a.getX(), a.getY(), b.getX(),
 				b.getY(), false);
 	}
 
+	/**
+	 * Find available paths.
+	 *
+	 * @param source the source
+	 * @param wanderDist the wander dist
+	 * @param layer the layer
+	 * @return the array list
+	 */
 	public ArrayList<Tile> findAvailablePaths(Tile source, int wanderDist,
 			int layer) {// TODO limit generated array to dimensions of board
 		ArrayList<Tile> toRet = new ArrayList<Tile>(0);
@@ -414,6 +638,13 @@ public class GameBoard implements ILosBoard {
 		return toRet;
 	}
 
+	/**
+	 * High light available paths.
+	 *
+	 * @param source the source
+	 * @param wanderDist the wander dist
+	 * @param layer the layer
+	 */
 	public void highLightAvailablePaths(Tile source, int wanderDist, int layer) {
 		ArrayList<Tile> targetableTiles = findAvailablePaths(source,
 				wanderDist, layer);
@@ -424,7 +655,7 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * makes every tile on the board have a low light level, and makes it
-	 * invisible
+	 * invisible.
 	 */
 	public void HideAll() {
 		for (int x = 0; x < board.length; x++) {
@@ -435,22 +666,49 @@ public class GameBoard implements ILosBoard {
 		}
 	}
 
+	/**
+	 * Coord in grid.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @return true, if successful
+	 */
 	public boolean coordInGrid(int x, int y) {
 		return x >= 0 && y >= 0 && x < width && y < width;
 	}
 
+	/**
+	 * Gets the game.
+	 *
+	 * @return the game
+	 */
 	public GameplayElement getGame() {
 		return GameplayElement;
 	}
 
+	/**
+	 * Sets the game.
+	 *
+	 * @param g the new game
+	 */
 	public void setGame(GameplayElement g) {
 		this.GameplayElement = g;
 	}
 
+	/**
+	 * Assign element.
+	 *
+	 * @param g the g
+	 */
 	public void assignElement(GameplayElement g) {
 		this.GameplayElement = g;
 	}
 
+	/**
+	 * Checks if is idle.
+	 *
+	 * @return true, if is idle
+	 */
 	public boolean isIdle() {
 		for (int i = 0; i < this.ingameEntities.size(); i++) {
 			if (!ingameEntities.get(i).isIdle()) {
@@ -460,24 +718,43 @@ public class GameBoard implements ILosBoard {
 		return true;
 	}
 
+	/**
+	 * Gets the save id.
+	 *
+	 * @return the save id
+	 */
 	public String getSaveID() {
 		return saveID;
 	}
 
+	/**
+	 * Gets the map id.
+	 *
+	 * @return the map id
+	 */
 	public String getMapID() {
 		return mapID;
 	}
 
+	/* (non-Javadoc)
+	 * @see rlforj.los.ILosBoard#contains(int, int)
+	 */
 	public boolean contains(int x, int y) {
 		return x < this.getWidth() && x >= 0 && y < this.getHeight() && y >= 0
 				&& this.getTileAt(x, y).isOpen(Tile.LAYER_ACTIVE);
 	}
 
+	/* (non-Javadoc)
+	 * @see rlforj.los.ILosBoard#isObstacle(int, int)
+	 */
 	public boolean isObstacle(int x, int y) {
 		return x < this.getWidth() && x >= 0 && y < this.getHeight() && y >= 0
 				&& !board[x][y].isTransparent();
 	}
 
+	/* (non-Javadoc)
+	 * @see rlforj.los.ILosBoard#visit(int, int)
+	 */
 	public void visit(int x, int y) {
 		if (x < this.getWidth() && x >= 0 && y < this.getHeight() && y >= 0) {
 			this.getTileAt(x, y).visibility = true;

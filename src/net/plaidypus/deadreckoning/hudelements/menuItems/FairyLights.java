@@ -10,12 +10,32 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.StateBasedGame;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FairyLights.
+ */
 public class FairyLights extends HudElement {
 
+	/** The num particles. */
 	int width, height, numParticles;
+	
+	/** The particle sheet. */
 	SpriteSheet particleSheet;
+	
+	/** The particles. */
 	private float[][] particles;
 
+	/**
+	 * Instantiates a new fairy lights.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @param bindMethod the bind method
+	 * @param width the width
+	 * @param height the height
+	 * @param numParticles the num particles
+	 * @param particles the particles
+	 */
 	public FairyLights(int x, int y, int bindMethod, int width, int height,
 			int numParticles, SpriteSheet particles) {
 		super(x, y, bindMethod, false);
@@ -37,6 +57,9 @@ public class FairyLights extends HudElement {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
@@ -69,25 +92,40 @@ public class FairyLights extends HudElement {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(java.lang.Object)
+	 */
 	@Override
 	public void makeFrom(Object o) {
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#init(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame)
+	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getWidth()
+	 */
 	@Override
 	public int getWidth() {
 		return width;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getHeight()
+	 */
 	@Override
 	public int getHeight() {
 		return height;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#render(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, org.newdawn.slick.Graphics)
+	 */
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {

@@ -9,10 +9,23 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AnimatedEntity.
+ */
 public abstract class AnimatedEntity extends Entity {
 
+	/** The sprite. */
 	Animation sprite;
 
+	/**
+	 * Instantiates a new animated entity.
+	 *
+	 * @param location the location
+	 * @param layer the layer
+	 * @param imageRef the image ref
+	 * @throws SlickException the slick exception
+	 */
 	public AnimatedEntity(Tile location, int layer, String imageRef)
 			throws SlickException {
 		super(location, layer);
@@ -27,10 +40,18 @@ public abstract class AnimatedEntity extends Entity {
 		sprite.setAutoUpdate(true);
 	}
 
+	/**
+	 * Render.
+	 *
+	 * @return the image
+	 */
 	public Image render() {
 		return sprite.getCurrentFrame();
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.entities.Entity#update(org.newdawn.slick.GameContainer, int)
+	 */
 	public void update(GameContainer gc, int delta) {
 		sprite.update(delta);
 	}

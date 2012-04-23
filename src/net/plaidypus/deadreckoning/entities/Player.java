@@ -27,6 +27,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
+// TODO: Auto-generated Javadoc
 /*
 
  Lezbihonest here, Max is the only one who's been coding this for a while.
@@ -34,29 +35,46 @@ import org.newdawn.slick.SlickException;
 
  */
 
+/**
+ * The Class Player.
+ */
 public class Player extends LivingEntity {
 
+	/** The input. */
 	Input input;
 
+	/** The key binds. */
 	public static int[] keyBinds;
+	
+	/** The input skills. */
 	public static Skill[] inputSkills;
 
+	/** The current skill. */
 	public int currentSkill;
+	
+	/** The EXP. */
 	public int EXP;
 
+	/** The profession. */
 	public Profession profession;
 
+	/** The epuips. */
 	ArrayList<Equip> epuips;
 
+	/**
+	 * Instantiates a new player.
+	 */
 	public Player() {
 	}
 
 	/**
-	 * subclass of living entity that is controlled by user input
-	 * 
-	 * @param i
-	 *            the input object returned by GameContainer.getInput()
-	 * @throws SlickException
+	 * subclass of living entity that is controlled by user input.
+	 *
+	 * @param targetTile the target tile
+	 * @param layer the layer
+	 * @param p the p
+	 * @param i the input object returned by GameContainer.getInput()
+	 * @throws SlickException the slick exception
 	 */
 	public Player(Tile targetTile, int layer, Profession p, Input i)
 			throws SlickException {
@@ -92,10 +110,16 @@ public class Player extends LivingEntity {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.entities.LivingEntity#canSee(net.plaidypus.deadreckoning.board.Tile)
+	 */
 	public boolean canSee(Tile t) {
 		return this.getLocation().isVisible();
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.entities.LivingEntity#update(org.newdawn.slick.GameContainer, int)
+	 */
 	public void update(GameContainer gc, int delta) {
 		super.update(gc, delta);
 		if (gc.getInput().isKeyDown(Input.KEY_SCROLL)) {
@@ -103,6 +127,9 @@ public class Player extends LivingEntity {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.entities.InteractiveEntity#updateBoardEffects(org.newdawn.slick.GameContainer, int)
+	 */
 	public void updateBoardEffects(GameContainer gc, int delta) {
 		super.updateBoardEffects(gc, delta);
 		this.getParent().lightInRadius(getLocation(), 2);// TODO visibility
@@ -130,7 +157,11 @@ public class Player extends LivingEntity {
 
 	/**
 	 * action choosing for the player (returns null often because the player
-	 * takes time to decide/input)
+	 * takes time to decide/input).
+	 *
+	 * @param gc the gc
+	 * @param delta the delta
+	 * @return the action
 	 */
 	public Action decideNextAction(GameContainer gc, int delta) {
 		for (int i = 0; i < keyBinds.length; i++) {
@@ -170,78 +201,151 @@ public class Player extends LivingEntity {
 		return null;
 	}
 
+	/**
+	 * Can target.
+	 *
+	 * @return true, if successful
+	 */
 	private boolean canTarget() {
 		return this.getParent().getPrimairyHighlight().highlighted == Tile.HIGHLIGHT_CONFIRM
 				&& this.canSee(this.getParent().getPrimairyHighlight());
 	}
 
+	/**
+	 * Gets the eX pfor level.
+	 *
+	 * @return the eX pfor level
+	 */
 	public int getEXPforLevel() {
 		return (int) (10 * Math.pow(2, this.profession.getLevel()));
 	}
 
+	/**
+	 * Gets the max hp.
+	 *
+	 * @return the max hp
+	 */
 	public int getMaxHP() {
 		return (int) this.profession.getMaxHP();
 	}
 
+	/**
+	 * Gets the max mp.
+	 *
+	 * @return the max mp
+	 */
 	public int getMaxMP() {
 		return (int) this.profession.getMaxMP();
 	}
 
+	/**
+	 * Gets the iNT.
+	 *
+	 * @return the iNT
+	 */
 	public int getINT() {
 		return (int) this.profession.getINT();
 	}
 
+	/**
+	 * Gets the lUK.
+	 *
+	 * @return the lUK
+	 */
 	public int getLUK() {
 		return (int) this.profession.getLUK();
 	}
 
+	/**
+	 * Gets the sTR.
+	 *
+	 * @return the sTR
+	 */
 	public int getSTR() {
 		return (int) this.profession.getSTR();
 	}
 
+	/**
+	 * Gets the dEX.
+	 *
+	 * @return the dEX
+	 */
 	public int getDEX() {
 		return (int) this.profession.getDEX();
 	}
 
+	/**
+	 * Gets the profession.
+	 *
+	 * @return the profession
+	 */
 	public Profession getProfession() {
 		return this.profession;
 	}
 
+	/**
+	 * Adds the exp.
+	 *
+	 * @param value the value
+	 */
 	public void addExp(int value) {
 		this.EXP += value;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.entities.Entity#makeFromString(net.plaidypus.deadreckoning.board.GameBoard, java.lang.String[])
+	 */
 	@Override
 	public Entity makeFromString(GameBoard g, String[] toload) {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.entities.Entity#saveToString()
+	 */
 	@Override
 	public String saveToString() {
 		return "LOLGONNAPUTSOMETHINGHERELATER";
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.entities.LivingEntity#isInteractive()
+	 */
 	@Override
 	public boolean isInteractive() {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.entities.Entity#init()
+	 */
 	@Override
 	public void init() throws SlickException {
 		OnFire.init();
 		Fireball.init();
 	}
 
+	/**
+	 * Sets the input.
+	 *
+	 * @param input the new input
+	 */
 	public void setInput(Input input) {
 		this.input = input;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.entities.Entity#onInteract(net.plaidypus.deadreckoning.entities.Entity)
+	 */
 	@Override
 	public Action onInteract(Entity e) {
 		// TODO this should never be called
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString() {
 		return "Player[" + this.getX() + "," + this.getY() + "]";
 	}

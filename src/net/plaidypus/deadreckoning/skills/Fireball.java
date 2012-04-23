@@ -18,30 +18,52 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Fireball.
+ */
 public class Fireball extends Skill {
 
+	/** The fireball. */
 	public static SpriteSheet fireball;
 
+	/** The image. */
 	private static Image image;
 
+	/**
+	 * Instantiates a new fireball.
+	 */
 	public Fireball() {
 		super(image);
 		this.setName("Fireball");
 		this.setDescriptor("sets target living entity\non fire, dealing damage\nover time");
 	}
 
+	/**
+	 * Instantiates a new fireball.
+	 *
+	 * @param source the source
+	 */
 	public Fireball(LivingEntity source) {
 		super(source);
 		this.setName("fireball");
 		this.setDescriptor("sets target living entity on fire, dealing damage over time");
 	}
 
+	/**
+	 * Inits the.
+	 *
+	 * @throws SlickException the slick exception
+	 */
 	public static void init() throws SlickException {
 		fireball = new SpriteSheet("res/FireBurst.png",
 				DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
 		image = new Image("res/onFireIcon.png");
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.skills.Skill#makeAction(net.plaidypus.deadreckoning.board.Tile)
+	 */
 	public Action makeAction(Tile target) {
 		ArrayList<Action> toRet = new ArrayList<Action>(0);
 		Animation an = new Animation(fireball, 40);
@@ -54,11 +76,17 @@ public class Fireball extends Skill {
 		return new ActionSpawner(source, toRet);
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.skills.Skill#updateSkill()
+	 */
 	public void updateSkill() {
 		super.updateSkill();
 		this.levelcap = (this.source.getStatMaster().getLevel() - 1) * 1;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.skills.Skill#canTargetTile(net.plaidypus.deadreckoning.board.Tile)
+	 */
 	public boolean canTargetTile(Tile t) {
 		if (!t.isOpen(Tile.LAYER_ACTIVE)
 				&& !(t.getX() == source.getX() && t.getY() == source.getY())) {
@@ -67,10 +95,16 @@ public class Fireball extends Skill {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.skills.Skill#canBeCast()
+	 */
 	public boolean canBeCast() {
 		return super.canBeCast() && getLevel() > 0;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.skills.Skill#highlightRange(net.plaidypus.deadreckoning.board.GameBoard)
+	 */
 	public void highlightRange(GameBoard board) {
 		highlightRadial(board, 2);
 	}

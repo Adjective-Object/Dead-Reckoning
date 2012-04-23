@@ -13,15 +13,36 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Panel.
+ */
 public class Panel extends HudElement {
 
+	/** The height. */
 	int borderX, borderY, width, height;
+	
+	/** The contents. */
 	ArrayList<HudElement> contents;
 
+	/**
+	 * Instantiates a new panel.
+	 *
+	 * @param contents the contents
+	 */
 	public Panel(ArrayList<HudElement> contents) {
 		this(HudElement.TOP_LEFT, true, contents, 10, 10);
 	}
 
+	/**
+	 * Instantiates a new panel.
+	 *
+	 * @param bindMethod the bind method
+	 * @param needFoc the need foc
+	 * @param contents the contents
+	 * @param borderX the border x
+	 * @param borderY the border y
+	 */
 	public Panel(int bindMethod, boolean needFoc,
 			ArrayList<HudElement> contents, int borderX, int borderY) {
 		super(contents.get(0).getX(), contents.get(0).getY(), bindMethod,
@@ -35,6 +56,9 @@ public class Panel extends HudElement {
 		bakeBorders();
 	}
 
+	/**
+	 * Bake borders.
+	 */
 	public void bakeBorders() {
 		for (int i = 0; i < contents.size(); i++) {
 			int nw = contents.get(i).getX() + contents.get(i).getWidth();
@@ -60,14 +84,23 @@ public class Panel extends HudElement {
 		height = height - yoff;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getWidth()
+	 */
 	public int getWidth() {
 		return width;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getHeight()
+	 */
 	public int getHeight() {
 		return height;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#render(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, org.newdawn.slick.Graphics)
+	 */
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		g.setColor(DeadReckoningGame.menuColor);
@@ -83,6 +116,9 @@ public class Panel extends HudElement {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#renderMouseOver(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, org.newdawn.slick.Graphics)
+	 */
 	public void renderMouseOver(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		for (int i = 0; i < contents.size(); i++) {
@@ -90,6 +126,9 @@ public class Panel extends HudElement {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
@@ -98,6 +137,9 @@ public class Panel extends HudElement {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(java.lang.Object)
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void makeFrom(Object o) {
@@ -111,6 +153,11 @@ public class Panel extends HudElement {
 		bakeBorders();
 	}
 
+	/**
+	 * Make from.
+	 *
+	 * @param o the o
+	 */
 	public void makeFrom(Object[] o) {
 		for (int i = 0; i < contents.size(); i++) {
 			this.contents.get(i).makeFrom(o[i]);
@@ -118,6 +165,9 @@ public class Panel extends HudElement {
 		bakeBorders();
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#init(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame)
+	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
@@ -126,6 +176,11 @@ public class Panel extends HudElement {
 		}
 	}
 
+	/**
+	 * Gets the contents.
+	 *
+	 * @return the contents
+	 */
 	public ArrayList<HudElement> getContents() {
 		return this.contents;
 	}

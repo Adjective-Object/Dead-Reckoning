@@ -16,11 +16,25 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SaveSelectorState.
+ */
 public class SaveSelectorState extends ExclusiveHudLayersState {
 
+	/** The saves. */
 	static Save[] saves;
+	
+	/** The button index. */
 	int buttonIndex;
 
+	/**
+	 * Instantiates a new save selector state.
+	 *
+	 * @param stateID the state id
+	 * @param background the background
+	 * @throws SlickException the slick exception
+	 */
 	@SuppressWarnings("unchecked")
 	public SaveSelectorState(int stateID, ArrayList<HudElement> background)
 			throws SlickException {
@@ -29,6 +43,9 @@ public class SaveSelectorState extends ExclusiveHudLayersState {
 		this.HudElements.addAll(SaveSelectorState.makeElementsList());
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.state.ExclusiveHudLayersState#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	 */
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		super.update(container, game, delta);
@@ -66,6 +83,12 @@ public class SaveSelectorState extends ExclusiveHudLayersState {
 		}
 	}
 
+	/**
+	 * Make elements list.
+	 *
+	 * @return the array list
+	 * @throws SlickException the slick exception
+	 */
 	private static ArrayList<HudElement> makeElementsList()
 			throws SlickException {
 		File f = new File("saves/");

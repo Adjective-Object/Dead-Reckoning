@@ -8,23 +8,46 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class HudElement.
+ */
 public abstract class HudElement {
 
+	/** The Constant cursorSize. */
 	static final int cursorSize = 10;
 
+	/** The bind method. */
 	public int xoff, yoff, bindMethod;
+	
+	/** The has focus. */
 	public boolean hasFocus;
+	
+	/** The needs focus. */
 	public boolean needsFocus;
+	
+	/** The mouseover text. */
 	String mouseoverText = null;
 
+	/** The parent state. */
 	HudLayersState parentState;
 
+	/** The Constant BOTTOM_RIGHT. */
 	public static final int TOP_LEFT = 0, TOP_CENTER = 1, TOP_RIGHT = 2,
 			CENTER_LEFT = 3, CENTER_CENTER = 4, CENTER_RIGHT = 5,
 			BOTTOM_LEFT = 6, BOTTOM_CENTER = 7, BOTTOM_RIGHT = 8;
 
+	/** The offsets. */
 	static int[][] offsets;
 
+	/**
+	 * Instantiates a new hud element.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @param bindMethod the bind method
+	 * @param needFoc the need foc
+	 */
 	public HudElement(int x, int y, int bindMethod, boolean needFoc) {
 		this.xoff = x;
 		this.yoff = y;
@@ -32,25 +55,62 @@ public abstract class HudElement {
 		this.needsFocus = needFoc;
 	}
 
+	/**
+	 * Update.
+	 *
+	 * @param gc the gc
+	 * @param sbg the sbg
+	 * @param delta the delta
+	 * @throws SlickException the slick exception
+	 */
 	public abstract void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException;
 
+	/**
+	 * Update.
+	 *
+	 * @param gc the gc
+	 * @param sbg the sbg
+	 * @param delta the delta
+	 * @param hasFocus the has focus
+	 * @throws SlickException the slick exception
+	 */
 	public void update(GameContainer gc, StateBasedGame sbg, int delta,
 			boolean hasFocus) throws SlickException {
 		this.setFocus(hasFocus);
 		this.update(gc, sbg, delta);
 	}
 
+	/**
+	 * Sets the parent.
+	 *
+	 * @param parentState the new parent
+	 */
 	public void setParent(HudLayersState parentState) {
 		this.parentState = parentState;
 	}
 
+	/**
+	 * Make from.
+	 *
+	 * @param o the o
+	 */
 	public abstract void makeFrom(Object o);
 
+	/**
+	 * Sets the focus.
+	 *
+	 * @param b the new focus
+	 */
 	public void setFocus(boolean b) {
 		this.hasFocus = b;
 	}
 
+	/**
+	 * Calculate offsets.
+	 *
+	 * @param gc the gc
+	 */
 	public static void calculateOffsets(GameContainer gc) {
 		offsets = new int[9][2];
 		for (int i = 0; i < 3; i++) {
@@ -61,20 +121,58 @@ public abstract class HudElement {
 		}
 	}
 
+	/**
+	 * Sets the mouseover text.
+	 *
+	 * @param text the new mouseover text
+	 */
 	public void setMouseoverText(String text) {
 		this.mouseoverText = text;
 	}
 
+	/**
+	 * Inits the.
+	 *
+	 * @param gc the gc
+	 * @param sbg the sbg
+	 * @throws SlickException the slick exception
+	 */
 	public abstract void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException;
 
+	/**
+	 * Gets the width.
+	 *
+	 * @return the width
+	 */
 	public abstract int getWidth();
 
+	/**
+	 * Gets the height.
+	 *
+	 * @return the height
+	 */
 	public abstract int getHeight();
 
+	/**
+	 * Render.
+	 *
+	 * @param gc the gc
+	 * @param sbg the sbg
+	 * @param g the g
+	 * @throws SlickException the slick exception
+	 */
 	public abstract void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException;
 
+	/**
+	 * Render mouse over.
+	 *
+	 * @param gc the gc
+	 * @param sbg the sbg
+	 * @param g the g
+	 * @throws SlickException the slick exception
+	 */
 	public void renderMouseOver(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		int mx = gc.getInput().getMouseX(), my = gc.getInput().getMouseY();
@@ -99,14 +197,29 @@ public abstract class HudElement {
 		}
 	}
 
+	/**
+	 * Gets the x.
+	 *
+	 * @return the x
+	 */
 	public int getX() {
 		return xoff + offsets[bindMethod][0];
 	}
 
+	/**
+	 * Gets the y.
+	 *
+	 * @return the y
+	 */
 	public int getY() {
 		return yoff + offsets[bindMethod][1];
 	}
 
+	/**
+	 * Gets the parent.
+	 *
+	 * @return the parent
+	 */
 	public HudLayersState getParent() {
 		return this.parentState;
 	}

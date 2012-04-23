@@ -9,17 +9,40 @@ import net.plaidypus.deadreckoning.entities.LandingPad;
 import net.plaidypus.deadreckoning.entities.Stair;
 import net.plaidypus.deadreckoning.entities.Wall;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RoomBasedBiome.
+ */
 public abstract class RoomBasedBiome extends Biome {
 
+	/** The room size max. */
 	int numRooms, roomSizeMin = 5, roomSizeMax = 10;
 
+	/**
+	 * Instantiates a new room based biome.
+	 *
+	 * @param numRooms the num rooms
+	 */
 	public RoomBasedBiome(int numRooms) {
 		this.numRooms = numRooms;
 	}
 
+	/**
+	 * Populate board.
+	 *
+	 * @param target the target
+	 * @param rooms the rooms
+	 * @param linkedLevels the linked levels
+	 * @return the game board
+	 */
 	public abstract GameBoard populateBoard(GameBoard target,
 			ArrayList<int[]> rooms, ArrayList<Stair> linkedLevels);
 
+	/**
+	 * Place walls on null borders.
+	 *
+	 * @param g the g
+	 */
 	public void placeWallsOnNullBorders(GameBoard g) {
 		for (int x = 0; x < g.getWidth(); x++) {
 			for (int y = 0; y < g.getHeight(); y++) {
@@ -65,6 +88,12 @@ public abstract class RoomBasedBiome extends Biome {
 		}
 	}
 
+	/**
+	 * Outline room.
+	 *
+	 * @param target the target
+	 * @param room the room
+	 */
 	public void outlineRoom(GameBoard target, int[] room) {
 		for (int x = 1; x < room[2] - 1; x++) {
 			target.getTileAt(room[0] + x, room[1]).setTileFace(
@@ -95,6 +124,14 @@ public abstract class RoomBasedBiome extends Biome {
 		}
 	}
 
+	/**
+	 * Draw cooridor.
+	 *
+	 * @param target the target
+	 * @param roomA the room a
+	 * @param roomB the room b
+	 * @return the game board
+	 */
 	public GameBoard drawCooridor(GameBoard target, int[] roomA, int[] roomB) {
 		int x = roomA[0] + roomA[2] / 2;
 		int y = roomA[1] + roomA[3] / 2;
@@ -122,6 +159,16 @@ public abstract class RoomBasedBiome extends Biome {
 
 	}
 
+	/**
+	 * Adds the line.
+	 *
+	 * @param target the target
+	 * @param ax the ax
+	 * @param ay the ay
+	 * @param length the length
+	 * @param horizontal the horizontal
+	 * @return the array list
+	 */
 	public ArrayList<int[]> addLine(GameBoard target, int ax, int ay,
 			int length, boolean horizontal) {
 
@@ -139,6 +186,12 @@ public abstract class RoomBasedBiome extends Biome {
 		return retPoints;
 	}
 
+	/**
+	 * Draw on board.
+	 *
+	 * @param target the target
+	 * @param points the points
+	 */
 	public void drawOnBoard(GameBoard target, ArrayList<int[]> points) {
 		boolean willdr = true;
 		Tile previous = null;
@@ -178,6 +231,9 @@ public abstract class RoomBasedBiome extends Biome {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.generator.Biome#makeBoard(int, java.util.ArrayList)
+	 */
 	public GameBoard makeBoard(int depth, ArrayList<Stair> floorLinks) {
 		ArrayList<int[]> rooms = new ArrayList<int[]>(0);
 
@@ -207,6 +263,13 @@ public abstract class RoomBasedBiome extends Biome {
 
 	}
 
+	/**
+	 * Checkfor collisions.
+	 *
+	 * @param room the room
+	 * @param rooms the rooms
+	 * @return true, if successful
+	 */
 	public boolean checkforCollisions(int[] room, ArrayList<int[]> rooms) { // check
 																			// for
 																			// collisions
@@ -224,6 +287,13 @@ public abstract class RoomBasedBiome extends Biome {
 		return false;
 	}
 
+	/**
+	 * Generic population.
+	 *
+	 * @param target the target
+	 * @param rooms the rooms
+	 * @param linkedLevels the linked levels
+	 */
 	public void genericPopulation(GameBoard target, ArrayList<int[]> rooms,
 			ArrayList<Stair> linkedLevels) {
 		for (int i = 0; i < rooms.size() - 1; i++) {

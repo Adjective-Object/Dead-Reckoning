@@ -11,12 +11,22 @@ import net.plaidypus.deadreckoning.entities.Torch;
 
 import org.newdawn.slick.SlickException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Temple.
+ */
 public class Temple extends Biome {
 
+	/**
+	 * Instantiates a new temple.
+	 */
 	public Temple() {
 		requiredClasses = new Class[] { Torch.class, Stair.class };
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.generator.Biome#makeBoard(int, java.util.ArrayList)
+	 */
 	@Override
 	public GameBoard makeBoard(int depth, ArrayList<Stair> linkedLevels)
 			throws SlickException {

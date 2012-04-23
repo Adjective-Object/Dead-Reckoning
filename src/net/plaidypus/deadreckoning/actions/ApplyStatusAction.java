@@ -6,20 +6,39 @@ import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.status.Status;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ApplyStatusAction.
+ */
 public class ApplyStatusAction extends EntityTypeAction {
 
+	/** The s. */
 	Status s;
 
+	/**
+	 * Instantiates a new apply status action.
+	 *
+	 * @param source the source
+	 * @param target the target
+	 * @param targetTile the target tile
+	 * @param toApply the to apply
+	 */
 	public ApplyStatusAction(Entity source, Tile target, int targetTile,
 			Status toApply) {
 		super(source, target, targetTile);
 		this.s = toApply;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net.plaidypus.deadreckoning.entities.Entity)
+	 */
 	protected boolean applyToEntity(Entity entity) {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net.plaidypus.deadreckoning.entities.LivingEntity)
+	 */
 	protected boolean applyToEntity(LivingEntity e) {
 		e.addCondition(s);
 		sendMessage(target.getEntity(Tile.LAYER_ACTIVE).getName() + " become "
@@ -27,10 +46,16 @@ public class ApplyStatusAction extends EntityTypeAction {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net.plaidypus.deadreckoning.entities.InteractiveEntity)
+	 */
 	protected boolean applyToEntity(InteractiveEntity e) {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.plaidypus.deadreckoning.actions.Action#isNoticed()
+	 */
 	protected boolean isNoticed() {
 		return target.canBeSeen() || source.getLocation().canBeSeen();
 	}
