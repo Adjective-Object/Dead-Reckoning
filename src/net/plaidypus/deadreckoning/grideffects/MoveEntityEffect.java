@@ -8,6 +8,10 @@ import org.newdawn.slick.Graphics;
 // TODO: Auto-generated Javadoc
 /**
  * The Class MoveEntityEffect.
+ * 
+ * a simple grideffect for doing gradual line motion between two tiles
+ * 
+ * unused as of now
  */
 public class MoveEntityEffect extends GridEffect {
 	

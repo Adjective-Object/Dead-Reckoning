@@ -6,9 +6,12 @@ import net.plaidypus.deadreckoning.board.Tile;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class FadeoutEffect.
+ * 
+ * Fades out an image over a certain tile
+ * 
+ * used to make deletion of objects better looking
  */
 public class FadeoutEffect extends GridEffect {
 

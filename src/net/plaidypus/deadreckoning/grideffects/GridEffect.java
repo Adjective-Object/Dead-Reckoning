@@ -4,22 +4,25 @@ import net.plaidypus.deadreckoning.board.Tile;
 
 import org.newdawn.slick.Graphics;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class GridEffect.
+ * 
+ * GridEffects are a method of putting animations / etc tied to the grid of a GameBoard
+ * they can be stored as above or below the entities in the tile.
+ * 
  */
 public abstract class GridEffect {
 	
-	/** The kill. */
+	/** a boolean value that, when true, says "this should be deleted"*/
 	private boolean kill;
 	
-	/** The location. */
+	/** The location where the grid effect is located. */
 	public Tile location;
 
 	/**
 	 * Instantiates a new grid effect.
 	 *
-	 * @param location the location
+	 * @param location the tile to tie the effect to
 	 */
 	public GridEffect(Tile location) {
 		this.location = location;
@@ -27,7 +30,7 @@ public abstract class GridEffect {
 	}
 
 	/**
-	 * Sets the location.
+	 * Sets the location of the gridEffect.
 	 *
 	 * @param l the new location
 	 */
@@ -36,7 +39,7 @@ public abstract class GridEffect {
 	}
 
 	/**
-	 * Checks if is complete.
+	 * Checks if is complete / should be killed.
 	 *
 	 * @return true, if is complete
 	 */
@@ -45,27 +48,27 @@ public abstract class GridEffect {
 	}
 
 	/**
-	 * Sets the complete.
+	 * Sets the complete / kill value.
 	 *
-	 * @param comp the new complete
+	 * @param comp the new kill value
 	 */
 	public void setComplete(boolean comp) {
 		this.kill = comp;
 	}
 
 	/**
-	 * Update.
+	 * Updates the grid effect.
 	 *
-	 * @param delta the delta
+	 * @param delta the milliseconds passed since the last update call
 	 */
 	public abstract void update(int delta);
 
 	/**
-	 * Render.
+	 * Renders at the x,y offset (given in terms of tiles offset - number of tiles shifted out of screen).
 	 *
 	 * @param g the g
-	 * @param xoff the xoff
-	 * @param yoff the yoff
+	 * @param xoff the xoff in tile offset
+	 * @param yoff the yoff in tiel offset
 	 */
 	public abstract void render(Graphics g, float xoff, float yoff);
 }

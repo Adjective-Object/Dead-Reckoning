@@ -50,7 +50,7 @@ public abstract class Skill {
 	}
 
 	/**
-	 * created to have unlinekd instances of a skill that can be later bound.
+	 * created to have unlinked instances of a skill that can be later bound.
 	 * planned to be used only in character creation
 	 */
 	public Skill() {
@@ -61,7 +61,7 @@ public abstract class Skill {
 	}
 
 	/**
-	 * binds the skill to a ceratain livingentity such that it is unecessary to
+	 * binds the skill to a certain livingentity such that it is not necessary to
 	 * constantly pass the correct livingentity to parse based off of.
 	 *
 	 * @param source the source

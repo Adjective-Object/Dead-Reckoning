@@ -16,36 +16,41 @@ import org.newdawn.slick.SlickException;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class Profession.
+ * The Profession (Playerclass).
+ * 
+ * The profession class is a custom kind of statmaster that also keeps the skills
+ * that the player has access to in a series of skillprogressions
+ * 
+ * @see net.plaidypus.deadreckoning.professions.SkillProgression
  */
 public class Profession extends StatMaster {
 
-	/** The stat dist. */
+	/** The stat distribution variables (determines how stats are allocated to HP,MP,STR,DEX,INT,and LUK. From the baseclass). */
 	private double[] statDist;// HP, MP, STR, DEX, INT, LUK
 
-	/** The main weapon. */
+	/** The main weapon of the profession (the weapon they get bonus damage from using). */
 	private Item mainWeapon;
 
-	/** The skill trees. */
+	/** The skill "tree". (not really branching. instead, three seperate independent skill progressions) */
 	private SkillProgression[] skillTrees;
 
-	/** The portrait. */
+	/** The portrait image of the profession/character. */
 	private Image portrait;
 	
-	/** The base class id. */
+	/** The base class id. Used to get stat distributions and the character portrait */
 	private int baseClassID;
 
-	/** The name. */
+	/** The name of the playerclass. */
 	public String name;
 	
-	/** The sp per level. */
+	/** The base stats and SP gained per level. */
 	int baseHP = 50, baseMP = 20, baseStat = 4, spPerLevel = 5;
 
-	/** The skill points. */
+	/** The skill points earned, distributed with the ratios in statDist. */
 	public int skillPoints;
 
 	/**
-	 * Instantiates a new profession.
+	 * Loads a profession (one of the base classes)
 	 *
 	 * @param baseClassID the base class id
 	 * @throws SlickException the slick exception
@@ -58,6 +63,8 @@ public class Profession extends StatMaster {
 
 	/**
 	 * Instantiates a new profession.
+	 * 
+	 * with this, you can mix and match skill trees from different classes.
 	 *
 	 * @param baseClassID the base class id
 	 * @param treeA the tree a
@@ -78,7 +85,9 @@ public class Profession extends StatMaster {
 	}
 
 	/**
-	 * Parses the class traits.
+	 * Parses the class traits, and dumps them into statDist
+	 * 
+	 *  used just for getting the stat ratio variables
 	 *
 	 * @param baseClassID the base class id
 	 */
@@ -104,10 +113,12 @@ public class Profession extends StatMaster {
 	}
 
 	/**
-	 * Load from file.
-	 *
-	 * @param f the f
-	 * @return the profession
+	 * Loads from file.
+	 * 
+	 * unimplemented
+	 * 
+	 * @param f the file
+	 * @return the loaded profession
 	 * @throws SlickException the slick exception
 	 */
 	public static Profession loadFromFile(File f) throws SlickException {
@@ -133,7 +144,7 @@ public class Profession extends StatMaster {
 	}
 
 	/**
-	 * Gets the hP frac.
+	 * Gets the hP frac. (from statDist)
 	 *
 	 * @return the hP frac
 	 */
@@ -142,7 +153,7 @@ public class Profession extends StatMaster {
 	}
 
 	/**
-	 * Gets the mP frac.
+	 * Gets the mP frac. (from statDist)
 	 *
 	 * @return the mP frac
 	 */
@@ -151,7 +162,7 @@ public class Profession extends StatMaster {
 	}
 
 	/**
-	 * Gets the sTR frac.
+	 * Gets the sTR frac. (from statDist)
 	 *
 	 * @return the sTR frac
 	 */
@@ -160,7 +171,7 @@ public class Profession extends StatMaster {
 	}
 
 	/**
-	 * Gets the dEX frac.
+	 * Gets the dEX frac. (from statDist)
 	 *
 	 * @return the dEX frac
 	 */
@@ -169,7 +180,7 @@ public class Profession extends StatMaster {
 	}
 
 	/**
-	 * Gets the iNT frac.
+	 * Gets the iNT frac. (from statDist)
 	 *
 	 * @return the iNT frac
 	 */
@@ -178,7 +189,7 @@ public class Profession extends StatMaster {
 	}
 
 	/**
-	 * Gets the lUK frac.
+	 * Gets the lUK frac. (from statDist)
 	 *
 	 * @return the lUK frac
 	 */

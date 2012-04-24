@@ -9,25 +9,29 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class DamageEffect.
+ * 
+ * displays damage numbers when someone attacks
+ * created by AttackAction
+ * 
+ * @see net.plaidypus.deadreckoning.actions.AttackAction
  */
 public class DamageEffect extends GridEffect {
 
 	/** The font. */
 	static UnicodeFont font;
 	
-	/** The gravity. */
-	static float gravity = (float) 0.05;
+	/** The "gravity". */
+	static final float gravity = (float) 0.05;
 	
-	/** The fadeout. */
-	static float fadeout = (float) 0.8;
+	/** The fade out time. */
+	static final float fadeout = (float) 0.8;
 	
-	/** The visibility. */
+	/** The variables that control individual behavior (random X movement, mostly) */
 	float x, y, xMove, yMove, visibility;
 	
-	/** The damage. */
+	/** The damage string to display */
 	String damage;
 
 	/**
@@ -67,7 +71,7 @@ public class DamageEffect extends GridEffect {
 		x += xMove;
 		y += yMove;
 
-		if (this.visibility <= 0.00001) {
+		if (this.visibility <= 0.00001) {//basically this provides a visibility cutoff to delete the effect when it is no longer visible
 			this.setComplete(true);
 		}
 

@@ -3,10 +3,17 @@ package net.plaidypus.deadreckoning.professions;
 // TODO: Auto-generated Javadoc
 /**
  * The Class StatMaster.
+ * 
+ * Statmastes are used to manage the stats of livingentities.
+ * while yes, it WOULD be simpler just to put that in the livingentitiy class,
+ * this encapsulates it to simplify thinking, and allows for the creation of
+ * custom statmasters later on
+ * 
+ * @see net.plaidypus.deadreckoning.professions.Profession
  */
 public class StatMaster {
 
-	/** The level. */
+	/** The internal stats */
 	protected int mHP, mMP, STR, DEX, INT, LUK, level;
 
 	/**
