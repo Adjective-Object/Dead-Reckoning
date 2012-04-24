@@ -22,32 +22,31 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class NewGameState.
  */
 public class NewGameState extends HudLayersState {
 
-	/** The class buttons. */
+	/** The buttons that reference the saved and default classes */
 	public ArrayList<ImageButton> classButtons;
 	
-	/** The professions. */
+	/** The professions referenced by the classButtons. */
 	public ArrayList<Profession> professions;
 
-	/** The new class button. */
+	/** The button to create a new class. */
 	public ImageButton newClassButton;
 	
 	/** The text. */
 	public TextEntryBox text;
 
-	/** The colum b. */
+	/** The x, and y locations of the class buttons. */
 	int columA = 15, columB = 300;
 
 	/**
-	 * Instantiates a new new game state.
+	 * Instantiates a new game creator state.
 	 *
 	 * @param stateID the state id
-	 * @param background the background
+	 * @param background the background of the screen
 	 * @throws SlickException the slick exception
 	 */
 	@SuppressWarnings("unchecked")
@@ -58,7 +57,7 @@ public class NewGameState extends HudLayersState {
 	}
 
 	/**
-	 * Load classes.
+	 * loads classes and builds the necessary HudElements
 	 *
 	 * @throws SlickException the slick exception
 	 */
@@ -68,7 +67,9 @@ public class NewGameState extends HudLayersState {
 		ArrayList<HudElement> elimB = new ArrayList<HudElement>(0);
 
 		professions = new ArrayList<Profession>(0);
-
+		
+		//This ridiculous loop counts the default professions,
+		//and it loads them into the professions list, creating the buttons
 		for (int i = 0; i < Profession.enumerateProfessions(); i++) {
 			String className = "WHOP";
 			try {
@@ -90,13 +91,17 @@ public class NewGameState extends HudLayersState {
 					HudElement.TOP_LEFT, className, Color.white,
 					DeadReckoningGame.menuFont));
 		}
-
+		
+		//this quick block creates a the "create new class" button
 		newClassButton = new ImageButton(columB, 20, HudElement.TOP_LEFT,
 				new Image("res/newClassButton.png"));
 		elim.add(newClassButton);
 		elim.add(new TextElement(columB + 69, 42, HudElement.TOP_LEFT,
 				"New Class", Color.white, DeadReckoningGame.menuFont));
-
+				
+		//this block of fuck loads the custom professions, and creates the buttons
+		//that are needed for them
+		//untested, may or may not work. TODO fix that....
 		int numClasses = 0;
 		File f = new File("classes/" + numClasses + ".txt");
 		while (f.exists()) {
@@ -121,11 +126,14 @@ public class NewGameState extends HudLayersState {
 			numClasses++;
 			f = new File("classes/" + numClasses + ".txt");
 		}
-
+		
+		//this creates the text box nessecary for saving the game
 		ArrayList<HudElement> elimC = new ArrayList<HudElement>(0);
 		text = new TextEntryBox(-250, 50, HudElement.TOP_RIGHT, 200, 50);
 		elimC.add(text);
-
+		
+		//this packages the hudelement lists into Panels and drops them into
+		//the "real" HudElements list
 		this.HudElements.add(new Panel(elim));
 		this.HudElements.add(new Panel(elimB));
 		this.HudElements.add(new Panel(elimC));

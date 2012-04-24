@@ -11,13 +11,21 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ExclusiveHudLayersState.
+ * 
+ * A still somewhat incomplete subclass of HudLayersState, used in special situations
+ * 
+ * basically it's for states where the contents are mutually exclusive, i.e.
+ * only one thing should be operable at a time. exists to make pure keyboard
+ * navigation possible in the future
+ * 
+ * TODO too terribly awkward to work with (player and programmer side), needs a total revamp
+ * 
  */
 public class ExclusiveHudLayersState extends HudLayersState {
 
-	/** The omy. */
+	/** The current focus, old mouse x,y. used for determining if something changes. */
 	int focus = -1, omx = -1, omy = -1;
 	
 	/** The mouse set. */
@@ -52,7 +60,9 @@ public class ExclusiveHudLayersState extends HudLayersState {
 		advanceFocus();
 	}
 
-	/* (non-Javadoc)
+	/**
+	 * updates the state, along with finding the new object in focus.
+	 * 
 	 * @see net.plaidypus.deadreckoning.state.HudLayersState#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
 	 */
 	public void update(GameContainer container, StateBasedGame game, int delta)
@@ -109,7 +119,7 @@ public class ExclusiveHudLayersState extends HudLayersState {
 	}
 
 	/**
-	 * Advance focus.
+	 * Advances the focus to the next focusable object
 	 */
 	private void advanceFocus() {
 		clearFoci();
@@ -123,7 +133,7 @@ public class ExclusiveHudLayersState extends HudLayersState {
 	}
 
 	/**
-	 * Clear foci.
+	 * Clears the foci.
 	 */
 	private void clearFoci() {
 		for (int i = 0; i < this.HudElements.size(); i++) {

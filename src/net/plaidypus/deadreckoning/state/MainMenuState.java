@@ -14,9 +14,9 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class MainMenuState.
+ * The HudLayersState of the Main Menu.
+ * 
  */
 public class MainMenuState extends HudLayersState {
 
@@ -51,7 +51,7 @@ public class MainMenuState extends HudLayersState {
 	/**
 	 * Make contents.
 	 *
-	 * @return the array list
+	 * @return the list of default contents, placed on top of the background. simple enough.
 	 * @throws SlickException the slick exception
 	 */
 	public static ArrayList<HudElement> makeContents() throws SlickException {
@@ -75,7 +75,9 @@ public class MainMenuState extends HudLayersState {
 		return elements;
 	}
 
-	/* (non-Javadoc)
+	/**
+	 * on button press, enter the correct state.
+	 * 
 	 * @see net.plaidypus.deadreckoning.state.HudLayersState#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
 	 */
 	public void update(GameContainer container, StateBasedGame game, int delta)

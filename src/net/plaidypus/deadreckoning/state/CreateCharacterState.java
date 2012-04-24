@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class CreateCharacterState.
+ * 
+ * TODO totally unimplemented
+ * meant to allow for the creation of custom classes.
  */
 public class CreateCharacterState extends HudLayersState {
 

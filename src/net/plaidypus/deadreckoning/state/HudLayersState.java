@@ -13,19 +13,20 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class HudLayersState.
+ * 
+ * generic, used to assemble HudElements into a BasicGameState useable by Slick
  */
 public class HudLayersState extends BasicGameState {
 
-	/** The state id. */
+	/** The state id used for referencing this file*/
 	int stateID;
 	
-	/** The parent. */
+	/** The parent DeadReckoningGame.*/
 	DeadReckoningGame parent;
 
-	/** The Hud elements. */
+	/** The Hud elements contained in this HudLayersState*/
 	ArrayList<HudElement> HudElements;
 
 	/**
@@ -58,8 +59,13 @@ public class HudLayersState extends BasicGameState {
 		}
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see org.newdawn.slick.state.GameState#init(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame)
+	 * calls the initialization function of each of the elements in the HudLayersState
+	 * 
+	 * the Initialization function is used (mostly) to load common resources that are
+	 * used across the board by all members of a given class, although that need not be
+	 * the case
 	 */
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
@@ -68,8 +74,10 @@ public class HudLayersState extends BasicGameState {
 		}
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see org.newdawn.slick.state.GameState#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	 *
+	 * updates the elements of the state
 	 */
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
@@ -78,7 +86,7 @@ public class HudLayersState extends BasicGameState {
 		}
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see org.newdawn.slick.state.GameState#render(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, org.newdawn.slick.Graphics)
 	 */
 	public void render(GameContainer gc, StateBasedGame game, Graphics g)
@@ -97,7 +105,10 @@ public class HudLayersState extends BasicGameState {
 	}
 
 	/**
-	 * Make from.
+	 * this function passes each element of the object[] to the corresponding HudElement,
+	 * calling the makeFrom(Object) function on each of them.
+	 *
+	 *	@see net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(Object)
 	 *
 	 * @param objects the objects
 	 */
@@ -116,7 +127,7 @@ public class HudLayersState extends BasicGameState {
 	}
 
 	/**
-	 * Gets the elements.
+	 * Gets the elements in the state.
 	 *
 	 * @return the elements
 	 */
@@ -125,7 +136,7 @@ public class HudLayersState extends BasicGameState {
 	}
 
 	/**
-	 * Gets the element.
+	 * Gets a specific ekement in the list.
 	 *
 	 * @param index the index
 	 * @return the element
@@ -135,7 +146,7 @@ public class HudLayersState extends BasicGameState {
 	}
 
 	/**
-	 * Gets the parent.
+	 * Gets the parent DeadReckoningGame.
 	 *
 	 * @return the parent
 	 */

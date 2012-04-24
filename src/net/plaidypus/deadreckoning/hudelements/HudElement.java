@@ -91,7 +91,14 @@ public abstract class HudElement {
 	}
 
 	/**
-	 * Make from.
+	 * changes some contents of this HudElement based on the value of Object o.
+	 * this is meant to be called by the HudLayersState.makeFrom(Objet[]) function,
+	 * right before a state is shifted into, in order to shift around a few values.
+	 * this is faster than say, rebuilding the whole state.
+	 * 
+	 * Ex: LootStates are passed two inventories in the makeFrom, in order to change the
+	 * contents of the two inventory display-ers without the need for a rebuild of all
+	 * HudElements.
 	 *
 	 * @param o the o
 	 */
