@@ -32,7 +32,7 @@ public class OnFire extends AnimatedStatus {
 	static SpriteSheet sprite;
 
 	/**
-	 * Instantiates a new on fire.
+	 * Instantiates a new on fire status.
 	 *
 	 * @param source the source
 	 * @param duration the duration
@@ -46,7 +46,7 @@ public class OnFire extends AnimatedStatus {
 	}
 
 	/**
-	 * Inits the.
+	 * initializes the status.
 	 *
 	 * @throws SlickException the slick exception
 	 */

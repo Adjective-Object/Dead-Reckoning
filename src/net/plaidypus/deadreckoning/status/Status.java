@@ -9,29 +9,30 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Status.
+ * Statuses to be applied to entities.
+ * 
+ * (abstract) used for persistent effects on entities, like buffs, debuffs, DOT, etc.
  */
 public abstract class Status {
 
-	/** The tile image. */
+	/** The image tile used by the Status, displayed by . */
 	public Image tileImage;
 	
-	/** The identifier. */
+	/** The name and description of the Status.*/
 	public String description, identifier;
 	
-	/** The stacks. */
+	/** The stacks=# stacks of a given buff.*/
 	int statusID, duration, stacks;
 	
 	/** The source. */
 	public InteractiveEntity source;
 
-	/** The Constant STATUS_ONFIRE. */
+	/** The Constant STATUS_ONFIRE - identifier # of onFire */
 	static final int STATUS_ONFIRE = 1;
 
 	/**
-	 * Instantiates a new status.
+	 * Instantiates a new status object.
 	 *
 	 * @param source the source
 	 * @param tileImage the tile image
@@ -49,7 +50,7 @@ public abstract class Status {
 
 	// Only called if they have the same identifier string
 	/**
-	 * Collapse with status.
+	 * Collapses with a status that has the same identifier string.
 	 *
 	 * @param s the s
 	 * @return the status
@@ -64,14 +65,17 @@ public abstract class Status {
 	}
 
 	/**
-	 * Apply to entity.
+	 * Applies the effects of the status to an entity.
+	 * It's called once per turn advance (from one entity to the next)
 	 *
 	 * @param target the target
 	 */
 	public abstract void applyToEntity(LivingEntity target);
 
 	/**
-	 * Update.
+	 * Updates the status.
+	 * 
+	 * Called once per frame iteration, used mostly for animation handling.
 	 *
 	 * @param target the target
 	 * @param delta the delta
@@ -79,7 +83,8 @@ public abstract class Status {
 	public abstract void update(LivingEntity target, int delta);
 
 	/**
-	 * Advance turn effects.
+	 * Applies the effects of the status to an entity.
+	 * It's called once per turn advance (once per full round)
 	 *
 	 * @param target the target
 	 * @return the array list
@@ -96,21 +101,21 @@ public abstract class Status {
 	/**
 	 * Render.
 	 *
-	 * @param g the g
-	 * @param x the x
-	 * @param y the y
+	 * @param g the Graphics upon which to render
+	 * @param x the screen X at which to render
+	 * @param y the screen y at which to render
 	 */
 	public abstract void render(Graphics g, int x, int y);
 
 	/**
-	 * Checks if is finished.
+	 * Checks if is finished (usually if the duration is carried out to completion).
 	 *
 	 * @return true, if is finished
 	 */
 	public abstract boolean isFinished();
 
 	/**
-	 * Gets the name.
+	 * Gets the name of the status.
 	 *
 	 * @return the name
 	 */

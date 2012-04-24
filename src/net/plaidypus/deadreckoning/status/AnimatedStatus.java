@@ -10,6 +10,8 @@ import org.newdawn.slick.Image;
 // TODO: Auto-generated Javadoc
 /**
  * The Class AnimatedStatus.
+ * 
+ * Made for Statuses that apply animated effects to their target Entities
  */
 public abstract class AnimatedStatus extends Status {
 
@@ -20,10 +22,10 @@ public abstract class AnimatedStatus extends Status {
 	 * Instantiates a new animated status.
 	 *
 	 * @param source the source
-	 * @param tile the tile
+	 * @param tile the tile image
 	 * @param description the description
-	 * @param identifier the identifier
-	 * @param effectAnimation the effect animation
+	 * @param identifier the int identifier of the status
+	 * @param effectAnimation the animation applies over the target Entity
 	 */
 	public AnimatedStatus(InteractiveEntity source, Image tile,
 			String description, String identifier, Animation effectAnimation) {
