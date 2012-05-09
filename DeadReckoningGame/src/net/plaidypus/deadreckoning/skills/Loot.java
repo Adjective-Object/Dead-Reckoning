@@ -1,5 +1,7 @@
 package net.plaidypus.deadreckoning.skills;
 
+import org.newdawn.slick.SlickException;
+
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.LootAction;
 import net.plaidypus.deadreckoning.actions.WaitAction;
@@ -67,5 +69,9 @@ public class Loot extends Skill {
 	public void highlightRange(GameBoard board) {
 		highlightRadial(board, 1);
 	}
+	
+
+	@Override
+	public void init() throws SlickException {}
 
 }

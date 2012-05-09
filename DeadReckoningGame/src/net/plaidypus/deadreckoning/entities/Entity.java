@@ -73,7 +73,7 @@ public abstract class Entity {
 	}
 
 	/**
-	 * Inits the.
+	 * Inits the entity. called as static, but not.
 	 *
 	 * @throws SlickException the slick exception
 	 */

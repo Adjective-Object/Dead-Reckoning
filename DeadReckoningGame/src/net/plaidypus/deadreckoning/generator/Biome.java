@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.generator;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.jar.JarFile;
@@ -19,9 +20,6 @@ public abstract class Biome {
 	
 	/** The biomes. */
 	static ArrayList<Biome> biomes = new ArrayList<Biome>(0);
-	
-	/** The required classes. */
-	protected Class<Entity>[] requiredClasses;
 
 	protected String parentMod;
 	
@@ -69,21 +67,5 @@ public abstract class Biome {
 	 *
 	 * @throws SlickException the slick exception
 	 */
-	public static void init() throws SlickException {
-		
-		for (int i = 0; i < biomes.size(); i++) {
-			for (int e = 0; e < biomes.get(i).requiredClasses.length; e++) {
-				try {
-					Class<? extends Entity> clas = biomes.get(i).requiredClasses[e]
-							.asSubclass(Entity.class);
-					clas.newInstance().init();
-				} catch (InstantiationException error) {
-					error.printStackTrace();
-				} catch (IllegalAccessException error) {
-					error.printStackTrace();
-				}
-
-			}
-		}
-	}
+	public abstract  void init() throws SlickException;
 }

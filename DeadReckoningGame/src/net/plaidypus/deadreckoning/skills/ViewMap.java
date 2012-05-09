@@ -1,5 +1,7 @@
 package net.plaidypus.deadreckoning.skills;
 
+import org.newdawn.slick.SlickException;
+
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.ChangeStateAction;
@@ -60,4 +62,7 @@ public class ViewMap extends Skill {
 		highlightRadial(board, 0);
 	}
 
+	@Override
+	public void init() throws SlickException {}
+	
 }

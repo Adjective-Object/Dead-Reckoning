@@ -1,5 +1,7 @@
 package net.plaidypus.deadreckoning.skills;
 
+import org.newdawn.slick.SlickException;
+
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.MoveAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
@@ -50,5 +52,8 @@ public class Movement extends Skill {
 		board.highLightAvailablePaths(source.getLocation(), 1,
 				Tile.LAYER_ACTIVE);
 	}
-
+	
+	
+	@Override
+	public void init() throws SlickException {}
 }

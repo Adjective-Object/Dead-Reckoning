@@ -1,5 +1,7 @@
 package net.plaidypus.deadreckoning.skills;
 
+import org.newdawn.slick.SlickException;
+
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.AttackAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
@@ -59,5 +61,8 @@ public class Attack extends Skill {
 	public void highlightRange(GameBoard board) {
 		highlightRadial(board, source.getAttackRange());
 	}
+
+	@Override
+	public void init() throws SlickException {}
 
 }

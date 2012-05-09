@@ -90,6 +90,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(entityReader));
 			loadFromFile(reader);
 			reader.close();
+			this.parentMod=parentMod;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

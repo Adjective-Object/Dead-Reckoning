@@ -10,11 +10,8 @@ import net.plaidypus.deadreckoning.items.Equip;
 import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.skills.Attack;
 import net.plaidypus.deadreckoning.skills.CheckInventory;
-import net.plaidypus.deadreckoning.skills.Fireball;
 import net.plaidypus.deadreckoning.skills.Interacter;
 import net.plaidypus.deadreckoning.skills.Loot;
-import net.plaidypus.deadreckoning.skills.PlaceChest;
-import net.plaidypus.deadreckoning.skills.PlaceWall;
 import net.plaidypus.deadreckoning.skills.PreBakedMove;
 import net.plaidypus.deadreckoning.skills.Skill;
 import net.plaidypus.deadreckoning.skills.ViewMap;
@@ -24,8 +21,10 @@ import net.plaidypus.deadreckoning.status.OnFire;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 
 // TODO: Auto-generated Javadoc
 /*
@@ -60,7 +59,9 @@ public class Player extends LivingEntity {
 
 	/** The epuips. */
 	ArrayList<Equip> epuips;
-
+	
+	protected SpriteSheet levelUp;
+	
 	/**
 	 * Instantiates a new player.
 	 */
@@ -85,11 +86,15 @@ public class Player extends LivingEntity {
 		this.profession.parentTo(this);
 
 		keyBinds = new int[] { Input.KEY_A, Input.KEY_D, Input.KEY_W,
-				Input.KEY_S, Input.KEY_Q, Input.KEY_F1, Input.KEY_F2,
-				Input.KEY_F3, Input.KEY_F4, Input.KEY_F5, Input.KEY_F6,
-				Input.KEY_F7, Input.KEY_F8, Input.KEY_F9, Input.KEY_F10,
-				Input.KEY_F11, Input.KEY_F12, Input.KEY_T, Input.KEY_P,
-				Input.KEY_T, Input.KEY_C, Input.KEY_L, Input.KEY_I,
+				Input.KEY_S, Input.KEY_Q,
+				Input.KEY_F1, Input.KEY_F2,
+				Input.KEY_F3, Input.KEY_F4,
+				Input.KEY_F5, Input.KEY_F6,
+				Input.KEY_F7, Input.KEY_F8,
+				Input.KEY_F9, Input.KEY_F10,
+				Input.KEY_F11, Input.KEY_F12,
+				Input.KEY_T,
+				Input.KEY_L, Input.KEY_I,
 				Input.KEY_M, Input.KEY_K, Input.KEY_E };
 		inputSkills = new Skill[] { new PreBakedMove(this, -1, 0),
 				new PreBakedMove(this, 1, 0), new PreBakedMove(this, 0, -1),
@@ -102,8 +107,8 @@ public class Player extends LivingEntity {
 				p.getTrees()[2].getSkills()[0], p.getTrees()[2].getSkills()[1],
 				p.getTrees()[2].getSkills()[2], p.getTrees()[2].getSkills()[3],
 
-				new Wait(this), new PlaceWall(this), new PlaceChest(this),
-				new Loot(this), new Fireball(this), new CheckInventory(this),
+				new Wait(this),
+				new Loot(this), new CheckInventory(this),
 				new ViewMap(this), new ViewSkills(this), new Interacter(this) };
 
 		this.skills.addAll(p.getSkillList());
@@ -141,7 +146,7 @@ public class Player extends LivingEntity {
 			Action.sendMessage(this.getName() + " leveled up!");
 			this.MP = this.profession.getMaxMP();
 			this.HP = this.profession.getMaxHP();
-			Animation levelUp = new Animation(Fireball.fireball, 100);// TODO
+			Animation levelUp = new Animation(this.levelUp, 100);// TODO
 																		// actual
 																		// level
 																		// up
@@ -322,7 +327,7 @@ public class Player extends LivingEntity {
 	@Override
 	public void init() throws SlickException {
 		OnFire.init();
-		Fireball.init();
+		this.levelUp=new SpriteSheet(new Image("res/fireBurst.png"),32,32);
 	}
 
 	/**

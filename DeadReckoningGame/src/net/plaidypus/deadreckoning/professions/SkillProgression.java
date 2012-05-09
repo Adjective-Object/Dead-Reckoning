@@ -1,13 +1,12 @@
 package net.plaidypus.deadreckoning.professions;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.skills.Skill;
 
 import org.newdawn.slick.SlickException;
@@ -59,15 +58,14 @@ public class SkillProgression {
 		SkillProgression s = null;
 		try {
 			BufferedReader r = new BufferedReader(new InputStreamReader(stream));
-			ClassLoader c = ClassLoader.getSystemClassLoader();
 			Skill[] array = new Skill[4];
 			int[] levels = new int[] { 0, 1, 2, 3 };
 
 			String name = r.readLine();
 
 			for (int i = 0; i < 4; i++) {
-				Class<? extends Skill> clas = c.loadClass(r.readLine())
-						.asSubclass(Skill.class);
+				@SuppressWarnings("unchecked")
+				Class<? extends Skill> clas = ModLoader.loadClass(r.readLine()).asSubclass(Skill.class);
 				Skill k = clas.newInstance();
 				array[i] = k;
 			}

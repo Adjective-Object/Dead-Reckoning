@@ -11,14 +11,20 @@ import org.newdawn.slick.SlickException;
 // TODO: Auto-generated Javadoc
 /**
  * The Class Skill.
+ * 
+ * used as a simple way of generating action objects based off of a source entity
+ * 
+ * all skills must have an argument free () constructor, to allow for newInstance() calls,
+ * so that the init() method unique to each class can be called
+ * because java does not have instance-independent abstract methods.
  */
 public abstract class Skill {
 
 	/** The levelcap. */
-	int level, levelcap;
+	protected int level, levelcap;
 	
 	/** The cooldown. */
-	private int cooldown;
+	protected int cooldown;
 	
 	/** The description. */
 	String name = "NO_NAME", description = "NO_DESC";
@@ -27,7 +33,7 @@ public abstract class Skill {
 	Image imageIcon;
 
 	/** The source. */
-	LivingEntity source;
+	protected LivingEntity source;
 
 	/**
 	 * Instantiates a new skill.
@@ -253,4 +259,12 @@ public abstract class Skill {
 	public int getCooldown() {
 		return cooldown;
 	}
+	
+	/**
+	 * loads the resources needed for this class
+	 * 
+	 * called automagically by modloader
+	 * @throws SlickException
+	 */
+	public abstract void init() throws SlickException;
 }

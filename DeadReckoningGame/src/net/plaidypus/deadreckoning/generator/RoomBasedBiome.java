@@ -7,7 +7,6 @@ import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.LandingPad;
 import net.plaidypus.deadreckoning.entities.Stair;
-import net.plaidypus.deadreckoning.entities.Wall;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -38,55 +37,7 @@ public abstract class RoomBasedBiome extends Biome {
 	public abstract GameBoard populateBoard(GameBoard target,
 			ArrayList<int[]> rooms, ArrayList<Stair> linkedLevels);
 
-	/**
-	 * Place walls on null borders.
-	 *
-	 * @param g the g
-	 */
-	public void placeWallsOnNullBorders(GameBoard g) {
-		for (int x = 0; x < g.getWidth(); x++) {
-			for (int y = 0; y < g.getHeight(); y++) {
-				if (g.getTileAt(x, y).getTileFace() == Tile.TILE_NULL
-						&& (g.getTileAt(
-								Utilities.limitTo(x + 1, 0, g.getWidth()), y)
-								.getTileFace() != Tile.TILE_NULL
-								|| g.getTileAt(
-										Utilities.limitTo(x - 1, 0,
-												g.getWidth()), y).getTileFace() != Tile.TILE_NULL
-								|| g.getTileAt(
-										x,
-										Utilities.limitTo(y - 1, 0,
-												g.getHeight())).getTileFace() != Tile.TILE_NULL
-								|| g.getTileAt(
-										x,
-										Utilities.limitTo(y + 1, 0,
-												g.getHeight())).getTileFace() != Tile.TILE_NULL
-								|| g.getTileAt(
-										Utilities.limitTo(x - 1, 0,
-												g.getWidth()),
-										Utilities.limitTo(y + 1, 0,
-												g.getHeight())).getTileFace() != Tile.TILE_NULL
-								|| g.getTileAt(
-										Utilities.limitTo(x + 1, 0,
-												g.getWidth()),
-										Utilities.limitTo(y + 1, 0,
-												g.getHeight())).getTileFace() != Tile.TILE_NULL
-								|| g.getTileAt(
-										Utilities.limitTo(x - 1, 0,
-												g.getWidth()),
-										Utilities.limitTo(y - 1, 0,
-												g.getHeight())).getTileFace() != Tile.TILE_NULL || g
-								.getTileAt(
-										Utilities.limitTo(x + 1, 0,
-												g.getWidth()),
-										Utilities.limitTo(y - 1, 0,
-												g.getHeight())).getTileFace() != Tile.TILE_NULL)) {
-					g.placeEntity(g.getTileAt(x, y), new Wall(),
-							Tile.LAYER_ACTIVE);
-				}
-			}
-		}
-	}
+	
 
 	/**
 	 * Outline room.
@@ -323,8 +274,6 @@ public abstract class RoomBasedBiome extends Biome {
 				}
 			}
 		}
-
-		placeWallsOnNullBorders(target);
 	}
 
 }

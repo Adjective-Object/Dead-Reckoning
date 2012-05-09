@@ -7,6 +7,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.entities.Player;
+import net.plaidypus.deadreckoning.entities.Stair;
 import net.plaidypus.deadreckoning.generator.Biome;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
@@ -204,8 +205,9 @@ public class DeadReckoningGame extends StateBasedGame {
 		container.getInput().enableKeyRepeat();
 
 		HudElement.calculateOffsets(container);
-		Biome.init();
+		//initialization of internal entities and things that will not be initialized by classloader
 		new Player().init();
+		new Stair().init();
 
 		this.addState(new MainMenuState(MAINMENUSTATE, this.menuBackground));
 

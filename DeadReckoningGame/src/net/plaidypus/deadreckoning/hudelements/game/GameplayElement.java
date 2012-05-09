@@ -12,7 +12,6 @@ import net.plaidypus.deadreckoning.entities.LandingPad;
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.grideffects.DamageEffect;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
-import net.plaidypus.deadreckoning.skills.Fireball;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;

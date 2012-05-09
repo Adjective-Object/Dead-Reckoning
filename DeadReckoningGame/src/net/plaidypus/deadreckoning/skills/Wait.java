@@ -1,5 +1,7 @@
 package net.plaidypus.deadreckoning.skills;
 
+import org.newdawn.slick.SlickException;
+
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.WaitAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
@@ -59,4 +61,8 @@ public class Wait extends Skill {
 		return true;
 	}
 
+
+	@Override
+	public void init() throws SlickException {}
+	
 }

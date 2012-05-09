@@ -2,7 +2,7 @@ package net.plaidypus.deadreckoning.modloader;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -15,8 +15,10 @@ import java.util.jar.JarFile;
 
 import org.newdawn.slick.SlickException;
 
+import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.generator.Biome;
 import net.plaidypus.deadreckoning.professions.Profession;
+import net.plaidypus.deadreckoning.skills.Skill;
 
 public class ModLoader {
 
@@ -27,6 +29,8 @@ public class ModLoader {
 	 * 
 	 * @return an arraylist of files pointing to the directories of 
 	 * the modpacks with their dependencies met.
+	 * 
+	 *TODO determine the order modpacks must be loaded so no errors happen
 	 */
 	public static ArrayList<File> resolveMods(boolean vocal){
 		File[] mods = new File("modpacks/").listFiles();
@@ -98,8 +102,12 @@ public class ModLoader {
 	 * other loaders should be able to work the rest out from there.
 	 * 
 	 * @param f the directory of the modpack
+	 * @throws NoSuchMethodException 
+	 * @throws InvocationTargetException 
+	 * @throws SecurityException 
+	 * @throws IllegalArgumentException 
 	 */
-	public static void loadModpack(File f){
+	public static void loadModpack(File f) throws IllegalArgumentException, SecurityException, InvocationTargetException, NoSuchMethodException{
 		System.out.println("loading" + f.getPath());
 		String modname = f.getName().replace(".jar", "");
 		
@@ -112,6 +120,8 @@ public class ModLoader {
 			Enumeration<JarEntry> contents = jarFile.entries();
 			
 			ArrayList<Class> biomeClasses = new ArrayList<Class>(0);
+			ArrayList<Class> skillClasses = new ArrayList<Class>(0);
+			ArrayList<Class> entityClasses = new ArrayList<Class>(0);
 			
 			int numProfessions = 0;
 			//populates list of biomes for loading
@@ -122,20 +132,43 @@ public class ModLoader {
 							urlLoader.loadClass(e.getName().replace("/", ".").replace(".class", ""))
 							);
 				}
-				if(e.getName().contains("/professions/") && e.getName().endsWith("player.entity")){
+				else if (e.getName().contains("/skills/") && e.getName().endsWith(".class")){
+					skillClasses.add(
+							urlLoader.loadClass(e.getName().replace("/", ".").replace(".class", ""))
+							);
+				}
+				else if (e.getName().contains("/entities/") && e.getName().endsWith(".class")){
+					entityClasses.add(
+							urlLoader.loadClass(e.getName().replace("/", ".").replace(".class", ""))
+							);
+				}
+				else if(e.getName().contains("/professions/") && e.getName().endsWith("player.entity")){
 					numProfessions++;
 				}
 			}
 			
 			//loads biomes
 			for(int biome=0; biome<biomeClasses.size() ;biome++){
+				System.out.println("Initializing biome "+biomeClasses.get(biome).getCanonicalName());
 				Biome b = (Biome)(biomeClasses.get(biome).asSubclass(Biome.class).newInstance());
+				b.init();
 				b.setLoader(modname);
 				Biome.addBiome(b);
 			}
 			
-			//loads custom skills
-			//TODO that thing
+			//initializes custom entities
+			for(int entity=0; entity<entityClasses.size() ;entity++){
+				System.out.println("Initializing entity "+entityClasses.get(entity).getCanonicalName());
+				Entity e = (Entity) entityClasses.get(entity).asSubclass(Entity.class).newInstance();
+				e.init();
+			}
+			
+			//initializes custom skills
+			for(int skill=0; skill<skillClasses.size() ;skill++){
+				System.out.println("Initializing skill "+skillClasses.get(skill).getCanonicalName());
+				Skill s = (Skill) skillClasses.get(skill).asSubclass(Skill.class).newInstance();
+				s.init();
+			}
 			
 			
 			//loads professions
@@ -167,6 +200,20 @@ public class ModLoader {
 		return loadedLoaders.get(modpackName);
 	}
 	
+	public static URLClassLoader getLoaderFor(String classpath){
+		return getModpackLoader(classpath.split("\\.")[0]);
+	}
+	
+	public static Class loadClass(String line) throws ClassNotFoundException {
+		URLClassLoader l =getLoaderFor(line);
+		if(l!=null){
+			return l.loadClass(line);
+		}
+		else{
+			return ClassLoader.getSystemClassLoader().loadClass(line);
+		}
+	}
+	
 	/**
 	 * loads a list of modpacks
 	 * 
@@ -174,7 +221,21 @@ public class ModLoader {
 	 */
 	public static void loadModpacks(ArrayList<File> f){
 		for(int i=0; i<f.size();i++){
-			loadModpack(f.get(i));
+			try {
+				loadModpack(f.get(i));
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	

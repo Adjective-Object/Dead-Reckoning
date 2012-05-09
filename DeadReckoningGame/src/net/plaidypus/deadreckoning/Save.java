@@ -16,9 +16,9 @@ import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.Player;
-import net.plaidypus.deadreckoning.entities.Statue;
 import net.plaidypus.deadreckoning.generator.DungeonMap;
 import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
+import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.professions.SkillProgression;
 
@@ -92,15 +92,11 @@ public class Save {
 	public void loadGame(GameplayElement state) throws IOException,
 			SlickException, ClassNotFoundException, InstantiationException,
 			IllegalAccessException {
-		System.out.println("SAVE WISHES TOU TO FUCK OFF");
 		state.setPlayer(loadPlayer(new BufferedReader(new FileReader(
 				saveLocation + "/player.txt"))));
-		System.out.println("SAVE WISHES TOU TO FUCK OFF");
 		BufferedReader r = new BufferedReader(new FileReader(saveLocation + "/"
 				+ currentMap));
-		System.out.println("SAVE WISHES TOU TO FUCK OFF");
 		GameBoard g = loadBoard(state, saveLocation, currentMap, r);
-		System.out.println("SAVE WISHES TOU TO FUCK OFF");
 		loadEntities(g, r);
 		state.setBoard(g);
 
@@ -159,6 +155,7 @@ public class Save {
 		r.readLine();
 		b.height = r.read();
 		r.readLine();
+		System.out.println(b.board);
 		b.board = new Tile[b.width][b.height];
 		for (int y = 0; y < b.height; y++) {
 			for (int x = 0; x < b.width; x++) {
@@ -190,21 +187,15 @@ public class Save {
 	public static ArrayList<Entity> loadEntities(GameBoard target,
 			BufferedReader r) throws IOException, ClassNotFoundException,
 			InstantiationException, IllegalAccessException {
-		ClassLoader c = ClassLoader.getSystemClassLoader();
 		String definition = r.readLine();
 		ArrayList<Entity> entities = new ArrayList<Entity>(0);
 		while (definition != null) {
 			String[] defInfo = definition.split(":");
 			try {
-				Class<? extends Entity> clas = c.loadClass(defInfo[0])
+				Class<? extends Entity> clas = ModLoader.loadClass(defInfo[0])
 						.asSubclass(Entity.class);
-				clas.newInstance().init();
 				clas.newInstance().makeFromString(target, defInfo);
 			} catch (ClassCastException e) {
-				e.printStackTrace();
-				entities.add(new Statue().makeFromString(target, defInfo));
-				e.printStackTrace();
-			} catch (SlickException e) {
 				e.printStackTrace();
 			}
 			definition = r.readLine();

@@ -1,5 +1,7 @@
 package net.plaidypus.deadreckoning.skills;
 
+import org.newdawn.slick.SlickException;
+
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.Interact;
 import net.plaidypus.deadreckoning.board.GameBoard;
@@ -47,5 +49,8 @@ public class Interacter extends Skill {
 		board.highlightSquare(source.getX(), source.getY() - 1);
 		board.highlightSquare(source.getX(), source.getY() + 1);
 	}
+	
 
+	@Override
+	public void init() throws SlickException {}
 }

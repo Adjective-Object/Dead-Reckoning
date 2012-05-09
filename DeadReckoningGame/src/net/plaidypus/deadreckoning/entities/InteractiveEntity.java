@@ -16,7 +16,7 @@ import org.newdawn.slick.Graphics;
 public abstract class InteractiveEntity extends Entity {
 
 	/** The inventory. */
-	ArrayList<Item> inventory;
+	protected ArrayList<Item> inventory;
 	
 	/** The inventory size. */
 	int inventorySize = 5;
