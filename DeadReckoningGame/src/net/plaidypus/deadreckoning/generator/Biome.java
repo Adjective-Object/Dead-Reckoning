@@ -5,6 +5,7 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.jar.JarFile;
 
+import net.plaidypus.deadreckoning.DeadReckoningComponent;
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.entities.Entity;
@@ -16,7 +17,7 @@ import org.newdawn.slick.SlickException;
 /**
  * The Class Biome.
  */
-public abstract class Biome {
+public abstract class Biome  extends DeadReckoningComponent{
 	
 	/** The biomes. */
 	static ArrayList<Biome> biomes = new ArrayList<Biome>(0);
@@ -58,14 +59,4 @@ public abstract class Biome {
 	public void setLoader(String newMod){
 		this.parentMod=newMod;
 	}
-	
-	/**
-	 * Initializes the biome code, adding initializing the required
-	 * classes of each biome.
-	 *
-	 * needs to be called after the biome list has been populated
-	 *
-	 * @throws SlickException the slick exception
-	 */
-	public abstract  void init() throws SlickException;
 }
