@@ -1,5 +1,0 @@
-Destruction
-core.skills.Fireball
-core.skills.Fireball
-core.skills.Fireball
-core.skills.Fireball

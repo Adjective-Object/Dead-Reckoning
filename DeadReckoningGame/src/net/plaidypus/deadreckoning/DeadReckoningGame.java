@@ -4,6 +4,7 @@
 package net.plaidypus.deadreckoning;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.entities.Player;
@@ -177,7 +178,12 @@ public class DeadReckoningGame extends StateBasedGame {
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
 		
-		ModLoader.loadModpacks(ModLoader.resolveMods(true));
+		try {
+			ModLoader.loadModpacks(ModLoader.resolveMods(true));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		System.out.println(Biome.getBiomes());
 		System.out.println(Profession.getProfessions());
 		

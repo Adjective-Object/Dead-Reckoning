@@ -1,8 +1,12 @@
 package net.plaidypus.deadreckoning.modloader;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -31,66 +35,43 @@ public class ModLoader {
 	 * the modpacks with their dependencies met.
 	 * 
 	 *TODO determine the order modpacks must be loaded so no errors happen
+	 * @throws IOException 
 	 */
-	public static ArrayList<File> resolveMods(boolean vocal){
+	public static ArrayList<File> resolveMods(boolean vocal) throws IOException{
 		File[] mods = new File("modpacks/").listFiles();
 		
-		HashMap<String,File> loadedMods = new HashMap<String,File>();
+		HashMap<String,File> uncountedMods = new HashMap<String,File>();
+		HashMap<String,ArrayList<String>> modReqs = new HashMap<String,ArrayList<String>>();
 		
 		for(int i=0; i<mods.length; i++){
 			if(mods[i].getName().contains(".jar")){
-				loadedMods.put(mods[i].getName(), mods[i]);
+				String name = mods[i].getName().split(".")[0];
+				uncountedMods.put(name, mods[i]);
+				
+				URL x = mods[i].toURI().toURL();
+				URLClassLoader urlLoader = new URLClassLoader(new URL[] {x},ClassLoader.getSystemClassLoader());
+				InputStream in = urlLoader.getResourceAsStream(name+"/requirements.txt");
+				BufferedReader b = new BufferedReader(new InputStreamReader(in));
+				String requirement = b.readLine();
+				ArrayList<String> tempReqs = new ArrayList<String>(0);
+				while(requirement !=null){
+					tempReqs.add(requirement);
+					requirement=b.readLine();
+				}
+				modReqs.put(name,tempReqs);
 			}
 		}
 		
-		Set<String> fileNames =loadedMods.keySet();
+		Set<String> fileNames =uncountedMods.keySet();
 		Iterator<String> iter = fileNames.iterator();
 		
 		// the list of mods that are properley formatted and have the dependencies met
-		ArrayList<File> returnMods = new ArrayList<File>(loadedMods.size());
+		ArrayList<File> returnMods = new ArrayList<File>(uncountedMods.size());
 		
-		/* Trashed, due to inability to read insides of jars totally
-		 * possible, but I am retarded / lazy and will work on others 'fo now
-		while (iter.hasNext()){
-			String name = iter.next();
-			try{
-				//checks the integrity of the mod's file system
-				if(!new File("modpacks/"+name+"/biomes").exists() ||
-						!new URL("modpacks/"+name+"!/entities") ||
-						!new File("modpacks/"+name+"!/items").exists() ||
-						!new File("modpacks/"+name+"!/livingEntities").exists() ||
-						!new File("modpacks/"+name+"!/professions").exists()
-				){	throw new ModLoaderException();	}
-				
-				File requirements = new File("modpacks/"+name+"/requirements.txt");
-				BufferedReader r = new BufferedReader(new FileReader(requirements));
-				
-				//checks the requirements of the mod
-				String requirement = r.readLine();
-				boolean reqMet = true;
-				while (requirement != null){
-					if(!fileNames.contains(requirement)){
-						if(vocal){System.err.println("modpack \""+name+"\" dependencies not met. will disregard");}
-						reqMet = false;
-						break;
-					}
-					requirement = r.readLine();
-				}
-				
-				if(reqMet){
-					if(vocal){System.out.println("modpack \""+name+"\" approved for loading");}
-					returnMods.add(loadedMods.get(name));
-				}
-				
-			} catch(IOException e){
-				if(vocal){ System.err.println("modpack \""+name+"\" not properly formatted, skipping");}
-			} catch (ModLoaderException e) {
-				if (vocal){System.err.println("modpack \""+name+"\" not properly formatted, skipping");}
-			}
-		}
-		*/
+		//TODO
 		
-		returnMods.addAll(loadedMods.values());
+		
+		returnMods.addAll(uncountedMods.values());
 		
 		return returnMods;
 	}
