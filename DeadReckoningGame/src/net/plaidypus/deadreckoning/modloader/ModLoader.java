@@ -19,6 +19,7 @@ import java.util.jar.JarFile;
 
 import org.newdawn.slick.SlickException;
 
+import net.plaidypus.deadreckoning.DeadReckoningComponent;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.generator.Biome;
 import net.plaidypus.deadreckoning.professions.Profession;
@@ -100,59 +101,47 @@ public class ModLoader {
 			JarFile jarFile = new JarFile(f);
 			Enumeration<JarEntry> contents = jarFile.entries();
 			
-			ArrayList<Class> biomeClasses = new ArrayList<Class>(0);
-			ArrayList<Class> skillClasses = new ArrayList<Class>(0);
-			ArrayList<Class> entityClasses = new ArrayList<Class>(0);
+			
+			ArrayList<ArrayList<Class>> classes = new ArrayList<ArrayList<Class>>(0);
 			
 			int numProfessions = 0;
+			String[] classKeys = new String[]{"/biomes/","/skills/","/entities/"};
 			//populates list of biomes for loading
 			while (contents.hasMoreElements()){
 				JarEntry e = contents.nextElement();
-				if(e.getName().contains("/biomes/") && e.getName().endsWith(".class")){
-					biomeClasses.add(
-							urlLoader.loadClass(e.getName().replace("/", ".").replace(".class", ""))
-							);
+				
+				for(int i=0; i<classKeys.length;i++){
+					classes.add(new ArrayList<Class>(0));
+					if(e.getName().contains(classKeys[i]) && e.getName().endsWith(".class")){
+						classes.get(i).add(
+								urlLoader.loadClass(e.getName().replace("/", ".").replace(".class", ""))
+								);
+					}
+					else if(e.getName().contains("/professions/") && e.getName().endsWith("player.entity")){
+						numProfessions++;
+					}
 				}
-				else if (e.getName().contains("/skills/") && e.getName().endsWith(".class")){
-					skillClasses.add(
-							urlLoader.loadClass(e.getName().replace("/", ".").replace(".class", ""))
-							);
-				}
-				else if (e.getName().contains("/entities/") && e.getName().endsWith(".class")){
-					entityClasses.add(
-							urlLoader.loadClass(e.getName().replace("/", ".").replace(".class", ""))
-							);
-				}
-				else if(e.getName().contains("/professions/") && e.getName().endsWith("player.entity")){
-					numProfessions++;
-				}
+				
 			}
 			
-			//loads biomes
-			for(int biome=0; biome<biomeClasses.size() ;biome++){
-				System.out.println("Initializing biome "+biomeClasses.get(biome).getCanonicalName());
-				Biome b = (Biome)(biomeClasses.get(biome).asSubclass(Biome.class).newInstance());
-				b.init();
-				b.setLoader(modname);
-				Biome.addBiome(b);
-			}
-			
-			//initializes custom entities
-			for(int entity=0; entity<entityClasses.size() ;entity++){
-				System.out.println("Initializing entity "+entityClasses.get(entity).getCanonicalName());
-				Entity e = (Entity) entityClasses.get(entity).asSubclass(Entity.class).newInstance();
-				e.init();
-			}
-			
-			//initializes custom skills
-			for(int skill=0; skill<skillClasses.size() ;skill++){
-				System.out.println("Initializing skill "+skillClasses.get(skill).getCanonicalName());
-				Skill s = (Skill) skillClasses.get(skill).asSubclass(Skill.class).newInstance();
-				s.init();
+			//initializes custom components
+			//handles special cases of biomes
+			for(int i=0; i<classes.size(); i++){
+				for(int c=0; c<classes.get(i).size() ;c++){
+					System.out.println("Initializing entity "+classes.get(i).get(c).getCanonicalName());
+					DeadReckoningComponent e = (DeadReckoningComponent) classes.get(i).get(c).asSubclass(Entity.class).newInstance();
+					e.init();
+					if(classKeys[i].equals("/biomes/")){
+						Biome b = (Biome) e;
+						b.setLoader(modname);
+						Biome.addBiome(b);
+					}
+				}
 			}
 			
 			
 			//loads professions
+			//handes special cases of professions
 			for(int prof = 0; prof<numProfessions; prof++){
 				Profession p = new Profession(modname,prof,
 						urlLoader.getResourceAsStream(modname+"/professions/"+prof+"/tree1.txt"),

@@ -9,12 +9,18 @@ package net.plaidypus.deadreckoning.professions;
  * this encapsulates it to simplify thinking, and allows for the creation of
  * custom statmasters later on
  * 
+ * custom stat calculation is done with formulas roughly adapted from Maplestory,
+ * Immediately after the Big Bang update, or from League of Legends, shortly after
+ * the varus patch.
+ * 
  * @see net.plaidypus.deadreckoning.professions.Profession
  */
 public class StatMaster {
 
 	/** The internal stats */
 	protected int mHP, mMP, STR, DEX, INT, LUK, level;
+	
+	protected int modHP, modMP, modSTR, modDEX, modINT, modLUK, modAtt, modDef, modMagAtt, modMagDef;
 
 	/**
 	 * Instantiates a new stat master.
@@ -35,6 +41,7 @@ public class StatMaster {
 		this.DEX = dex;
 		this.INT = INT;
 		this.LUK = luk;
+		resetStatBonuses();
 		this.level = level;
 	}
 
@@ -43,7 +50,7 @@ public class StatMaster {
 	 *
 	 * @return the dEX
 	 */
-	public int getDEX() {
+	public int getRawDEX() {
 		return this.DEX;
 	}
 
@@ -52,7 +59,7 @@ public class StatMaster {
 	 *
 	 * @return the lUK
 	 */
-	public int getLUK() {
+	public int getRawLUK() {
 		return this.LUK;
 	}
 
@@ -61,7 +68,7 @@ public class StatMaster {
 	 *
 	 * @return the sTR
 	 */
-	public int getSTR() {
+	public int getRawSTR() {
 		return this.STR;
 	}
 
@@ -70,17 +77,54 @@ public class StatMaster {
 	 *
 	 * @return the iNT
 	 */
-	public int getINT() {
+	public int getRawINT() {
 		return this.INT;
 	}
 
 	/**
-	 * Gets the mag defense.
+	 * Gets the dEX.
 	 *
-	 * @return the mag defense
+	 * @return the dEX
+	 */
+	public int getDEX() {
+		return this.DEX+this.modDEX;
+	}
+
+	/**
+	 * Gets the lUK.
+	 *
+	 * @return the lUK
+	 */
+	public int getLUK() {
+		return this.LUK+this.modLUK;
+	}
+
+	/**
+	 * Gets the sTR.
+	 *
+	 * @return the sTR
+	 */
+	public int getSTR() {
+		return this.STR+this.modSTR;
+	}
+
+	/**
+	 * Gets the iNT.
+	 *
+	 * @return the iNT
+	 */
+	public int getINT(){
+		return this.INT+this.modINT;
+	}
+	
+	/**
+	 * Gets the Magical defense.
+	 *
+	 *
+	 * @return the Magic defense
 	 */
 	public int getMagDefense() {
-		return this.INT;
+		return (int) (1.2F * this.getINT() + 0.5F * this.getDEX() + 0.5F * this.getLUK() + 0.4F * this.getSTR() + this.modMagDef);
 	}
 
 	/**
@@ -89,7 +133,7 @@ public class StatMaster {
 	 * @return the wep defense
 	 */
 	public int getWepDefense() {
-		return this.STR;
+		return (int) (0.4F * this.getINT() + 0.5F * this.getDEX() + 0.5F * this.getLUK() + 1.2F * this.getSTR() + this.modDef);
 	}
 
 	/**
@@ -118,7 +162,40 @@ public class StatMaster {
 	public int calculateEXPValue() {
 		return this.getDEX() + this.getINT() + this.getLUK() + this.getSTR();
 	}
+	
+	/**
+	 * resets the bonuses on base and other stats to 0
+	 */
+	public void resetStatBonuses(){
+		this.modHP=0;
+		this.modMP=0;
+		this.modSTR=0;
+		this.modDEX=0;
+		this.modINT=0;
+		this.modLUK=0;
+		this.modAtt=0;
+		this.modMagAtt=0;
+		this.modDef=0;
+		this.modMagDef=0;
+	}
+	
+	public int getPhysicalDamage(int rawDamageValue){
+		return (int) (rawDamageValue* (100F/(100+this.getWepDefense())));
+	}
+	
+	public int getMagicalDamage(int rawDamageValue){
+		return (int) (rawDamageValue* (100F/(100+this.getMagDefense())));
+	}
 
+	/**
+	 * Gets the level of the creature this covers.
+	 *
+	 * @return the level
+	 */
+	public int getLevel() {
+		return this.level;
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -127,13 +204,5 @@ public class StatMaster {
 				+ ":" + level;
 	}
 
-	/**
-	 * Gets the level.
-	 *
-	 * @return the level
-	 */
-	public int getLevel() {
-		return this.level;
-	}
 
 }

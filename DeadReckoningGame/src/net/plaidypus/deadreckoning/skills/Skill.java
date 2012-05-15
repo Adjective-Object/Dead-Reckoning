@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.skills;
 
+import net.plaidypus.deadreckoning.DeadReckoningComponent;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
@@ -18,7 +19,7 @@ import org.newdawn.slick.SlickException;
  * so that the init() method unique to each class can be called
  * because java does not have instance-independent abstract methods.
  */
-public abstract class Skill {
+public abstract class Skill extends DeadReckoningComponent{
 
 	/** The levelcap. */
 	protected int level, levelcap;

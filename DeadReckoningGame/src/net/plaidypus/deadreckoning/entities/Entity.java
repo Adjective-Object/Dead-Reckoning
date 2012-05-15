@@ -2,6 +2,7 @@ package net.plaidypus.deadreckoning.entities;
 
 import java.util.ArrayList;
 
+import net.plaidypus.deadreckoning.DeadReckoningComponent;
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.WaitAction;
@@ -16,7 +17,7 @@ import org.newdawn.slick.SlickException;
 /**
  * The Class Entity.
  */
-public abstract class Entity {
+public abstract class Entity extends DeadReckoningComponent{
 	
 	/** The location. */
 	private Tile location;
@@ -71,13 +72,6 @@ public abstract class Entity {
 			t.getParent().placeEntity(t, this, layer);
 		}
 	}
-
-	/**
-	 * Inits the entity. called as static, but not.
-	 *
-	 * @throws SlickException the slick exception
-	 */
-	public abstract void init() throws SlickException;
 
 	/**
 	 * updates the entity. Used primarily for animation.
