@@ -321,15 +321,25 @@ public class Save {
 		try {
 			String parentMod = r.readLine();
 			int baseClass = r.read();
-			SkillProgression a = SkillProgression.loadTree(parentMod,r.read(), r.read());
+			SkillProgression a = SkillProgression.loadTree(parentMod,r.read(), r.read());//TODO errors are happen here
 			SkillProgression b = SkillProgression.loadTree(parentMod,r.read(), r.read());
 			SkillProgression c = SkillProgression.loadTree(parentMod,r.read(), r.read());
 			p = new Profession(parentMod, baseClass, a, b, c, 1);// TODO read/write player
 														// level to savefile
+			System.out.println("MAKING NEW PROFESSION FROM SAVE");
+			System.out.println(p.getTrees()[0]);
+			System.out.println(p.getTrees()[1]);
+			System.out.println(p.getTrees()[2]);
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.out.println("USING ALREADY LOADED PROFESSION");
+			System.out.println(p.getTrees()[0]);
+			System.out.println(p.getTrees()[1]);
+			System.out.println(p.getTrees()[2]);
 		}
-
+		
+		
+		
 		return new Player(null, Tile.LAYER_PASSIVE_PLAY, p, null);
 	}
 

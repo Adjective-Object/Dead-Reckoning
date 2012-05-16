@@ -105,7 +105,12 @@ public class SkillProgression {
 	}
 
 	public static SkillProgression loadTree(String modName,int profNum, int treeNum) {
+		System.out.println("Loading Tree: "+modName+" "+profNum+" "+treeNum);
 		return Profession.loadProfession(modName,profNum).getTrees()[treeNum];
+	}
+	
+	public String toString(){
+		return "["+skillList[0]+","+skillList[1]+","+skillList[2]+","+skillList[3]+"]";
 	}
 
 }

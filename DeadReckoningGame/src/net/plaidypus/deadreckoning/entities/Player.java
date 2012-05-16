@@ -60,7 +60,7 @@ public class Player extends LivingEntity {
 	/** The epuips. */
 	ArrayList<Equip> epuips;
 	
-	protected SpriteSheet levelUp;
+	static protected SpriteSheet levelUp;
 	
 	/**
 	 * Instantiates a new player.

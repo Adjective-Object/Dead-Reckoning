@@ -64,10 +64,8 @@ public class FairyLights extends HudElement {
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 		for (int i = 0; i < particles.length; i++) {
-			particles[i][3] += (Utilities.randFloat() - Utilities.randFloat())
-					* delta / 1000;// Momentum
-			particles[i][4] += (Utilities.randFloat() - Utilities.randFloat())
-					* delta / 1000;
+			particles[i][3] += (Utilities.randFloat() - Utilities.randFloat())*0.01;// Momentum
+			particles[i][4] += (Utilities.randFloat() - Utilities.randFloat())*0.01;
 
 			particles[i][1] += particles[i][3] * 5 * delta / 1000;// Movement
 			particles[i][2] += particles[i][4] * 5 * delta / 1000;

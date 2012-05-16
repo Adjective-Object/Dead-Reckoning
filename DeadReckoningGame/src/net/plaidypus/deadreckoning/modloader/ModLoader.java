@@ -46,7 +46,8 @@ public class ModLoader {
 		
 		for(int i=0; i<mods.length; i++){
 			if(mods[i].getName().contains(".jar")){
-				String name = mods[i].getName().split(".")[0];
+				String name = mods[i].getName().split("\\.")[0];
+				System.out.println(name);
 				uncountedMods.put(name, mods[i]);
 				
 				URL x = mods[i].toURI().toURL();
@@ -90,7 +91,7 @@ public class ModLoader {
 	 * @throws IllegalArgumentException 
 	 */
 	public static void loadModpack(File f) throws IllegalArgumentException, SecurityException, InvocationTargetException, NoSuchMethodException{
-		System.out.println("loading" + f.getPath());
+		System.out.println("loading " + f.getPath());
 		String modname = f.getName().replace(".jar", "");
 		
 		try {
@@ -117,9 +118,9 @@ public class ModLoader {
 								urlLoader.loadClass(e.getName().replace("/", ".").replace(".class", ""))
 								);
 					}
-					else if(e.getName().contains("/professions/") && e.getName().endsWith("player.entity")){
-						numProfessions++;
-					}
+				}
+				if(e.getName().contains("/professions/") && e.getName().endsWith("player.entity")){
+					numProfessions++;
 				}
 				
 			}
@@ -129,7 +130,7 @@ public class ModLoader {
 			for(int i=0; i<classes.size(); i++){
 				for(int c=0; c<classes.get(i).size() ;c++){
 					System.out.println("Initializing entity "+classes.get(i).get(c).getCanonicalName());
-					DeadReckoningComponent e = (DeadReckoningComponent) classes.get(i).get(c).asSubclass(Entity.class).newInstance();
+					DeadReckoningComponent e = (DeadReckoningComponent) classes.get(i).get(c).asSubclass(DeadReckoningComponent.class).newInstance();
 					e.init();
 					if(classKeys[i].equals("/biomes/")){
 						Biome b = (Biome) e;

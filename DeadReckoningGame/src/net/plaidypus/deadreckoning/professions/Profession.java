@@ -80,6 +80,7 @@ public class Profession extends StatMaster {
 			throws SlickException {
 		super(0, 0, 0, 0, 0, 0, level);
 		skillTrees = new SkillProgression[] { treeA, treeB, treeC };
+		System.out.println("New Profession: "+treeA +" "+treeB+" "+treeC);
 		this.baseClassID = baseClassID;
 		this.parentMod=parentMod;
 		this.portrait = new Image("res/professions/" + baseClassID
