@@ -27,7 +27,10 @@ public class SkillProgression {
 	private int[] levelReq;
 	
 	/** The source tree. */
-	public int sourceClass, sourceTree;
+	public int sourceTree, sourceClass;
+	
+	/** The path to the source class */
+	public String sourceMod;
 
 	/**
 	 * Instantiates a new skill progression.
@@ -44,6 +47,12 @@ public class SkillProgression {
 		levelReq = levels;
 		if (skillList.length != levelReq.length)
 			throw new SlickException("Error Loading Skills: Length Mismatch");
+	}
+	
+	public void setSource(String sourceMod, int sourceClass, int sourceTree){
+		this.sourceMod = sourceMod;
+		this.sourceClass=sourceClass;
+		this.sourceTree=sourceTree;
 	}
 	
 	/**

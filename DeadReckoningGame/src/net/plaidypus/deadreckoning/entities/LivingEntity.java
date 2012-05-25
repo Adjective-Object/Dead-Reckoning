@@ -13,6 +13,7 @@ import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
+import net.plaidypus.deadreckoning.items.Equip;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.professions.StatMaster;
 import net.plaidypus.deadreckoning.skills.Skill;
@@ -55,6 +56,9 @@ public abstract class LivingEntity extends InteractiveEntity {
 	
 	/** The current animation id. */
 	int currentAnimationID;
+	
+	/** equipment **/
+	public ArrayList<Equip> equips = new ArrayList<Equip>(0);
 	
 	/** The Constant ANIMATION_DEATH. */
 	public static final int ANIMATION_STAND = 0, ANIMATION_ATTACK = 1,

@@ -255,10 +255,22 @@ public class Save {
 			throws IOException {
 		w.write(p.getParentMod()+"\n");
 		w.write(p.getBaseClass());
+		
+		w.newLine();
+		w.write(p.getTrees()[0].sourceMod);
+		w.newLine();
 		w.write(p.getTrees()[0].sourceClass);
 		w.write(p.getTrees()[0].sourceTree);
+		
+		w.newLine();
+		w.write(p.getTrees()[1].sourceMod);
+		w.newLine();
 		w.write(p.getTrees()[1].sourceClass);
 		w.write(p.getTrees()[1].sourceTree);
+		
+		w.newLine();
+		w.write(p.getTrees()[2].sourceMod);
+		w.newLine();
 		w.write(p.getTrees()[2].sourceClass);
 		w.write(p.getTrees()[2].sourceTree);
 	}
@@ -321,9 +333,12 @@ public class Save {
 		try {
 			String parentMod = r.readLine();
 			int baseClass = r.read();
-			SkillProgression a = SkillProgression.loadTree(parentMod,r.read(), r.read());//TODO errors are happen here
-			SkillProgression b = SkillProgression.loadTree(parentMod,r.read(), r.read());
-			SkillProgression c = SkillProgression.loadTree(parentMod,r.read(), r.read());
+			r.readLine();
+			SkillProgression a = SkillProgression.loadTree(r.readLine(),r.read(), r.read());//TODO errors are happen here
+			r.readLine();
+			SkillProgression b = SkillProgression.loadTree(r.readLine(),r.read(), r.read());
+			r.readLine();
+			SkillProgression c = SkillProgression.loadTree(r.readLine(),r.read(), r.read());
 			p = new Profession(parentMod, baseClass, a, b, c, 1);// TODO read/write player
 														// level to savefile
 			System.out.println("MAKING NEW PROFESSION FROM SAVE");

@@ -61,6 +61,10 @@ public class Profession extends StatMaster {
 				SkillProgression.loadFromStream(tree1),
 				SkillProgression.loadFromStream(tree2),
 				SkillProgression.loadFromStream(tree3),1);
+		this.skillTrees[0].setSource(parentMod, baseClassID, 0);
+		this.skillTrees[1].setSource(parentMod, baseClassID, 1);
+		this.skillTrees[2].setSource(parentMod, baseClassID, 2);
+		
 	}
 
 	/**
