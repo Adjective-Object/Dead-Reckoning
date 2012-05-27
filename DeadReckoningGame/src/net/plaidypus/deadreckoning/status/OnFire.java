@@ -7,6 +7,7 @@ import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.AttackAction;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
+import net.plaidypus.deadreckoning.professions.StatMaster;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
@@ -101,6 +102,11 @@ public class OnFire extends AnimatedStatus {
 	@Override
 	public String getName() {
 		return "On Fire!";
+	}
+
+	@Override
+	public void alterStatMaster(StatMaster statMaster) {
+		statMaster.editDEX(-1);
 	}
 
 }

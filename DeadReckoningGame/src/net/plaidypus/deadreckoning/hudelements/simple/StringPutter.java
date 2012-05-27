@@ -16,7 +16,9 @@ import org.newdawn.slick.state.StateBasedGame;
  * The Class StringPutter.
  */
 public class StringPutter extends HudElement {
-
+	
+	static int maxMessages = 4;
+	
 	/** The alphas. */
 	private ArrayList<Double> alphas;
 	
@@ -55,7 +57,10 @@ public class StringPutter extends HudElement {
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 		for (int i = 0; i < alphas.size(); i++) {
-			alphas.set(i, alphas.get(i) - fadeoutRate * (delta / 1000.0));
+			alphas.set(i, alphas.get(i) - fadeoutRate * (delta / 1000F));
+			if(i<alphas.size()-maxMessages){
+				alphas.set(i,alphas.get(i) - alphas.get(i)* (delta / 250F));
+			}
 			if (alphas.get(i) <= 0) {
 				alphas.remove(i);
 				messages.remove(i);

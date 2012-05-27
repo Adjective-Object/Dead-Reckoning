@@ -3,6 +3,8 @@ package net.plaidypus.deadreckoning.items;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -12,9 +14,9 @@ import org.newdawn.slick.SlickException;
  * The Class Equip.
  */
 public class Equip extends Item {
-
+	
 	/** The VIS. */
-	int STR, WIS, DEX, HP, MP, VIS;
+	public int STR, INT, DEX, LUK, HP, MP, MDef, MAtt, WDef, WAtt;
 
 	/** The equip slot. */
 	int equipSlot;
@@ -23,30 +25,36 @@ public class Equip extends Item {
 	int[] classCompatability;
 
 	/**
-	 * Instantiates a new equip.
+	 * Instantiates a new equip, loaded from the itemID.
 	 *
 	 * @param itemID the item id
 	 */
-	public Equip(int itemID) {
-		super(itemID, Item.ITEM_EQUIP);
+	public Equip(String parentMod, int itemID) {
+		super(parentMod, itemID, Item.ITEM_EQUIP);
 	}
-
+	
+	/**
+	
 	/* (non-Javadoc)
 	 * @see net.plaidypus.deadreckoning.items.Item#parseItem(java.lang.String)
 	 */
-	protected void parseItem(String path) throws IOException, SlickException {
-		BufferedReader reader = new BufferedReader(new FileReader(path));
+	protected void parseItem(InputStream in) throws IOException, SlickException {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		name = reader.readLine();
 		description = reader.readLine();
 		image = new Image(reader.readLine());
 
 		equipSlot = Integer.parseInt(reader.readLine());
 		STR = Integer.parseInt(reader.readLine());
-		WIS = Integer.parseInt(reader.readLine());
+		INT = Integer.parseInt(reader.readLine());
+		DEX = Integer.parseInt(reader.readLine());
 		DEX = Integer.parseInt(reader.readLine());
 		HP = Integer.parseInt(reader.readLine());
 		MP = Integer.parseInt(reader.readLine());
-		VIS = Integer.parseInt(reader.readLine());
+		WAtt = Integer.parseInt(reader.readLine());
+		WDef = Integer.parseInt(reader.readLine());
+		MAtt = Integer.parseInt(reader.readLine());
+		MDef = Integer.parseInt(reader.readLine());
 	}
 
 	/* (non-Javadoc)

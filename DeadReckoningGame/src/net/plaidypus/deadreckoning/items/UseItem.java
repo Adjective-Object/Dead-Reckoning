@@ -1,6 +1,7 @@
 package net.plaidypus.deadreckoning.items;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import net.plaidypus.deadreckoning.skills.Skill;
 
@@ -17,8 +18,8 @@ public class UseItem extends Item {
 	 *
 	 * @param itemID the item id
 	 */
-	public UseItem(int itemID) {
-		super(itemID, Item.ITEM_USE);
+	public UseItem(String parentMod, int itemID) {
+		super(parentMod, itemID, Item.ITEM_USE);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -26,7 +27,7 @@ public class UseItem extends Item {
 	 * @see net.plaidypus.deadreckoning.items.Item#parseItem(java.lang.String)
 	 */
 	@Override
-	protected void parseItem(String path) throws IOException, SlickException {
+	protected void parseItem(InputStream i) throws IOException, SlickException {
 		// TODO Auto-generated method stub
 
 	}

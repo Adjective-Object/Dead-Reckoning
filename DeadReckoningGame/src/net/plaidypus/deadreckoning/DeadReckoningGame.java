@@ -203,7 +203,7 @@ public class DeadReckoningGame extends StateBasedGame {
 		menuFont.addNeheGlyphs();
 		menuFont.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
 		menuFont.loadGlyphs();
-		menuSmallFont = new UnicodeFont("/res/visitor.ttf", 11, true, false);
+		menuSmallFont = new UnicodeFont("/res/visitor.ttf", 15, true, false);
 		menuSmallFont.addNeheGlyphs();
 		menuSmallFont.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
 		menuSmallFont.loadGlyphs();

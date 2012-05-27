@@ -44,7 +44,15 @@ public class StatMaster {
 		resetStatBonuses();
 		this.level = level;
 	}
-
+	
+	public int getRawMaxHP(){
+		return this.mHP;
+	}
+	
+	public int getRawMaxMP(){
+		return this.mMP;
+	}
+	
 	/**
 	 * Gets the dEX.
 	 *
@@ -87,7 +95,7 @@ public class StatMaster {
 	 * @return the dEX
 	 */
 	public int getDEX() {
-		return this.DEX+this.modDEX;
+		return this.getRawDEX()+this.modDEX;
 	}
 
 	/**
@@ -96,7 +104,7 @@ public class StatMaster {
 	 * @return the lUK
 	 */
 	public int getLUK() {
-		return this.LUK+this.modLUK;
+		return this.getRawLUK()+this.modLUK;
 	}
 
 	/**
@@ -105,7 +113,7 @@ public class StatMaster {
 	 * @return the sTR
 	 */
 	public int getSTR() {
-		return this.STR+this.modSTR;
+		return this.getRawSTR()+this.modSTR;
 	}
 
 	/**
@@ -114,7 +122,7 @@ public class StatMaster {
 	 * @return the iNT
 	 */
 	public int getINT(){
-		return this.INT+this.modINT;
+		return this.getRawLUK()+this.modINT;
 	}
 	
 	/**
@@ -142,7 +150,7 @@ public class StatMaster {
 	 * @return the max hp
 	 */
 	public int getMaxHP() {
-		return mHP;
+		return this.getRawMaxHP()+modHP;
 	}
 
 	/**
@@ -151,7 +159,7 @@ public class StatMaster {
 	 * @return the max mp
 	 */
 	public int getMaxMP() {
-		return mMP;
+		return this.getRawMaxMP()+modMP;
 	}
 
 	/**
@@ -161,6 +169,46 @@ public class StatMaster {
 	 */
 	public int calculateEXPValue() {
 		return this.getDEX() + this.getINT() + this.getLUK() + this.getSTR();
+	}
+	
+	public void editHP(int modValue){
+		this.modHP+=modValue;
+	}
+	
+	public void editMP(int modValue){
+		this.modMP+=modValue;
+	}
+	
+	public void editSTR(int modValue){
+		this.modSTR+=modValue;
+	}
+	
+	public void editDEX(int modValue){
+		this.modDEX+=modValue;
+	}
+	
+	public void editINT(int modValue){
+		this.modINT+=modValue;
+	}
+	
+	public void editLUK(int modValue){
+		this.modLUK+=modValue;
+	}
+	
+	public void editAtt(int modValue){
+		this.modAtt+=modValue;
+	}
+	
+	public void editDef(int modValue){
+		this.modDef+=modValue;
+	}
+	
+	public void editMAtt(int modValue){
+		this.modMagAtt+=modValue;
+	}
+	
+	public void editMDef(int modValue){
+		this.modMagDef+=modValue;
 	}
 	
 	/**
@@ -204,5 +252,28 @@ public class StatMaster {
 				+ ":" + level;
 	}
 
+	public int getBonusMaxHP() {
+		return modHP;
+	}
+	
+	public int getBonusMaxMP() {
+		return modMP;
+	}
+	
+	public int getBonusSTR() {
+		return modSTR;
+	}
+	
+	public int getBonusINT() {
+		return modINT;
+	}
+	
+	public int getBonusDEX() {
+		return modDEX;
+	}
+	
+	public int getBonusLUK() {
+		return modLUK;
+	}
 
 }

@@ -52,11 +52,11 @@ public abstract class Biome  extends DeadReckoningComponent{
 		return biomes;
 	}
 	
-	public String getURLLoader(){
+	public String getParentMod(){
 		return this.parentMod;
 	}
 	
-	public void setLoader(String newMod){
+	public void setParentMod(String newMod){
 		this.parentMod=newMod;
 	}
 }

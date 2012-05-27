@@ -57,8 +57,17 @@ public class Player extends LivingEntity {
 	/** The profession. */
 	public Profession profession;
 
-	/** The epuips. */
-	ArrayList<Equip> epuips;
+	/** The epuips.
+	 * 0 = hat
+	 * 1 = top / shirt
+	 * 2 = bottom / pants
+	 * 3 = feet / shoes
+	 * 5 = weapon hand 1
+	 * 6 = weapon hand 2
+	 * 7 = accesory 1
+	 * 8 = accesory 2
+	 * */
+	protected ArrayList<Equip> equips; 
 	
 	static protected SpriteSheet levelUp;
 	
@@ -77,10 +86,10 @@ public class Player extends LivingEntity {
 	 * @param i the input object returned by GameContainer.getInput()
 	 * @throws SlickException the slick exception
 	 */
-	public Player(Tile targetTile, int layer, Profession p, Input i)
+	public Player(Tile targetTile, int layer, Profession p, Input in)
 			throws SlickException {
 		super(targetTile, layer, p.getParentMod(), p.getEntityFile(), p, Entity.ALLIGN_FRIENDLY);
-		this.input = i;
+		this.input = in;
 
 		this.profession = p;
 		this.profession.parentTo(this);
@@ -112,7 +121,10 @@ public class Player extends LivingEntity {
 				new ViewMap(this), new ViewSkills(this), new Interacter(this) };
 
 		this.skills.addAll(p.getSkillList());
-
+		this.equips = new ArrayList<Equip>(9);
+		for(int i=0; i<9 ;i++){
+			this.equips.add(null);
+		}
 	}
 
 	/* (non-Javadoc)
@@ -130,8 +142,31 @@ public class Player extends LivingEntity {
 		if (gc.getInput().isKeyDown(Input.KEY_SCROLL)) {
 			this.EXP += delta;
 		}
+		if (gc.getInput().isKeyDown(Input.KEY_PAUSE)) {
+			this.equips.set(0, new Equip("core",0));
+		}
 	}
-
+	
+	public ArrayList<Action> advanceTurn(){
+		ArrayList<Action> c = super.advanceTurn();
+		for(int i=0; i<8; i++){//updating the stat alterations based on equips
+			if(this.equips.get(i)!=null){
+				Equip e= this.equips.get(i);
+				this.profession.editHP(e.HP);
+				this.profession.editMP(e.MP);
+				this.profession.editINT(e.INT);
+				this.profession.editLUK(e.LUK);
+				this.profession.editDEX(e.DEX);
+				this.profession.editSTR(e.STR);
+				this.profession.editAtt(e.WAtt);
+				this.profession.editDef(e.WDef);
+				this.profession.editMAtt(e.MAtt);
+				this.profession.editMDef(e.MDef);
+			}
+		}
+		return c;
+	}
+	
 	/* (non-Javadoc)
 	 * @see net.plaidypus.deadreckoning.entities.InteractiveEntity#updateBoardEffects(org.newdawn.slick.GameContainer, int)
 	 */

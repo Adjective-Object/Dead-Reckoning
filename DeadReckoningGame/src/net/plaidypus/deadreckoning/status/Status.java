@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
+import net.plaidypus.deadreckoning.professions.StatMaster;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -120,4 +121,7 @@ public abstract class Status {
 	 * @return the name
 	 */
 	public abstract String getName();
+
+	public abstract void alterStatMaster(StatMaster statMaster);
+	
 }

@@ -177,42 +177,42 @@ public class Profession extends StatMaster {
 	/* (non-Javadoc)
 	 * @see net.plaidypus.deadreckoning.professions.StatMaster#getMaxHP()
 	 */
-	public int getMaxHP() {
+	public int getRawMaxHP() {
 		return (int) (baseHP + statDist[0] * level * spPerLevel);
 	}
 
 	/* (non-Javadoc)
 	 * @see net.plaidypus.deadreckoning.professions.StatMaster#getMaxMP()
 	 */
-	public int getMaxMP() {
+	public int getRawMaxMP() {
 		return (int) (baseMP + statDist[1] * level * spPerLevel);
 	}
 
 	/* (non-Javadoc)
 	 * @see net.plaidypus.deadreckoning.professions.StatMaster#getSTR()
 	 */
-	public int getSTR() {
+	public int getRawSTR() {
 		return (int) (baseStat + statDist[2] * level * spPerLevel);
 	}
 
 	/* (non-Javadoc)
 	 * @see net.plaidypus.deadreckoning.professions.StatMaster#getDEX()
 	 */
-	public int getDEX() {
+	public int getRawDEX() {
 		return (int) (baseStat + statDist[3] * level * spPerLevel);
 	}
 
 	/* (non-Javadoc)
 	 * @see net.plaidypus.deadreckoning.professions.StatMaster#getINT()
 	 */
-	public int getINT() {
+	public int getRawINT() {
 		return (int) (baseStat + statDist[4] * level * spPerLevel);
 	}
 
 	/* (non-Javadoc)
 	 * @see net.plaidypus.deadreckoning.professions.StatMaster#getLUK()
 	 */
-	public int getLUK() {
+	public int getRawLUK() {
 		return (int) (baseStat + statDist[5] * level * spPerLevel);
 	}
 
@@ -333,6 +333,5 @@ public class Profession extends StatMaster {
 	public static Profession loadProfession(String modname, int profNumber){
 		return Profession.profMap.get(modname+profNumber);
 	}
-
 
 }

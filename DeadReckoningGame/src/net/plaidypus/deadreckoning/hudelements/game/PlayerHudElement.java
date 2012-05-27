@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.hudelements.game;
 
+import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 
 import org.newdawn.slick.Color;
@@ -93,6 +94,7 @@ public class PlayerHudElement extends HudElement {
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
+		g.setFont(DeadReckoningGame.menuSmallFont);
 		g.drawImage(img, getX(), getY());
 		g.drawImage(target.player.getProfession().getPortriat(), getX() + 19,
 				getY() + 23);
@@ -105,6 +107,9 @@ public class PlayerHudElement extends HudElement {
 		g.setColor(new Color(200, 200, 70));
 		g.fillRect(getX() + 126, getY() + 74, 75 * displayEXPValue
 				/ target.player.getEXPforLevel(), 9);
+		g.setColor(DeadReckoningGame.menuTextColor);
+		g.drawString(target.player.HP+"/"+target.player.getProfession().getMaxHP(), getX()+146, getY()+22);
+		g.drawString(target.player.MP+"/"+target.player.getProfession().getMaxMP(), getX()+146, getY()+46);
 		g.drawString(
 				Integer.toString(target.player.getProfession().getLevel()),
 				getX(), getY() + getHeight() + 20);

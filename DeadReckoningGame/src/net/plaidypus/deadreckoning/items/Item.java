@@ -2,6 +2,9 @@ package net.plaidypus.deadreckoning.items;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+
+import net.plaidypus.deadreckoning.modloader.ModLoader;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -26,7 +29,7 @@ public abstract class Item {
 	Image image;
 	
 	/** The description. */
-	String name, description;
+	String name, description, parentMod;
 
 	/**
 	 * Instantiates a new item.
@@ -34,10 +37,11 @@ public abstract class Item {
 	 * @param itemID the item id
 	 * @param classification the classification
 	 */
-	public Item(int itemID, int classification) {
+	public Item(String parentMod, int itemID, int classification) {
 		this.itemID = itemID;
 		try {
-			parseItem("res/" + Integer.toString(itemID) + ".item");
+			System.out.println("ITEM AT "+parentMod+"/items/"+ Integer.toString(itemID) + ".item");
+			parseItem(ModLoader.getLoaderFor(parentMod).getResourceAsStream(parentMod+"/items/" + Integer.toString(itemID) + ".item"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -46,6 +50,7 @@ public abstract class Item {
 			e.printStackTrace();
 		}
 		this.classification = classification;
+		this.parentMod=parentMod;
 	}
 
 	/**
@@ -55,7 +60,7 @@ public abstract class Item {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 * @throws SlickException the slick exception
 	 */
-	protected abstract void parseItem(String path) throws IOException,
+	protected abstract void parseItem(InputStream i) throws IOException,
 			SlickException;
 
 	/**

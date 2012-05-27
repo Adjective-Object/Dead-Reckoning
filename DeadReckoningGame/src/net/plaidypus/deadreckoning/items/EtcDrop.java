@@ -3,6 +3,8 @@ package net.plaidypus.deadreckoning.items;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -23,16 +25,16 @@ public class EtcDrop extends Item {
 	 * @param itemID the item id
 	 * @param number the number
 	 */
-	public EtcDrop(int itemID, int number) {
-		super(itemID, Item.ITEM_ETC);
+	public EtcDrop(String parentMod, int itemID, int number) {
+		super(parentMod, itemID, Item.ITEM_ETC);
 		this.number = number;
 	}
 
 	/* (non-Javadoc)
 	 * @see net.plaidypus.deadreckoning.items.Item#parseItem(java.lang.String)
 	 */
-	protected void parseItem(String path) throws IOException, SlickException {
-		BufferedReader reader = new BufferedReader(new FileReader(path));
+	protected void parseItem(InputStream in) throws IOException, SlickException {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		name = reader.readLine();
 		description = reader.readLine();
 		image = new Image(reader.readLine());
@@ -63,7 +65,7 @@ public class EtcDrop extends Item {
 	@Override
 	public Item combineWith(Item item) {
 		EtcDrop drop = (EtcDrop) item;
-		return new EtcDrop(itemID, this.number + drop.number);
+		return new EtcDrop(this.parentMod, itemID, this.number + drop.number);
 	}
 
 }
