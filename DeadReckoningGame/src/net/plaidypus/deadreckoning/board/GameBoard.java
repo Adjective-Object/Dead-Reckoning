@@ -762,4 +762,18 @@ public class GameBoard implements ILosBoard {
 		}
 	}
 
+	/**
+	 * method for getting a valid tile to drop the player on
+	 * 
+	 * used in lieu of a default spawn point as defined by Biome.
+	 * @return
+	 */
+	public Tile getValidSpawnTile() {
+		Tile returnTile = this.getTileAt(0,0);
+		while(returnTile.getTileFace()==Tile.TILE_NULL){
+			returnTile =  this.getTileAt(Utilities.randInt(0,this.getWidth()), Utilities.randInt(0,this.getHeight()));
+		}
+		return returnTile;
+	}
+
 }

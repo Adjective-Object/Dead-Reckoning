@@ -119,7 +119,7 @@ public class NewGameState extends HudLayersState {
 					s.loadGame(GameplayElement.class.cast(HudLayersState.class
 							.cast(DeadReckoningGame.instance
 									.getState(DeadReckoningGame.GAMEPLAYSTATE))
-							.getElement(0)));
+							.getElement(0)),game.getContainer());
 					game.enterState(DeadReckoningGame.GAMEPLAYSTATE);
 				} catch (IOException e) {
 					e.printStackTrace();

@@ -334,4 +334,8 @@ public class Profession extends StatMaster {
 		return Profession.profMap.get(modname+profNumber);
 	}
 
+	public void setLevel(int level) {
+		this.level=level;
+	}
+
 }

@@ -71,7 +71,7 @@ public class SaveSelectorState extends ExclusiveHudLayersState {
 										.cast(HudLayersState.class
 												.cast(DeadReckoningGame.instance
 														.getState(DeadReckoningGame.GAMEPLAYSTATE))
-												.getElement(0)));
+												.getElement(0)),container);
 						DeadReckoningGame.instance
 								.enterState(DeadReckoningGame.GAMEPLAYSTATE);
 					} else if (this.focus == buttonIndex) {

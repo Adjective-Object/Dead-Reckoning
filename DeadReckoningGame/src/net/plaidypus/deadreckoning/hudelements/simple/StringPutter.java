@@ -43,7 +43,7 @@ public class StringPutter extends HudElement {
 
 	/* (non-Javadoc)
 	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#init(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame)
-	 */
+	 */	
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 		alphas = new ArrayList<Double>(0);

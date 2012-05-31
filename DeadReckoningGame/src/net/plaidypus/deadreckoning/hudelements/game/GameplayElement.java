@@ -51,7 +51,7 @@ public class GameplayElement extends HudElement {
 	public static float cameraDestX, cameraDestY;
 
 	/** The Constant cameraRate. */
-	static final float cameraRate = (float) 0.2;
+	static final float cameraRate = 0.2F, cameraSensitivityFrac=2.0F;
 
 	/** The last map. */
 	public String lastMap;
@@ -147,14 +147,6 @@ public class GameplayElement extends HudElement {
 		this.gb = b;
 
 		Tile target = null;
-		while (target == null) {
-			Tile t = gb.getTileAt(Utilities.randInt(0, gb.getWidth()),
-					Utilities.randInt(0, gb.getHeight()));
-			if (t.getTileFace() != Tile.TILE_NULL) {
-				target = t;
-			}
-		}
-
 		if (lastMap != "") {
 			for (int x = 0; x < b.getWidth(); x++) {
 				for (int y = 0; y < b.getHeight(); y++) {
@@ -170,6 +162,9 @@ public class GameplayElement extends HudElement {
 					}
 				}
 			}
+		}
+		else{
+			target = b.getTileAt(player.getX(),player.getY());
 		}
 
 		gb.insertEntity(0, target, player, player.getLayer());
@@ -339,8 +334,8 @@ public class GameplayElement extends HudElement {
 	 * @return true, if successful
 	 */
 	private boolean cameraIsFocused() {
-		return (Math.abs(cameraDestX - cameraX) < 0.5 && Math.abs(cameraDestY
-				- cameraY) < 0.5)
+		return (Math.abs(cameraDestX - cameraX) < cameraSensitivityFrac && Math.abs(cameraDestY
+				- cameraY) < cameraSensitivityFrac)
 				|| !this.getBoard().ingameEntities.get(currentEntity)
 						.getLocation().canBeSeen();
 	}

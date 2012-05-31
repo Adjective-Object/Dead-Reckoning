@@ -22,6 +22,7 @@ import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.professions.SkillProgression;
 
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 
 /**
@@ -89,14 +90,17 @@ public class Save {
 	 * @throws InstantiationException the instantiation exception
 	 * @throws IllegalAccessException the illegal access exception
 	 */
-	public void loadGame(GameplayElement state) throws IOException,
+	public void loadGame(GameplayElement state, GameContainer c) throws IOException,
 			SlickException, ClassNotFoundException, InstantiationException,
 			IllegalAccessException {
-		state.setPlayer(loadPlayer(new BufferedReader(new FileReader(
-				saveLocation + "/player.txt"))));
 		BufferedReader r = new BufferedReader(new FileReader(saveLocation + "/"
 				+ currentMap));
 		GameBoard g = loadBoard(state, saveLocation, currentMap, r);
+		
+		BufferedReader playerReader = new BufferedReader(new FileReader(saveLocation + "/player.txt"));
+		Player play = loadPlayerStatus(playerReader, c, g, loadPlayerProfession(playerReader) );
+		state.setPlayer(play);
+		
 		loadEntities(g, r);
 		state.setBoard(g);
 
@@ -251,7 +255,7 @@ public class Save {
 	 * @param p the p
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	private static void savePlayer(BufferedWriter w, Profession p)
+	private static void savePlayerProfession(BufferedWriter w, Profession p)
 			throws IOException {
 		w.write(p.getParentMod()+"\n");
 		w.write(p.getBaseClass());
@@ -273,6 +277,8 @@ public class Save {
 		w.newLine();
 		w.write(p.getTrees()[2].sourceClass);
 		w.write(p.getTrees()[2].sourceTree);
+		w.newLine();
+		w.write(p.getLevel());
 	}
 
 	/**
@@ -296,30 +302,41 @@ public class Save {
 		r.write("floor0.map");
 		r.close();
 
-		File playerFile = new File(fileLocation + "/player.txt");
-		playerFile.createNewFile();
-		BufferedWriter w = new BufferedWriter(new FileWriter(playerFile));
-		savePlayer(w, p);
-		w.close();
-
 		DungeonMap map = new DungeonMap(16);
-
+		
+		Tile spawnTile = null;
+		
 		for (int i = 0; i < map.getDepth(); i++) {
 			File floorFile = new File(fileLocation + map.getFloorName(i));
 			floorFile.createNewFile();
 			r = new BufferedWriter(new FileWriter(floorFile));
 
 			GameBoard gameBoard = map.makeBoard(i);
-
+			
+			if (i==0){
+				spawnTile=gameBoard.getValidSpawnTile();
+			}
+			
 			Save.saveBoard(gameBoard, r);
 			Save.saveEntities(gameBoard, r);
 			r.close();
 		}
-
+		
+		File playerFile = new File(fileLocation + "/player.txt");
+		playerFile.createNewFile();
+		BufferedWriter w = new BufferedWriter(new FileWriter(playerFile));
+		savePlayerProfession(w, p);
+		savePlayerStatus(w, spawnTile, 0);
+		w.close();
+		
 		Save s = new Save(fileLocation);
 		return s;
 	}
-
+	
+	public static void updateSave(int saveNumber, Player p, String newMap){
+		//TODO updating save.
+	}
+	
 	/**
 	 * Loads the player.
 	 *
@@ -327,7 +344,7 @@ public class Save {
 	 * @return the player
 	 * @throws SlickException the slick exception
 	 */
-	private Player loadPlayer(BufferedReader r) throws SlickException {
+	private Profession loadPlayerProfession(BufferedReader r) throws SlickException {
 
 		Profession p = Profession.loadProfession("core", 0);//either pull from catalog of parents or load out of mod
 		try {
@@ -341,21 +358,37 @@ public class Save {
 			SkillProgression c = SkillProgression.loadTree(r.readLine(),r.read(), r.read());
 			p = new Profession(parentMod, baseClass, a, b, c, 1);// TODO read/write player
 														// level to savefile
-			System.out.println("MAKING NEW PROFESSION FROM SAVE");
-			System.out.println(p.getTrees()[0]);
-			System.out.println(p.getTrees()[1]);
-			System.out.println(p.getTrees()[2]);
+			r.readLine();
+			p.setLevel(r.read());
+
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println("USING ALREADY LOADED PROFESSION");
-			System.out.println(p.getTrees()[0]);
-			System.out.println(p.getTrees()[1]);
-			System.out.println(p.getTrees()[2]);
 		}
+		return p;
+	}
+	
+	private Player loadPlayerStatus(BufferedReader r, GameContainer c, GameBoard b, Profession p) throws SlickException, IOException{
+		//TODO stuff
+		r.readLine();
+		int tileX=Integer.parseInt(r.readLine());
+		int tileY=Integer.parseInt(r.readLine());
+		int currentEXP=Integer.parseInt(r.readLine());
 		
+		Player player = new Player(null,Tile.LAYER_ACTIVE,p,c.getInput());
 		
+		player.setLocation(b.getTileAt(tileX, tileY));
+		player.EXP=currentEXP;
 		
-		return new Player(null, Tile.LAYER_PASSIVE_PLAY, p, null);
+		return player;
+	}
+	
+	private static void savePlayerStatus(BufferedWriter w, Tile spawnTile, int experience) throws IOException {
+		w.newLine();
+		w.write(Integer.toString(spawnTile.getX()));
+		w.newLine();
+		w.write(Integer.toString(spawnTile.getY()));
+		w.newLine();
+		w.write(Integer.toString(experience));
 	}
 
 	/**
