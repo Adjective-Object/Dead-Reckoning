@@ -1,8 +1,10 @@
 package net.plaidypus.deadreckoning.hudelements.game;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
+import net.plaidypus.deadreckoning.Save;
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
@@ -33,7 +35,7 @@ public class GameplayElement extends HudElement {
 	int currentEntity, currentAction;
 	
 	/** The save number. */
-	int saveNumber;
+	public String saveLocation;
 	
 	/** The time on. */
 	int timeOn;
@@ -136,6 +138,12 @@ public class GameplayElement extends HudElement {
 	public void setBoard(GameBoard b) {
 		if (this.gb != null) {
 			lastMap = this.gb.getMapID();
+			this.gb.removeEntity(player);
+			try {
+				Save.updateSave(saveLocation, player, gb);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 
 		System.out.println(lastMap + " -> " + b.getMapID());
@@ -143,9 +151,11 @@ public class GameplayElement extends HudElement {
 		b.setGame(this);
 		b.renderDistX = this.getWidth() / DeadReckoningGame.tileSize + 2;
 		b.renderDistY = this.getHeight() / DeadReckoningGame.tileSize + 2;
-
+		
+		
+		
 		this.gb = b;
-
+		
 		Tile target = null;
 		if (lastMap != "") {
 			for (int x = 0; x < b.getWidth(); x++) {
@@ -168,7 +178,8 @@ public class GameplayElement extends HudElement {
 		}
 
 		gb.insertEntity(0, target, player, player.getLayer());
-
+		
+		
 		cameraDestX = player.getAbsoluteX() - gc.getWidth() / 2
 				+ DeadReckoningGame.tileSize / 2;
 		cameraDestY = player.getAbsoluteY() - gc.getHeight() / 2

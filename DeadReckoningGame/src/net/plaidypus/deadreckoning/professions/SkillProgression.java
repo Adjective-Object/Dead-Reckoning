@@ -122,4 +122,11 @@ public class SkillProgression {
 		return "["+skillList[0]+","+skillList[1]+","+skillList[2]+","+skillList[3]+"]";
 	}
 
+	public void setLevels(int a, int b, int c, int d) {
+		this.skillList[0].setLevel(a);
+		this.skillList[1].setLevel(b);
+		this.skillList[2].setLevel(c);
+		this.skillList[3].setLevel(d);
+	}
+
 }

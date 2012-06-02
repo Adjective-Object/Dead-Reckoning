@@ -108,13 +108,17 @@ public class PlayerHudElement extends HudElement {
 		g.fillRect(getX() + 126, getY() + 74, 75 * displayEXPValue
 				/ target.player.getEXPforLevel(), 9);
 		g.setColor(DeadReckoningGame.menuTextColor);
-		g.drawString(target.player.HP+"/"+target.player.getProfession().getMaxHP(), getX()+146, getY()+22);
-		g.drawString(target.player.MP+"/"+target.player.getProfession().getMaxMP(), getX()+146, getY()+46);
+		g.drawString(target.player.HP+"/"+target.player.getProfession().getMaxHP(), getX()+128, getY()+22);
+		g.drawString(target.player.MP+"/"+target.player.getProfession().getMaxMP(), getX()+128, getY()+46);
 		g.drawString(
 				Integer.toString(target.player.getProfession().getLevel()),
 				getX(), getY() + getHeight() + 20);
 		g.drawString(Integer.toString(target.getBoard().depth), getX(), getY()
 				+ getHeight() + 40);
+		g.drawString(Integer.toString(target.player.getX()), getX(), getY()
+				+ getHeight() + 60);
+		g.drawString(Integer.toString(target.player.getY()), getX()+30, getY()
+				+ getHeight() + 60);
 	}
 
 }

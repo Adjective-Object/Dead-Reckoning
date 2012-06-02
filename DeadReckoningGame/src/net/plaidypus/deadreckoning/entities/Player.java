@@ -1,7 +1,9 @@
 package net.plaidypus.deadreckoning.entities;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import net.plaidypus.deadreckoning.Save;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
@@ -142,8 +144,15 @@ public class Player extends LivingEntity {
 		if (gc.getInput().isKeyDown(Input.KEY_SCROLL)) {
 			this.EXP += delta;
 		}
-		if (gc.getInput().isKeyDown(Input.KEY_PAUSE)) {
+		if (gc.getInput().isKeyPressed(Input.KEY_PAUSE)) {
 			this.equips.set(0, new Equip("core",0));
+		}
+		if (gc.getInput().isKeyPressed(Input.KEY_F5)) {
+			try {
+				Save.updateSave(this.getGame().saveLocation, this, this.getParent());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -345,7 +354,7 @@ public class Player extends LivingEntity {
 	 */
 	@Override
 	public String saveToString() {
-		return "LOLGONNAPUTSOMETHINGHERELATER";
+		return "LOLGONNAPUTSOMETHINGHERELATER";//TODO implement player position saving
 	}
 
 	/* (non-Javadoc)

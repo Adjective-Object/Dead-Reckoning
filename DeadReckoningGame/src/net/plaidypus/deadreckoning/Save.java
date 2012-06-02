@@ -100,6 +100,7 @@ public class Save {
 		BufferedReader playerReader = new BufferedReader(new FileReader(saveLocation + "/player.txt"));
 		Player play = loadPlayerStatus(playerReader, c, g, loadPlayerProfession(playerReader) );
 		state.setPlayer(play);
+		state.saveLocation=this.saveLocation;
 		
 		loadEntities(g, r);
 		state.setBoard(g);
@@ -260,25 +261,21 @@ public class Save {
 		w.write(p.getParentMod()+"\n");
 		w.write(p.getBaseClass());
 		
-		w.newLine();
-		w.write(p.getTrees()[0].sourceMod);
-		w.newLine();
-		w.write(p.getTrees()[0].sourceClass);
-		w.write(p.getTrees()[0].sourceTree);
+		for (int i=0; i<3; i++){
+			w.newLine();
+			w.write(p.getTrees()[i].sourceMod);
+			w.newLine();
+			w.write(p.getTrees()[i].sourceClass);
+			w.write(p.getTrees()[i].sourceTree);
+			w.write(p.getTrees()[i].getSkills()[0].getLevel());
+			w.write(p.getTrees()[i].getSkills()[1].getLevel());
+			w.write(p.getTrees()[i].getSkills()[2].getLevel());
+			w.write(p.getTrees()[i].getSkills()[3].getLevel());
+		}
 		
-		w.newLine();
-		w.write(p.getTrees()[1].sourceMod);
-		w.newLine();
-		w.write(p.getTrees()[1].sourceClass);
-		w.write(p.getTrees()[1].sourceTree);
-		
-		w.newLine();
-		w.write(p.getTrees()[2].sourceMod);
-		w.newLine();
-		w.write(p.getTrees()[2].sourceClass);
-		w.write(p.getTrees()[2].sourceTree);
 		w.newLine();
 		w.write(p.getLevel());
+		
 	}
 
 	/**
@@ -333,8 +330,31 @@ public class Save {
 		return s;
 	}
 	
-	public static void updateSave(int saveNumber, Player p, String newMap){
-		//TODO updating save.
+	public static void updateSave(String saveLocation, Player p, GameBoard currentMap) throws IOException{
+		System.out.println("updating Save...");
+		File playerFile = new File(saveLocation + "/player.txt");
+		System.out.println(playerFile.getAbsolutePath());
+		BufferedWriter w = new BufferedWriter(new FileWriter(playerFile));
+		
+		Save.savePlayerProfession(w, p.getProfession());
+		Save.savePlayerStatus(w, p);
+		w.close();
+		
+		BufferedWriter r = new BufferedWriter(new FileWriter(saveLocation +"/"+ currentMap.mapID));
+		Save.saveBoard(currentMap, r);
+		Save.saveEntities(currentMap, r);
+		r.close();
+		
+		File director = new File(saveLocation + "/saveInformation.txt");
+		BufferedReader a = new BufferedReader(new FileReader(director));
+		String name = a.readLine();
+		a.close();
+		
+		BufferedWriter b = new BufferedWriter(new FileWriter(director));
+		b.write(name);
+		b.newLine();
+		b.write(currentMap.mapID);
+		b.close();
 	}
 	
 	/**
@@ -352,10 +372,13 @@ public class Save {
 			int baseClass = r.read();
 			r.readLine();
 			SkillProgression a = SkillProgression.loadTree(r.readLine(),r.read(), r.read());//TODO errors are happen here
+			a.setLevels(r.read(),r.read(),r.read(),r.read());
 			r.readLine();
 			SkillProgression b = SkillProgression.loadTree(r.readLine(),r.read(), r.read());
+			b.setLevels(r.read(),r.read(),r.read(),r.read());
 			r.readLine();
 			SkillProgression c = SkillProgression.loadTree(r.readLine(),r.read(), r.read());
+			c.setLevels(r.read(),r.read(),r.read(),r.read());
 			p = new Profession(parentMod, baseClass, a, b, c, 1);// TODO read/write player
 														// level to savefile
 			r.readLine();
@@ -380,6 +403,15 @@ public class Save {
 		player.EXP=currentEXP;
 		
 		return player;
+	}
+	
+	private static void savePlayerStatus(BufferedWriter w,Player p) throws IOException{
+		w.newLine();
+		w.write(Integer.toString(p.getX()));
+		w.newLine();
+		w.write(Integer.toString(p.getY()));
+		w.newLine();
+		w.write(Integer.toString(p.EXP));
 	}
 	
 	private static void savePlayerStatus(BufferedWriter w, Tile spawnTile, int experience) throws IOException {

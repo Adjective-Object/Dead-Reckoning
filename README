@@ -1,1 +1,11 @@
+Dead-Reckoning
+======
 Nothing to see here, just move along now child.
+
+Okay, actually this is a simple graphical Rougelike game slapped together in java. As time goes on and it fell victim to the ever looming terror that is feature creep, it has gained half-finished systems for mod loading/saving, and a rework of the Slick GameState system, called HudLayerStates.
+
+The main contributers are PurpleTengu, TheTaoist, and Lego6245, although Purple is more or less the only one actually working on it as of now.
+
+I swear we'll finish it eventually.
+
+In other words, "Nothing to see here, just move along now child."
