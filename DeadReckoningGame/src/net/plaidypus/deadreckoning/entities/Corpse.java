@@ -6,6 +6,7 @@ import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.LootAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
+import net.plaidypus.deadreckoning.modloader.ModLoader;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -19,7 +20,14 @@ public class Corpse extends InteractiveEntity {
 
 	/** The entity. */
 	LivingEntity entity;
-
+	
+	/**
+	 * I hate you, java
+	 * 
+	 * NEVER USE THIS SHIT
+	 */
+	public Corpse(){}
+	
 	/**
 	 * Instantiates a new corpse.
 	 *
@@ -85,7 +93,21 @@ public class Corpse extends InteractiveEntity {
 	 */
 	@Override
 	public Entity makeFromString(GameBoard target, String[] attributes) {
-		return null;
+		LivingEntity e = null;
+		try {
+			e = (LivingEntity) ModLoader.loadClass(attributes[4]).newInstance();
+		} catch (InstantiationException e1) {
+			e1.printStackTrace();
+		} catch (IllegalAccessException e1) {
+			e1.printStackTrace();
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		String[] subatt = new String[attributes.length-3];
+		for(int i=4; i<attributes.length; i++){
+			subatt[i-4] = attributes[i];
+		}
+		return new Corpse(target.getTileAt(Integer.parseInt(attributes[1]),Integer.parseInt(attributes[2])),Integer.parseInt(attributes[3]),(LivingEntity)e.makeFromString(target, subatt));
 	}
 
 	/* (non-Javadoc)
@@ -93,8 +115,7 @@ public class Corpse extends InteractiveEntity {
 	 */
 	@Override
 	public String saveToString() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getGenericSave()+":"+this.entity.saveToString();
 	}
 
 	/* (non-Javadoc)

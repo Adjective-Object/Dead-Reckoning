@@ -16,7 +16,6 @@ import net.plaidypus.deadreckoning.skills.Interacter;
 import net.plaidypus.deadreckoning.skills.Loot;
 import net.plaidypus.deadreckoning.skills.PreBakedMove;
 import net.plaidypus.deadreckoning.skills.Skill;
-import net.plaidypus.deadreckoning.skills.ViewMap;
 import net.plaidypus.deadreckoning.skills.ViewSkills;
 import net.plaidypus.deadreckoning.skills.Wait;
 import net.plaidypus.deadreckoning.status.OnFire;
@@ -106,7 +105,7 @@ public class Player extends LivingEntity {
 				Input.KEY_F11, Input.KEY_F12,
 				Input.KEY_T,
 				Input.KEY_L, Input.KEY_I,
-				Input.KEY_M, Input.KEY_K, Input.KEY_E };
+				Input.KEY_K, Input.KEY_E };
 		inputSkills = new Skill[] { new PreBakedMove(this, -1, 0),
 				new PreBakedMove(this, 1, 0), new PreBakedMove(this, 0, -1),
 				new PreBakedMove(this, 0, 1), new Attack(this),
@@ -120,7 +119,7 @@ public class Player extends LivingEntity {
 
 				new Wait(this),
 				new Loot(this), new CheckInventory(this),
-				new ViewMap(this), new ViewSkills(this), new Interacter(this) };
+				new ViewSkills(this), new Interacter(this) };
 
 		this.skills.addAll(p.getSkillList());
 		this.equips = new ArrayList<Equip>(9);

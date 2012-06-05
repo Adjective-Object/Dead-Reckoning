@@ -127,6 +127,7 @@ public class Save {
 			loadEntities(b, r);
 			return b;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -243,7 +244,9 @@ public class Save {
 	 */
 	public static void saveEntities(GameBoard b, BufferedWriter r)
 			throws IOException {
+		System.out.println(r);
 		for (int i = 0; i < b.ingameEntities.size(); i++) {
+			System.out.println(b.ingameEntities.get(i));
 			r.write(b.ingameEntities.get(i).saveToString());
 			r.newLine();
 		}

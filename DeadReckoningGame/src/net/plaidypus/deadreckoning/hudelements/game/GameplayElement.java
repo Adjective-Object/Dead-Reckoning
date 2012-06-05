@@ -53,7 +53,7 @@ public class GameplayElement extends HudElement {
 	public static float cameraDestX, cameraDestY;
 
 	/** The Constant cameraRate. */
-	static final float cameraRate = 0.2F, cameraSensitivityFrac=2.0F;
+	static final float cameraRate = 0.2F, cameraSensitivityFrac=0.1F;
 
 	/** The last map. */
 	public String lastMap;

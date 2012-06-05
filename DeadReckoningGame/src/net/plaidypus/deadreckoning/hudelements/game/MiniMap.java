@@ -1,56 +1,35 @@
-package net.plaidypus.deadreckoning.hudelements.game.substates;
+package net.plaidypus.deadreckoning.hudelements.game;
 
-import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
-import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
-import net.plaidypus.deadreckoning.state.HudLayersState;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class MiniMap extends HudElement {
 
-	int hookState, scale = 2;
+	int scale;
 	GameBoard target;
+	GameplayElement hookState;
 
-	Image mapRender;
-
-	public MiniMap(int x, int y, int bindMethod, int hookState) {
+	public MiniMap(int x, int y, int bindMethod, int scale, GameplayElement hookState) {
 		super(x, y, bindMethod, false);
-		this.hookState = hookState;
+		this.target = hookState.getBoard();
+		this.scale=scale;
+		this.hookState=hookState;
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-
+		this.target = hookState.getBoard();
 	}
 
 	@Override
-	public void makeFrom(Object o) {
-		System.out.println(DeadReckoningGame.instance.getState(hookState));
-		target = GameplayElement.class.cast(
-				HudLayersState.class.cast(
-						DeadReckoningGame.instance.getState(hookState))
-						.getElement(0)).getBoard();
-		try {
-			mapRender = new Image(target.getWidth() * scale, target.getHeight()
-					* scale);
-			Graphics g = mapRender.getGraphics();
-
-			renderTo(g, 0, 0);
-
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
-
-	}
+	public void makeFrom(Object o) {}
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
@@ -59,12 +38,12 @@ public class MiniMap extends HudElement {
 
 	@Override
 	public int getWidth() {
-		return target.getWidth();
+		return target.getWidth()*scale;
 	}
 
 	@Override
 	public int getHeight() {
-		return target.getHeight();
+		return target.getHeight()*scale;
 	}
 
 	private void renderTo(Graphics g, int xo, int yo) {
@@ -79,12 +58,10 @@ public class MiniMap extends HudElement {
 			for (int y = 0; y < target.getHeight(); y++) {
 				if (target.getTileAt(x, y).explored) {
 
-					if (!target.getTileAt(x, y).isOpen(Tile.LAYER_ACTIVE)
-							&& target.getTileAt(x, y).canBeSeen()) {
+					if (!target.getTileAt(x, y).isOpen(Tile.LAYER_ACTIVE) && target.getTileAt(x, y).canBeSeen() && target.getTileAt(x, y).getEntity(Tile.LAYER_ACTIVE).isInteractive()) {
 						g.setColor(Color.green);
-					} else if (!target.getTileAt(x, y).isOpen(
-							Tile.LAYER_PASSIVE_MAP)
-							&& target.getTileAt(x, y).canBeSeen()) {
+					} else if ( (!target.getTileAt(x, y).isOpen(Tile.LAYER_PASSIVE_MAP) && target.getTileAt(x, y).getEntity(Tile.LAYER_PASSIVE_MAP).isTerrain()) ||
+							(!target.getTileAt(x, y).isOpen(Tile.LAYER_ACTIVE) && target.getTileAt(x, y).getEntity(Tile.LAYER_ACTIVE).isTerrain())){ 
 						g.setColor(Color.gray);
 					} else if (target.getTileAt(x, y).getTileFace() != Tile.TILE_NULL) {
 						g.setColor(Color.lightGray);
@@ -101,11 +78,7 @@ public class MiniMap extends HudElement {
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		g.drawImage(mapRender, getX() - mapRender.getWidth() / 2, getY()
-				- mapRender.getHeight() / 2);// TODO why does this not work? I
-												// will never know.
-		renderTo(g, getX() - target.getWidth() * scale / 2,
-				getY() - target.getHeight() * scale / 2);
+		renderTo(g, getX() - target.getWidth() * scale, getY());
 
 	}
 

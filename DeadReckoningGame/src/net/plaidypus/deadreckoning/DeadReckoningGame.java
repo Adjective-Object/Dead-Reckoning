@@ -12,12 +12,12 @@ import net.plaidypus.deadreckoning.entities.Stair;
 import net.plaidypus.deadreckoning.generator.Biome;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
+import net.plaidypus.deadreckoning.hudelements.game.MiniMap;
 import net.plaidypus.deadreckoning.hudelements.game.PlayerHudElement;
 import net.plaidypus.deadreckoning.hudelements.game.SkillMonitorElement;
 import net.plaidypus.deadreckoning.hudelements.game.StatusTrackerElement;
 import net.plaidypus.deadreckoning.hudelements.game.substates.ItemGridElement;
 import net.plaidypus.deadreckoning.hudelements.game.substates.ItemGridInteractionElement;
-import net.plaidypus.deadreckoning.hudelements.game.substates.MiniMap;
 import net.plaidypus.deadreckoning.hudelements.game.substates.ReturnToGameElement;
 import net.plaidypus.deadreckoning.hudelements.menuItems.FairyLights;
 import net.plaidypus.deadreckoning.hudelements.simple.ColorFiller;
@@ -222,8 +222,9 @@ public class DeadReckoningGame extends StateBasedGame {
 				game,
 				new PlayerHudElement(10, 10, HudElement.TOP_LEFT, 0),
 				new StatusTrackerElement(10, 120, HudElement.TOP_LEFT, 0),
-				new SkillMonitorElement(-200, -45, HudElement.BOTTOM_CENTER,
-						game), messages }));
+				new SkillMonitorElement(-200, -45, HudElement.BOTTOM_CENTER, game),
+				new MiniMap(-2,1,HudElement.TOP_RIGHT,1,game),
+				messages }));
 
 		this.addState(new ExclusiveHudLayersState(LOOTSTATE,
 				new HudElement[] { // TODO create custom state for this, instead
@@ -239,13 +240,6 @@ public class DeadReckoningGame extends StateBasedGame {
 		this.addState(new HudLayersState(INVENTORYSTATE, new HudElement[] {
 				new StillImageElement(0, 0, HudElement.TOP_LEFT), messages,
 				new ItemGridElement(0, 0, HudElement.CENTER_CENTER),
-				new ReturnToGameElement() }));
-
-		this.addState(new HudLayersState(MAPSTATE, new HudElement[] {
-				new StillImageElement(0, 0, HudElement.TOP_LEFT),
-				messages,
-				new MiniMap(0, 0, HudElement.CENTER_CENTER,
-						DeadReckoningGame.GAMEPLAYSTATE),
 				new ReturnToGameElement() }));
 
 		this.addState(new HudLayersState(ERRORSTATE, new HudElement[] {
