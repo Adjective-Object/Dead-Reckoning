@@ -1,7 +1,9 @@
 package net.plaidypus.deadreckoning.hudelements.game;
 
+import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
+import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -11,21 +13,20 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class MiniMap extends HudElement {
 
-	int scale;
-	GameBoard target;
+	int scale,width, height;
 	GameplayElement hookState;
 
-	public MiniMap(int x, int y, int bindMethod, int scale, GameplayElement hookState) {
+	public MiniMap(int x, int y, int bindMethod, int scale, int width, int height, GameplayElement hookState) {
 		super(x, y, bindMethod, false);
-		this.target = hookState.getBoard();
 		this.scale=scale;
+		this.width=width;
+		this.height=height;
 		this.hookState=hookState;
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-		this.target = hookState.getBoard();
 	}
 
 	@Override
@@ -38,32 +39,38 @@ public class MiniMap extends HudElement {
 
 	@Override
 	public int getWidth() {
-		return target.getWidth()*scale;
+		return this.getWidth();
 	}
 
 	@Override
 	public int getHeight() {
-		return target.getHeight()*scale;
+		return this.getHeight();
 	}
 
 	private void renderTo(Graphics g, int xo, int yo) {
+		GameBoard target = hookState.getBoard();
+		Player p = hookState.player;
+		
 		g.setColor(Color.white);
-		g.fillRect(xo, yo, target.getWidth() * scale + 1, target.getHeight()
-				* scale + 1);
+		g.drawRect(xo, yo, width*scale +1 , height*scale + 1);
 		g.setColor(Color.black);
-		g.fillRect(xo + 1, yo + 1, target.getWidth() * scale - 1,
-				target.getHeight() * scale - 1);
-
-		for (int x = 0; x < target.getWidth(); x++) {
-			for (int y = 0; y < target.getHeight(); y++) {
-				if (target.getTileAt(x, y).explored) {
-
-					if (!target.getTileAt(x, y).isOpen(Tile.LAYER_ACTIVE) && target.getTileAt(x, y).canBeSeen() && target.getTileAt(x, y).getEntity(Tile.LAYER_ACTIVE).isInteractive()) {
+		g.fillRect(xo + 1, yo + 1, width*scale, height*scale);
+		
+		int px = p.getX(), py = p.getY();
+		
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height ; y++) {
+				int ax = px-width/2+x, ay = py-height/2+y;
+				
+				if ( ax>0 && ax<target.getWidth() && ay>0 && ay<target.getHeight() && target.getTileAt(ax,ay).explored) {
+					Tile til = target.getTileAt(ax, ay);
+					
+					if (!til.isOpen(Tile.LAYER_ACTIVE) && til.canBeSeen() && til.getEntity(Tile.LAYER_ACTIVE).isInteractive()) {
 						g.setColor(Color.green);
-					} else if ( (!target.getTileAt(x, y).isOpen(Tile.LAYER_PASSIVE_MAP) && target.getTileAt(x, y).getEntity(Tile.LAYER_PASSIVE_MAP).isTerrain()) ||
-							(!target.getTileAt(x, y).isOpen(Tile.LAYER_ACTIVE) && target.getTileAt(x, y).getEntity(Tile.LAYER_ACTIVE).isTerrain())){ 
+					} else if ( (!til.isOpen(Tile.LAYER_PASSIVE_MAP) && til.getEntity(Tile.LAYER_PASSIVE_MAP).isTerrain()) ||
+							(!til.isOpen(Tile.LAYER_ACTIVE) && til.getEntity(Tile.LAYER_ACTIVE).isTerrain())){ 
 						g.setColor(Color.gray);
-					} else if (target.getTileAt(x, y).getTileFace() != Tile.TILE_NULL) {
+					} else if (til.getTileFace() != Tile.TILE_NULL) {
 						g.setColor(Color.lightGray);
 					} else {
 						g.setColor(Color.white);
@@ -78,7 +85,7 @@ public class MiniMap extends HudElement {
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		renderTo(g, getX() - target.getWidth() * scale, getY());
+		renderTo(g, getX()-width*scale, getY());
 
 	}
 

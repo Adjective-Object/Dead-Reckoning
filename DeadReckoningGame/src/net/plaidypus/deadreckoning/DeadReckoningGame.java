@@ -223,7 +223,7 @@ public class DeadReckoningGame extends StateBasedGame {
 				new PlayerHudElement(10, 10, HudElement.TOP_LEFT, 0),
 				new StatusTrackerElement(10, 120, HudElement.TOP_LEFT, 0),
 				new SkillMonitorElement(-200, -45, HudElement.BOTTOM_CENTER, game),
-				new MiniMap(-2,1,HudElement.TOP_RIGHT,1,game),
+				new MiniMap(-3,1,HudElement.TOP_RIGHT,2,70,70,game),
 				messages }));
 
 		this.addState(new ExclusiveHudLayersState(LOOTSTATE,

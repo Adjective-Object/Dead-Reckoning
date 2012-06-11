@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -20,10 +19,8 @@ import java.util.jar.JarFile;
 import org.newdawn.slick.SlickException;
 
 import net.plaidypus.deadreckoning.DeadReckoningComponent;
-import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.generator.Biome;
 import net.plaidypus.deadreckoning.professions.Profession;
-import net.plaidypus.deadreckoning.skills.Skill;
 
 public class ModLoader {
 
