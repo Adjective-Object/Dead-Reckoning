@@ -14,16 +14,20 @@ public class ChangeBoardAction extends Action {
 
 	/**
 	 * Instantiates a new change board action.
-	 *
-	 * @param source the source
-	 * @param targetFloor the target floor
+	 * 
+	 * @param source
+	 *            the source
+	 * @param targetFloor
+	 *            the target floor
 	 */
 	public ChangeBoardAction(Entity source, String targetFloor) {
 		super(source, source.getLocation());
 		this.targetFloor = targetFloor;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.actions.Action#isNoticed()
 	 */
 	@Override
@@ -31,7 +35,9 @@ public class ChangeBoardAction extends Action {
 		return false;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.actions.Action#apply(int)
 	 */
 	@Override

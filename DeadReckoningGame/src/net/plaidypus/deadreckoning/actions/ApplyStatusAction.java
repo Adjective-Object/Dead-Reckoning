@@ -17,11 +17,15 @@ public class ApplyStatusAction extends EntityTypeAction {
 
 	/**
 	 * Instantiates a new apply status action.
-	 *
-	 * @param source the source
-	 * @param target the target
-	 * @param targetTile the target tile
-	 * @param toApply the to apply
+	 * 
+	 * @param source
+	 *            the source
+	 * @param target
+	 *            the target
+	 * @param targetTile
+	 *            the target tile
+	 * @param toApply
+	 *            the to apply
 	 */
 	public ApplyStatusAction(Entity source, Tile target, int targetTile,
 			Status toApply) {
@@ -29,15 +33,23 @@ public class ApplyStatusAction extends EntityTypeAction {
 		this.s = toApply;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net.plaidypus.deadreckoning.entities.Entity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net
+	 * .plaidypus.deadreckoning.entities.Entity)
 	 */
 	protected boolean applyToEntity(Entity entity) {
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net.plaidypus.deadreckoning.entities.LivingEntity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net
+	 * .plaidypus.deadreckoning.entities.LivingEntity)
 	 */
 	protected boolean applyToEntity(LivingEntity e) {
 		e.addCondition(s);
@@ -46,14 +58,20 @@ public class ApplyStatusAction extends EntityTypeAction {
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net.plaidypus.deadreckoning.entities.InteractiveEntity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net
+	 * .plaidypus.deadreckoning.entities.InteractiveEntity)
 	 */
 	protected boolean applyToEntity(InteractiveEntity e) {
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.actions.Action#isNoticed()
 	 */
 	protected boolean isNoticed() {

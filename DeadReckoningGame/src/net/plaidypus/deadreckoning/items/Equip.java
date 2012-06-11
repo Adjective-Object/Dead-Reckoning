@@ -14,28 +14,29 @@ import org.newdawn.slick.SlickException;
  * The Class Equip.
  */
 public class Equip extends Item {
-	
+
 	/** The VIS. */
 	public int STR, INT, DEX, LUK, HP, MP, MDef, MAtt, WDef, WAtt;
 
 	/** The equip slot. */
 	int equipSlot;
-	
+
 	/** The class compatability. */
 	int[] classCompatability;
 
 	/**
 	 * Instantiates a new equip, loaded from the itemID.
-	 *
-	 * @param itemID the item id
+	 * 
+	 * @param itemID
+	 *            the item id
 	 */
 	public Equip(String parentMod, int itemID) {
 		super(parentMod, itemID, Item.ITEM_EQUIP);
 	}
-	
+
 	/**
-	
-	/* (non-Javadoc)
+	 * /* (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.items.Item#parseItem(java.lang.String)
 	 */
 	protected void parseItem(InputStream in) throws IOException, SlickException {
@@ -57,16 +58,23 @@ public class Equip extends Item {
 		MDef = Integer.parseInt(reader.readLine());
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.items.Item#stacksWith(net.plaidypus.deadreckoning.items.Item)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.items.Item#stacksWith(net.plaidypus.deadreckoning
+	 * .items.Item)
 	 */
 	@Override
 	public boolean stacksWith(Item item) {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.items.Item#combineWith(net.plaidypus.deadreckoning.items.Item)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.plaidypus.deadreckoning.items.Item#combineWith(net.plaidypus.
+	 * deadreckoning.items.Item)
 	 */
 	@Override
 	public Item combineWith(Item item) {

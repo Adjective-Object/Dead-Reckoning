@@ -20,20 +20,22 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class HudLayersState extends BasicGameState {
 
-	/** The state id used for referencing this file*/
+	/** The state id used for referencing this file */
 	int stateID;
-	
-	/** The parent DeadReckoningGame.*/
+
+	/** The parent DeadReckoningGame. */
 	DeadReckoningGame parent;
 
-	/** The Hud elements contained in this HudLayersState*/
+	/** The Hud elements contained in this HudLayersState */
 	ArrayList<HudElement> HudElements;
 
 	/**
 	 * Instantiates a new hud layers state.
-	 *
-	 * @param stateID the state id
-	 * @param elements the elements
+	 * 
+	 * @param stateID
+	 *            the state id
+	 * @param elements
+	 *            the elements
 	 */
 	public HudLayersState(int stateID, ArrayList<HudElement> elements) {
 		this.stateID = stateID;
@@ -45,9 +47,11 @@ public class HudLayersState extends BasicGameState {
 
 	/**
 	 * Instantiates a new hud layers state.
-	 *
-	 * @param stateID the state id
-	 * @param elementsarr the elementsarr
+	 * 
+	 * @param stateID
+	 *            the state id
+	 * @param elementsarr
+	 *            the elementsarr
 	 */
 	public HudLayersState(int stateID, HudElement[] elementsarr) {
 		this.stateID = stateID;
@@ -59,12 +63,13 @@ public class HudLayersState extends BasicGameState {
 	}
 
 	/**
-	 * @see org.newdawn.slick.state.GameState#init(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame)
-	 * calls the initialization function of each of the elements in the HudLayersState
+	 * @see org.newdawn.slick.state.GameState#init(org.newdawn.slick.GameContainer,
+	 *      org.newdawn.slick.state.StateBasedGame) calls the initialization
+	 *      function of each of the elements in the HudLayersState
 	 * 
-	 * the Initialization function is used (mostly) to load common resources that are
-	 * used across the board by all members of a given class, although that need not be
-	 * the case
+	 *      the Initialization function is used (mostly) to load common
+	 *      resources that are used across the board by all members of a given
+	 *      class, although that need not be the case
 	 */
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
@@ -74,9 +79,10 @@ public class HudLayersState extends BasicGameState {
 	}
 
 	/**
-	 * @see org.newdawn.slick.state.GameState#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
-	 *
-	 * updates the elements of the state
+	 * @see org.newdawn.slick.state.GameState#update(org.newdawn.slick.GameContainer,
+	 *      org.newdawn.slick.state.StateBasedGame, int)
+	 * 
+	 *      updates the elements of the state
 	 */
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
@@ -86,7 +92,8 @@ public class HudLayersState extends BasicGameState {
 	}
 
 	/**
-	 * @see org.newdawn.slick.state.GameState#render(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, org.newdawn.slick.Graphics)
+	 * @see org.newdawn.slick.state.GameState#render(org.newdawn.slick.GameContainer,
+	 *      org.newdawn.slick.state.StateBasedGame, org.newdawn.slick.Graphics)
 	 */
 	public void render(GameContainer gc, StateBasedGame game, Graphics g)
 			throws SlickException {
@@ -104,21 +111,24 @@ public class HudLayersState extends BasicGameState {
 	}
 
 	/**
-	 * this function passes each element of the object[] to the corresponding HudElement,
-	 * calling the makeFrom(Object) function on each of them.
-	 *
-	 *	@see net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(Object)
-	 *
-	 * @param objects the objects
+	 * this function passes each element of the object[] to the corresponding
+	 * HudElement, calling the makeFrom(Object) function on each of them.
+	 * 
+	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(Object)
+	 * 
+	 * @param objects
+	 *            the objects
 	 */
 	public void makeFrom(Object[] objects) {
-		System.out.println("HudLayersState "+stateID);
+		System.out.println("HudLayersState " + stateID);
 		for (int i = 0; i < objects.length; i++) {
 			this.HudElements.get(i % HudElements.size()).makeFrom(objects[i]);
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.newdawn.slick.state.BasicGameState#getID()
 	 */
 	public int getID() {
@@ -127,7 +137,7 @@ public class HudLayersState extends BasicGameState {
 
 	/**
 	 * Gets the elements in the state.
-	 *
+	 * 
 	 * @return the elements
 	 */
 	public ArrayList<HudElement> getElements() {
@@ -136,8 +146,9 @@ public class HudLayersState extends BasicGameState {
 
 	/**
 	 * Gets a specific ekement in the list.
-	 *
-	 * @param index the index
+	 * 
+	 * @param index
+	 *            the index
 	 * @return the element
 	 */
 	public HudElement getElement(int index) {
@@ -146,7 +157,7 @@ public class HudLayersState extends BasicGameState {
 
 	/**
 	 * Gets the parent DeadReckoningGame.
-	 *
+	 * 
 	 * @return the parent
 	 */
 	public DeadReckoningGame getParent() {

@@ -24,15 +24,19 @@ public class CheckInventory extends Skill {
 
 	/**
 	 * Instantiates a new check inventory.
-	 *
-	 * @param source the source
+	 * 
+	 * @param source
+	 *            the source
 	 */
 	public CheckInventory(LivingEntity source) {
 		super(source);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.skills.Skill#makeAction(net.plaidypus.deadreckoning.board.Tile)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.plaidypus.deadreckoning.skills.Skill#makeAction(net.plaidypus.
+	 * deadreckoning.board.Tile)
 	 */
 	@Override
 	public Action makeAction(Tile target) {
@@ -40,31 +44,41 @@ public class CheckInventory extends Skill {
 				DeadReckoningGame.INVENTORYSTATE);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.skills.Skill#canTargetTile(net.plaidypus.deadreckoning.board.Tile)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.skills.Skill#canTargetTile(net.plaidypus.
+	 * deadreckoning.board.Tile)
 	 */
 	@Override
 	public boolean canTargetTile(Tile t) {
 		return t == source.getLocation();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.skills.Skill#isInstant()
 	 */
 	public boolean isInstant() {
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.skills.Skill#highlightRange(net.plaidypus.deadreckoning.board.GameBoard)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.skills.Skill#highlightRange(net.plaidypus
+	 * .deadreckoning.board.GameBoard)
 	 */
 	@Override
 	public void highlightRange(GameBoard board) {
 		highlightRadial(board, 0);
 	}
-	
 
 	@Override
-	public void init() throws SlickException {}
+	public void init() throws SlickException {
+	}
 
 }

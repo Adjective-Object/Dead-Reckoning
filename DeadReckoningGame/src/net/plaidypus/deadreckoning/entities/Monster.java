@@ -36,15 +36,20 @@ public class Monster extends LivingEntity {
 
 	/**
 	 * a testing monster class.
-	 *
-	 * @param targetTile the target tile
-	 * @param layer the layer
-	 * @param entityFile the entity file
-	 * @param stats the stats
-	 * @param allign the allign
+	 * 
+	 * @param targetTile
+	 *            the target tile
+	 * @param layer
+	 *            the layer
+	 * @param entityFile
+	 *            the entity file
+	 * @param stats
+	 *            the stats
+	 * @param allign
+	 *            the allign
 	 */
-	public Monster(Tile targetTile, int layer, String parentMod, String entityFile,
-			StatMaster stats, int allign) {
+	public Monster(Tile targetTile, int layer, String parentMod,
+			String entityFile, StatMaster stats, int allign) {
 		super(targetTile, layer, parentMod, entityFile, stats, allign);
 		movement = new Movement(this);
 		attack = new Attack(this);
@@ -54,9 +59,11 @@ public class Monster extends LivingEntity {
 
 	/**
 	 * if something is blocking its path, it will turn left.
-	 *
-	 * @param gc the gc
-	 * @param delta the delta
+	 * 
+	 * @param gc
+	 *            the gc
+	 * @param delta
+	 *            the delta
 	 * @return the action
 	 */
 	public Action decideNextAction(GameContainer gc, int delta) {
@@ -84,27 +91,37 @@ public class Monster extends LivingEntity {
 						getParent().getWidth()),
 				Utilities.limitTo(this.getY() + Utilities.randInt(-1, 2), 0,
 						getParent().getHeight()));
-		if (dest.isOpen(this.getLayer()) && !dest.equals(this.getLocation())) {
+		if (dest.isEmpty(this.getLayer()) && !dest.equals(this.getLocation())) {
 			return movement.makeAction(dest);
 		}
 
 		return new WaitAction(this);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.InteractiveEntity#updateBoardEffects(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.InteractiveEntity#updateBoardEffects
+	 * (org.newdawn.slick.GameContainer, int)
 	 */
 	public void updateBoardEffects(GameContainer gc, int delta) {
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#makeFromString(net.plaidypus.deadreckoning.board.GameBoard, java.lang.String[])
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#makeFromString(net.plaidypus
+	 * .deadreckoning.board.GameBoard, java.lang.String[])
 	 */
-	@Override//TODO loading from jarfile
+	@Override
+	// TODO loading from jarfile
 	public Entity makeFromString(GameBoard g, String[] toload) {
-		return new Monster(g.getTileAt(Integer.parseInt(toload[1]), Integer.parseInt(toload[2])),//tile
-				Integer.parseInt(toload[3]),//layer
-				toload[4], toload[5],//parentMod , entityfile
+		return new Monster(g.getTileAt(Integer.parseInt(toload[1]),
+				Integer.parseInt(toload[2])),// tile
+				Integer.parseInt(toload[3]),// layer
+				toload[4], toload[5],// parentMod , entityfile
 				new StatMaster(Integer.parseInt(toload[6]),
 						Integer.parseInt(toload[7]),
 						Integer.parseInt(toload[8]),
@@ -115,31 +132,42 @@ public class Monster extends LivingEntity {
 				Integer.parseInt(toload[13]));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#saveToString()
 	 */
 	@Override
 	public String saveToString() {
-		return this.getGenericSave() + ":" + this.parentMod + ":" + this.entityFile + ":"
-				+ this.statMaster.toString() + ":" + this.allignmnet;
+		return this.getGenericSave() + ":" + this.parentMod + ":"
+				+ this.entityFile + ":" + this.statMaster.toString() + ":"
+				+ this.allignmnet;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
 		return "Monster[" + this.getX() + "," + this.getY() + "]";
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#init()
 	 */
 	@Override
 	public void init() throws SlickException {
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#onInteract(net.plaidypus.deadreckoning.entities.Entity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#onInteract(net.plaidypus.
+	 * deadreckoning.entities.Entity)
 	 */
 	@Override
 	public Action onInteract(Entity e) {

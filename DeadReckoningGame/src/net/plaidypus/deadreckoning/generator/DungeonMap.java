@@ -19,8 +19,9 @@ public class DungeonMap {
 
 	/**
 	 * Instantiates a new dungeon map.
-	 *
-	 * @param depthDungeon the depth dungeon
+	 * 
+	 * @param depthDungeon
+	 *            the depth dungeon
 	 */
 	public DungeonMap(int depthDungeon) {
 		setDepth(depthDungeon);
@@ -28,10 +29,12 @@ public class DungeonMap {
 
 	/**
 	 * Make board.
-	 *
-	 * @param depth the depth
+	 * 
+	 * @param depth
+	 *            the depth
 	 * @return the game board
-	 * @throws SlickException the slick exception
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	public GameBoard makeBoard(int depth) throws SlickException {
 		ArrayList<Stair> topass = new ArrayList<Stair>(0);
@@ -48,8 +51,9 @@ public class DungeonMap {
 
 	/**
 	 * Gets the floor name.
-	 *
-	 * @param depth the depth
+	 * 
+	 * @param depth
+	 *            the depth
 	 * @return the floor name
 	 */
 	public String getFloorName(int depth) {
@@ -58,8 +62,9 @@ public class DungeonMap {
 
 	/**
 	 * Sets the depth.
-	 *
-	 * @param depth the new depth
+	 * 
+	 * @param depth
+	 *            the new depth
 	 */
 	public void setDepth(int depth) {
 		this.depth = depth;
@@ -67,7 +72,7 @@ public class DungeonMap {
 
 	/**
 	 * Gets the depth.
-	 *
+	 * 
 	 * @return the depth
 	 */
 	public int getDepth() {

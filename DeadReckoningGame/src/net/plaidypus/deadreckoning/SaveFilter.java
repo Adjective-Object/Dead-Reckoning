@@ -20,7 +20,9 @@ public class SaveFilter implements FilenameFilter {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.io.FilenameFilter#accept(java.io.File, java.lang.String)
 	 */
 	public boolean accept(File file, String name) {

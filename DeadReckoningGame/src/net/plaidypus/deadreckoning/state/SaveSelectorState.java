@@ -19,8 +19,8 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * The Class SaveSelectorState.
  * 
- * it's used to SELECT THE FUCKING SAVE TO BE PASSED TO THE GAME.
- * WHO WOULD HAVE FUCKING THOUGHT IT.
+ * it's used to SELECT THE FUCKING SAVE TO BE PASSED TO THE GAME. WHO WOULD HAVE
+ * FUCKING THOUGHT IT.
  * 
  * anyway, it also allows for the creation of new states
  */
@@ -28,16 +28,19 @@ public class SaveSelectorState extends ExclusiveHudLayersState {
 
 	/** The saves. */
 	static Save[] saves;
-	
+
 	/** The button index. */
 	int buttonIndex;
 
 	/**
 	 * Instantiates a new save selector state.
-	 *
-	 * @param stateID the state id
-	 * @param background the background
-	 * @throws SlickException the slick exception
+	 * 
+	 * @param stateID
+	 *            the state id
+	 * @param background
+	 *            the background
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	@SuppressWarnings("unchecked")
 	public SaveSelectorState(int stateID, ArrayList<HudElement> background)
@@ -50,11 +53,12 @@ public class SaveSelectorState extends ExclusiveHudLayersState {
 	/**
 	 * the update loop
 	 * 
-	 * basically, if any button is pressed, that button's corresponding save has it's
-	 * loadGame called
+	 * basically, if any button is pressed, that button's corresponding save has
+	 * it's loadGame called
 	 * 
 	 * @see net.plaidypus.deadreckoning.Save#loadGame(GameplayElement)
-	 * @see net.plaidypus.deadreckoning.state.ExclusiveHudLayersState#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	 * @see net.plaidypus.deadreckoning.state.ExclusiveHudLayersState#update(org.newdawn.slick.GameContainer,
+	 *      org.newdawn.slick.state.StateBasedGame, int)
 	 */
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
@@ -67,11 +71,13 @@ public class SaveSelectorState extends ExclusiveHudLayersState {
 				try {
 					if (this.focus > buttonIndex) {
 						saves[focus - buttonIndex - 1]
-								.loadGame(GameplayElement.class
-										.cast(HudLayersState.class
-												.cast(DeadReckoningGame.instance
-														.getState(DeadReckoningGame.GAMEPLAYSTATE))
-												.getElement(0)),container);
+								.loadGame(
+										GameplayElement.class
+												.cast(HudLayersState.class
+														.cast(DeadReckoningGame.instance
+																.getState(DeadReckoningGame.GAMEPLAYSTATE))
+														.getElement(0)),
+										container);
 						DeadReckoningGame.instance
 								.enterState(DeadReckoningGame.GAMEPLAYSTATE);
 					} else if (this.focus == buttonIndex) {
@@ -96,31 +102,32 @@ public class SaveSelectorState extends ExclusiveHudLayersState {
 	/**
 	 * Makes the default HudElement list.
 	 * 
-	 * it's used in the initialization function, because each instance of this state
-	 * will have the same contents
-	 *
+	 * it's used in the initialization function, because each instance of this
+	 * state will have the same contents
+	 * 
 	 * @return the array list
-	 * @throws SlickException the slick exception
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	private static ArrayList<HudElement> makeElementsList()
 			throws SlickException {
-		//enumerates the number of saves
+		// enumerates the number of saves
 		File f = new File("saves/");
-		System.out.println("SaveSelectorState "+f.list());
+		System.out.println("SaveSelectorState " + f.list());
 		String[] savesList = f.list(new SaveFilter());
 		for (int i = 0; i < savesList.length; i++) {
-			System.out.println("SaveSelectorState "+savesList[i]);
+			System.out.println("SaveSelectorState " + savesList[i]);
 		}
-		
+
 		ArrayList<HudElement> buttons = new ArrayList<HudElement>(
 				savesList.length + 2);
 		saves = new Save[savesList.length];
-		
+
 		buttons.add(new TextButton(10, 30, HudElement.TOP_LEFT, new Color(30,
 				50, 70), new Color(40, 60, 80), new Color(60, 80, 100),
 				"New Game", DeadReckoningGame.menuFont));
-		
-		//creates the buttons needed to reference those saves
+
+		// creates the buttons needed to reference those saves
 		for (int i = 0; i < savesList.length; i++) {
 			saves[i] = new Save("saves/" + savesList[i]);
 			buttons.add(new TextButton(

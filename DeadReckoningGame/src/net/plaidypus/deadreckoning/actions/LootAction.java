@@ -16,18 +16,25 @@ public class LootAction extends EntityTypeAction { // TODO make it so you can
 													// layers?
 
 	/**
-  * Instantiates a new loot action.
-  *
-  * @param source the source
-  * @param target the target
-  * @param targetLayer the target layer
-  */
- public LootAction(Entity source, Tile target, int targetLayer) {
+	 * Instantiates a new loot action.
+	 * 
+	 * @param source
+	 *            the source
+	 * @param target
+	 *            the target
+	 * @param targetLayer
+	 *            the target layer
+	 */
+	public LootAction(Entity source, Tile target, int targetLayer) {
 		super(source, target, targetLayer);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net.plaidypus.deadreckoning.entities.Entity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net
+	 * .plaidypus.deadreckoning.entities.Entity)
 	 */
 	protected boolean applyToEntity(Entity entity) {
 		DeadReckoningGame.instance.getMessageElement().addMessage(
@@ -36,8 +43,12 @@ public class LootAction extends EntityTypeAction { // TODO make it so you can
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net.plaidypus.deadreckoning.entities.InteractiveEntity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net
+	 * .plaidypus.deadreckoning.entities.InteractiveEntity)
 	 */
 	protected boolean applyToEntity(InteractiveEntity e) {
 		DeadReckoningGame.instance.getMessageElement().addMessage(
@@ -46,8 +57,12 @@ public class LootAction extends EntityTypeAction { // TODO make it so you can
 		return gotoLootScreen(((InteractiveEntity) source), e);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net.plaidypus.deadreckoning.entities.LivingEntity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net
+	 * .plaidypus.deadreckoning.entities.LivingEntity)
 	 */
 	protected boolean applyToEntity(LivingEntity e) {
 		if (e.isAlive()) {
@@ -65,9 +80,11 @@ public class LootAction extends EntityTypeAction { // TODO make it so you can
 
 	/**
 	 * Goto loot screen.
-	 *
-	 * @param a the a
-	 * @param b the b
+	 * 
+	 * @param a
+	 *            the a
+	 * @param b
+	 *            the b
 	 * @return true, if successful
 	 */
 	private boolean gotoLootScreen(InteractiveEntity a, InteractiveEntity b) {
@@ -79,7 +96,9 @@ public class LootAction extends EntityTypeAction { // TODO make it so you can
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.actions.Action#isNoticed()
 	 */
 	@Override

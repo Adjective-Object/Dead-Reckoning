@@ -16,31 +16,43 @@ public class Interacter extends Skill {
 
 	/**
 	 * Instantiates a new interacter.
-	 *
-	 * @param source the source
+	 * 
+	 * @param source
+	 *            the source
 	 */
 	public Interacter(LivingEntity source) {
 		super(source);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.skills.Skill#makeAction(net.plaidypus.deadreckoning.board.Tile)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.plaidypus.deadreckoning.skills.Skill#makeAction(net.plaidypus.
+	 * deadreckoning.board.Tile)
 	 */
 	@Override
 	public Action makeAction(Tile target) {
 		return new Interact(this.source, target);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.skills.Skill#canTargetTile(net.plaidypus.deadreckoning.board.Tile)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.skills.Skill#canTargetTile(net.plaidypus.
+	 * deadreckoning.board.Tile)
 	 */
 	@Override
 	public boolean canTargetTile(Tile t) {
 		return t.isOpen();
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.skills.Skill#highlightRange(net.plaidypus.deadreckoning.board.GameBoard)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.skills.Skill#highlightRange(net.plaidypus
+	 * .deadreckoning.board.GameBoard)
 	 */
 	@Override
 	public void highlightRange(GameBoard board) {
@@ -49,8 +61,8 @@ public class Interacter extends Skill {
 		board.highlightSquare(source.getX(), source.getY() - 1);
 		board.highlightSquare(source.getX(), source.getY() + 1);
 	}
-	
 
 	@Override
-	public void init() throws SlickException {}
+	public void init() throws SlickException {
+	}
 }

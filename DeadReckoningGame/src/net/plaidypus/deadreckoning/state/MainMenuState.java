@@ -31,10 +31,13 @@ public class MainMenuState extends HudLayersState {
 
 	/**
 	 * Instantiates a new main menu state.
-	 *
-	 * @param stateID the state id
-	 * @param background the background
-	 * @throws SlickException the slick exception
+	 * 
+	 * @param stateID
+	 *            the state id
+	 * @param background
+	 *            the background
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	@SuppressWarnings("unchecked")
 	public MainMenuState(int stateID, ArrayList<HudElement> background)
@@ -50,9 +53,11 @@ public class MainMenuState extends HudLayersState {
 
 	/**
 	 * Make contents.
-	 *
-	 * @return the list of default contents, placed on top of the background. simple enough.
-	 * @throws SlickException the slick exception
+	 * 
+	 * @return the list of default contents, placed on top of the background.
+	 *         simple enough.
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	public static ArrayList<HudElement> makeContents() throws SlickException {
 		System.out.println("Building MainMenuState");
@@ -78,7 +83,8 @@ public class MainMenuState extends HudLayersState {
 	/**
 	 * on button press, enter the correct state.
 	 * 
-	 * @see net.plaidypus.deadreckoning.state.HudLayersState#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	 * @see net.plaidypus.deadreckoning.state.HudLayersState#update(org.newdawn.slick.GameContainer,
+	 *      org.newdawn.slick.state.StateBasedGame, int)
 	 */
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {

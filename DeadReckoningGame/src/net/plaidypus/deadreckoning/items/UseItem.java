@@ -15,15 +15,18 @@ public class UseItem extends Item {
 
 	/**
 	 * Instantiates a new use item.
-	 *
-	 * @param itemID the item id
+	 * 
+	 * @param itemID
+	 *            the item id
 	 */
 	public UseItem(String parentMod, int itemID) {
 		super(parentMod, itemID, Item.ITEM_USE);
 		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.items.Item#parseItem(java.lang.String)
 	 */
 	@Override
@@ -32,8 +35,12 @@ public class UseItem extends Item {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.items.Item#stacksWith(net.plaidypus.deadreckoning.items.Item)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.items.Item#stacksWith(net.plaidypus.deadreckoning
+	 * .items.Item)
 	 */
 	@Override
 	public boolean stacksWith(Item item) {
@@ -45,15 +52,18 @@ public class UseItem extends Item {
 
 	/**
 	 * Gets the skill.
-	 *
+	 * 
 	 * @return the skill
 	 */
 	public Skill getSkill() {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.items.Item#combineWith(net.plaidypus.deadreckoning.items.Item)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.plaidypus.deadreckoning.items.Item#combineWith(net.plaidypus.
+	 * deadreckoning.items.Item)
 	 */
 	@Override
 	public Item combineWith(Item item) {

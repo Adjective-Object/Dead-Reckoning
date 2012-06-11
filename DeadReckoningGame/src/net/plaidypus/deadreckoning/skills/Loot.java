@@ -24,15 +24,19 @@ public class Loot extends Skill {
 
 	/**
 	 * Instantiates a new loot.
-	 *
-	 * @param source the source
+	 * 
+	 * @param source
+	 *            the source
 	 */
 	public Loot(LivingEntity source) {
 		super(source);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.skills.Skill#makeAction(net.plaidypus.deadreckoning.board.Tile)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.plaidypus.deadreckoning.skills.Skill#makeAction(net.plaidypus.
+	 * deadreckoning.board.Tile)
 	 */
 	@Override
 	public Action makeAction(Tile target) {
@@ -47,8 +51,12 @@ public class Loot extends Skill {
 		return new WaitAction(source);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.skills.Skill#canTargetTile(net.plaidypus.deadreckoning.board.Tile)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.skills.Skill#canTargetTile(net.plaidypus.
+	 * deadreckoning.board.Tile)
 	 */
 	@Override
 	public boolean canTargetTile(Tile t) {
@@ -62,16 +70,20 @@ public class Loot extends Skill {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.skills.Skill#highlightRange(net.plaidypus.deadreckoning.board.GameBoard)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.skills.Skill#highlightRange(net.plaidypus
+	 * .deadreckoning.board.GameBoard)
 	 */
 	@Override
 	public void highlightRange(GameBoard board) {
 		highlightRadial(board, 1);
 	}
-	
 
 	@Override
-	public void init() throws SlickException {}
+	public void init() throws SlickException {
+	}
 
 }

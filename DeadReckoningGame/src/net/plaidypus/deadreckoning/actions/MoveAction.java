@@ -11,16 +11,19 @@ public class MoveAction extends Action {
 
 	/** The animate. */
 	boolean animate;
-	
+
 	/** The dest layer. */
 	int destLayer;
 
 	/**
 	 * Instantiates a new move action.
-	 *
-	 * @param source the source
-	 * @param destination the destination
-	 * @param destLayer the dest layer
+	 * 
+	 * @param source
+	 *            the source
+	 * @param destination
+	 *            the destination
+	 * @param destLayer
+	 *            the dest layer
 	 */
 	public MoveAction(Entity source, Tile destination, int destLayer) {
 		super(source, destination);
@@ -31,7 +34,9 @@ public class MoveAction extends Action {
 		this.destLayer = destLayer;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.actions.Action#apply(int)
 	 */
 	public boolean apply(int delta) {
@@ -46,14 +51,16 @@ public class MoveAction extends Action {
 
 	/**
 	 * Gets the message.
-	 *
+	 * 
 	 * @return the message
 	 */
 	public String getMessage() {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.actions.Action#isNoticed()
 	 */
 	@Override

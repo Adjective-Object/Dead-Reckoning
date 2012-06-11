@@ -17,35 +17,35 @@ import org.newdawn.slick.SlickException;
 /**
  * The Class Entity.
  */
-public abstract class Entity extends DeadReckoningComponent{
-	
+public abstract class Entity extends DeadReckoningComponent {
+
 	/** The location. */
 	private Tile location;
-	
+
 	/** The layer. */
 	private int layer;
 
 	/** The name. */
 	private String name = "NAMELESS ENTITY";
-	
+
 	/** The description. */
 	protected String description = "Too lazy to describe";
-	
+
 	/** The facing. */
 	private boolean facing;
-	
+
 	/** The visible. */
 	private boolean transparent, visible;
-	
+
 	/** The is interactive. */
 	protected boolean isTerrain, isInteractive;
-	
+
 	/** The to kill. */
 	public boolean toKill;
-	
+
 	/** The allignmnet. */
 	public int allignmnet;
-	
+
 	/** The Constant ALLIGN_FRIENDLY. */
 	public static final int ALLIGN_NEUTRAL = 0, ALLIGN_HOSTILE = 1,
 			ALLIGN_FRIENDLY = 2;
@@ -60,9 +60,11 @@ public abstract class Entity extends DeadReckoningComponent{
 
 	/**
 	 * Instantiates a new entity.
-	 *
-	 * @param t the t
-	 * @param layer the layer
+	 * 
+	 * @param t
+	 *            the t
+	 * @param layer
+	 *            the layer
 	 */
 	public Entity(Tile t, int layer) {
 		this.visible = true;
@@ -75,9 +77,11 @@ public abstract class Entity extends DeadReckoningComponent{
 
 	/**
 	 * updates the entity. Used primarily for animation.
-	 *
-	 * @param gc the gc
-	 * @param delta the delta
+	 * 
+	 * @param gc
+	 *            the gc
+	 * @param delta
+	 *            the delta
 	 */
 	public abstract void update(GameContainer gc, int delta);
 
@@ -85,28 +89,35 @@ public abstract class Entity extends DeadReckoningComponent{
 	 * chooses the next action. returns either the action or null for undecided.
 	 * if undecided, the GameState should continue calling chooseAction until it
 	 * returns an action
-	 *
-	 * @param gc the gc
-	 * @param delta the elapsed milliseconds since the last call of update
+	 * 
+	 * @param gc
+	 *            the gc
+	 * @param delta
+	 *            the elapsed milliseconds since the last call of update
 	 */
 
 	public abstract void updateBoardEffects(GameContainer gc, int delta);
 
 	/**
 	 * Choose action.
-	 *
-	 * @param gc the gc
-	 * @param delta the delta
+	 * 
+	 * @param gc
+	 *            the gc
+	 * @param delta
+	 *            the delta
 	 * @return the action
 	 */
 	public abstract Action chooseAction(GameContainer gc, int delta);
 
 	/**
 	 * renders to Graphics only if this.visible calls this.forceRender()
-	 *
-	 * @param g the g
-	 * @param x the x
-	 * @param y the y
+	 * 
+	 * @param g
+	 *            the g
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
 	public void render(Graphics g, float x, float y) {
 		if (this.visible) {
@@ -116,16 +127,19 @@ public abstract class Entity extends DeadReckoningComponent{
 
 	/**
 	 * renders the entity to a Graphics at a certain X and Y.
-	 *
-	 * @param g the g
-	 * @param x the x
-	 * @param y the y
+	 * 
+	 * @param g
+	 *            the g
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
 	public abstract void forceRender(Graphics g, float x, float y);
 
 	/**
 	 * Gets the use.
-	 *
+	 * 
 	 * @return the use
 	 */
 	public Action getUse() {
@@ -136,7 +150,7 @@ public abstract class Entity extends DeadReckoningComponent{
 
 	/**
 	 * returns the tile this entity is standing on / is located in.
-	 *
+	 * 
 	 * @return the tile it is standing on
 	 */
 	public Tile getLocation() {
@@ -145,7 +159,7 @@ public abstract class Entity extends DeadReckoningComponent{
 
 	/**
 	 * gets the Gameboard that this entity is a member of.
-	 *
+	 * 
 	 * @return the gameboard this is a member of
 	 */
 	public GameBoard getParent() {
@@ -158,8 +172,9 @@ public abstract class Entity extends DeadReckoningComponent{
 	 * 
 	 * if the idea is to move something from tile A to tile B, it would be
 	 * better to use Gameboard.moveEntity()
-	 *
-	 * @param t the new location
+	 * 
+	 * @param t
+	 *            the new location
 	 */
 	public void setLocation(Tile t) {
 		location = t;
@@ -168,7 +183,7 @@ public abstract class Entity extends DeadReckoningComponent{
 	/**
 	 * returns the X position of the entity (in the XY coordinate plane of the
 	 * tilesystem).
-	 *
+	 * 
 	 * @return the X position
 	 */
 	public int getX() {
@@ -178,7 +193,7 @@ public abstract class Entity extends DeadReckoningComponent{
 	/**
 	 * returns the Y position of the entity (in the XY coordinate plane of the
 	 * tilesystem).
-	 *
+	 * 
 	 * @return the Y position
 	 */
 	public int getY() {
@@ -210,16 +225,18 @@ public abstract class Entity extends DeadReckoningComponent{
 	 * purpose. it should be abstract, if it will continue to exist at all
 	 * 
 	 * as of now, it provides a result for an interaction
-	 *
-	 * @param e the entity with which to interact
+	 * 
+	 * @param e
+	 *            the entity with which to interact
 	 * @return the action
 	 */
 	public abstract Action onInteract(Entity e);
 
 	/**
 	 * returns a string description for the observe action.
-	 *
-	 * @param e the e
+	 * 
+	 * @param e
+	 *            the e
 	 * @return the description
 	 */
 	public String getDescription(Entity e) {
@@ -228,8 +245,9 @@ public abstract class Entity extends DeadReckoningComponent{
 
 	/**
 	 * sets the facing direction of the entity (if true, flip the sprite).
-	 *
-	 * @param facing facing left or right (true = right, left = false)
+	 * 
+	 * @param facing
+	 *            facing left or right (true = right, left = false)
 	 */
 	public void setFacing(boolean facing) {
 		this.facing = facing;
@@ -237,7 +255,7 @@ public abstract class Entity extends DeadReckoningComponent{
 
 	/**
 	 * gets the facing direction of the entity (if true, flip the sprite).
-	 *
+	 * 
 	 * @return facing facing left or right (true = right, left = false)
 	 */
 	public boolean getFacing() {
@@ -246,8 +264,9 @@ public abstract class Entity extends DeadReckoningComponent{
 
 	/**
 	 * sets if the entity is "see through" (light passes through it).
-	 *
-	 * @param transparent the new transparent
+	 * 
+	 * @param transparent
+	 *            the new transparent
 	 */
 	public void setTransparent(boolean transparent) {
 		this.transparent = transparent;
@@ -255,7 +274,7 @@ public abstract class Entity extends DeadReckoningComponent{
 
 	/**
 	 * gets if the entity is "see through" (light passes through it).
-	 *
+	 * 
 	 * @return true, if is transparent
 	 */
 	public boolean isTransparent() {
@@ -264,7 +283,7 @@ public abstract class Entity extends DeadReckoningComponent{
 
 	/**
 	 * Gets the allignment.
-	 *
+	 * 
 	 * @return the allignment
 	 */
 	public int getAllignment() {
@@ -273,8 +292,9 @@ public abstract class Entity extends DeadReckoningComponent{
 
 	/**
 	 * Sets the allignment.
-	 *
-	 * @param allign the new allignment
+	 * 
+	 * @param allign
+	 *            the new allignment
 	 */
 	public void setAllignment(int allign) {
 		this.allignmnet = allign;
@@ -282,7 +302,7 @@ public abstract class Entity extends DeadReckoningComponent{
 
 	/**
 	 * Checks if is interactive.
-	 *
+	 * 
 	 * @return true, if is interactive
 	 */
 	public boolean isInteractive() {
@@ -291,7 +311,7 @@ public abstract class Entity extends DeadReckoningComponent{
 
 	/**
 	 * Checks if is visible.
-	 *
+	 * 
 	 * @return true, if is visible
 	 */
 	public boolean isVisible() {
@@ -300,8 +320,9 @@ public abstract class Entity extends DeadReckoningComponent{
 
 	/**
 	 * Sets the visible.
-	 *
-	 * @param visible the new visible
+	 * 
+	 * @param visible
+	 *            the new visible
 	 */
 	public void setVisible(boolean visible) {
 		this.visible = visible;
@@ -316,7 +337,7 @@ public abstract class Entity extends DeadReckoningComponent{
 
 	/**
 	 * Gets the name.
-	 *
+	 * 
 	 * @return the name
 	 */
 	public String getName() {
@@ -325,8 +346,9 @@ public abstract class Entity extends DeadReckoningComponent{
 
 	/**
 	 * Sets the name.
-	 *
-	 * @param n the new name
+	 * 
+	 * @param n
+	 *            the new name
 	 */
 	public void setName(String n) {
 		this.name = n;
@@ -334,14 +356,14 @@ public abstract class Entity extends DeadReckoningComponent{
 
 	/**
 	 * Advance turn.
-	 *
+	 * 
 	 * @return the array list
 	 */
 	public abstract ArrayList<Action> advanceTurn();
 
 	/**
 	 * Checks if is idle.
-	 *
+	 * 
 	 * @return true, if is idle
 	 */
 	public boolean isIdle() {
@@ -350,23 +372,25 @@ public abstract class Entity extends DeadReckoningComponent{
 
 	/**
 	 * Make from string.
-	 *
-	 * @param target the target
-	 * @param attributes the attributes
+	 * 
+	 * @param target
+	 *            the target
+	 * @param attributes
+	 *            the attributes
 	 * @return the entity
 	 */
 	public abstract Entity makeFromString(GameBoard target, String[] attributes);
 
 	/**
 	 * Save to string.
-	 *
+	 * 
 	 * @return the string
 	 */
 	public abstract String saveToString();
 
 	/**
 	 * Gets the generic save.
-	 *
+	 * 
 	 * @return the generic save
 	 */
 	protected String getGenericSave() {
@@ -376,8 +400,9 @@ public abstract class Entity extends DeadReckoningComponent{
 
 	/**
 	 * Sets the layer.
-	 *
-	 * @param layer the new layer
+	 * 
+	 * @param layer
+	 *            the new layer
 	 */
 	public void setLayer(int layer) {
 		this.layer = layer;
@@ -385,7 +410,7 @@ public abstract class Entity extends DeadReckoningComponent{
 
 	/**
 	 * Gets the layer.
-	 *
+	 * 
 	 * @return the layer
 	 */
 	public int getLayer() {
@@ -399,7 +424,7 @@ public abstract class Entity extends DeadReckoningComponent{
 
 	/**
 	 * Checks if is terrain.
-	 *
+	 * 
 	 * @return true, if is terrain
 	 */
 	public boolean isTerrain() {

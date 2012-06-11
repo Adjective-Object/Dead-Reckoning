@@ -17,27 +17,30 @@ import org.newdawn.slick.SlickException;
 /**
  * The Class Biome.
  */
-public abstract class Biome  extends DeadReckoningComponent{
-	
+public abstract class Biome extends DeadReckoningComponent {
+
 	/** The biomes. */
 	static ArrayList<Biome> biomes = new ArrayList<Biome>(0);
 
 	protected String parentMod;
-	
+
 	/**
 	 * Make board.
-	 *
-	 * @param depth the depth
-	 * @param floorLinks the floor links
+	 * 
+	 * @param depth
+	 *            the depth
+	 * @param floorLinks
+	 *            the floor links
 	 * @return the game board
-	 * @throws SlickException the slick exception
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	public abstract GameBoard makeBoard(int depth, ArrayList<Stair> floorLinks)
 			throws SlickException;
 
 	/**
 	 * Gets the random biome.
-	 *
+	 * 
 	 * @return the random biome
 	 */
 	public static Biome getRandomBiome() {
@@ -47,16 +50,16 @@ public abstract class Biome  extends DeadReckoningComponent{
 	public static void addBiome(Biome b) {
 		Biome.biomes.add(b);
 	}
-	
-	public static ArrayList<Biome> getBiomes(){
+
+	public static ArrayList<Biome> getBiomes() {
 		return biomes;
 	}
-	
-	public String getParentMod(){
+
+	public String getParentMod() {
 		return this.parentMod;
 	}
-	
-	public void setParentMod(String newMod){
-		this.parentMod=newMod;
+
+	public void setParentMod(String newMod) {
+		this.parentMod = newMod;
 	}
 }

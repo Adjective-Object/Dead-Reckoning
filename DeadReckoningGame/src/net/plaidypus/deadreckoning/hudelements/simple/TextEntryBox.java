@@ -31,12 +31,17 @@ public class TextEntryBox extends HudElement {
 
 	/**
 	 * Instantiates a new text entry box.
-	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param bindMethod the bind method
-	 * @param width the width
-	 * @param height the height
+	 * 
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param bindMethod
+	 *            the bind method
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
 	 */
 	public TextEntryBox(int x, int y, int bindMethod, int width, int height) {
 		super(x, y, bindMethod, true);
@@ -44,8 +49,12 @@ public class TextEntryBox extends HudElement {
 		this.height = height;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#update(org.newdawn
+	 * .slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
 	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
@@ -71,8 +80,12 @@ public class TextEntryBox extends HudElement {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(java.lang
+	 * .Object)
 	 */
 	@Override
 	public void makeFrom(Object o) {
@@ -80,15 +93,21 @@ public class TextEntryBox extends HudElement {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#init(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#init(org.newdawn.slick
+	 * .GameContainer, org.newdawn.slick.state.StateBasedGame)
 	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getWidth()
 	 */
 	@Override
@@ -96,7 +115,9 @@ public class TextEntryBox extends HudElement {
 		return this.width;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getHeight()
 	 */
 	@Override
@@ -104,8 +125,13 @@ public class TextEntryBox extends HudElement {
 		return this.height;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#render(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, org.newdawn.slick.Graphics)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#render(org.newdawn
+	 * .slick.GameContainer, org.newdawn.slick.state.StateBasedGame,
+	 * org.newdawn.slick.Graphics)
 	 */
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
@@ -126,7 +152,7 @@ public class TextEntryBox extends HudElement {
 
 	/**
 	 * Gets the content.
-	 *
+	 * 
 	 * @return the content
 	 */
 	public String getContent() {

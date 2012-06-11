@@ -22,18 +22,25 @@ public abstract class StaticImageEntity extends Entity {
 
 	/**
 	 * Instantiates a new static image entity.
-	 *
-	 * @param t the t
-	 * @param layer the layer
-	 * @param drawImage the draw image
+	 * 
+	 * @param t
+	 *            the t
+	 * @param layer
+	 *            the layer
+	 * @param drawImage
+	 *            the draw image
 	 */
 	public StaticImageEntity(Tile t, int layer, Image drawImage) {
 		super(t, layer);
 		draw = drawImage;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#forceRender(org.newdawn.slick.Graphics, float, float)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#forceRender(org.newdawn.slick
+	 * .Graphics, float, float)
 	 */
 	@Override
 	public void forceRender(Graphics g, float x, float y) {

@@ -27,17 +27,22 @@ public class LandingPad extends Entity {
 
 	/**
 	 * Instantiates a new landing pad.
-	 *
-	 * @param t the t
-	 * @param layer the layer
-	 * @param fromFloor the from floor
+	 * 
+	 * @param t
+	 *            the t
+	 * @param layer
+	 *            the layer
+	 * @param fromFloor
+	 *            the from floor
 	 */
 	public LandingPad(Tile t, int layer, String fromFloor) {
 		super(t, layer);
 		this.fromFloor = fromFloor;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#init()
 	 */
 	@Override
@@ -46,8 +51,12 @@ public class LandingPad extends Entity {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#update(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#update(org.newdawn.slick.
+	 * GameContainer, int)
 	 */
 	@Override
 	public void update(GameContainer gc, int delta) {
@@ -55,8 +64,12 @@ public class LandingPad extends Entity {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#updateBoardEffects(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#updateBoardEffects(org.newdawn
+	 * .slick.GameContainer, int)
 	 */
 	@Override
 	public void updateBoardEffects(GameContainer gc, int delta) {
@@ -64,8 +77,12 @@ public class LandingPad extends Entity {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#chooseAction(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#chooseAction(org.newdawn.
+	 * slick.GameContainer, int)
 	 */
 	@Override
 	public Action chooseAction(GameContainer gc, int delta) {
@@ -73,8 +90,12 @@ public class LandingPad extends Entity {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#forceRender(org.newdawn.slick.Graphics, float, float)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#forceRender(org.newdawn.slick
+	 * .Graphics, float, float)
 	 */
 	@Override
 	public void forceRender(Graphics g, float x, float y) {
@@ -82,7 +103,9 @@ public class LandingPad extends Entity {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#isInteractive()
 	 */
 	@Override
@@ -91,7 +114,9 @@ public class LandingPad extends Entity {
 		return false;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#advanceTurn()
 	 */
 	@Override
@@ -100,8 +125,12 @@ public class LandingPad extends Entity {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#makeFromString(net.plaidypus.deadreckoning.board.GameBoard, java.lang.String[])
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#makeFromString(net.plaidypus
+	 * .deadreckoning.board.GameBoard, java.lang.String[])
 	 */
 	@Override
 	public Entity makeFromString(GameBoard target, String[] attributes) {
@@ -110,7 +139,9 @@ public class LandingPad extends Entity {
 				Integer.parseInt(attributes[3]), attributes[4]);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#saveToString()
 	 */
 	@Override
@@ -118,7 +149,9 @@ public class LandingPad extends Entity {
 		return this.getGenericSave() + ":" + fromFloor;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#onDeath()
 	 */
 	@Override
@@ -126,8 +159,12 @@ public class LandingPad extends Entity {
 		// TODO empty
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#onInteract(net.plaidypus.deadreckoning.entities.Entity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#onInteract(net.plaidypus.
+	 * deadreckoning.entities.Entity)
 	 */
 	@Override
 	public Action onInteract(Entity e) {

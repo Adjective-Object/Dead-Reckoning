@@ -11,17 +11,21 @@ public class ChangeMapAction extends Action {
 
 	/** The to write. */
 	Entity toWrite;
-	
+
 	/** The layer. */
 	int layer;
 
 	/**
 	 * Instantiates a new change map action.
-	 *
-	 * @param source the source
-	 * @param target the target
-	 * @param layer the layer
-	 * @param toOverWrite the to over write
+	 * 
+	 * @param source
+	 *            the source
+	 * @param target
+	 *            the target
+	 * @param layer
+	 *            the layer
+	 * @param toOverWrite
+	 *            the to over write
 	 */
 	public ChangeMapAction(Entity source, Tile target, int layer,
 			Entity toOverWrite) {
@@ -31,7 +35,9 @@ public class ChangeMapAction extends Action {
 		takesTurn = false;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.actions.Action#apply(int)
 	 */
 	protected boolean apply(int delta) {
@@ -39,7 +45,9 @@ public class ChangeMapAction extends Action {
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.actions.Action#isNoticed()
 	 */
 	@Override

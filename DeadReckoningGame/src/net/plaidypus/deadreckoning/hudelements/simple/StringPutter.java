@@ -16,50 +16,62 @@ import org.newdawn.slick.state.StateBasedGame;
  * The Class StringPutter.
  */
 public class StringPutter extends HudElement {
-	
+
 	static int maxMessages = 4;
-	
+
 	/** The alphas. */
 	private ArrayList<Double> alphas;
-	
+
 	/** The messages. */
 	private ArrayList<String> messages;
-	
+
 	/** The fadeout rate. */
 	private int fadeoutRate;
 
 	/**
 	 * Instantiates a new string putter.
-	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param bindMethod the bind method
-	 * @param fadeoutRate the fadeout rate
+	 * 
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param bindMethod
+	 *            the bind method
+	 * @param fadeoutRate
+	 *            the fadeout rate
 	 */
 	public StringPutter(int x, int y, int bindMethod, int fadeoutRate) {
 		super(x, y, bindMethod, false);
 		this.fadeoutRate = fadeoutRate;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#init(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame)
-	 */	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#init(org.newdawn.slick
+	 * .GameContainer, org.newdawn.slick.state.StateBasedGame)
+	 */
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 		alphas = new ArrayList<Double>(0);
 		messages = new ArrayList<String>(0);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#update(org.newdawn
+	 * .slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
 	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 		for (int i = 0; i < alphas.size(); i++) {
 			alphas.set(i, alphas.get(i) - fadeoutRate * (delta / 1000F));
-			if(i<alphas.size()-maxMessages){
-				alphas.set(i,alphas.get(i) - alphas.get(i)* (delta / 250F));
+			if (i < alphas.size() - maxMessages) {
+				alphas.set(i, alphas.get(i) - alphas.get(i) * (delta / 250F));
 			}
 			if (alphas.get(i) <= 0) {
 				alphas.remove(i);
@@ -71,16 +83,22 @@ public class StringPutter extends HudElement {
 
 	/**
 	 * Adds the message.
-	 *
-	 * @param string the string
+	 * 
+	 * @param string
+	 *            the string
 	 */
 	public void addMessage(String string) {
 		messages.add(string);
 		alphas.add(255.0);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#render(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, org.newdawn.slick.Graphics)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#render(org.newdawn
+	 * .slick.GameContainer, org.newdawn.slick.state.StateBasedGame,
+	 * org.newdawn.slick.Graphics)
 	 */
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
@@ -93,14 +111,20 @@ public class StringPutter extends HudElement {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(java.lang
+	 * .Object)
 	 */
 	@Override
 	public void makeFrom(Object o) {
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getWidth()
 	 */
 	@Override
@@ -108,7 +132,9 @@ public class StringPutter extends HudElement {
 		return 0;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getHeight()
 	 */
 	@Override

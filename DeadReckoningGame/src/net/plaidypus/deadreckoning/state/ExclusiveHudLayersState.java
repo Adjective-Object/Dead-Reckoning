@@ -14,28 +14,35 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * The Class ExclusiveHudLayersState.
  * 
- * A still somewhat incomplete subclass of HudLayersState, used in special situations
+ * A still somewhat incomplete subclass of HudLayersState, used in special
+ * situations
  * 
  * basically it's for states where the contents are mutually exclusive, i.e.
  * only one thing should be operable at a time. exists to make pure keyboard
  * navigation possible in the future
  * 
- * TODO too terribly awkward to work with (player and programmer side), needs a total revamp
+ * TODO too terribly awkward to work with (player and programmer side), needs a
+ * total revamp
  * 
  */
 public class ExclusiveHudLayersState extends HudLayersState {
 
-	/** The current focus, old mouse x,y. used for determining if something changes. */
+	/**
+	 * The current focus, old mouse x,y. used for determining if something
+	 * changes.
+	 */
 	int focus = -1, omx = -1, omy = -1;
-	
+
 	/** The mouse set. */
 	boolean mouseSet = true;
 
 	/**
 	 * Instantiates a new exclusive hud layers state.
-	 *
-	 * @param stateID the state id
-	 * @param elements the elements
+	 * 
+	 * @param stateID
+	 *            the state id
+	 * @param elements
+	 *            the elements
 	 */
 	public ExclusiveHudLayersState(int stateID, ArrayList<HudElement> elements) {
 		super(stateID, elements);
@@ -43,16 +50,22 @@ public class ExclusiveHudLayersState extends HudLayersState {
 
 	/**
 	 * Instantiates a new exclusive hud layers state.
-	 *
-	 * @param stateID the state id
-	 * @param elements the elements
+	 * 
+	 * @param stateID
+	 *            the state id
+	 * @param elements
+	 *            the elements
 	 */
 	public ExclusiveHudLayersState(int stateID, HudElement[] elements) {
 		super(stateID, elements);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.state.HudLayersState#makeFrom(java.lang.Object[])
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.state.HudLayersState#makeFrom(java.lang.Object
+	 * [])
 	 */
 	public void makeFrom(Object[] objects) {
 		super.makeFrom(objects);
@@ -63,7 +76,8 @@ public class ExclusiveHudLayersState extends HudLayersState {
 	/**
 	 * updates the state, along with finding the new object in focus.
 	 * 
-	 * @see net.plaidypus.deadreckoning.state.HudLayersState#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	 * @see net.plaidypus.deadreckoning.state.HudLayersState#update(org.newdawn.slick.GameContainer,
+	 *      org.newdawn.slick.state.StateBasedGame, int)
 	 */
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
@@ -104,8 +118,13 @@ public class ExclusiveHudLayersState extends HudLayersState {
 		container.getInput().clearControlPressedRecord();
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.state.HudLayersState#render(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, org.newdawn.slick.Graphics)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.state.HudLayersState#render(org.newdawn.slick
+	 * .GameContainer, org.newdawn.slick.state.StateBasedGame,
+	 * org.newdawn.slick.Graphics)
 	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {

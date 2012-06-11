@@ -8,8 +8,9 @@ import java.util.Random;
 import net.plaidypus.deadreckoning.board.Tile;
 
 /**
- * The Class Utilities.
- * contains some basic self-explanatory methods that are used around the game (easy random generation, basic math, number range limits, etc.)
+ * The Class Utilities. contains some basic self-explanatory methods that are
+ * used around the game (easy random generation, basic math, number range
+ * limits, etc.)
  */
 public class Utilities {
 
@@ -18,8 +19,9 @@ public class Utilities {
 
 	/**
 	 * gets the Fractional Part of the float passed.
-	 *
-	 * @param frac the number
+	 * 
+	 * @param frac
+	 *            the number
 	 * @return the fPart
 	 */
 	public static float fPart(float frac) {
@@ -27,11 +29,12 @@ public class Utilities {
 	}
 
 	/**
-	 * Gets the distance from tile A to tile B.
-	 * uses pythag.
-	 *
-	 * @param a the a
-	 * @param b the b
+	 * Gets the distance from tile A to tile B. uses pythag.
+	 * 
+	 * @param a
+	 *            the a
+	 * @param b
+	 *            the b
 	 * @return the distance
 	 */
 	public static double getDistance(Tile a, Tile b) {
@@ -41,18 +44,20 @@ public class Utilities {
 
 	/**
 	 * Random int generation.
-	 *
-	 * @param lower the lower
-	 * @param higher the higher
+	 * 
+	 * @param lower
+	 *            the lower
+	 * @param higher
+	 *            the higher
 	 * @return the int
 	 */
 	public static int randInt(int lower, int higher) {
 		return r.nextInt(higher - lower) + lower;
 	}
-	
+
 	/**
 	 * Random float generation, between 0 and 1.
-	 *
+	 * 
 	 * @return the float
 	 */
 	public static float randFloat() {
@@ -60,10 +65,10 @@ public class Utilities {
 	}
 
 	/**
-	 * parses boolean as +1 or -1
-	 * for use in simple stuff
-	 *
-	 * @param b the boolean
+	 * parses boolean as +1 or -1 for use in simple stuff
+	 * 
+	 * @param b
+	 *            the boolean
 	 * @return +=1
 	 */
 	public static int booleanPlusMin(boolean b) {
@@ -72,11 +77,12 @@ public class Utilities {
 		}
 		return -1;
 	}
-	
+
 	/**
 	 * converts int into boolean, a la python (1=True, 0=False).
-	 *
-	 * @param b the b
+	 * 
+	 * @param b
+	 *            the b
 	 * @return the double
 	 */
 	public static double intBool(boolean b) {
@@ -88,10 +94,13 @@ public class Utilities {
 
 	/**
 	 * Limits the # between the upper and lower bound.
-	 *
-	 * @param toLimit the to limit
-	 * @param lowerBound the lower bound
-	 * @param upperBound the upper bound
+	 * 
+	 * @param toLimit
+	 *            the to limit
+	 * @param lowerBound
+	 *            the lower bound
+	 * @param upperBound
+	 *            the upper bound
 	 * @return the limited #
 	 */
 	public static int limitTo(int toLimit, int lowerBound, int upperBound) {
@@ -106,10 +115,13 @@ public class Utilities {
 
 	/**
 	 * Limits the # between the upper and lower bound.
-	 *
-	 * @param toLimit the to limit
-	 * @param lowerBound the lower bound
-	 * @param upperBound the upper bound
+	 * 
+	 * @param toLimit
+	 *            the to limit
+	 * @param lowerBound
+	 *            the lower bound
+	 * @param upperBound
+	 *            the upper bound
 	 * @return the limited #
 	 */
 	public static float limitTo(float toLimit, float lowerBound,
@@ -125,19 +137,24 @@ public class Utilities {
 
 	/**
 	 * Move towards a destination, capping at a certain distance.
-	 *
-	 * @param x the starting x
-	 * @param y the starting y
-	 * @param TargetX the destination x
-	 * @param TargetY the destination y
-	 * @param movespeed the maximum distance to travel
+	 * 
+	 * @param x
+	 *            the starting x
+	 * @param y
+	 *            the starting y
+	 * @param TargetX
+	 *            the destination x
+	 * @param TargetY
+	 *            the destination y
+	 * @param movespeed
+	 *            the maximum distance to travel
 	 * @return an int[] with the resulting coordinates [x,y]
 	 */
 	public static int[] moveTowards(int x, int y, int TargetX, int TargetY,
 			int movespeed) {
 		if (Math.sqrt(Math.pow(x - TargetX, 2) + Math.pow(y - TargetY, 2)) <= movespeed) {
 			double[] v = rotate(movespeed, 0, findAngle(x, y, TargetX, TargetY));
-			
+
 			x += v[0];
 			y += v[1];
 		} else {
@@ -148,11 +165,15 @@ public class Utilities {
 	}
 
 	/**
-	 * Rotates a line starting at the origin and ending at x,y by a certain angle (in radians).
-	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param angle the angle
+	 * Rotates a line starting at the origin and ending at x,y by a certain
+	 * angle (in radians).
+	 * 
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param angle
+	 *            the angle
 	 * @return the resulting vector [x,y]
 	 */
 	public static double[] rotate(double x, double y, double angle) {
@@ -160,19 +181,24 @@ public class Utilities {
 				x * Math.sin(angle) + y * Math.cos(angle) };
 	}
 
-	// 
+	//
 	/**
 	 * Find angle.
 	 * 
-	 * this is derptacular and doesn't really work, but it's ok for now
-	 * it's meant to find the angle in radians from the origin (x,y) to the
+	 * this is derptacular and doesn't really work, but it's ok for now it's
+	 * meant to find the angle in radians from the origin (x,y) to the
 	 * destination(destx,desty)
 	 * 
-	 * @param x the start x
-	 * @param y the start y
-	 * @param destx the destination x
-	 * @param desty the destination y
-	 * @return the angle between the vertical and the vector drawn to the X,Y, in radians
+	 * @param x
+	 *            the start x
+	 * @param y
+	 *            the start y
+	 * @param destx
+	 *            the destination x
+	 * @param desty
+	 *            the destination y
+	 * @return the angle between the vertical and the vector drawn to the X,Y,
+	 *         in radians
 	 */
 	public static double findAngle(double x, double y, double destx,
 			double desty) {
@@ -185,8 +211,9 @@ public class Utilities {
 
 	/**
 	 * Round up.
-	 *
-	 * @param target the target
+	 * 
+	 * @param target
+	 *            the target
 	 * @return the int
 	 */
 	public static int roundUp(float target) {
@@ -198,8 +225,9 @@ public class Utilities {
 
 	/**
 	 * Round down.
-	 *
-	 * @param target the target
+	 * 
+	 * @param target
+	 *            the target
 	 * @return the int
 	 */
 	public static int roundDown(float target) {
@@ -208,8 +236,9 @@ public class Utilities {
 
 	/**
 	 * Round up.
-	 *
-	 * @param d the d
+	 * 
+	 * @param d
+	 *            the d
 	 * @return the int
 	 */
 	public static int roundUp(double d) {
@@ -218,8 +247,9 @@ public class Utilities {
 
 	/**
 	 * Round down.
-	 *
-	 * @param d the d
+	 * 
+	 * @param d
+	 *            the d
 	 * @return the int
 	 */
 	public static int roundDown(double d) {

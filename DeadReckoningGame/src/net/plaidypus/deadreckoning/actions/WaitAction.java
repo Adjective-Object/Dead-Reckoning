@@ -10,8 +10,9 @@ public class WaitAction extends Action {
 
 	/**
 	 * Instantiates a new wait action.
-	 *
-	 * @param source the source
+	 * 
+	 * @param source
+	 *            the source
 	 */
 	public WaitAction(Entity source) {
 		super(source, source.getLocation());
@@ -20,9 +21,11 @@ public class WaitAction extends Action {
 
 	/**
 	 * Instantiates a new wait action.
-	 *
-	 * @param source the source
-	 * @param takesTurn the takes turn
+	 * 
+	 * @param source
+	 *            the source
+	 * @param takesTurn
+	 *            the takes turn
 	 */
 	public WaitAction(Entity source, boolean takesTurn) {
 		super(source, source.getLocation());
@@ -30,7 +33,9 @@ public class WaitAction extends Action {
 		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.actions.Action#apply(int)
 	 */
 	protected boolean apply(int delta) {
@@ -39,14 +44,16 @@ public class WaitAction extends Action {
 
 	/**
 	 * Gets the message.
-	 *
+	 * 
 	 * @return the message
 	 */
 	public String getMessage() {
 		return source.getName() + " is useless";
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.actions.Action#isNoticed()
 	 */
 	@Override

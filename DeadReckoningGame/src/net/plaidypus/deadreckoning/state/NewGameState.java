@@ -32,7 +32,7 @@ public class NewGameState extends HudLayersState {
 
 	/** The button to create a new class. */
 	public ImageButton newClassButton;
-	
+
 	/** The text. */
 	public TextEntryBox text;
 
@@ -41,10 +41,13 @@ public class NewGameState extends HudLayersState {
 
 	/**
 	 * Instantiates a new game creator state.
-	 *
-	 * @param stateID the state id
-	 * @param background the background of the screen
-	 * @throws SlickException the slick exception
+	 * 
+	 * @param stateID
+	 *            the state id
+	 * @param background
+	 *            the background of the screen
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	@SuppressWarnings("unchecked")
 	public NewGameState(int stateID, ArrayList<HudElement> background)
@@ -55,52 +58,58 @@ public class NewGameState extends HudLayersState {
 
 	/**
 	 * loads classes and builds the necessary HudElements
-	 *
-	 * @throws SlickException the slick exception
+	 * 
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	public void loadClasses() throws SlickException {
 		classButtons = new ArrayList<ImageButton>(0);
 		ArrayList<HudElement> elim = new ArrayList<HudElement>(0);
 		ArrayList<HudElement> elimB = new ArrayList<HudElement>(0);
-		
-		//this quick block creates a the "create new class" button
+
+		// this quick block creates a the "create new class" button
 		newClassButton = new ImageButton(columB, 20, HudElement.TOP_LEFT,
 				new Image("res/newClassButton.png"));
 		elim.add(newClassButton);
 		elim.add(new TextElement(columB + 69, 42, HudElement.TOP_LEFT,
 				"New Class", Color.white, DeadReckoningGame.menuFont));
-				
-		//this block of fuck loads the custom professions, and creates the buttons
-		//that are needed for them
-		//untested, may or may not work. TODO fix that....
-		for (int prof=0; prof<Profession.getProfessions().size() ;prof++) {
+
+		// this block of fuck loads the custom professions, and creates the
+		// buttons
+		// that are needed for them
+		// untested, may or may not work. TODO fix that....
+		for (int prof = 0; prof < Profession.getProfessions().size(); prof++) {
 			int baseClass = 0;
 			ImageButton i = new ImageButton(columA, 15 + (prof) * 79,
-					HudElement.TOP_LEFT, Profession.getProfession(prof).getPortriat());
+					HudElement.TOP_LEFT, Profession.getProfession(prof)
+							.getPortriat());
 			classButtons.add(i);
 			elimB.add(i);
 			elimB.add(new TextElement(columA + 69, 15 + 22 + (prof) * 79,
-					HudElement.TOP_LEFT, Profession.getProfession(prof).name, Color.white,
-					DeadReckoningGame.menuFont));
+					HudElement.TOP_LEFT, Profession.getProfession(prof).name,
+					Color.white, DeadReckoningGame.menuFont));
 		}
-		
-		//TODO add custom loaded professions
-		
-		
-		//this creates the text box necessary for saving the game
+
+		// TODO add custom loaded professions
+
+		// this creates the text box necessary for saving the game
 		ArrayList<HudElement> elimC = new ArrayList<HudElement>(0);
 		text = new TextEntryBox(-250, 50, HudElement.TOP_RIGHT, 200, 50);
 		elimC.add(text);
-		
-		//this packages the hudelement lists into Panels and drops them into
-		//the "real" HudElements list
+
+		// this packages the hudelement lists into Panels and drops them into
+		// the "real" HudElements list
 		this.HudElements.add(new Panel(elim));
 		this.HudElements.add(new Panel(elimB));
 		this.HudElements.add(new Panel(elimC));
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.state.HudLayersState#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.state.HudLayersState#update(org.newdawn.slick
+	 * .GameContainer, org.newdawn.slick.state.StateBasedGame, int)
 	 */
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
@@ -119,7 +128,7 @@ public class NewGameState extends HudLayersState {
 					s.loadGame(GameplayElement.class.cast(HudLayersState.class
 							.cast(DeadReckoningGame.instance
 									.getState(DeadReckoningGame.GAMEPLAYSTATE))
-							.getElement(0)),game.getContainer());
+							.getElement(0)), game.getContainer());
 					game.enterState(DeadReckoningGame.GAMEPLAYSTATE);
 				} catch (IOException e) {
 					e.printStackTrace();

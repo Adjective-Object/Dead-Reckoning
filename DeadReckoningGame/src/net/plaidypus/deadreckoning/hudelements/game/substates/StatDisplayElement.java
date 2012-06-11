@@ -54,25 +54,36 @@ public class StatDisplayElement extends HudElement {
 		g.setFont(DeadReckoningGame.menuSmallFont);
 		g.setColor(DeadReckoningGame.menuTextColor);
 		g.drawImage(statIcons.getSprite(0, 0), getX(), getY());
-		g.drawString(Integer.toString(target.getStatMaster().getRawMaxHP())+"+("+ Integer.toString(target.getStatMaster().getBonusMaxHP()) +")",
-				getX() + 21, getY());
+		g.drawString(
+				Integer.toString(target.getStatMaster().getRawMaxHP())
+						+ "+("
+						+ Integer.toString(target.getStatMaster()
+								.getBonusMaxHP()) + ")", getX() + 21, getY());
 		g.drawImage(statIcons.getSprite(1, 0), getX(), getY() + 20);
-		g.drawString(Integer.toString(target.getStatMaster().getRawMaxMP())+"+("+ Integer.toString(target.getStatMaster().getBonusMaxMP()) +")",
-				getX() + 21, getY() + 20);
+		g.drawString(
+				Integer.toString(target.getStatMaster().getRawMaxMP())
+						+ "+("
+						+ Integer.toString(target.getStatMaster()
+								.getBonusMaxMP()) + ")", getX() + 21,
+				getY() + 20);
 
 		g.drawImage(statIcons.getSprite(2, 0), getX(), getY() + 45);
-		g.drawString(Integer.toString(target.getStatMaster().getRawSTR())+"+("+ Integer.toString(target.getStatMaster().getBonusSTR()) +")",
-				getX() + 20, getY() + 45);
+		g.drawString(Integer.toString(target.getStatMaster().getRawSTR())
+				+ "+(" + Integer.toString(target.getStatMaster().getBonusSTR())
+				+ ")", getX() + 20, getY() + 45);
 		g.drawImage(statIcons.getSprite(3, 0), getX(), getY() + 65);
-		g.drawString(Integer.toString(target.getStatMaster().getRawDEX())+"+("+ Integer.toString(target.getStatMaster().getBonusDEX()) +")",
-				getX() + 20, getY() + 65);
+		g.drawString(Integer.toString(target.getStatMaster().getRawDEX())
+				+ "+(" + Integer.toString(target.getStatMaster().getBonusDEX())
+				+ ")", getX() + 20, getY() + 65);
 
 		g.drawImage(statIcons.getSprite(4, 0), getX() + 80, getY() + 45);
-		g.drawString(Integer.toString(target.getStatMaster().getRawINT())+"+("+ Integer.toString(target.getStatMaster().getBonusINT()) +")",
-				getX() + 101, getY() + 45);
+		g.drawString(Integer.toString(target.getStatMaster().getRawINT())
+				+ "+(" + Integer.toString(target.getStatMaster().getBonusINT())
+				+ ")", getX() + 101, getY() + 45);
 		g.drawImage(statIcons.getSprite(5, 0), getX() + 80, getY() + 65);
-		g.drawString(Integer.toString(target.getStatMaster().getRawLUK())+"+("+ Integer.toString(target.getStatMaster().getBonusLUK()) +")",
-				getX() + 101, getY() + 65);
+		g.drawString(Integer.toString(target.getStatMaster().getRawLUK())
+				+ "+(" + Integer.toString(target.getStatMaster().getBonusLUK())
+				+ ")", getX() + 101, getY() + 65);
 	}
 
 }

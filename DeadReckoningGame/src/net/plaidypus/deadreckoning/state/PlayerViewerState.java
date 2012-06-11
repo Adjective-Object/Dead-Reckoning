@@ -26,8 +26,9 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * The Class PlayerViewerState.
  * 
- * used to view the player's stats (as determined by level and stat ratios), along
- * with viewing the player's skills, and when skill points are available, editing them.
+ * used to view the player's stats (as determined by level and stat ratios),
+ * along with viewing the player's skills, and when skill points are available,
+ * editing them.
  */
 public class PlayerViewerState extends HudLayersState {
 
@@ -45,8 +46,9 @@ public class PlayerViewerState extends HudLayersState {
 
 	/**
 	 * Instantiates a new player viewer state.
-	 *
-	 * @param stateID the state id
+	 * 
+	 * @param stateID
+	 *            the state id
 	 */
 	public PlayerViewerState(int stateID) {
 		super(stateID, makeState());
@@ -54,13 +56,17 @@ public class PlayerViewerState extends HudLayersState {
 		this.statPanel = (Panel) this.HudElements.get(2);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.state.HudLayersState#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.state.HudLayersState#update(org.newdawn.slick
+	 * .GameContainer, org.newdawn.slick.state.StateBasedGame, int)
 	 */
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		super.update(container, game, delta);
-		
+
 		for (int i = 0; i < buttonPanel.getContents().size() - 1; i++) {
 			Button b = (Button) (buttonPanel.getContents().get(i));
 			Skill siq = sourceProf.getTrees()[i / 4].getSkills()[i % 4];
@@ -85,13 +91,14 @@ public class PlayerViewerState extends HudLayersState {
 	public void makeFrom(Object[] args) {
 		this.HudElements.get(0).makeFrom(args[0]);
 		Player p = (Player) (args[1]);
-		System.out.println("PlayerViewerState "+p);
+		System.out.println("PlayerViewerState " + p);
 		this.sourceProf = p.getProfession();
-		
+
 		ArrayList<Skill> skills = this.sourceProf.getSkillList();
-		//this whole block is used to bake the class skill buttons to speed up rendering.
-		//it creates a sizable amount of lag on call.
-		//this makes me sad
+		// this whole block is used to bake the class skill buttons to speed up
+		// rendering.
+		// it creates a sizable amount of lag on call.
+		// this makes me sad
 		for (int i = 0; i < skills.size(); i++) {
 			Image img = skills.get(i).getImage().getFlippedCopy(false, false);
 			try {
@@ -122,7 +129,7 @@ public class PlayerViewerState extends HudLayersState {
 			} catch (SlickException e) {
 			}
 		}
-		
+
 		bakeFromProfession(sourceProf);
 
 		this.buttonPanel.bakeBorders();
@@ -132,42 +139,43 @@ public class PlayerViewerState extends HudLayersState {
 
 	/**
 	 * "Bakes" the state from a profession.
-	 *
-	 * used to update the display images and mouse over text of the skill buttons,
-	 * and also updates the skill-points text.
-	 *
-	 * @param p the p
+	 * 
+	 * used to update the display images and mouse over text of the skill
+	 * buttons, and also updates the skill-points text.
+	 * 
+	 * @param p
+	 *            the p
 	 */
 	public void bakeFromProfession(Profession p) {
 		for (int i = 0; i < 3; i++) {
 			SkillProgression prog = p.getTrees()[i];
 			for (int s = 0; s < 4; s++) {
 				Image img;
-				
-				//used to determine what image a skill has
-				//if a skill should be highlighted (is available for level up)
+
+				// used to determine what image a skill has
+				// if a skill should be highlighted (is available for level up)
 				if (sourceProf.skillPoints > 0
 						&& (s == 0 || prog.getSkills()[s - 1].getLevel() > 0)
 						&& p.getLevel() >= prog.getSkills()[s].getLevelReq()
 						&& prog.getSkills()[s].getLevel() < prog.getSkills()[s]
-								.getLevelCap()) { // 
-					//if a skill is unlocked
+								.getLevelCap()) { //
+					// if a skill is unlocked
 					if (prog.getSkills()[s].getLevel() >= 1) {
 						img = images[1][i * 4 + s];
 					} else {
 						img = images[2][i * 4 + s];
 					}
 				}
-				//otherwise, if a skill is not available for level up
+				// otherwise, if a skill is not available for level up
 				else {
 					if (prog.getSkills()[s].getLevel() >= 1) {
 						img = prog.getSkills()[s].getImage();
-					}else {
+					} else {
 						img = images[0][i * 4 + s];
 					}
 				}
 
-				System.out.println("PlayerViewerState "+img);
+				System.out.println("PlayerViewerState " + img);
 
 				this.buttonPanel.getContents().get(i * 4 + s).makeFrom(img);
 				this.buttonPanel
@@ -191,14 +199,14 @@ public class PlayerViewerState extends HudLayersState {
 	 * Makes the default contents of the state.
 	 * 
 	 * called in the initialization. function
-	 *
+	 * 
 	 * @return the array list
 	 */
 	public static ArrayList<HudElement> makeState() {
 		ArrayList<HudElement> elements = new ArrayList<HudElement>(0);
 		elements.add(new StillImageElement(0, 0, HudElement.TOP_LEFT));
-		
-		//building skill buttons
+
+		// building skill buttons
 		ArrayList<HudElement> skillButton = new ArrayList<HudElement>(12), playerWindow = new ArrayList<HudElement>(
 				2);
 		for (int x = 0; x < 3; x++) {
@@ -210,8 +218,8 @@ public class PlayerViewerState extends HudLayersState {
 
 		skillButton.add(new TextElement(50, 270, HudElement.TOP_LEFT, "",
 				DeadReckoningGame.menuTextColor, DeadReckoningGame.menuFont));
-		
-		//building the player window
+
+		// building the player window
 		playerWindow
 				.add(new StillImageElement(-200, 0, HudElement.CENTER_RIGHT));
 		playerWindow.add(new StatDisplayElement(-200, 69,

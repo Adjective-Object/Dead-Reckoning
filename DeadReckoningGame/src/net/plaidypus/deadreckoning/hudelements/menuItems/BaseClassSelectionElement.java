@@ -19,7 +19,7 @@ public class BaseClassSelectionElement extends HudElement {
 
 	/** The current class. */
 	int currentClass = 0;
-	
+
 	/** The num classes. */
 	int numClasses;
 
@@ -28,11 +28,15 @@ public class BaseClassSelectionElement extends HudElement {
 
 	/**
 	 * Instantiates a new base class selection element.
-	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param bindMethod the bind method
-	 * @throws SlickException the slick exception
+	 * 
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param bindMethod
+	 *            the bind method
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	public BaseClassSelectionElement(int x, int y, int bindMethod)
 			throws SlickException {
@@ -44,7 +48,7 @@ public class BaseClassSelectionElement extends HudElement {
 
 	/**
 	 * Enumerate classes.
-	 *
+	 * 
 	 * @return the int
 	 */
 	private int enumerateClasses() {
@@ -57,8 +61,12 @@ public class BaseClassSelectionElement extends HudElement {
 		return numClass;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#update(org.newdawn
+	 * .slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
 	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
@@ -77,29 +85,41 @@ public class BaseClassSelectionElement extends HudElement {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(java.lang
+	 * .Object)
 	 */
 	@Override
 	public void makeFrom(Object o) {
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#init(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#init(org.newdawn.slick
+	 * .GameContainer, org.newdawn.slick.state.StateBasedGame)
 	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getWidth()
 	 */
 	public int getWidth() {
 		return iconImage.getWidth();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getHeight()
 	 */
 	@Override
@@ -107,8 +127,13 @@ public class BaseClassSelectionElement extends HudElement {
 		return iconImage.getHeight();
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#render(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, org.newdawn.slick.Graphics)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#render(org.newdawn
+	 * .slick.GameContainer, org.newdawn.slick.state.StateBasedGame,
+	 * org.newdawn.slick.Graphics)
 	 */
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)

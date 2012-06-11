@@ -33,53 +33,75 @@ public class Statue extends StaticImageEntity {
 
 	/**
 	 * Instantiates a new statue.
-	 *
-	 * @param t the t
-	 * @param layer the layer
+	 * 
+	 * @param t
+	 *            the t
+	 * @param layer
+	 *            the layer
 	 */
 	public Statue(Tile t, int layer) {
 		super(t, layer, i);
 		this.description = "the placeholder object that loads when something glitches during load";
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#init()
 	 */
 	public void init() throws SlickException {
 		i = new Image("res/statue.png");
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#update(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#update(org.newdawn.slick.
+	 * GameContainer, int)
 	 */
 	@Override
 	public void update(GameContainer gc, int delta) {
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#updateBoardEffects(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#updateBoardEffects(org.newdawn
+	 * .slick.GameContainer, int)
 	 */
 	@Override
 	public void updateBoardEffects(GameContainer gc, int delta) {
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#chooseAction(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#chooseAction(org.newdawn.
+	 * slick.GameContainer, int)
 	 */
 	@Override
 	public Action chooseAction(GameContainer gc, int delta) {
 		return new WaitAction(this);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.StaticImageEntity#forceRender(org.newdawn.slick.Graphics, float, float)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.StaticImageEntity#forceRender(org
+	 * .newdawn.slick.Graphics, float, float)
 	 */
 	@Override
 	public void forceRender(Graphics g, float x, float y) {
 		g.drawImage(i, x, y);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#isInteractive()
 	 */
 	@Override
@@ -87,7 +109,9 @@ public class Statue extends StaticImageEntity {
 		return false;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#advanceTurn()
 	 */
 	@Override
@@ -95,8 +119,12 @@ public class Statue extends StaticImageEntity {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#makeFromString(net.plaidypus.deadreckoning.board.GameBoard, java.lang.String[])
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#makeFromString(net.plaidypus
+	 * .deadreckoning.board.GameBoard, java.lang.String[])
 	 */
 	@Override
 	public Entity makeFromString(GameBoard target, String[] attributes) {
@@ -107,7 +135,9 @@ public class Statue extends StaticImageEntity {
 				Integer.parseInt(attributes[3]));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#saveToString()
 	 */
 	@Override
@@ -115,15 +145,21 @@ public class Statue extends StaticImageEntity {
 		return getGenericSave();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#onDeath()
 	 */
 	@Override
 	public void onDeath() {
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#onInteract(net.plaidypus.deadreckoning.entities.Entity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#onInteract(net.plaidypus.
+	 * deadreckoning.entities.Entity)
 	 */
 	@Override
 	public Action onInteract(Entity e) {

@@ -22,18 +22,22 @@ public class SkillMonitorElement extends HudElement { // TODO turn into a
 														// use skill.
 
 	/** The to monitor. */
- Profession toMonitor;
-	
+	Profession toMonitor;
+
 	/** The target game. */
 	GameplayElement targetGame;
 
 	/**
 	 * Instantiates a new skill monitor element.
-	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param bindMethod the bind method
-	 * @param targetGame the target game
+	 * 
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param bindMethod
+	 *            the bind method
+	 * @param targetGame
+	 *            the target game
 	 */
 	public SkillMonitorElement(int x, int y, int bindMethod,
 			GameplayElement targetGame) {
@@ -41,8 +45,12 @@ public class SkillMonitorElement extends HudElement { // TODO turn into a
 		this.targetGame = targetGame;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#update(org.newdawn
+	 * .slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
 	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
@@ -52,23 +60,33 @@ public class SkillMonitorElement extends HudElement { // TODO turn into a
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(java.lang
+	 * .Object)
 	 */
 	@Override
 	public void makeFrom(Object o) {
 		this.toMonitor = targetGame.player.getProfession();
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#init(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#init(org.newdawn.slick
+	 * .GameContainer, org.newdawn.slick.state.StateBasedGame)
 	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getWidth()
 	 */
 	@Override
@@ -76,7 +94,9 @@ public class SkillMonitorElement extends HudElement { // TODO turn into a
 		return 12 * 35 + 10;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getHeight()
 	 */
 	@Override
@@ -84,8 +104,13 @@ public class SkillMonitorElement extends HudElement { // TODO turn into a
 		return 42;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#render(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, org.newdawn.slick.Graphics)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#render(org.newdawn
+	 * .slick.GameContainer, org.newdawn.slick.state.StateBasedGame,
+	 * org.newdawn.slick.Graphics)
 	 */
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)

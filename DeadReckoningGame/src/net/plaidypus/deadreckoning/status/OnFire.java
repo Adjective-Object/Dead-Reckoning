@@ -22,22 +22,25 @@ public class OnFire extends AnimatedStatus {
 
 	/** The power. */
 	int duration, power;
-	
+
 	/** The image. */
 	static Image image;
-	
+
 	/** The details. */
 	static String details;
-	
+
 	/** The sprite. */
 	static SpriteSheet sprite;
 
 	/**
 	 * Instantiates a new on fire status.
-	 *
-	 * @param source the source
-	 * @param duration the duration
-	 * @param power the power
+	 * 
+	 * @param source
+	 *            the source
+	 * @param duration
+	 *            the duration
+	 * @param power
+	 *            the power
 	 */
 	public OnFire(InteractiveEntity source, int duration, int power) {
 		super(source, image, details, "OnFire", new Animation(sprite, 60));
@@ -48,8 +51,9 @@ public class OnFire extends AnimatedStatus {
 
 	/**
 	 * initializes the status.
-	 *
-	 * @throws SlickException the slick exception
+	 * 
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	public static void init() throws SlickException {
 		image = new Image("res/onFireIcon.png");
@@ -58,8 +62,12 @@ public class OnFire extends AnimatedStatus {
 				DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.status.Status#applyToEntity(net.plaidypus.deadreckoning.entities.LivingEntity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.status.Status#applyToEntity(net.plaidypus
+	 * .deadreckoning.entities.LivingEntity)
 	 */
 	@Override
 	public void applyToEntity(LivingEntity target) {
@@ -67,8 +75,12 @@ public class OnFire extends AnimatedStatus {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.status.Status#advanceTurnEffects(net.plaidypus.deadreckoning.entities.LivingEntity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.status.Status#advanceTurnEffects(net.plaidypus
+	 * .deadreckoning.entities.LivingEntity)
 	 */
 	@Override
 	public ArrayList<Action> advanceTurnEffects(LivingEntity target) {
@@ -80,15 +92,21 @@ public class OnFire extends AnimatedStatus {
 		return actions;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.status.Status#removeFromEntity(net.plaidypus.deadreckoning.entities.LivingEntity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.status.Status#removeFromEntity(net.plaidypus
+	 * .deadreckoning.entities.LivingEntity)
 	 */
 	@Override
 	public void removeFromEntity(LivingEntity target) {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.status.Status#isFinished()
 	 */
 	@Override
@@ -96,7 +114,9 @@ public class OnFire extends AnimatedStatus {
 		return duration <= 0;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.status.Status#getName()
 	 */
 	@Override

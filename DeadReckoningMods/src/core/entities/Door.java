@@ -33,9 +33,11 @@ public class Door extends Entity {
 
 	/**
 	 * Instantiates a new door.
-	 *
-	 * @param t the t
-	 * @param layer the layer
+	 * 
+	 * @param t
+	 *            the t
+	 * @param layer
+	 *            the layer
 	 */
 	public Door(Tile t, int layer) {
 		super(t, layer);
@@ -43,7 +45,9 @@ public class Door extends Entity {
 		this.isTerrain = true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#init()
 	 */
 	@Override
@@ -52,31 +56,47 @@ public class Door extends Entity {
 		closeImg = new Image("res/doorClosed.png");
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#update(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#update(org.newdawn.slick.
+	 * GameContainer, int)
 	 */
 	@Override
 	public void update(GameContainer gc, int delta) {
 		// TODO Auto-generated method stub
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#updateBoardEffects(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#updateBoardEffects(org.newdawn
+	 * .slick.GameContainer, int)
 	 */
 	@Override
 	public void updateBoardEffects(GameContainer gc, int delta) {
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#chooseAction(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#chooseAction(org.newdawn.
+	 * slick.GameContainer, int)
 	 */
 	@Override
 	public Action chooseAction(GameContainer gc, int delta) {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#forceRender(org.newdawn.slick.Graphics, float, float)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#forceRender(org.newdawn.slick
+	 * .Graphics, float, float)
 	 */
 	@Override
 	public void forceRender(Graphics g, float x, float y) {
@@ -87,7 +107,9 @@ public class Door extends Entity {
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#isTransparent()
 	 */
 	@Override
@@ -95,7 +117,9 @@ public class Door extends Entity {
 		return this.open;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#isInteractive()
 	 */
 	@Override
@@ -103,7 +127,9 @@ public class Door extends Entity {
 		return false;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#advanceTurn()
 	 */
 	@Override
@@ -111,8 +137,12 @@ public class Door extends Entity {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#makeFromString(net.plaidypus.deadreckoning.board.GameBoard, java.lang.String[])
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#makeFromString(net.plaidypus
+	 * .deadreckoning.board.GameBoard, java.lang.String[])
 	 */
 	@Override
 	public Entity makeFromString(GameBoard target, String[] toload) {
@@ -120,7 +150,9 @@ public class Door extends Entity {
 				Integer.parseInt(toload[2])), Integer.parseInt(toload[3]));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#saveToString()
 	 */
 	@Override
@@ -128,15 +160,21 @@ public class Door extends Entity {
 		return this.getGenericSave();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#onDeath()
 	 */
 	@Override
 	public void onDeath() {
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#onInteract(net.plaidypus.deadreckoning.entities.Entity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#onInteract(net.plaidypus.
+	 * deadreckoning.entities.Entity)
 	 */
 	@Override
 	public Action onInteract(Entity e) {

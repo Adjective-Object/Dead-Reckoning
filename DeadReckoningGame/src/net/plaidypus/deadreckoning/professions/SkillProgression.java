@@ -25,20 +25,24 @@ public class SkillProgression {
 
 	/** The level req. */
 	private int[] levelReq;
-	
+
 	/** The source tree. */
 	public int sourceTree, sourceClass;
-	
+
 	/** The path to the source class */
 	public String sourceMod;
 
 	/**
 	 * Instantiates a new skill progression.
-	 *
-	 * @param name the name
-	 * @param skills the skills
-	 * @param levels the levels
-	 * @throws SlickException the slick exception
+	 * 
+	 * @param name
+	 *            the name
+	 * @param skills
+	 *            the skills
+	 * @param levels
+	 *            the levels
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	public SkillProgression(String name, Skill[] skills, int[] levels)
 			throws SlickException {
@@ -48,19 +52,21 @@ public class SkillProgression {
 		if (skillList.length != levelReq.length)
 			throw new SlickException("Error Loading Skills: Length Mismatch");
 	}
-	
-	public void setSource(String sourceMod, int sourceClass, int sourceTree){
+
+	public void setSource(String sourceMod, int sourceClass, int sourceTree) {
 		this.sourceMod = sourceMod;
-		this.sourceClass=sourceClass;
-		this.sourceTree=sourceTree;
+		this.sourceClass = sourceClass;
+		this.sourceTree = sourceTree;
 	}
-	
+
 	/**
 	 * Load from inputStream.
-	 *
-	 * @param stream the inputstream to read from
+	 * 
+	 * @param stream
+	 *            the inputstream to read from
 	 * @return the skill progression
-	 * @throws SlickException the slick exception
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	public static SkillProgression loadFromStream(InputStream stream)
 			throws SlickException {
@@ -74,7 +80,8 @@ public class SkillProgression {
 
 			for (int i = 0; i < 4; i++) {
 				@SuppressWarnings("unchecked")
-				Class<? extends Skill> clas = ModLoader.loadClass(r.readLine()).asSubclass(Skill.class);
+				Class<? extends Skill> clas = ModLoader.loadClass(r.readLine())
+						.asSubclass(Skill.class);
 				Skill k = clas.newInstance();
 				array[i] = k;
 			}
@@ -97,7 +104,7 @@ public class SkillProgression {
 
 	/**
 	 * Gets the skills.
-	 *
+	 * 
 	 * @return the skills
 	 */
 	public Skill[] getSkills() {
@@ -106,20 +113,23 @@ public class SkillProgression {
 
 	/**
 	 * Gets the level reqs.
-	 *
+	 * 
 	 * @return the level reqs
 	 */
 	public int[] getLevelReqs() {
 		return levelReq;
 	}
 
-	public static SkillProgression loadTree(String modName,int profNum, int treeNum) {
-		System.out.println("Loading Tree: "+modName+" "+profNum+" "+treeNum);
-		return Profession.loadProfession(modName,profNum).getTrees()[treeNum];
+	public static SkillProgression loadTree(String modName, int profNum,
+			int treeNum) {
+		System.out.println("Loading Tree: " + modName + " " + profNum + " "
+				+ treeNum);
+		return Profession.loadProfession(modName, profNum).getTrees()[treeNum];
 	}
-	
-	public String toString(){
-		return "["+skillList[0]+","+skillList[1]+","+skillList[2]+","+skillList[3]+"]";
+
+	public String toString() {
+		return "[" + skillList[0] + "," + skillList[1] + "," + skillList[2]
+				+ "," + skillList[3] + "]";
 	}
 
 	public void setLevels(int a, int b, int c, int d) {

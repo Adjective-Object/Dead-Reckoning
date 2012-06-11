@@ -20,12 +20,17 @@ public abstract class AnimatedStatus extends Status {
 
 	/**
 	 * Instantiates a new animated status.
-	 *
-	 * @param source the source
-	 * @param tile the tile image
-	 * @param description the description
-	 * @param identifier the int identifier of the status
-	 * @param effectAnimation the animation applies over the target Entity
+	 * 
+	 * @param source
+	 *            the source
+	 * @param tile
+	 *            the tile image
+	 * @param description
+	 *            the description
+	 * @param identifier
+	 *            the int identifier of the status
+	 * @param effectAnimation
+	 *            the animation applies over the target Entity
 	 */
 	public AnimatedStatus(InteractiveEntity source, Image tile,
 			String description, String identifier, Animation effectAnimation) {
@@ -33,16 +38,24 @@ public abstract class AnimatedStatus extends Status {
 		this.animation = effectAnimation;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.status.Status#update(net.plaidypus.deadreckoning.entities.LivingEntity, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.status.Status#update(net.plaidypus.deadreckoning
+	 * .entities.LivingEntity, int)
 	 */
 	@Override
 	public void update(LivingEntity target, int delta) {
 		animation.update(delta);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.status.Status#render(org.newdawn.slick.Graphics, int, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.status.Status#render(org.newdawn.slick.Graphics
+	 * , int, int)
 	 */
 	@Override
 	public void render(Graphics g, int x, int y) {

@@ -17,7 +17,7 @@ public abstract class InteractiveEntity extends Entity {
 
 	/** The inventory. */
 	protected ArrayList<Item> inventory;
-	
+
 	/** The inventory size. */
 	int inventorySize = 5;
 
@@ -29,9 +29,11 @@ public abstract class InteractiveEntity extends Entity {
 
 	/**
 	 * Instantiates a new interactive entity.
-	 *
-	 * @param targetTile the target tile
-	 * @param layer the layer
+	 * 
+	 * @param targetTile
+	 *            the target tile
+	 * @param layer
+	 *            the layer
 	 */
 	public InteractiveEntity(Tile targetTile, int layer) {
 		this(targetTile, layer, new ArrayList<Item>(0));
@@ -39,44 +41,63 @@ public abstract class InteractiveEntity extends Entity {
 
 	/**
 	 * Instantiates a new interactive entity.
-	 *
-	 * @param targetTile the target tile
-	 * @param layer the layer
-	 * @param items the items
+	 * 
+	 * @param targetTile
+	 *            the target tile
+	 * @param layer
+	 *            the layer
+	 * @param items
+	 *            the items
 	 */
 	public InteractiveEntity(Tile targetTile, int layer, ArrayList<Item> items) {
 		super(targetTile, layer);
 		this.inventory = items;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#update(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#update(org.newdawn.slick.
+	 * GameContainer, int)
 	 */
 	@Override
 	public abstract void update(GameContainer gc, int delta);
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#updateBoardEffects(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#updateBoardEffects(org.newdawn
+	 * .slick.GameContainer, int)
 	 */
 	public void updateBoardEffects(GameContainer gc, int delta) {
 		this.collapseInventory();
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#chooseAction(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#chooseAction(org.newdawn.
+	 * slick.GameContainer, int)
 	 */
 	@Override
 	public abstract Action chooseAction(GameContainer gc, int delta);
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#forceRender(org.newdawn.slick.Graphics, float, float)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#forceRender(org.newdawn.slick
+	 * .Graphics, float, float)
 	 */
 	@Override
 	public abstract void forceRender(Graphics g, float x, float y);
 
 	/**
 	 * Gets the inventory.
-	 *
+	 * 
 	 * @return the inventory
 	 */
 	public ArrayList<Item> getInventory() {
@@ -85,8 +106,9 @@ public abstract class InteractiveEntity extends Entity {
 
 	/**
 	 * Collapse item array.
-	 *
-	 * @param in the in
+	 * 
+	 * @param in
+	 *            the in
 	 * @return the array list
 	 */
 	public static ArrayList<Item> collapseItemArray(ArrayList<Item> in) {
@@ -110,8 +132,9 @@ public abstract class InteractiveEntity extends Entity {
 
 	/**
 	 * Adds the item.
-	 *
-	 * @param i the i
+	 * 
+	 * @param i
+	 *            the i
 	 * @return if the item was successfully added to the inventory
 	 */
 	public boolean addItem(Item i) {

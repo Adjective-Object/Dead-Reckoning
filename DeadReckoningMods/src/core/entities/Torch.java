@@ -21,10 +21,10 @@ public class Torch extends Entity {
 
 	/** The light. */
 	int light;
-	
+
 	/** The img. */
 	static SpriteSheet img;
-	
+
 	/** The ani. */
 	Animation ani;
 
@@ -38,10 +38,13 @@ public class Torch extends Entity {
 
 	/**
 	 * Instantiates a new torch.
-	 *
-	 * @param t the t
-	 * @param layer the layer
-	 * @param areaofLight the areaof light
+	 * 
+	 * @param t
+	 *            the t
+	 * @param layer
+	 *            the layer
+	 * @param areaofLight
+	 *            the areaof light
 	 */
 	public Torch(Tile t, int layer, int areaofLight) {
 		super(t, layer);
@@ -52,43 +55,65 @@ public class Torch extends Entity {
 		this.isTerrain = true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#init()
 	 */
 	public void init() throws SlickException {
 		img = new SpriteSheet("res/torch.png", 32, 32);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#update(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#update(org.newdawn.slick.
+	 * GameContainer, int)
 	 */
 	public void update(GameContainer gc, int delta) {
 		this.ani.update(delta);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#updateBoardEffects(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#updateBoardEffects(org.newdawn
+	 * .slick.GameContainer, int)
 	 */
 	public void updateBoardEffects(GameContainer gc, int delta) {
 		this.getParent().lightInRadius(getLocation(), this.light);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#chooseAction(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#chooseAction(org.newdawn.
+	 * slick.GameContainer, int)
 	 */
 	public Action chooseAction(GameContainer gc, int delta) {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#forceRender(org.newdawn.slick.Graphics, float, float)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#forceRender(org.newdawn.slick
+	 * .Graphics, float, float)
 	 */
 	public void forceRender(Graphics g, float x, float y) {
 		g.drawImage(ani.getCurrentFrame(), x, y);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#makeFromString(net.plaidypus.deadreckoning.board.GameBoard, java.lang.String[])
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#makeFromString(net.plaidypus
+	 * .deadreckoning.board.GameBoard, java.lang.String[])
 	 */
 	@Override
 	public Entity makeFromString(GameBoard g, String[] toload) {
@@ -97,7 +122,9 @@ public class Torch extends Entity {
 				Integer.parseInt(toload[4]));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#saveToString()
 	 */
 	@Override
@@ -105,7 +132,9 @@ public class Torch extends Entity {
 		return this.getGenericSave() + ":" + this.light;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#advanceTurn()
 	 */
 	@Override
@@ -113,7 +142,9 @@ public class Torch extends Entity {
 		return new ArrayList<Action>(0);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#isInteractive()
 	 */
 	@Override
@@ -121,15 +152,21 @@ public class Torch extends Entity {
 		return false;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#onDeath()
 	 */
 	@Override
 	public void onDeath() {
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#onInteract(net.plaidypus.deadreckoning.entities.Entity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#onInteract(net.plaidypus.
+	 * deadreckoning.entities.Entity)
 	 */
 	@Override
 	public Action onInteract(Entity e) {

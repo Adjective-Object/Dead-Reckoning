@@ -13,50 +13,64 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class StatusTrackerElement extends HudElement {
 
-	/** The hook element. */
-	int hookElement;
-	
 	/** The target. */
 	GameplayElement target;
 
 	/**
 	 * Instantiates a new status tracker element.
-	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param bindMethod the bind method
-	 * @param hookElement the hook element
+	 * 
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param bindMethod
+	 *            the bind method
+	 * @param hookElement
+	 *            the hook element
 	 */
-	public StatusTrackerElement(int x, int y, int bindMethod, int hookElement) {
+	public StatusTrackerElement(int x, int y, int bindMethod, GameplayElement hookElement) {
 		super(x, y, bindMethod, false);
-		this.hookElement = hookElement;
+		this.target=hookElement;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#update(org.newdawn
+	 * .slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
 	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(java.lang
+	 * .Object)
 	 */
 	@Override
 	public void makeFrom(Object o) {
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#init(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#init(org.newdawn.slick
+	 * .GameContainer, org.newdawn.slick.state.StateBasedGame)
 	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
-		target = (GameplayElement) (this.getParent().getElement(hookElement));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getWidth()
 	 */
 	@Override
@@ -64,7 +78,9 @@ public class StatusTrackerElement extends HudElement {
 		return target.player.statuses.size() * 37;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getHeight()
 	 */
 	@Override
@@ -72,8 +88,13 @@ public class StatusTrackerElement extends HudElement {
 		return 36;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#render(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, org.newdawn.slick.Graphics)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#render(org.newdawn
+	 * .slick.GameContainer, org.newdawn.slick.state.StateBasedGame,
+	 * org.newdawn.slick.Graphics)
 	 */
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)

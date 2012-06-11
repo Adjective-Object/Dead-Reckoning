@@ -21,16 +21,20 @@ public class EtcDrop extends Item {
 
 	/**
 	 * Instantiates a new etc drop.
-	 *
-	 * @param itemID the item id
-	 * @param number the number
+	 * 
+	 * @param itemID
+	 *            the item id
+	 * @param number
+	 *            the number
 	 */
 	public EtcDrop(String parentMod, int itemID, int number) {
 		super(parentMod, itemID, Item.ITEM_ETC);
 		this.number = number;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.items.Item#parseItem(java.lang.String)
 	 */
 	protected void parseItem(InputStream in) throws IOException, SlickException {
@@ -40,8 +44,12 @@ public class EtcDrop extends Item {
 		image = new Image(reader.readLine());
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.items.Item#stacksWith(net.plaidypus.deadreckoning.items.Item)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.items.Item#stacksWith(net.plaidypus.deadreckoning
+	 * .items.Item)
 	 */
 	@Override
 	public boolean stacksWith(Item item) {
@@ -51,16 +59,23 @@ public class EtcDrop extends Item {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.items.Item#render(org.newdawn.slick.Graphics, int, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.items.Item#render(org.newdawn.slick.Graphics,
+	 * int, int)
 	 */
 	public void render(Graphics g, int x, int y) {
 		super.render(g, x, y);
 		g.drawString(Integer.toString(this.number), x, y);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.items.Item#combineWith(net.plaidypus.deadreckoning.items.Item)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.plaidypus.deadreckoning.items.Item#combineWith(net.plaidypus.
+	 * deadreckoning.items.Item)
 	 */
 	@Override
 	public Item combineWith(Item item) {

@@ -19,13 +19,13 @@ public abstract class HudElement {
 
 	/** The bind method. */
 	public int xoff, yoff, bindMethod;
-	
+
 	/** The has focus. */
 	public boolean hasFocus;
-	
+
 	/** The needs focus. */
 	public boolean needsFocus;
-	
+
 	/** The mouseover text. */
 	String mouseoverText = null;
 
@@ -42,11 +42,15 @@ public abstract class HudElement {
 
 	/**
 	 * Instantiates a new hud element.
-	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param bindMethod the bind method
-	 * @param needFoc the need foc
+	 * 
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param bindMethod
+	 *            the bind method
+	 * @param needFoc
+	 *            the need foc
 	 */
 	public HudElement(int x, int y, int bindMethod, boolean needFoc) {
 		this.xoff = x;
@@ -57,23 +61,32 @@ public abstract class HudElement {
 
 	/**
 	 * Update.
-	 *
-	 * @param gc the gc
-	 * @param sbg the sbg
-	 * @param delta the delta
-	 * @throws SlickException the slick exception
+	 * 
+	 * @param gc
+	 *            the gc
+	 * @param sbg
+	 *            the sbg
+	 * @param delta
+	 *            the delta
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	public abstract void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException;
 
 	/**
 	 * Update.
-	 *
-	 * @param gc the gc
-	 * @param sbg the sbg
-	 * @param delta the delta
-	 * @param hasFocus the has focus
-	 * @throws SlickException the slick exception
+	 * 
+	 * @param gc
+	 *            the gc
+	 * @param sbg
+	 *            the sbg
+	 * @param delta
+	 *            the delta
+	 * @param hasFocus
+	 *            the has focus
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	public void update(GameContainer gc, StateBasedGame sbg, int delta,
 			boolean hasFocus) throws SlickException {
@@ -83,8 +96,9 @@ public abstract class HudElement {
 
 	/**
 	 * Sets the parent.
-	 *
-	 * @param parentState the new parent
+	 * 
+	 * @param parentState
+	 *            the new parent
 	 */
 	public void setParent(HudLayersState parentState) {
 		this.parentState = parentState;
@@ -92,22 +106,24 @@ public abstract class HudElement {
 
 	/**
 	 * changes some contents of this HudElement based on the value of Object o.
-	 * this is meant to be called by the HudLayersState.makeFrom(Objet[]) function,
-	 * right before a state is shifted into, in order to shift around a few values.
-	 * this is faster than say, rebuilding the whole state.
+	 * this is meant to be called by the HudLayersState.makeFrom(Objet[])
+	 * function, right before a state is shifted into, in order to shift around
+	 * a few values. this is faster than say, rebuilding the whole state.
 	 * 
-	 * Ex: LootStates are passed two inventories in the makeFrom, in order to change the
-	 * contents of the two inventory display-ers without the need for a rebuild of all
-	 * HudElements.
-	 *
-	 * @param o the o
+	 * Ex: LootStates are passed two inventories in the makeFrom, in order to
+	 * change the contents of the two inventory display-ers without the need for
+	 * a rebuild of all HudElements.
+	 * 
+	 * @param o
+	 *            the o
 	 */
 	public abstract void makeFrom(Object o);
 
 	/**
 	 * Sets the focus.
-	 *
-	 * @param b the new focus
+	 * 
+	 * @param b
+	 *            the new focus
 	 */
 	public void setFocus(boolean b) {
 		this.hasFocus = b;
@@ -115,8 +131,9 @@ public abstract class HudElement {
 
 	/**
 	 * Calculate offsets.
-	 *
-	 * @param gc the gc
+	 * 
+	 * @param gc
+	 *            the gc
 	 */
 	public static void calculateOffsets(GameContainer gc) {
 		offsets = new int[9][2];
@@ -130,8 +147,9 @@ public abstract class HudElement {
 
 	/**
 	 * Sets the mouseover text.
-	 *
-	 * @param text the new mouseover text
+	 * 
+	 * @param text
+	 *            the new mouseover text
 	 */
 	public void setMouseoverText(String text) {
 		this.mouseoverText = text;
@@ -139,46 +157,57 @@ public abstract class HudElement {
 
 	/**
 	 * Inits the.
-	 *
-	 * @param gc the gc
-	 * @param sbg the sbg
-	 * @throws SlickException the slick exception
+	 * 
+	 * @param gc
+	 *            the gc
+	 * @param sbg
+	 *            the sbg
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	public abstract void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException;
 
 	/**
 	 * Gets the width.
-	 *
+	 * 
 	 * @return the width
 	 */
 	public abstract int getWidth();
 
 	/**
 	 * Gets the height.
-	 *
+	 * 
 	 * @return the height
 	 */
 	public abstract int getHeight();
 
 	/**
 	 * Render.
-	 *
-	 * @param gc the gc
-	 * @param sbg the sbg
-	 * @param g the g
-	 * @throws SlickException the slick exception
+	 * 
+	 * @param gc
+	 *            the gc
+	 * @param sbg
+	 *            the sbg
+	 * @param g
+	 *            the g
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	public abstract void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException;
 
 	/**
 	 * Render mouse over.
-	 *
-	 * @param gc the gc
-	 * @param sbg the sbg
-	 * @param g the g
-	 * @throws SlickException the slick exception
+	 * 
+	 * @param gc
+	 *            the gc
+	 * @param sbg
+	 *            the sbg
+	 * @param g
+	 *            the g
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	public void renderMouseOver(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
@@ -206,7 +235,7 @@ public abstract class HudElement {
 
 	/**
 	 * Gets the x.
-	 *
+	 * 
 	 * @return the x
 	 */
 	public int getX() {
@@ -215,7 +244,7 @@ public abstract class HudElement {
 
 	/**
 	 * Gets the y.
-	 *
+	 * 
 	 * @return the y
 	 */
 	public int getY() {
@@ -224,7 +253,7 @@ public abstract class HudElement {
 
 	/**
 	 * Gets the parent.
-	 *
+	 * 
 	 * @return the parent
 	 */
 	public HudLayersState getParent() {

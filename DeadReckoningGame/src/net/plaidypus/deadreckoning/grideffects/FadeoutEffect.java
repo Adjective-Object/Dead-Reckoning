@@ -17,15 +17,17 @@ public class FadeoutEffect extends GridEffect {
 
 	/** The alpha. */
 	float alpha;
-	
+
 	/** The image. */
 	Image image;
 
 	/**
 	 * Instantiates a new fadeout effect.
-	 *
-	 * @param location the location
-	 * @param image the image
+	 * 
+	 * @param location
+	 *            the location
+	 * @param image
+	 *            the image
 	 */
 	public FadeoutEffect(Tile location, Image image) {
 		super(location);
@@ -33,7 +35,9 @@ public class FadeoutEffect extends GridEffect {
 		alpha = 255;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.grideffects.GridEffect#update(int)
 	 */
 	@Override
@@ -44,8 +48,12 @@ public class FadeoutEffect extends GridEffect {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.grideffects.GridEffect#render(org.newdawn.slick.Graphics, float, float)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.grideffects.GridEffect#render(org.newdawn
+	 * .slick.Graphics, float, float)
 	 */
 	@Override
 	public void render(Graphics g, float xOff, float yOff) {

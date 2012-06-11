@@ -11,15 +11,19 @@ public class Interact extends Action {
 
 	/**
 	 * Instantiates a new interact.
-	 *
-	 * @param source the source
-	 * @param target the target
+	 * 
+	 * @param source
+	 *            the source
+	 * @param target
+	 *            the target
 	 */
 	public Interact(Entity source, Tile target) {
 		super(source, target);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.actions.Action#isNoticed()
 	 */
 	@Override
@@ -27,7 +31,9 @@ public class Interact extends Action {
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.actions.Action#apply(int)
 	 */
 	@Override

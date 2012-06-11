@@ -14,17 +14,21 @@ public class ChangeStateAction extends Action {
 
 	/** The state. */
 	int state;
-	
+
 	/** The args. */
 	Object[] args;
 
 	/**
 	 * Instantiates a new change state action.
-	 *
-	 * @param source the source
-	 * @param target the target
-	 * @param state the state
-	 * @param args the args
+	 * 
+	 * @param source
+	 *            the source
+	 * @param target
+	 *            the target
+	 * @param state
+	 *            the state
+	 * @param args
+	 *            the args
 	 */
 	public ChangeStateAction(Entity source, Tile target, int state,
 			Object[] args) {
@@ -36,17 +40,22 @@ public class ChangeStateAction extends Action {
 
 	/**
 	 * Instantiates a new change state action.
-	 *
-	 * @param source the source
-	 * @param target the target
-	 * @param state the state
+	 * 
+	 * @param source
+	 *            the source
+	 * @param target
+	 *            the target
+	 * @param state
+	 *            the state
 	 */
 	public ChangeStateAction(Entity source, Tile target, int state) {
 		this(source, target, state, new Object[] { GameplayElement.getImage(),
 				null, (InteractiveEntity) (source) });
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.actions.Action#apply(int)
 	 */
 	@Override
@@ -57,7 +66,9 @@ public class ChangeStateAction extends Action {
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.actions.Action#isNoticed()
 	 */
 	@Override

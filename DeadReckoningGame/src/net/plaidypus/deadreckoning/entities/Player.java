@@ -15,6 +15,7 @@ import net.plaidypus.deadreckoning.skills.CheckInventory;
 import net.plaidypus.deadreckoning.skills.Interacter;
 import net.plaidypus.deadreckoning.skills.Loot;
 import net.plaidypus.deadreckoning.skills.PreBakedMove;
+import net.plaidypus.deadreckoning.skills.Saver;
 import net.plaidypus.deadreckoning.skills.Skill;
 import net.plaidypus.deadreckoning.skills.ViewSkills;
 import net.plaidypus.deadreckoning.skills.Wait;
@@ -45,33 +46,27 @@ public class Player extends LivingEntity {
 
 	/** The key binds. */
 	public static int[] keyBinds;
-	
+
 	/** The input skills. */
 	public static Skill[] inputSkills;
 
 	/** The current skill. */
 	public int currentSkill;
-	
+
 	/** The EXP. */
 	public int EXP;
 
 	/** The profession. */
 	public Profession profession;
 
-	/** The epuips.
-	 * 0 = hat
-	 * 1 = top / shirt
-	 * 2 = bottom / pants
-	 * 3 = feet / shoes
-	 * 5 = weapon hand 1
-	 * 6 = weapon hand 2
-	 * 7 = accesory 1
-	 * 8 = accesory 2
+	/**
+	 * The epuips. 0 = hat 1 = top / shirt 2 = bottom / pants 3 = feet / shoes 5
+	 * = weapon hand 1 6 = weapon hand 2 7 = accesory 1 8 = accesory 2
 	 * */
-	protected ArrayList<Equip> equips; 
-	
+	protected ArrayList<Equip> equips;
+
 	static protected SpriteSheet levelUp;
-	
+
 	/**
 	 * Instantiates a new player.
 	 */
@@ -80,32 +75,33 @@ public class Player extends LivingEntity {
 
 	/**
 	 * subclass of living entity that is controlled by user input.
-	 *
-	 * @param targetTile the target tile
-	 * @param layer the layer
-	 * @param p the p
-	 * @param i the input object returned by GameContainer.getInput()
-	 * @throws SlickException the slick exception
+	 * 
+	 * @param targetTile
+	 *            the target tile
+	 * @param layer
+	 *            the layer
+	 * @param p
+	 *            the p
+	 * @param i
+	 *            the input object returned by GameContainer.getInput()
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	public Player(Tile targetTile, int layer, Profession p, Input in)
 			throws SlickException {
-		super(targetTile, layer, p.getParentMod(), p.getEntityFile(), p, Entity.ALLIGN_FRIENDLY);
+		super(targetTile, layer, p.getParentMod(), p.getEntityFile(), p,
+				Entity.ALLIGN_FRIENDLY);
 		this.input = in;
 
 		this.profession = p;
 		this.profession.parentTo(this);
 
 		keyBinds = new int[] { Input.KEY_A, Input.KEY_D, Input.KEY_W,
-				Input.KEY_S, Input.KEY_Q,
-				Input.KEY_F1, Input.KEY_F2,
-				Input.KEY_F3, Input.KEY_F4,
-				Input.KEY_F5, Input.KEY_F6,
-				Input.KEY_F7, Input.KEY_F8,
-				Input.KEY_F9, Input.KEY_F10,
-				Input.KEY_F11, Input.KEY_F12,
-				Input.KEY_T,
-				Input.KEY_L, Input.KEY_I,
-				Input.KEY_K, Input.KEY_E };
+				Input.KEY_S, Input.KEY_Q, Input.KEY_F1, Input.KEY_F2,
+				Input.KEY_F3, Input.KEY_F4, Input.KEY_F5, Input.KEY_F6,
+				Input.KEY_F7, Input.KEY_F8, Input.KEY_F9, Input.KEY_F10,
+				Input.KEY_F11, Input.KEY_F12, Input.KEY_T, Input.KEY_L,
+				Input.KEY_I, Input.KEY_K, Input.KEY_E, Input.KEY_P};
 		inputSkills = new Skill[] { new PreBakedMove(this, -1, 0),
 				new PreBakedMove(this, 1, 0), new PreBakedMove(this, 0, -1),
 				new PreBakedMove(this, 0, 1), new Attack(this),
@@ -117,26 +113,36 @@ public class Player extends LivingEntity {
 				p.getTrees()[2].getSkills()[0], p.getTrees()[2].getSkills()[1],
 				p.getTrees()[2].getSkills()[2], p.getTrees()[2].getSkills()[3],
 
-				new Wait(this),
-				new Loot(this), new CheckInventory(this),
-				new ViewSkills(this), new Interacter(this) };
+				new Wait(this), new Loot(this), new CheckInventory(this),
+				new ViewSkills(this), new Interacter(this), new Saver(this)};
 
 		this.skills.addAll(p.getSkillList());
 		this.equips = new ArrayList<Equip>(9);
-		for(int i=0; i<9 ;i++){
+		for (int i = 0; i < 9; i++) {
 			this.equips.add(null);
 		}
+		
+		this.HP=this.profession.getMaxHP();
+		this.MP=this.profession.getMaxMP();
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.LivingEntity#canSee(net.plaidypus.deadreckoning.board.Tile)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.LivingEntity#canSee(net.plaidypus
+	 * .deadreckoning.board.Tile)
 	 */
 	public boolean canSee(Tile t) {
 		return this.getLocation().isVisible();
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.LivingEntity#update(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.LivingEntity#update(org.newdawn.
+	 * slick.GameContainer, int)
 	 */
 	public void update(GameContainer gc, int delta) {
 		super.update(gc, delta);
@@ -144,22 +150,24 @@ public class Player extends LivingEntity {
 			this.EXP += delta;
 		}
 		if (gc.getInput().isKeyPressed(Input.KEY_PAUSE)) {
-			this.equips.set(0, new Equip("core",0));
+			this.equips.set(0, new Equip("core", 0));
 		}
 		if (gc.getInput().isKeyPressed(Input.KEY_F5)) {
 			try {
-				Save.updateSave(this.getGame().saveLocation, this, this.getParent());
+				Save.updateSave(this.getGame().saveLocation, this,
+						this.getParent());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 	}
-	
-	public ArrayList<Action> advanceTurn(){
+
+	public ArrayList<Action> advanceTurn() {
 		ArrayList<Action> c = super.advanceTurn();
-		for(int i=0; i<8; i++){//updating the stat alterations based on equips
-			if(this.equips.get(i)!=null){
-				Equip e= this.equips.get(i);
+		for (int i = 0; i < 8; i++) {// updating the stat alterations based on
+										// equips
+			if (this.equips.get(i) != null) {
+				Equip e = this.equips.get(i);
 				this.profession.editHP(e.HP);
 				this.profession.editMP(e.MP);
 				this.profession.editINT(e.INT);
@@ -174,9 +182,13 @@ public class Player extends LivingEntity {
 		}
 		return c;
 	}
-	
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.InteractiveEntity#updateBoardEffects(org.newdawn.slick.GameContainer, int)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.InteractiveEntity#updateBoardEffects
+	 * (org.newdawn.slick.GameContainer, int)
 	 */
 	public void updateBoardEffects(GameContainer gc, int delta) {
 		super.updateBoardEffects(gc, delta);
@@ -190,10 +202,10 @@ public class Player extends LivingEntity {
 			this.MP = this.profession.getMaxMP();
 			this.HP = this.profession.getMaxHP();
 			Animation levelUp = new Animation(this.levelUp, 100);// TODO
-																		// actual
-																		// level
-																		// up
-																		// animation
+																	// actual
+																	// level
+																	// up
+																	// animation
 			levelUp.setLooping(false);
 			this.getParent().addEffectOver(this.getLocation(),
 					new AnimationEffect(this.getLocation(), levelUp));// TODO
@@ -206,9 +218,11 @@ public class Player extends LivingEntity {
 	/**
 	 * action choosing for the player (returns null often because the player
 	 * takes time to decide/input).
-	 *
-	 * @param gc the gc
-	 * @param delta the delta
+	 * 
+	 * @param gc
+	 *            the gc
+	 * @param delta
+	 *            the delta
 	 * @return the action
 	 */
 	public Action decideNextAction(GameContainer gc, int delta) {
@@ -251,7 +265,7 @@ public class Player extends LivingEntity {
 
 	/**
 	 * Can target.
-	 *
+	 * 
 	 * @return true, if successful
 	 */
 	private boolean canTarget() {
@@ -261,7 +275,7 @@ public class Player extends LivingEntity {
 
 	/**
 	 * Gets the eX pfor level.
-	 *
+	 * 
 	 * @return the eX pfor level
 	 */
 	public int getEXPforLevel() {
@@ -270,7 +284,7 @@ public class Player extends LivingEntity {
 
 	/**
 	 * Gets the max hp.
-	 *
+	 * 
 	 * @return the max hp
 	 */
 	public int getMaxHP() {
@@ -279,7 +293,7 @@ public class Player extends LivingEntity {
 
 	/**
 	 * Gets the max mp.
-	 *
+	 * 
 	 * @return the max mp
 	 */
 	public int getMaxMP() {
@@ -288,7 +302,7 @@ public class Player extends LivingEntity {
 
 	/**
 	 * Gets the iNT.
-	 *
+	 * 
 	 * @return the iNT
 	 */
 	public int getINT() {
@@ -297,7 +311,7 @@ public class Player extends LivingEntity {
 
 	/**
 	 * Gets the lUK.
-	 *
+	 * 
 	 * @return the lUK
 	 */
 	public int getLUK() {
@@ -306,7 +320,7 @@ public class Player extends LivingEntity {
 
 	/**
 	 * Gets the sTR.
-	 *
+	 * 
 	 * @return the sTR
 	 */
 	public int getSTR() {
@@ -315,7 +329,7 @@ public class Player extends LivingEntity {
 
 	/**
 	 * Gets the dEX.
-	 *
+	 * 
 	 * @return the dEX
 	 */
 	public int getDEX() {
@@ -324,7 +338,7 @@ public class Player extends LivingEntity {
 
 	/**
 	 * Gets the profession.
-	 *
+	 * 
 	 * @return the profession
 	 */
 	public Profession getProfession() {
@@ -333,30 +347,40 @@ public class Player extends LivingEntity {
 
 	/**
 	 * Adds the exp.
-	 *
-	 * @param value the value
+	 * 
+	 * @param value
+	 *            the value
 	 */
 	public void addExp(int value) {
 		this.EXP += value;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#makeFromString(net.plaidypus.deadreckoning.board.GameBoard, java.lang.String[])
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#makeFromString(net.plaidypus
+	 * .deadreckoning.board.GameBoard, java.lang.String[])
 	 */
 	@Override
 	public Entity makeFromString(GameBoard g, String[] toload) {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#saveToString()
 	 */
 	@Override
 	public String saveToString() {
-		return "LOLGONNAPUTSOMETHINGHERELATER";//TODO implement player position saving
+		return "LOLGONNAPUTSOMETHINGHERELATER";// TODO implement player position
+												// saving
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.LivingEntity#isInteractive()
 	 */
 	@Override
@@ -364,26 +388,33 @@ public class Player extends LivingEntity {
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#init()
 	 */
 	@Override
 	public void init() throws SlickException {
 		OnFire.init();
-		this.levelUp=new SpriteSheet(new Image("res/fireBurst.png"),32,32);
+		this.levelUp = new SpriteSheet(new Image("res/fireBurst.png"), 32, 32);
 	}
 
 	/**
 	 * Sets the input.
-	 *
-	 * @param input the new input
+	 * 
+	 * @param input
+	 *            the new input
 	 */
 	public void setInput(Input input) {
 		this.input = input;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#onInteract(net.plaidypus.deadreckoning.entities.Entity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#onInteract(net.plaidypus.
+	 * deadreckoning.entities.Entity)
 	 */
 	@Override
 	public Action onInteract(Entity e) {
@@ -391,7 +422,9 @@ public class Player extends LivingEntity {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {

@@ -18,23 +18,30 @@ public class FairyLights extends HudElement {
 
 	/** The num particles. */
 	int width, height, numParticles;
-	
+
 	/** The particle sheet. */
 	SpriteSheet particleSheet;
-	
+
 	/** The particles. */
 	private float[][] particles;
 
 	/**
 	 * Instantiates a new fairy lights.
-	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param bindMethod the bind method
-	 * @param width the width
-	 * @param height the height
-	 * @param numParticles the num particles
-	 * @param particles the particles
+	 * 
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param bindMethod
+	 *            the bind method
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
+	 * @param numParticles
+	 *            the num particles
+	 * @param particles
+	 *            the particles
 	 */
 	public FairyLights(int x, int y, int bindMethod, int width, int height,
 			int numParticles, SpriteSheet particles) {
@@ -57,15 +64,19 @@ public class FairyLights extends HudElement {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#update(org.newdawn
+	 * .slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
 	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 		for (int i = 0; i < particles.length; i++) {
-			particles[i][3] += (Utilities.randFloat() - Utilities.randFloat())*0.01;// Momentum
-			particles[i][4] += (Utilities.randFloat() - Utilities.randFloat())*0.01;
+			particles[i][3] += (Utilities.randFloat() - Utilities.randFloat()) * 0.01;// Momentum
+			particles[i][4] += (Utilities.randFloat() - Utilities.randFloat()) * 0.01;
 
 			particles[i][1] += particles[i][3] * 5 * delta / 1000;// Movement
 			particles[i][2] += particles[i][4] * 5 * delta / 1000;
@@ -90,22 +101,32 @@ public class FairyLights extends HudElement {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(java.lang
+	 * .Object)
 	 */
 	@Override
 	public void makeFrom(Object o) {
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#init(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#init(org.newdawn.slick
+	 * .GameContainer, org.newdawn.slick.state.StateBasedGame)
 	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getWidth()
 	 */
 	@Override
@@ -113,7 +134,9 @@ public class FairyLights extends HudElement {
 		return width;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getHeight()
 	 */
 	@Override
@@ -121,8 +144,13 @@ public class FairyLights extends HudElement {
 		return height;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#render(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, org.newdawn.slick.Graphics)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#render(org.newdawn
+	 * .slick.GameContainer, org.newdawn.slick.state.StateBasedGame,
+	 * org.newdawn.slick.Graphics)
 	 */
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)

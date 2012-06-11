@@ -19,23 +19,27 @@ public class Stair extends StaticImageEntity {
 
 	/** The Constant NULL. */
 	public static final int UP = 0, DOWN = 1, NULL = 2;
-	
+
 	/** The target floor. */
 	public String targetFloor;
-	
+
 	/** The stair images. */
 	static ArrayList<Image> stairImages;
-	
+
 	/** The updown null. */
 	public int updownNull;
 
 	/**
 	 * Instantiates a new stair.
-	 *
-	 * @param target the target
-	 * @param layer the layer
-	 * @param targetFloor the target floor
-	 * @param updownNull the updown null
+	 * 
+	 * @param target
+	 *            the target
+	 * @param layer
+	 *            the layer
+	 * @param targetFloor
+	 *            the target floor
+	 * @param updownNull
+	 *            the updown null
 	 */
 	public Stair(Tile target, int layer, String targetFloor, int updownNull) {
 		super(target, layer, stairImages.get(updownNull));
@@ -50,7 +54,9 @@ public class Stair extends StaticImageEntity {
 	public Stair() {
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#init()
 	 */
 	@Override
@@ -60,23 +66,35 @@ public class Stair extends StaticImageEntity {
 		stairImages.add(new Image("res/stairsDown.png"));
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#update(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#update(org.newdawn.slick.
+	 * GameContainer, int)
 	 */
 	@Override
 	public void update(GameContainer gc, int delta) {
 		// TODO Auto-generated method stub
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#updateBoardEffects(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#updateBoardEffects(org.newdawn
+	 * .slick.GameContainer, int)
 	 */
 	@Override
 	public void updateBoardEffects(GameContainer gc, int delta) {
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#chooseAction(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#chooseAction(org.newdawn.
+	 * slick.GameContainer, int)
 	 */
 	@Override
 	public Action chooseAction(GameContainer gc, int delta) {
@@ -84,7 +102,9 @@ public class Stair extends StaticImageEntity {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#advanceTurn()
 	 */
 	@Override
@@ -92,8 +112,12 @@ public class Stair extends StaticImageEntity {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#makeFromString(net.plaidypus.deadreckoning.board.GameBoard, java.lang.String[])
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#makeFromString(net.plaidypus
+	 * .deadreckoning.board.GameBoard, java.lang.String[])
 	 */
 	@Override
 	public Entity makeFromString(GameBoard target, String[] attributes) {
@@ -103,7 +127,9 @@ public class Stair extends StaticImageEntity {
 				Integer.parseInt(attributes[5]));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#saveToString()
 	 */
 	@Override
@@ -111,15 +137,21 @@ public class Stair extends StaticImageEntity {
 		return this.getGenericSave() + ":" + targetFloor + ":" + updownNull;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#onDeath()
 	 */
 	@Override
 	public void onDeath() {
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#onInteract(net.plaidypus.deadreckoning.entities.Entity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#onInteract(net.plaidypus.
+	 * deadreckoning.entities.Entity)
 	 */
 	@Override
 	public Action onInteract(Entity e) {

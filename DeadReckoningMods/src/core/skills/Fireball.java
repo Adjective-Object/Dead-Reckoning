@@ -45,8 +45,9 @@ public class Fireball extends Skill {
 
 	/**
 	 * Instantiates a new fireball.
-	 *
-	 * @param source the source
+	 * 
+	 * @param source
+	 *            the source
 	 */
 	public Fireball(LivingEntity source) {
 		super(source);
@@ -56,23 +57,35 @@ public class Fireball extends Skill {
 
 	/**
 	 * Inits the.
-	 *
-	 * @throws SlickException the slick exception
+	 * 
+	 * @throws SlickException
+	 *             the slick exception
 	 */
-	public void init() throws SlickException {//TODO things
+	public void init() throws SlickException {// TODO things
 		try {
-			Fireball.fireball = new SpriteSheet( new Image(TextureLoader.getTexture("PNG",ModLoader.getModpackLoader("core").getResourceAsStream("core/res/FireBurst.png")) ),
+			Fireball.fireball = new SpriteSheet(new Image(
+					TextureLoader.getTexture(
+							"PNG",
+							ModLoader.getModpackLoader("core")
+									.getResourceAsStream(
+											"core/res/FireBurst.png"))),
 					DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
-			Fireball.image = new Image(TextureLoader.getTexture("PNG",ModLoader.getModpackLoader("core").getResourceAsStream("core/res/onFireIcon.png")));
-			System.out.println("FOIAHBAHLL "+fireball+" "+image);
+			Fireball.image = new Image(TextureLoader.getTexture(
+					"PNG",
+					ModLoader.getModpackLoader("core").getResourceAsStream(
+							"core/res/onFireIcon.png")));
+			System.out.println("FOIAHBAHLL " + fireball + " " + image);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		System.out.println(this.getClass().getCanonicalName());
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.skills.Skill#makeAction(net.plaidypus.deadreckoning.board.Tile)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.plaidypus.deadreckoning.skills.Skill#makeAction(net.plaidypus.
+	 * deadreckoning.board.Tile)
 	 */
 	public Action makeAction(Tile target) {
 		ArrayList<Action> toRet = new ArrayList<Action>(0);
@@ -86,7 +99,9 @@ public class Fireball extends Skill {
 		return new ActionSpawner(source, toRet);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.skills.Skill#updateSkill()
 	 */
 	public void updateSkill() {
@@ -94,8 +109,12 @@ public class Fireball extends Skill {
 		this.levelcap = (this.source.getStatMaster().getLevel() - 1) * 1;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.skills.Skill#canTargetTile(net.plaidypus.deadreckoning.board.Tile)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.skills.Skill#canTargetTile(net.plaidypus.
+	 * deadreckoning.board.Tile)
 	 */
 	public boolean canTargetTile(Tile t) {
 		if (!t.isOpen(Tile.LAYER_ACTIVE)
@@ -105,15 +124,21 @@ public class Fireball extends Skill {
 		return false;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.skills.Skill#canBeCast()
 	 */
 	public boolean canBeCast() {
 		return super.canBeCast() && getLevel() > 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.skills.Skill#highlightRange(net.plaidypus.deadreckoning.board.GameBoard)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.skills.Skill#highlightRange(net.plaidypus
+	 * .deadreckoning.board.GameBoard)
 	 */
 	public void highlightRange(GameBoard board) {
 		highlightRadial(board, 2);

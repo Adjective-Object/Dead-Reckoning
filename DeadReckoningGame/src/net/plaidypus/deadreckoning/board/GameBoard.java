@@ -29,10 +29,10 @@ public class GameBoard implements ILosBoard {
 
 	/** The board. */
 	public Tile[][] board;
-	
+
 	/** The primary highlight. */
 	Tile primaryHighlight;
-	
+
 	/** The height. */
 	public int width, height;
 
@@ -53,10 +53,13 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Instantiates a new game board.
-	 *
-	 * @param g the g
-	 * @param saveID the save id
-	 * @param mapID the map id
+	 * 
+	 * @param g
+	 *            the g
+	 * @param saveID
+	 *            the save id
+	 * @param mapID
+	 *            the map id
 	 */
 	public GameBoard(GameplayElement g, String saveID, String mapID) {
 		this();
@@ -76,9 +79,11 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Instantiates a new game board.
-	 *
-	 * @param width the width
-	 * @param height the height
+	 * 
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
 	 */
 	public GameBoard(int width, int height) {
 		this();
@@ -98,10 +103,13 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Place entity.
-	 *
-	 * @param t the t
-	 * @param e the e
-	 * @param layer the layer
+	 * 
+	 * @param t
+	 *            the t
+	 * @param e
+	 *            the e
+	 * @param layer
+	 *            the layer
 	 */
 	public void placeEntity(Tile t, Entity e, int layer) {
 		placeEntity(t.getX(), t.getY(), e, layer);
@@ -109,11 +117,15 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Insert entity.
-	 *
-	 * @param index the index
-	 * @param t the t
-	 * @param e the e
-	 * @param layer the layer
+	 * 
+	 * @param index
+	 *            the index
+	 * @param t
+	 *            the t
+	 * @param e
+	 *            the e
+	 * @param layer
+	 *            the layer
 	 */
 	public void insertEntity(int index, Tile t, Entity e, int layer) {
 		insertEntity(index, t.getX(), t.getY(), e, layer);
@@ -121,11 +133,15 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Place entity.
-	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param e the e
-	 * @param layer the layer
+	 * 
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param e
+	 *            the e
+	 * @param layer
+	 *            the layer
 	 */
 	public void placeEntity(int x, int y, Entity e, int layer) {
 		board[x][y].setEntity(e, layer);
@@ -134,12 +150,17 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Insert entity.
-	 *
-	 * @param index the index
-	 * @param x the x
-	 * @param y the y
-	 * @param e the e
-	 * @param layer the layer
+	 * 
+	 * @param index
+	 *            the index
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param e
+	 *            the e
+	 * @param layer
+	 *            the layer
 	 */
 	public void insertEntity(int index, int x, int y, Entity e, int layer) {
 		board[x][y].setEntity(e, layer);
@@ -148,11 +169,15 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Place entity near.
-	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param e the e
-	 * @param layer the layer
+	 * 
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param e
+	 *            the e
+	 * @param layer
+	 *            the layer
 	 * @return true, if successful
 	 */
 	public boolean placeEntityNear(int x, int y, Entity e, int layer) {
@@ -175,10 +200,13 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Removes the entity.
-	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param layer the layer
+	 * 
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param layer
+	 *            the layer
 	 */
 	public void removeEntity(int x, int y, int layer) {
 		ingameEntities.remove(board[x][y].getEntity(layer));
@@ -187,8 +215,9 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Removes the entity.
-	 *
-	 * @param e the e
+	 * 
+	 * @param e
+	 *            the e
 	 */
 	public void removeEntity(Entity e) {
 		ingameEntities.remove(e);
@@ -197,9 +226,11 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Clear tile.
-	 *
-	 * @param x the x
-	 * @param y the y
+	 * 
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
 	public void clearTile(int x, int y) {
 		for (int i = 0; i < Tile.numLayers; i++) {
@@ -210,10 +241,13 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Move entity.
-	 *
-	 * @param source the source
-	 * @param target the target
-	 * @param layer the layer
+	 * 
+	 * @param source
+	 *            the source
+	 * @param target
+	 *            the target
+	 * @param layer
+	 *            the layer
 	 */
 	public void moveEntity(Entity source, Tile target, int layer) {
 		source.getLocation().disconnectEntity(layer);
@@ -222,9 +256,11 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Gets the tile at.
-	 *
-	 * @param x the x
-	 * @param y the y
+	 * 
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 * @return the tile at
 	 */
 	public Tile getTileAt(int x, int y) {
@@ -233,10 +269,13 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Render.
-	 *
-	 * @param g the g
-	 * @param xoff the xoff
-	 * @param yoff the yoff
+	 * 
+	 * @param g
+	 *            the g
+	 * @param xoff
+	 *            the xoff
+	 * @param yoff
+	 *            the yoff
 	 */
 	public void render(Graphics g, float xoff, float yoff) {
 
@@ -289,10 +328,13 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Update selctor.
-	 *
-	 * @param i the i
-	 * @param xOff the x off
-	 * @param yOff the y off
+	 * 
+	 * @param i
+	 *            the i
+	 * @param xOff
+	 *            the x off
+	 * @param yOff
+	 *            the y off
 	 */
 	public void updateSelctor(Input i, float xOff, float yOff) {
 
@@ -322,9 +364,11 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Update all tiles.
-	 *
-	 * @param gc the gc
-	 * @param delta the delta
+	 * 
+	 * @param gc
+	 *            the gc
+	 * @param delta
+	 *            the delta
 	 */
 	public void updateAllTiles(GameContainer gc, int delta) {
 
@@ -361,9 +405,11 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Update board effects.
-	 *
-	 * @param gc the gc
-	 * @param delta the delta
+	 * 
+	 * @param gc
+	 *            the gc
+	 * @param delta
+	 *            the delta
 	 */
 	public void updateBoardEffects(GameContainer gc, int delta) {
 		for (int y = 0; y < this.height; y++) {
@@ -379,7 +425,7 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Gets the height.
-	 *
+	 * 
 	 * @return the height
 	 */
 	public int getHeight() {
@@ -388,7 +434,7 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Gets the width.
-	 *
+	 * 
 	 * @return the width
 	 */
 	public int getWidth() {
@@ -397,8 +443,9 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Adds the effect under.
-	 *
-	 * @param g the g
+	 * 
+	 * @param g
+	 *            the g
 	 */
 	public void addEffectUnder(GridEffect g) {
 		if (g != null) {
@@ -408,8 +455,9 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Adds the effect over.
-	 *
-	 * @param g the g
+	 * 
+	 * @param g
+	 *            the g
 	 */
 	public void addEffectOver(GridEffect g) {
 		if (g != null) {
@@ -419,9 +467,11 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Adds the effect under.
-	 *
-	 * @param t the t
-	 * @param g the g
+	 * 
+	 * @param t
+	 *            the t
+	 * @param g
+	 *            the g
 	 */
 	public void addEffectUnder(Tile t, GridEffect g) {
 		if (g != null) {
@@ -432,9 +482,11 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Adds the effect over.
-	 *
-	 * @param t the t
-	 * @param g the g
+	 * 
+	 * @param t
+	 *            the t
+	 * @param g
+	 *            the g
 	 */
 	public void addEffectOver(Tile t, GridEffect g) {
 		if (g != null) {
@@ -445,9 +497,11 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Highlight square.
-	 *
-	 * @param x the x
-	 * @param y the y
+	 * 
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
 	public void highlightSquare(int x, int y) {
 		board[x][y].setHighlighted(Tile.HIGHLIGHT_CONFIRM);
@@ -455,9 +509,11 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Checks if is tile highlighted.
-	 *
-	 * @param x the x
-	 * @param y the y
+	 * 
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 * @return true, if is tile highlighted
 	 */
 	public boolean isTileHighlighted(int x, int y) {
@@ -466,9 +522,11 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Sets the primairy highlight.
-	 *
-	 * @param x the x
-	 * @param y the y
+	 * 
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
 	public void setPrimairyHighlight(int x, int y) {
 		this.primaryHighlight = board[x][y];
@@ -476,8 +534,9 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Sets the primairy highlight.
-	 *
-	 * @param t the new primairy highlight
+	 * 
+	 * @param t
+	 *            the new primairy highlight
 	 */
 	public void setPrimairyHighlight(Tile t) {
 		this.primaryHighlight = t;
@@ -485,7 +544,7 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Gets the primairy highlight.
-	 *
+	 * 
 	 * @return the primairy highlight
 	 */
 	public Tile getPrimairyHighlight() {
@@ -513,9 +572,11 @@ public class GameBoard implements ILosBoard {
 	// TODO block light based on transparency / vision
 	/**
 	 * Light in radius.
-	 *
-	 * @param location the location
-	 * @param VIS the vIS
+	 * 
+	 * @param location
+	 *            the location
+	 * @param VIS
+	 *            the vIS
 	 */
 	public void lightInRadius(Tile location, float VIS) {
 		for (int x = 0; x < board.length; x++) {
@@ -535,9 +596,11 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Reveal from entity.
-	 *
-	 * @param entity the entity
-	 * @param sightDistance the sight distance
+	 * 
+	 * @param entity
+	 *            the entity
+	 * @param sightDistance
+	 *            the sight distance
 	 */
 	public void revealFromEntity(Entity entity, int sightDistance) { // TODO
 																		// temporary,
@@ -567,9 +630,11 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Checks if is lineof sight.
-	 *
-	 * @param a the a
-	 * @param b the b
+	 * 
+	 * @param a
+	 *            the a
+	 * @param b
+	 *            the b
 	 * @return true, if is lineof sight
 	 */
 	public boolean isLineofSight(Tile a, Tile b) {
@@ -580,10 +645,13 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Find available paths.
-	 *
-	 * @param source the source
-	 * @param wanderDist the wander dist
-	 * @param layer the layer
+	 * 
+	 * @param source
+	 *            the source
+	 * @param wanderDist
+	 *            the wander dist
+	 * @param layer
+	 *            the layer
 	 * @return the array list
 	 */
 	public ArrayList<Tile> findAvailablePaths(Tile source, int wanderDist,
@@ -640,10 +708,13 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * High light available paths.
-	 *
-	 * @param source the source
-	 * @param wanderDist the wander dist
-	 * @param layer the layer
+	 * 
+	 * @param source
+	 *            the source
+	 * @param wanderDist
+	 *            the wander dist
+	 * @param layer
+	 *            the layer
 	 */
 	public void highLightAvailablePaths(Tile source, int wanderDist, int layer) {
 		ArrayList<Tile> targetableTiles = findAvailablePaths(source,
@@ -668,9 +739,11 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Coord in grid.
-	 *
-	 * @param x the x
-	 * @param y the y
+	 * 
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 * @return true, if successful
 	 */
 	public boolean coordInGrid(int x, int y) {
@@ -679,7 +752,7 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Gets the game.
-	 *
+	 * 
 	 * @return the game
 	 */
 	public GameplayElement getGame() {
@@ -688,8 +761,9 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Sets the game.
-	 *
-	 * @param g the new game
+	 * 
+	 * @param g
+	 *            the new game
 	 */
 	public void setGame(GameplayElement g) {
 		this.GameplayElement = g;
@@ -697,8 +771,9 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Assign element.
-	 *
-	 * @param g the g
+	 * 
+	 * @param g
+	 *            the g
 	 */
 	public void assignElement(GameplayElement g) {
 		this.GameplayElement = g;
@@ -706,7 +781,7 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Checks if is idle.
-	 *
+	 * 
 	 * @return true, if is idle
 	 */
 	public boolean isIdle() {
@@ -720,7 +795,7 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Gets the save id.
-	 *
+	 * 
 	 * @return the save id
 	 */
 	public String getSaveID() {
@@ -729,14 +804,16 @@ public class GameBoard implements ILosBoard {
 
 	/**
 	 * Gets the map id.
-	 *
+	 * 
 	 * @return the map id
 	 */
 	public String getMapID() {
 		return mapID;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see rlforj.los.ILosBoard#contains(int, int)
 	 */
 	public boolean contains(int x, int y) {
@@ -744,7 +821,9 @@ public class GameBoard implements ILosBoard {
 				&& this.getTileAt(x, y).isOpen(Tile.LAYER_ACTIVE);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see rlforj.los.ILosBoard#isObstacle(int, int)
 	 */
 	public boolean isObstacle(int x, int y) {
@@ -752,7 +831,9 @@ public class GameBoard implements ILosBoard {
 				&& !board[x][y].isTransparent();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see rlforj.los.ILosBoard#visit(int, int)
 	 */
 	public void visit(int x, int y) {
@@ -766,12 +847,14 @@ public class GameBoard implements ILosBoard {
 	 * method for getting a valid tile to drop the player on
 	 * 
 	 * used in lieu of a default spawn point as defined by Biome.
+	 * 
 	 * @return
 	 */
 	public Tile getValidSpawnTile() {
-		Tile returnTile = this.getTileAt(0,0);
-		while(returnTile.getTileFace()==Tile.TILE_NULL){
-			returnTile =  this.getTileAt(Utilities.randInt(0,this.getWidth()), Utilities.randInt(0,this.getHeight()));
+		Tile returnTile = this.getTileAt(0, 0);
+		while (returnTile.getTileFace() == Tile.TILE_NULL) {
+			returnTile = this.getTileAt(Utilities.randInt(0, this.getWidth()),
+					Utilities.randInt(0, this.getHeight()));
 		}
 		return returnTile;
 	}

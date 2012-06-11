@@ -30,46 +30,46 @@ public class GameplayElement extends HudElement {
 
 	/** The state id. */
 	int stateID;
-	
+
 	/** The current action. */
 	int currentEntity, currentAction;
-	
+
 	/** The save number. */
 	public String saveLocation;
-	
+
 	/** The time on. */
 	int timeOn;
 
 	/** The width. */
 	private int width;
-	
+
 	/** The height. */
 	private int height;
 
 	/** The camera y. */
 	public static float cameraX, cameraY;
-	
+
 	/** The camera dest y. */
 	public static float cameraDestX, cameraDestY;
 
 	/** The Constant cameraRate. */
-	static final float cameraRate = 0.2F, cameraSensitivityFrac=1.0F;
+	static final float cameraRate = 0.2F, cameraSensitivityFrac = 1.0F;
 
 	/** The last map. */
 	public String lastMap;
 
 	/** The input. */
 	Input input;
-	
+
 	/** The player. */
 	public Player player;
-	
+
 	/** The background screen. */
 	static Image backgroundScreen;
 
 	/** The gb. */
 	private GameBoard gb;
-	
+
 	/** The gc. */
 	GameContainer gc;
 
@@ -78,9 +78,11 @@ public class GameplayElement extends HudElement {
 
 	/**
 	 * Instantiates a new gameplay element.
-	 *
-	 * @param saveNumber the save number
-	 * @throws SlickException the slick exception
+	 * 
+	 * @param saveNumber
+	 *            the save number
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	public GameplayElement(int saveNumber) throws SlickException {
 		super(0, 0, HudElement.TOP_LEFT, true);
@@ -90,10 +92,13 @@ public class GameplayElement extends HudElement {
 
 	/**
 	 * initializes the gameplay state.
-	 *
-	 * @param gc the gc
-	 * @param sbg the sbg
-	 * @throws SlickException the slick exception
+	 * 
+	 * @param gc
+	 *            the gc
+	 * @param sbg
+	 *            the sbg
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
@@ -106,7 +111,7 @@ public class GameplayElement extends HudElement {
 		input = gc.getInput();
 
 		lastMap = "";
-		
+
 		DamageEffect.init();
 		Tile.init("res\\wallTiles.png");
 
@@ -122,8 +127,9 @@ public class GameplayElement extends HudElement {
 
 	/**
 	 * Sets the player.
-	 *
-	 * @param p the new player
+	 * 
+	 * @param p
+	 *            the new player
 	 */
 	public void setPlayer(Player p) {
 		player = p;
@@ -132,8 +138,9 @@ public class GameplayElement extends HudElement {
 
 	/**
 	 * Sets the board.
-	 *
-	 * @param b the new board
+	 * 
+	 * @param b
+	 *            the new board
 	 */
 	public void setBoard(GameBoard b) {
 		if (this.gb != null) {
@@ -151,19 +158,20 @@ public class GameplayElement extends HudElement {
 		b.setGame(this);
 		b.renderDistX = this.getWidth() / DeadReckoningGame.tileSize + 2;
 		b.renderDistY = this.getHeight() / DeadReckoningGame.tileSize + 2;
-		
-		
-		
+
 		this.gb = b;
-		
+
 		Tile target = null;
-		if (lastMap != "") {
+		if (!lastMap.equals("")) {
 			for (int x = 0; x < b.getWidth(); x++) {
 				for (int y = 0; y < b.getHeight(); y++) {
-					if (!this.gb.getTileAt(x, y).isOpen(Tile.LAYER_PASSIVE_MAP)) {
+					if (!b.getTileAt(x, y).isOpen(Tile.LAYER_PASSIVE_MAP)) {
 						try {
+							System.out.println(b.getTileAt(x, y).getEntity(
+									Tile.LAYER_PASSIVE_MAP));
 							LandingPad pad = LandingPad.class.cast(b.getTileAt(
 									x, y).getEntity(Tile.LAYER_PASSIVE_MAP));
+							System.out.println("HNNG");
 							if (pad.fromFloor.equals(lastMap)) {
 								target = this.gb.getTileAt(x, y);
 							}
@@ -172,14 +180,13 @@ public class GameplayElement extends HudElement {
 					}
 				}
 			}
-		}
-		else{
-			target = b.getTileAt(player.getX(),player.getY());
+		} else {
+			target = b.getTileAt(player.getX(), player.getY());
 		}
 
+		System.out.println(target);
 		gb.insertEntity(0, target, player, player.getLayer());
-		
-		
+
 		cameraDestX = player.getAbsoluteX() - gc.getWidth() / 2
 				+ DeadReckoningGame.tileSize / 2;
 		cameraDestY = player.getAbsoluteY() - gc.getHeight() / 2
@@ -197,11 +204,15 @@ public class GameplayElement extends HudElement {
 
 	/**
 	 * updates the gamestate (called automagically by slick).
-	 *
-	 * @param gc the gc
-	 * @param sbg the sbg
-	 * @param delta the delta
-	 * @throws SlickException the slick exception
+	 * 
+	 * @param gc
+	 *            the gc
+	 * @param sbg
+	 *            the sbg
+	 * @param delta
+	 *            the delta
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
@@ -229,9 +240,11 @@ public class GameplayElement extends HudElement {
 
 	/**
 	 * Update board effects.
-	 *
-	 * @param gc the gc
-	 * @param delta the delta
+	 * 
+	 * @param gc
+	 *            the gc
+	 * @param delta
+	 *            the delta
 	 */
 	public void updateBoardEffects(GameContainer gc, int delta) {
 		getBoard().HideAll();
@@ -242,9 +255,11 @@ public class GameplayElement extends HudElement {
 
 	/**
 	 * Update actions.
-	 *
-	 * @param gc the gc
-	 * @param delta the delta
+	 * 
+	 * @param gc
+	 *            the gc
+	 * @param delta
+	 *            the delta
 	 */
 	private void updateActions(GameContainer gc, int delta) {
 		if (actions.size() == 0) {// if the current entity is in the middle of
@@ -284,8 +299,9 @@ public class GameplayElement extends HudElement {
 
 	/**
 	 * Finalize turn.
-	 *
-	 * @param delta the delta
+	 * 
+	 * @param delta
+	 *            the delta
 	 */
 	private void finalizeTurn(int delta) {
 		advanceEntity();
@@ -297,8 +313,9 @@ public class GameplayElement extends HudElement {
 
 	/**
 	 * Apply all actions.
-	 *
-	 * @param delta the delta
+	 * 
+	 * @param delta
+	 *            the delta
 	 */
 	private void applyAllActions(int delta) {
 		actions.get(currentAction).applyAction(delta);
@@ -309,7 +326,7 @@ public class GameplayElement extends HudElement {
 
 	/**
 	 * Actions take turn.
-	 *
+	 * 
 	 * @return true, if successful
 	 */
 	private boolean actionsTakeTurn() {
@@ -323,8 +340,9 @@ public class GameplayElement extends HudElement {
 
 	/**
 	 * Gets the actions.
-	 *
-	 * @param delta the delta
+	 * 
+	 * @param delta
+	 *            the delta
 	 * @return the actions
 	 */
 	private void getActions(int delta) {
@@ -341,20 +359,21 @@ public class GameplayElement extends HudElement {
 
 	/**
 	 * Camera is focused.
-	 *
+	 * 
 	 * @return true, if successful
 	 */
 	private boolean cameraIsFocused() {
-		return (Math.abs(cameraDestX - cameraX) < cameraSensitivityFrac && Math.abs(cameraDestY
-				- cameraY) < cameraSensitivityFrac)
+		return (Math.abs(cameraDestX - cameraX) < cameraSensitivityFrac && Math
+				.abs(cameraDestY - cameraY) < cameraSensitivityFrac)
 				|| !this.getBoard().ingameEntities.get(currentEntity)
 						.getLocation().canBeSeen();
 	}
 
 	/**
 	 * Alert camera to.
-	 *
-	 * @param e the e
+	 * 
+	 * @param e
+	 *            the e
 	 */
 	private void alertCameraTo(Entity e) {
 		int nx = e.getAbsoluteX() - gc.getWidth() / 2
@@ -386,7 +405,7 @@ public class GameplayElement extends HudElement {
 
 	/**
 	 * Actions complete.
-	 *
+	 * 
 	 * @return true, if successful
 	 */
 	private boolean actionsComplete() {
@@ -400,11 +419,15 @@ public class GameplayElement extends HudElement {
 
 	/**
 	 * renders the gamestate (gameboard and particless).
-	 *
-	 * @param gc the gc
-	 * @param sbg the sbg
-	 * @param g the g
-	 * @throws SlickException the slick exception
+	 * 
+	 * @param gc
+	 *            the gc
+	 * @param sbg
+	 *            the sbg
+	 * @param g
+	 *            the g
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
@@ -416,7 +439,7 @@ public class GameplayElement extends HudElement {
 
 	/**
 	 * Gets the iD.
-	 *
+	 * 
 	 * @return the iD
 	 */
 	public int getID() {
@@ -425,7 +448,7 @@ public class GameplayElement extends HudElement {
 
 	/**
 	 * adds a particle to the particle list in game.
-	 *
+	 * 
 	 * @return the image
 	 */
 
@@ -435,8 +458,9 @@ public class GameplayElement extends HudElement {
 
 	/**
 	 * Adds the action.
-	 *
-	 * @param a the a
+	 * 
+	 * @param a
+	 *            the a
 	 */
 	public void addAction(Action a) {
 		if (a != null) {
@@ -444,7 +468,9 @@ public class GameplayElement extends HudElement {
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getWidth()
 	 */
 	@Override
@@ -452,7 +478,9 @@ public class GameplayElement extends HudElement {
 		return width;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getHeight()
 	 */
 	@Override
@@ -460,8 +488,12 @@ public class GameplayElement extends HudElement {
 		return height;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(java.lang
+	 * .Object)
 	 */
 	@Override
 	public void makeFrom(Object o) {
@@ -469,7 +501,7 @@ public class GameplayElement extends HudElement {
 
 	/**
 	 * Gets the board.
-	 *
+	 * 
 	 * @return the board
 	 */
 	public GameBoard getBoard() {

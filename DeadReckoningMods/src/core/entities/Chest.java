@@ -36,10 +36,13 @@ public class Chest extends InteractiveEntity {
 
 	/**
 	 * Instantiates a new chest.
-	 *
-	 * @param t the t
-	 * @param layer the layer
-	 * @param items the items
+	 * 
+	 * @param t
+	 *            the t
+	 * @param layer
+	 *            the layer
+	 * @param items
+	 *            the items
 	 */
 	public Chest(Tile t, int layer, ArrayList<Item> items) {
 		super(t, layer);
@@ -50,7 +53,9 @@ public class Chest extends InteractiveEntity {
 		this.description = "A creaky old chest.";
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#init()
 	 */
 	public void init() throws SlickException {
@@ -58,14 +63,22 @@ public class Chest extends InteractiveEntity {
 		System.out.println(chest);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.InteractiveEntity#update(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.InteractiveEntity#update(org.newdawn
+	 * .slick.GameContainer, int)
 	 */
 	public void update(GameContainer gc, int delta) {
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.InteractiveEntity#updateBoardEffects(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.InteractiveEntity#updateBoardEffects
+	 * (org.newdawn.slick.GameContainer, int)
 	 */
 	public void updateBoardEffects(GameContainer gc, int delta) {
 		if (this.inventory.isEmpty()) {
@@ -73,39 +86,54 @@ public class Chest extends InteractiveEntity {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.InteractiveEntity#chooseAction(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.InteractiveEntity#chooseAction(org
+	 * .newdawn.slick.GameContainer, int)
 	 */
 	@Override
 	public Action chooseAction(GameContainer gc, int delta) {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.InteractiveEntity#forceRender(org.newdawn.slick.Graphics, float, float)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.InteractiveEntity#forceRender(org
+	 * .newdawn.slick.Graphics, float, float)
 	 */
 	@Override
 	public void forceRender(Graphics g, float x, float y) {
 		g.drawImage(chest, x, y);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#makeFromString(net.plaidypus.deadreckoning.board.GameBoard, java.lang.String[])
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#makeFromString(net.plaidypus
+	 * .deadreckoning.board.GameBoard, java.lang.String[])
 	 */
 	@Override
 	public Entity makeFromString(GameBoard g, String[] toload) {
 		ArrayList<Item> content = new ArrayList<Item>(0);
 		for (int i = 4; i < toload.length; i++) {
-			content.add(new EtcDrop("core",Integer.parseInt(toload[i]), 1));// TODO
-																		// equip parsing
-																		// making it not automatically assume everything belongs to modpack "core"
+			content.add(new EtcDrop("core", Integer.parseInt(toload[i]), 1));// TODO
+			// equip parsing
+			// making it not automatically assume everything belongs to modpack
+			// "core"
 		}
 		return new Chest(g.getTileAt(Integer.parseInt(toload[1]),
 				Integer.parseInt(toload[2])), Integer.parseInt(toload[3]),
 				content);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#saveToString()
 	 */
 	@Override
@@ -114,7 +142,9 @@ public class Chest extends InteractiveEntity {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#advanceTurn()
 	 */
 	@Override
@@ -122,7 +152,9 @@ public class Chest extends InteractiveEntity {
 		return new ArrayList<Action>(0);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#isInteractive()
 	 */
 	@Override
@@ -130,7 +162,9 @@ public class Chest extends InteractiveEntity {
 		return false;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#onDeath()
 	 */
 	@Override
@@ -139,8 +173,12 @@ public class Chest extends InteractiveEntity {
 				new FadeoutEffect(this.getLocation(), chest));
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#onInteract(net.plaidypus.deadreckoning.entities.Entity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#onInteract(net.plaidypus.
+	 * deadreckoning.entities.Entity)
 	 */
 	@Override
 	public Action onInteract(Entity observer) {

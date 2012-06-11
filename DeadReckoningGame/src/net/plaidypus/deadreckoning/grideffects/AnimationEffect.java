@@ -9,18 +9,21 @@ import org.newdawn.slick.Graphics;
 /**
  * The Class AnimationEffect.
  * 
- * A subclass of Grideffect for easily applying animations to the tile grid, looping only if the animation loops
+ * A subclass of Grideffect for easily applying animations to the tile grid,
+ * looping only if the animation loops
  */
 public class AnimationEffect extends GridEffect {
-	
+
 	/** The animation. */
 	public Animation animation;
 
 	/**
 	 * Instantiates a new animation effect.
-	 *
-	 * @param location the location tile
-	 * @param a the animation
+	 * 
+	 * @param location
+	 *            the location tile
+	 * @param a
+	 *            the animation
 	 */
 	public AnimationEffect(Tile location, Animation a) {
 		super(location);
@@ -45,7 +48,8 @@ public class AnimationEffect extends GridEffect {
 	 * renders the animation at the given tile XY offset and tile coords
 	 * 
 	 * @see org.newdawn.slick.Animation#getCurrentFrame()
-	 * @see net.plaidypus.deadreckoning.grideffects.GridEffect#render(org.newdawn.slick.Graphics, float, float)
+	 * @see net.plaidypus.deadreckoning.grideffects.GridEffect#render(org.newdawn.slick.Graphics,
+	 *      float, float)
 	 */
 	public void render(Graphics g, float xoff, float yoff) {
 		g.drawImage(this.animation.getCurrentFrame(), location.getX()

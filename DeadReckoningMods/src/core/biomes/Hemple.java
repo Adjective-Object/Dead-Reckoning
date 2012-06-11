@@ -6,7 +6,6 @@ import org.newdawn.slick.SlickException;
 
 import core.entities.Door;
 import core.entities.Torch;
-import core.entities.Wall;
 
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.board.GameBoard;
@@ -17,21 +16,21 @@ import net.plaidypus.deadreckoning.entities.Stair;
 import net.plaidypus.deadreckoning.generator.RoomBasedBiome;
 import net.plaidypus.deadreckoning.professions.StatMaster;
 
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class Hemple.
  */
 public class Hemple extends RoomBasedBiome {
-	
-	public Hemple(){
+
+	public Hemple() {
 		this(20);
 	}
-	
+
 	/**
 	 * Instantiates a new hemple.
-	 *
-	 * @param numRooms the num rooms
+	 * 
+	 * @param numRooms
+	 *            the num rooms
 	 */
 	public Hemple(int numRooms) {
 		super(numRooms);
@@ -39,8 +38,9 @@ public class Hemple extends RoomBasedBiome {
 
 	/**
 	 * Places walls on tiles that border Tile.TILE_NULL
-	 *
-	 * @param g the gameboard on which to dump walls
+	 * 
+	 * @param g
+	 *            the gameboard on which to dump walls
 	 */
 	public void placeWallsOnNullBorders(GameBoard g) {
 		for (int x = 0; x < g.getWidth(); x++) {
@@ -80,21 +80,25 @@ public class Hemple extends RoomBasedBiome {
 												g.getWidth()),
 										Utilities.limitTo(y - 1, 0,
 												g.getHeight())).getTileFace() != Tile.TILE_NULL)) {
-					g.placeEntity(g.getTileAt(x, y), new Wall(),
-							Tile.LAYER_ACTIVE);
+					g.getTileAt(x, y).blocking = true;
 				}
 			}
 		}
 	}
-	
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.generator.RoomBasedBiome#populateBoard(net.plaidypus.deadreckoning.board.GameBoard, java.util.ArrayList, java.util.ArrayList)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.generator.RoomBasedBiome#populateBoard(net
+	 * .plaidypus.deadreckoning.board.GameBoard, java.util.ArrayList,
+	 * java.util.ArrayList)
 	 */
 	public GameBoard populateBoard(GameBoard target, ArrayList<int[]> rooms,
 			ArrayList<Stair> linkedLevels) {
 		super.genericPopulation(target, rooms, linkedLevels);
 		placeWallsOnNullBorders(target);
-		
+
 		for (int i = 0; i < rooms.size(); i++) {// TODO this still does not work
 			int[] room = rooms.get(i);
 			for (int x = room[0]; x < room[0] + room[2]; x++) {
@@ -146,15 +150,15 @@ public class Hemple extends RoomBasedBiome {
 					s++;
 					target.placeEntity(t, new Monster(t, Tile.LAYER_ACTIVE,
 							this.parentMod, "livingEntities/goblin.entity",
-							new StatMaster(50, 50, 4, 4,
-									4, 4, 1), Entity.ALLIGN_HOSTILE),
-							Tile.LAYER_ACTIVE);
+							new StatMaster(50, 50, 4, 4, 4, 4, 1),
+							Entity.ALLIGN_HOSTILE), Tile.LAYER_ACTIVE);
 				}
 			}
 
 			target.placeEntity(
-					target.getTileAt(rooms.get(i)[0] + rooms.get(i)[2] / 2, rooms.get(i)[1] + rooms.get(i)[3] / 2),
- 					new Torch(null, Tile.LAYER_PASSIVE_MAP, Utilities.randInt(
+					target.getTileAt(rooms.get(i)[0] + rooms.get(i)[2] / 2,
+							rooms.get(i)[1] + rooms.get(i)[3] / 2),
+					new Torch(null, Tile.LAYER_PASSIVE_MAP, Utilities.randInt(
 							4, 6)), Tile.LAYER_PASSIVE_MAP);
 		}
 
@@ -163,7 +167,8 @@ public class Hemple extends RoomBasedBiome {
 
 	@Override
 	public void init() throws SlickException {
-		//TODO loading tileimage and assigning the tile image of the Tile class to the image upon setBoard.
+		// TODO loading tileimage and assigning the tile image of the Tile class
+		// to the image upon setBoard.
 	}
 
 }

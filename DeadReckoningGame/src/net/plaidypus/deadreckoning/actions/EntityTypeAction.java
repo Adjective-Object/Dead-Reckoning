@@ -16,17 +16,22 @@ public abstract class EntityTypeAction extends Action {
 
 	/**
 	 * Instantiates a new entity type action.
-	 *
-	 * @param source the source
-	 * @param target the target
-	 * @param targetLayer the target layer
+	 * 
+	 * @param source
+	 *            the source
+	 * @param target
+	 *            the target
+	 * @param targetLayer
+	 *            the target layer
 	 */
 	public EntityTypeAction(Entity source, Tile target, int targetLayer) {
 		super(source, target);
 		layer = targetLayer;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.actions.Action#apply(int)
 	 */
 	protected boolean apply(int delta) {
@@ -50,24 +55,27 @@ public abstract class EntityTypeAction extends Action {
 
 	/**
 	 * Apply to entity.
-	 *
-	 * @param entity the entity
+	 * 
+	 * @param entity
+	 *            the entity
 	 * @return true, if successful
 	 */
 	protected abstract boolean applyToEntity(Entity entity);
 
 	/**
 	 * Apply to entity.
-	 *
-	 * @param e the e
+	 * 
+	 * @param e
+	 *            the e
 	 * @return true, if successful
 	 */
 	protected abstract boolean applyToEntity(LivingEntity e);
 
 	/**
 	 * Apply to entity.
-	 *
-	 * @param e the e
+	 * 
+	 * @param e
+	 *            the e
 	 * @return true, if successful
 	 */
 	protected abstract boolean applyToEntity(InteractiveEntity e);

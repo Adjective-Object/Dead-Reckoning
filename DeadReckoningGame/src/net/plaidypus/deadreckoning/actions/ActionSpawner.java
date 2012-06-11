@@ -15,16 +15,20 @@ public class ActionSpawner extends Action {
 
 	/**
 	 * Instantiates a new action spawner.
-	 *
-	 * @param source the source
-	 * @param actions the actions
+	 * 
+	 * @param source
+	 *            the source
+	 * @param actions
+	 *            the actions
 	 */
 	public ActionSpawner(Entity source, ArrayList<Action> actions) {
 		super(source, source.getLocation());
 		this.actions = actions;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.actions.Action#apply(int)
 	 */
 	protected boolean apply(int delta) {
@@ -34,7 +38,9 @@ public class ActionSpawner extends Action {
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.actions.Action#isNoticed()
 	 */
 	@Override

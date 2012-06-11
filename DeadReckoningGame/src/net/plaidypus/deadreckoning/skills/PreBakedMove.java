@@ -23,10 +23,13 @@ public class PreBakedMove extends Movement {
 
 	/**
 	 * Instantiates a new pre baked move.
-	 *
-	 * @param l the l
-	 * @param xoff the xoff
-	 * @param yoff the yoff
+	 * 
+	 * @param l
+	 *            the l
+	 * @param xoff
+	 *            the xoff
+	 * @param yoff
+	 *            the yoff
 	 */
 	public PreBakedMove(LivingEntity l, int xoff, int yoff) {
 		super(l);
@@ -34,19 +37,25 @@ public class PreBakedMove extends Movement {
 		this.yoff = yoff;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.skills.Movement#makeAction(net.plaidypus.deadreckoning.board.Tile)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.skills.Movement#makeAction(net.plaidypus.
+	 * deadreckoning.board.Tile)
 	 */
 	public Action makeAction(Tile target) {
 		if (source.getLocation().getRelativeTo(xoff, yoff)
-				.isOpen(source.getLayer())) {
+				.isEmpty(source.getLayer())) {
 			return new MoveAction(source, source.getLocation().getRelativeTo(
 					xoff, yoff), source.getLayer());
 		}
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.skills.Skill#isInstant()
 	 */
 	public boolean isInstant() {

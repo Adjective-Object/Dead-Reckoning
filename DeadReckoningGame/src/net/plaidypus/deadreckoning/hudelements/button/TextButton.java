@@ -15,25 +15,34 @@ public class TextButton extends Button {
 
 	/** The text. */
 	String text;
-	
+
 	/** The font. */
 	UnicodeFont font;
-	
+
 	/** The c3. */
 	Color c, c2, c3;
 
 	/**
 	 * Instantiates a new text button.
-	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param bindMethod the bind method
-	 * @param normalColor the normal color
-	 * @param highlightC the highlight c
-	 * @param pressedC the pressed c
-	 * @param text the text
-	 * @param font the font
-	 * @throws SlickException the slick exception
+	 * 
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param bindMethod
+	 *            the bind method
+	 * @param normalColor
+	 *            the normal color
+	 * @param highlightC
+	 *            the highlight c
+	 * @param pressedC
+	 *            the pressed c
+	 * @param text
+	 *            the text
+	 * @param font
+	 *            the font
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	public TextButton(int x, int y, int bindMethod, Color normalColor,
 			Color highlightC, Color pressedC, String text, UnicodeFont font)
@@ -46,8 +55,12 @@ public class TextButton extends Button {
 		this.c3 = pressedC;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.button.Button#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.button.Button#update(org.newdawn
+	 * .slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
 	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
@@ -55,22 +68,32 @@ public class TextButton extends Button {
 		super.update(gc, sbg, delta);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(java.lang
+	 * .Object)
 	 */
 	@Override
 	public void makeFrom(Object o) {
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#init(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#init(org.newdawn.slick
+	 * .GameContainer, org.newdawn.slick.state.StateBasedGame)
 	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getWidth()
 	 */
 	@Override
@@ -78,7 +101,9 @@ public class TextButton extends Button {
 		return font.getWidth(text) + 20;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getHeight()
 	 */
 	@Override
@@ -86,8 +111,13 @@ public class TextButton extends Button {
 		return font.getHeight(text) + 4;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#render(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, org.newdawn.slick.Graphics)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#render(org.newdawn
+	 * .slick.GameContainer, org.newdawn.slick.state.StateBasedGame,
+	 * org.newdawn.slick.Graphics)
 	 */
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)

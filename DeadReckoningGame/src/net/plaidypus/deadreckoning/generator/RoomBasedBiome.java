@@ -19,8 +19,9 @@ public abstract class RoomBasedBiome extends Biome {
 
 	/**
 	 * Instantiates a new room based biome.
-	 *
-	 * @param numRooms the num rooms
+	 * 
+	 * @param numRooms
+	 *            the num rooms
 	 */
 	public RoomBasedBiome(int numRooms) {
 		this.numRooms = numRooms;
@@ -28,22 +29,25 @@ public abstract class RoomBasedBiome extends Biome {
 
 	/**
 	 * Populate board.
-	 *
-	 * @param target the target
-	 * @param rooms the rooms
-	 * @param linkedLevels the linked levels
+	 * 
+	 * @param target
+	 *            the target
+	 * @param rooms
+	 *            the rooms
+	 * @param linkedLevels
+	 *            the linked levels
 	 * @return the game board
 	 */
 	public abstract GameBoard populateBoard(GameBoard target,
 			ArrayList<int[]> rooms, ArrayList<Stair> linkedLevels);
 
-	
-
 	/**
 	 * Outline room.
-	 *
-	 * @param target the target
-	 * @param room the room
+	 * 
+	 * @param target
+	 *            the target
+	 * @param room
+	 *            the room
 	 */
 	public void outlineRoom(GameBoard target, int[] room) {
 		for (int x = 1; x < room[2] - 1; x++) {
@@ -77,10 +81,13 @@ public abstract class RoomBasedBiome extends Biome {
 
 	/**
 	 * Draw cooridor.
-	 *
-	 * @param target the target
-	 * @param roomA the room a
-	 * @param roomB the room b
+	 * 
+	 * @param target
+	 *            the target
+	 * @param roomA
+	 *            the room a
+	 * @param roomB
+	 *            the room b
 	 * @return the game board
 	 */
 	public GameBoard drawCooridor(GameBoard target, int[] roomA, int[] roomB) {
@@ -112,12 +119,17 @@ public abstract class RoomBasedBiome extends Biome {
 
 	/**
 	 * Adds the line.
-	 *
-	 * @param target the target
-	 * @param ax the ax
-	 * @param ay the ay
-	 * @param length the length
-	 * @param horizontal the horizontal
+	 * 
+	 * @param target
+	 *            the target
+	 * @param ax
+	 *            the ax
+	 * @param ay
+	 *            the ay
+	 * @param length
+	 *            the length
+	 * @param horizontal
+	 *            the horizontal
 	 * @return the array list
 	 */
 	public ArrayList<int[]> addLine(GameBoard target, int ax, int ay,
@@ -139,9 +151,11 @@ public abstract class RoomBasedBiome extends Biome {
 
 	/**
 	 * Draw on board.
-	 *
-	 * @param target the target
-	 * @param points the points
+	 * 
+	 * @param target
+	 *            the target
+	 * @param points
+	 *            the points
 	 */
 	public void drawOnBoard(GameBoard target, ArrayList<int[]> points) {
 		boolean willdr = true;
@@ -182,8 +196,11 @@ public abstract class RoomBasedBiome extends Biome {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.generator.Biome#makeBoard(int, java.util.ArrayList)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.plaidypus.deadreckoning.generator.Biome#makeBoard(int,
+	 * java.util.ArrayList)
 	 */
 	public GameBoard makeBoard(int depth, ArrayList<Stair> floorLinks) {
 		ArrayList<int[]> rooms = new ArrayList<int[]>(0);
@@ -216,9 +233,11 @@ public abstract class RoomBasedBiome extends Biome {
 
 	/**
 	 * Checkfor collisions.
-	 *
-	 * @param room the room
-	 * @param rooms the rooms
+	 * 
+	 * @param room
+	 *            the room
+	 * @param rooms
+	 *            the rooms
 	 * @return true, if successful
 	 */
 	public boolean checkforCollisions(int[] room, ArrayList<int[]> rooms) { // check
@@ -240,10 +259,13 @@ public abstract class RoomBasedBiome extends Biome {
 
 	/**
 	 * Generic population.
-	 *
-	 * @param target the target
-	 * @param rooms the rooms
-	 * @param linkedLevels the linked levels
+	 * 
+	 * @param target
+	 *            the target
+	 * @param rooms
+	 *            the rooms
+	 * @param linkedLevels
+	 *            the linked levels
 	 */
 	public void genericPopulation(GameBoard target, ArrayList<int[]> rooms,
 			ArrayList<Stair> linkedLevels) {

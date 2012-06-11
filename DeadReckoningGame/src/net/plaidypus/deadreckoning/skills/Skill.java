@@ -13,20 +13,21 @@ import org.newdawn.slick.SlickException;
 /**
  * The Class Skill.
  * 
- * used as a simple way of generating action objects based off of a source entity
+ * used as a simple way of generating action objects based off of a source
+ * entity
  * 
- * all skills must have an argument free () constructor, to allow for newInstance() calls,
- * so that the init() method unique to each class can be called
- * because java does not have instance-independent abstract methods.
+ * all skills must have an argument free () constructor, to allow for
+ * newInstance() calls, so that the init() method unique to each class can be
+ * called because java does not have instance-independent abstract methods.
  */
-public abstract class Skill extends DeadReckoningComponent{
+public abstract class Skill extends DeadReckoningComponent {
 
 	/** The levelcap. */
 	protected int level, levelcap;
-	
+
 	/** The cooldown. */
 	protected int cooldown;
-	
+
 	/** The description. */
 	String name = "NO_NAME", description = "NO_DESC";
 
@@ -38,8 +39,9 @@ public abstract class Skill extends DeadReckoningComponent{
 
 	/**
 	 * Instantiates a new skill.
-	 *
-	 * @param icon the icon
+	 * 
+	 * @param icon
+	 *            the icon
 	 */
 	public Skill(Image icon) {
 		this.imageIcon = icon;
@@ -49,8 +51,9 @@ public abstract class Skill extends DeadReckoningComponent{
 	 * Skills are a method of having arbitrary abilities on entites (able to be
 	 * stored in an arrayList) while keeping the Action class unique for each
 	 * execution of an action.
-	 *
-	 * @param source the source
+	 * 
+	 * @param source
+	 *            the source
 	 */
 	public Skill(LivingEntity source) {
 		this.source = source;
@@ -68,10 +71,11 @@ public abstract class Skill extends DeadReckoningComponent{
 	}
 
 	/**
-	 * binds the skill to a certain livingentity such that it is not necessary to
-	 * constantly pass the correct livingentity to parse based off of.
-	 *
-	 * @param source the source
+	 * binds the skill to a certain livingentity such that it is not necessary
+	 * to constantly pass the correct livingentity to parse based off of.
+	 * 
+	 * @param source
+	 *            the source
 	 */
 	public void bindTo(LivingEntity source) {
 		this.source = source;
@@ -80,8 +84,9 @@ public abstract class Skill extends DeadReckoningComponent{
 	/**
 	 * generates an action targeted at a tile. Usually to be assigned to the
 	 * source entity
-	 *
-	 * @param target the target
+	 * 
+	 * @param target
+	 *            the target
 	 * @return the action
 	 */
 	public abstract Action makeAction(Tile target);
@@ -89,8 +94,9 @@ public abstract class Skill extends DeadReckoningComponent{
 	/**
 	 * method for checking if a certain tile is highlight-able. used in
 	 * highlightRadial && other highlighting methods.
-	 *
-	 * @param t the tile that must be checked if it can be targeted
+	 * 
+	 * @param t
+	 *            the tile that must be checked if it can be targeted
 	 * @return true, if successful
 	 */
 	public abstract boolean canTargetTile(Tile t);
@@ -99,17 +105,20 @@ public abstract class Skill extends DeadReckoningComponent{
 	 * method for highlighting all the tiles that a skill can target. made
 	 * abstract so not all skills need to have attack ranges of certain shapes,
 	 * etc.
-	 *
-	 * @param board the board
+	 * 
+	 * @param board
+	 *            the board
 	 */
 	public abstract void highlightRange(GameBoard board);
 
 	/**
 	 * highlights all the tiles within a certain range of the skill's source.
 	 * (radial). made to be called by highlightRange(GameBoard board);
-	 *
-	 * @param board the board
-	 * @param range the range
+	 * 
+	 * @param board
+	 *            the board
+	 * @param range
+	 *            the range
 	 */
 	public void highlightRadial(GameBoard board, int range) {
 		board.clearHighlightedSquares();
@@ -132,7 +141,7 @@ public abstract class Skill extends DeadReckoningComponent{
 
 	/**
 	 * Checks if is instant.
-	 *
+	 * 
 	 * @return true, if is instant
 	 */
 	public boolean isInstant() {
@@ -141,7 +150,7 @@ public abstract class Skill extends DeadReckoningComponent{
 
 	/**
 	 * Gets the level.
-	 *
+	 * 
 	 * @return the level
 	 */
 	public int getLevel() {
@@ -150,8 +159,9 @@ public abstract class Skill extends DeadReckoningComponent{
 
 	/**
 	 * Sets the level.
-	 *
-	 * @param level the new level
+	 * 
+	 * @param level
+	 *            the new level
 	 */
 	public void setLevel(int level) {
 		this.level = level;
@@ -159,7 +169,7 @@ public abstract class Skill extends DeadReckoningComponent{
 
 	/**
 	 * Gets the image.
-	 *
+	 * 
 	 * @return the image
 	 */
 	public Image getImage() {
@@ -168,7 +178,7 @@ public abstract class Skill extends DeadReckoningComponent{
 
 	/**
 	 * Gets the name.
-	 *
+	 * 
 	 * @return the name
 	 */
 	public String getName() {
@@ -177,7 +187,7 @@ public abstract class Skill extends DeadReckoningComponent{
 
 	/**
 	 * Gets the description.
-	 *
+	 * 
 	 * @return the description
 	 */
 	public String getDescription() {
@@ -186,8 +196,9 @@ public abstract class Skill extends DeadReckoningComponent{
 
 	/**
 	 * Sets the name.
-	 *
-	 * @param name the new name
+	 * 
+	 * @param name
+	 *            the new name
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -195,8 +206,9 @@ public abstract class Skill extends DeadReckoningComponent{
 
 	/**
 	 * Sets the descriptor.
-	 *
-	 * @param description the new descriptor
+	 * 
+	 * @param description
+	 *            the new descriptor
 	 */
 	public void setDescriptor(String description) {
 		this.description = description;
@@ -211,7 +223,7 @@ public abstract class Skill extends DeadReckoningComponent{
 
 	/**
 	 * Can be cast.
-	 *
+	 * 
 	 * @return true, if successful
 	 */
 	public boolean canBeCast() {
@@ -227,7 +239,7 @@ public abstract class Skill extends DeadReckoningComponent{
 
 	/**
 	 * Gets the level cap.
-	 *
+	 * 
 	 * @return the level cap
 	 */
 	public int getLevelCap() {
@@ -236,7 +248,7 @@ public abstract class Skill extends DeadReckoningComponent{
 
 	/**
 	 * Gets the level req.
-	 *
+	 * 
 	 * @return the level req
 	 */
 	public int getLevelReq() {
@@ -245,8 +257,9 @@ public abstract class Skill extends DeadReckoningComponent{
 
 	/**
 	 * Sets the cooldown.
-	 *
-	 * @param cooldown the new cooldown
+	 * 
+	 * @param cooldown
+	 *            the new cooldown
 	 */
 	public void setCooldown(int cooldown) {
 		this.cooldown = cooldown;
@@ -254,17 +267,18 @@ public abstract class Skill extends DeadReckoningComponent{
 
 	/**
 	 * Gets the cooldown.
-	 *
+	 * 
 	 * @return the cooldown
 	 */
 	public int getCooldown() {
 		return cooldown;
 	}
-	
+
 	/**
 	 * loads the resources needed for this class
 	 * 
 	 * called automagically by modloader
+	 * 
 	 * @throws SlickException
 	 */
 	public abstract void init() throws SlickException;

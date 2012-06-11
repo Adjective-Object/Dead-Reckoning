@@ -15,10 +15,13 @@ public abstract class Button extends HudElement {
 
 	/**
 	 * Instantiates a new button.
-	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param bindMethod the bind method
+	 * 
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param bindMethod
+	 *            the bind method
 	 */
 	public Button(int x, int y, int bindMethod) {
 		super(x, y, bindMethod, true);
@@ -29,15 +32,19 @@ public abstract class Button extends HudElement {
 
 	/**
 	 * Checks if is pressed.
-	 *
+	 * 
 	 * @return true, if is pressed
 	 */
 	public boolean isPressed() {
 		return pressed;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.hudelements.HudElement#update(org.newdawn
+	 * .slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
 	 */
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {

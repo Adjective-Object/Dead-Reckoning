@@ -34,29 +34,29 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 	/** The height. */
 	public int HP, MP, width, height;
-	
+
 	/** The death. */
 	public Animation stand, basicAttack, walking, damageFront, damageBack,
 			death;
-	
+
 	/** The entity file. */
 	public String parentMod, entityFile;
-	
+
 	/** The current animation. */
 	public Animation currentAnimation;
-	
+
 	/** The animations. */
 	public ArrayList<Animation> animations;
-	
+
 	/** The statuses. */
 	public ArrayList<Status> statuses;
-	
+
 	/** The skills. */
 	public ArrayList<Skill> skills = new ArrayList<Skill>(0);
-	
+
 	/** The current animation id. */
 	int currentAnimationID;
-	
+
 	/** The Constant ANIMATION_DEATH. */
 	public static final int ANIMATION_STAND = 0, ANIMATION_ATTACK = 1,
 			ANIMATION_WALK = 2, ANIMATION_FLINCH_FRONT = 3,
@@ -76,29 +76,36 @@ public abstract class LivingEntity extends InteractiveEntity {
 	/**
 	 * subclass of entity with some basic stats for damage calulcation and
 	 * health, etc. also animations
-	 *
-	 * @param targetTile the target tile
-	 * @param layer the layer
-	 * @param entityFile the entity file
-	 * @param statMaster the stat master
-	 * @param allignment the allignment
+	 * 
+	 * @param targetTile
+	 *            the target tile
+	 * @param layer
+	 *            the layer
+	 * @param entityFile
+	 *            the entity file
+	 * @param statMaster
+	 *            the stat master
+	 * @param allignment
+	 *            the allignment
 	 */
-	public LivingEntity(Tile targetTile, int layer, String parentMod, String entityFile,
-			StatMaster statMaster, int allignment) {
+	public LivingEntity(Tile targetTile, int layer, String parentMod,
+			String entityFile, StatMaster statMaster, int allignment) {
 		super(targetTile, layer);
 		try {
-			InputStream entityReader = ModLoader.getModpackLoader(parentMod).getResourceAsStream(parentMod+"/"+entityFile);
-			BufferedReader reader = new BufferedReader(new InputStreamReader(entityReader));
+			InputStream entityReader = ModLoader.getModpackLoader(parentMod)
+					.getResourceAsStream(parentMod + "/" + entityFile);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					entityReader));
 			loadFromFile(reader);
 			reader.close();
-			this.parentMod=parentMod;
+			this.parentMod = parentMod;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		currentAnimation = stand;
 		this.statMaster = statMaster;
-		
+
 		this.entityFile = entityFile;
 
 		setFacing(false);
@@ -120,9 +127,11 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 	/**
 	 * updates the entity (updates the animation).
-	 *
-	 * @param gc the gc
-	 * @param delta the delta
+	 * 
+	 * @param gc
+	 *            the gc
+	 * @param delta
+	 *            the delta
 	 */
 	public void update(GameContainer gc, int delta) {
 		currentAnimation.update(delta);
@@ -141,9 +150,11 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 	/**
 	 * still abstract because different livingEntities will have differing AIs.
-	 *
-	 * @param gc the gc
-	 * @param delta the delta
+	 * 
+	 * @param gc
+	 *            the gc
+	 * @param delta
+	 *            the delta
 	 * @return the action
 	 */
 	public Action chooseAction(GameContainer gc, int delta) {
@@ -152,9 +163,11 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 	/**
 	 * necessary for the automatic usage of parsefinishedAction.
-	 *
-	 * @param gc the gc
-	 * @param delta the delta
+	 * 
+	 * @param gc
+	 *            the gc
+	 * @param delta
+	 *            the delta
 	 * @return the action
 	 */
 	protected abstract Action decideNextAction(GameContainer gc, int delta);
@@ -162,8 +175,9 @@ public abstract class LivingEntity extends InteractiveEntity {
 	/**
 	 * enacts something (be default, the updating of skill cooldowns) based on
 	 * the return value of a.
-	 *
-	 * @param a the action to return
+	 * 
+	 * @param a
+	 *            the action to return
 	 * @return a
 	 */
 	protected Action parseFinishedAction(Action a) {
@@ -203,10 +217,13 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 	/**
 	 * renders the entity at an x and y (of the tile XY system).
-	 *
-	 * @param g the g
-	 * @param x the x
-	 * @param y the y
+	 * 
+	 * @param g
+	 *            the g
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
 	public void forceRender(Graphics g, float x, float y) {
 		g.drawImage(
@@ -221,8 +238,9 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 	/**
 	 * changes the current animation to one determined by a static int.
-	 *
-	 * @param id the animation id (LivingEntity.ANIMATION_BLAW)
+	 * 
+	 * @param id
+	 *            the animation id (LivingEntity.ANIMATION_BLAW)
 	 */
 	public void setCurrentAnimation(int id) {
 		this.currentAnimationID = id;
@@ -232,7 +250,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 	/**
 	 * Gets the current antimation.
-	 *
+	 * 
 	 * @return the current antimation
 	 */
 	public Animation getCurrentAntimation() {
@@ -241,8 +259,9 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 	/**
 	 * Gets the animation.
-	 *
-	 * @param ID the iD
+	 * 
+	 * @param ID
+	 *            the iD
 	 * @return the animation
 	 */
 	public Animation getAnimation(int ID) {
@@ -251,7 +270,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 	/**
 	 * returns the current animation ID.
-	 *
+	 * 
 	 * @return the animation
 	 */
 	public int getCurrentAnimationID() {
@@ -260,8 +279,9 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 	/**
 	 * checks to see if a living entity can see a certain entity.
-	 *
-	 * @param e the entity to check against
+	 * 
+	 * @param e
+	 *            the entity to check against
 	 * @return if the entity can see it
 	 */
 	public boolean canSee(Entity e) {
@@ -270,8 +290,9 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 	/**
 	 * checks to see if a living entity can see a certain tile.
-	 *
-	 * @param t the tile to check against
+	 * 
+	 * @param t
+	 *            the tile to check against
 	 * @return if the entity can see it
 	 */
 	public boolean canSee(Tile t) {
@@ -284,7 +305,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	/**
 	 * gets the range the entity can attack with its default attack (STAT
 	 * MANAGEMENT).
-	 *
+	 * 
 	 * @return the number of tiles away the entity can target
 	 */
 	public int getAttackRange() {
@@ -293,14 +314,16 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 	/**
 	 * is the entity still alive?.
-	 *
+	 * 
 	 * @return if the HP>0
 	 */
 	public boolean isAlive() {
 		return this.HP > 0;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#onDeath()
 	 */
 	public void onDeath() {
@@ -314,7 +337,9 @@ public abstract class LivingEntity extends InteractiveEntity {
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#isInteractive()
 	 */
 	public boolean isInteractive() {
@@ -323,7 +348,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 	/**
 	 * Gets the conditions.
-	 *
+	 * 
 	 * @return the conditions
 	 */
 	public ArrayList<Status> getConditions() {
@@ -332,8 +357,9 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 	/**
 	 * Adds the condition.
-	 *
-	 * @param s the s
+	 * 
+	 * @param s
+	 *            the s
 	 */
 	public void addCondition(Status s) {
 		int i = 0;
@@ -362,7 +388,9 @@ public abstract class LivingEntity extends InteractiveEntity {
 		statuses.clear();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#isIdle()
 	 */
 	public boolean isIdle() {
@@ -373,11 +401,14 @@ public abstract class LivingEntity extends InteractiveEntity {
 	/**
 	 * Loads an entity from a text file. SO UGLY IT HURTS, but it didn't make
 	 * sense to break into subroutines
-	 *
-	 * @param reader the bufferedreader of the text file, on the first line of the
-	 * textfile
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @throws SlickException the slick exception
+	 * 
+	 * @param reader
+	 *            the bufferedreader of the text file, on the first line of the
+	 *            textfile
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	public void loadFromFile(BufferedReader reader) throws IOException,
 			SlickException {
@@ -460,14 +491,16 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 	/**
 	 * Gets the game.
-	 *
+	 * 
 	 * @return the game
 	 */
 	public GameplayElement getGame() {
 		return this.getParent().getGame();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#advanceTurn()
 	 */
 	public ArrayList<Action> advanceTurn() {
@@ -482,14 +515,16 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 	/**
 	 * Gets the stat master.
-	 *
+	 * 
 	 * @return the stat master
 	 */
 	public StatMaster getStatMaster() {
 		return this.statMaster;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#getName()
 	 */
 	public String getName() {
@@ -502,7 +537,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 	/**
 	 * Calculate exp value.
-	 *
+	 * 
 	 * @return the int
 	 */
 	public int calculateEXPValue() {

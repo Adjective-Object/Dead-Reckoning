@@ -24,36 +24,48 @@ public class Movement extends Skill {
 	/**
 	 * movement subclass of skill allows for easy generation of MoveAction
 	 * Actions.
-	 *
-	 * @param l the l
+	 * 
+	 * @param l
+	 *            the l
 	 */
 	public Movement(LivingEntity l) {
 		super(l);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.skills.Skill#canTargetTile(net.plaidypus.deadreckoning.board.Tile)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.skills.Skill#canTargetTile(net.plaidypus.
+	 * deadreckoning.board.Tile)
 	 */
 	public boolean canTargetTile(Tile t) {
-		return t.isOpen(Tile.LAYER_ACTIVE);
+		return t.isEmpty(Tile.LAYER_ACTIVE);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.skills.Skill#makeAction(net.plaidypus.deadreckoning.board.Tile)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.plaidypus.deadreckoning.skills.Skill#makeAction(net.plaidypus.
+	 * deadreckoning.board.Tile)
 	 */
 	public Action makeAction(Tile target) {
 		return new MoveAction(source, target, source.getLayer());
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.skills.Skill#highlightRange(net.plaidypus.deadreckoning.board.GameBoard)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.skills.Skill#highlightRange(net.plaidypus
+	 * .deadreckoning.board.GameBoard)
 	 */
 	public void highlightRange(GameBoard board) {
 		board.highLightAvailablePaths(source.getLocation(), 1,
 				Tile.LAYER_ACTIVE);
 	}
-	
-	
+
 	@Override
-	public void init() throws SlickException {}
+	public void init() throws SlickException {
+	}
 }

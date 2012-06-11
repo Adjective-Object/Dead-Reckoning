@@ -20,11 +20,15 @@ public abstract class AnimatedEntity extends Entity {
 
 	/**
 	 * Instantiates a new animated entity.
-	 *
-	 * @param location the location
-	 * @param layer the layer
-	 * @param imageRef the image ref
-	 * @throws SlickException the slick exception
+	 * 
+	 * @param location
+	 *            the location
+	 * @param layer
+	 *            the layer
+	 * @param imageRef
+	 *            the image ref
+	 * @throws SlickException
+	 *             the slick exception
 	 */
 	public AnimatedEntity(Tile location, int layer, String imageRef)
 			throws SlickException {
@@ -42,15 +46,19 @@ public abstract class AnimatedEntity extends Entity {
 
 	/**
 	 * Render.
-	 *
+	 * 
 	 * @return the image
 	 */
 	public Image render() {
 		return sprite.getCurrentFrame();
 	}
 
-	/* (non-Javadoc)
-	 * @see net.plaidypus.deadreckoning.entities.Entity#update(org.newdawn.slick.GameContainer, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#update(org.newdawn.slick.
+	 * GameContainer, int)
 	 */
 	public void update(GameContainer gc, int delta) {
 		sprite.update(delta);
