@@ -41,7 +41,7 @@ public class EtcDrop extends Item {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		name = reader.readLine();
 		description = reader.readLine();
-		image = new Image(reader.readLine());
+		image = new Image(reader.readLine());//TODO reading images from jarfiles
 	}
 
 	/*

@@ -61,8 +61,7 @@ public class Movement extends Skill {
 	 * .deadreckoning.board.GameBoard)
 	 */
 	public void highlightRange(GameBoard board) {
-		board.highLightAvailablePaths(source.getLocation(), 1,
-				Tile.LAYER_ACTIVE);
+		highlightRadial(board, 10);
 	}
 
 	@Override

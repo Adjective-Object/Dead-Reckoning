@@ -146,7 +146,7 @@ public class ModLoader {
 					if (classKeys[i].equals("/biomes/")) {
 						Biome b = (Biome) e;
 						b.setParentMod(modname);
-						Biome.addBiome(b);
+						Biome.addBiome(b.getClass().getCanonicalName(),b);
 					}
 				}
 			}

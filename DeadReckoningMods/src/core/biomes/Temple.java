@@ -1,0 +1,216 @@
+package core.biomes;
+
+import java.util.ArrayList;
+
+import net.plaidypus.deadreckoning.DeadReckoningGame;
+import net.plaidypus.deadreckoning.Utilities;
+import net.plaidypus.deadreckoning.board.GameBoard;
+import net.plaidypus.deadreckoning.board.Tile;
+import net.plaidypus.deadreckoning.entities.LivingEntity;
+import net.plaidypus.deadreckoning.entities.Monster;
+import net.plaidypus.deadreckoning.generator.DungeonRoom;
+import net.plaidypus.deadreckoning.generator.RoomBasedBiome;
+import net.plaidypus.deadreckoning.professions.StatMaster;
+
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
+
+import core.entities.Door;
+import core.entities.Torch;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Hemple.
+ */
+public class Temple extends RoomBasedBiome {
+	
+	/** The Constants used for determening the layout of the map tile file */
+	public static final int TILE_EMPTY = 4, TILE_WALL_UP = 1,
+			TILE_WALL_DOWN = 7, TILE_WALL_LEFT = 3, TILE_WALL_RIGHT = 5,
+			TILE_WALL_UP_RIGHT = 6, TILE_WALL_UP_LEFT = 0,
+			TILE_WALL_DOWN_RIGHT = 8, TILE_WALL_DOWN_LEFT = 2,
+			TILE_TUNNEL = 9, TILE_NULL = 10;
+
+	
+	public Temple() {
+		this(20);
+	}
+
+	/**
+	 * Instantiates a new hemple.
+	 * 
+	 * @param numRooms
+	 *            the num rooms
+	 */
+	public Temple(int numRooms) {
+		super(numRooms);
+	}
+
+	
+
+	@Override
+	public void init() throws SlickException {
+		Image tile = new Image("res/walltiles.png");//TODO reading images from jarfiles
+		this.tileImage = new SpriteSheet(tile,
+				DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
+	}
+
+	@Override
+	public GameBoard populateRoom(GameBoard target, DungeonRoom room) {
+		for (int i=room.x; i<room.width+room.x ;i++){
+			target.getTileAt(i,room.y).setTileFace(TILE_WALL_UP);
+			target.getTileAt(i,room.y-1).blocking=true;
+			target.getTileAt(i,room.y+room.height-1).setTileFace(TILE_WALL_DOWN);
+			target.getTileAt(i,room.y+room.height).blocking=true;
+		}
+		
+		for (int i=room.y; i<room.height+room.y ;i++){
+			target.getTileAt(room.x,i).setTileFace(TILE_WALL_LEFT);
+			target.getTileAt(room.x-1,i).blocking=true;
+			target.getTileAt(room.x+room.width-1,i).setTileFace(TILE_WALL_RIGHT);
+			target.getTileAt(room.x+room.width,i).blocking=true;
+		}
+		
+		target.getTileAt(room.x,room.y).setTileFace(TILE_WALL_UP_LEFT);
+		target.getTileAt(room.x,room.y+room.height-1).setTileFace(TILE_WALL_UP_RIGHT);
+		target.getTileAt(room.x+room.width-1,room.y).setTileFace(TILE_WALL_DOWN_LEFT);
+		target.getTileAt(room.x+room.width-1,room.y+room.height-1).setTileFace(TILE_WALL_DOWN_RIGHT);
+		
+		target.getTileAt(room.x-1,room.y-1).blocking=true;
+		target.getTileAt(room.x-1,room.y+room.height).blocking=true;
+		target.getTileAt(room.x+room.width,room.y-1).blocking=true;
+		target.getTileAt(room.x+room.width,room.y+room.height).blocking=true;
+
+				
+		for(int x=room.x+1; x<room.x+room.width-1; x++){
+			for(int y=room.y+1; y<room.y+room.height-1; y++){
+				target.getTileAt(x, y).setTileFace(TILE_EMPTY);
+			}
+		}
+		
+		target.placeEntity(room.getCenter(target),new Torch(room.getCenter(target),Tile.LAYER_PASSIVE_MAP,5), Tile.LAYER_PASSIVE_MAP);
+		
+		for(int i=0; i<Utilities.randInt(0,4); i++){
+			Tile t = room.getTileIn(target);
+			if(t.isEmpty(Tile.LAYER_ACTIVE)){
+				target.placeEntity(t, new Monster(null, Tile.LAYER_ACTIVE, "core", "livingEntities/goblin.entity",
+						new StatMaster(50, 50, 4, 4, 4, 4, 1), LivingEntity.ALLIGN_HOSTILE), Tile.LAYER_ACTIVE);
+			}
+		}
+		
+		return target;
+	}
+
+	@Override
+	public GameBoard populateCooridors(GameBoard target, ArrayList<DungeonRoom> rooms) {
+		for(int i=0; i<rooms.size()-1; i++){
+			Tile start= rooms.get(i).getCenter(target), end = rooms.get(i+1).getCenter(target);
+			
+			ArrayList<Tile> tilePath = tileLine(start.getX(), start.getY(), end.getX(), start.getY(), target);
+			tilePath.addAll(tileLine(end.getX(), start.getY(), end.getX(), end.getY(), target));
+			tilePath.add(end);
+			
+			drawPath(tilePath,rooms,TILE_TUNNEL);
+			
+			for (int x=0; x<rooms.get(i).width; x++){
+				Tile a = target.getTileAt(rooms.get(i).x+x,rooms.get(i).y-1),
+						b= target.getTileAt(rooms.get(i).x+x,rooms.get(i).y+rooms.get(i).height);
+				if(a.getTileFace()==TILE_TUNNEL){
+					target.placeEntity(a, new Door(null,Tile.LAYER_ACTIVE), Tile.LAYER_ACTIVE);
+				}
+				if(b.getTileFace()==TILE_TUNNEL){
+					target.placeEntity(b, new Door(null,Tile.LAYER_ACTIVE), Tile.LAYER_ACTIVE);
+				}
+			}
+			for (int y=0; y<rooms.get(i).height; y++){
+				Tile a = target.getTileAt(rooms.get(i).x-1, rooms.get(i).y+y),
+						b= target.getTileAt(rooms.get(i).x+rooms.get(i).width, rooms.get(i).y+y);
+				if(a.getTileFace()==TILE_TUNNEL){
+					target.placeEntity(a, new Door(null,Tile.LAYER_ACTIVE), Tile.LAYER_ACTIVE);
+				}
+				if(b.getTileFace()==TILE_TUNNEL){
+					target.placeEntity(b, new Door(null,Tile.LAYER_ACTIVE), Tile.LAYER_ACTIVE);
+				}
+			}
+			
+		}
+		
+		
+		return target;
+	}
+
+	public ArrayList<Tile> tileLine(int startx, int starty, int endx, int endy, GameBoard target){
+		ArrayList<Tile> tiles = new ArrayList<Tile>(Math.abs(startx-endx)+Math.abs(starty-endy)+1);
+		if(startx==endx){
+			for(int y=starty; y!=endy; y+=(endy-starty)/Math.abs(endy-starty)){
+				tiles.add(target.getTileAt(startx, y));
+			}
+		}
+		else if (starty==endy){
+			for(int x=startx; x!=endx; x+=(endx-startx)/Math.abs(endx-startx)){
+				tiles.add(target.getTileAt(x,starty));
+			}
+		}
+		return tiles;
+	}
+	
+	public void drawPath(ArrayList<Tile> tiles, ArrayList<DungeonRoom> rooms, int tileValue){
+		
+		//check for collisions along the length of the tunnel
+		//	marking the ones that do not have collisions, allowing for one collision consecutively
+		//go along the path, and adjust the blocking of the unmarked tiles
+		
+		boolean[] marks = new boolean[tiles.size()];
+		
+		int colls = 2;
+		for(int i=0; i<tiles.size(); i++){
+			marks[i]=true;
+			if( !checkTileColl(tiles.get(i)) ){
+				colls=0;
+				marks[i-1]=true;
+			}
+			else{
+				if(colls>0){
+					marks[i]=false;
+				}
+				colls++;
+			}
+		}
+		
+		for(int i=0; i<tiles.size(); i++){
+			if(marks[i] && tiles.get(i).getTileFace()==TILE_NULL){
+				tiles.get(i).setTileFace(tileValue);
+			}
+		}
+
+		
+		for(int i=0; i<tiles.size(); i++){
+			if(marks[i]){
+				tunnelTile(tiles.get(i));
+			}
+		}
+	}
+	
+	private boolean checkTileColl(Tile t){
+		return t.getToLeft().getTileFace()!=TILE_NULL || t.getToRight().getTileFace()!=TILE_NULL ||
+				t.getToDown().getTileFace()!=TILE_NULL || t.getToUp().getTileFace()!=TILE_NULL;
+	}
+	
+	private void tunnelTile(Tile t){
+		for (int x=-1; x<=1; x++){
+			for(int y=-1; y<=1; y++){
+				Tile p = t.getRelativeTo(x, y);
+				if(p.getTileFace()==TILE_NULL){
+					p.blocking=true;
+				}
+			}
+		}
+		t.blocking=false;
+	}
+	
+	public int getNullTileValue(){
+		return 10;
+	}
+	
+}

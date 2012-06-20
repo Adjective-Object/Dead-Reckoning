@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.entities.Entity;
+import net.plaidypus.deadreckoning.generator.Biome;
 import net.plaidypus.deadreckoning.grideffects.GridEffect;
 import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
 
@@ -13,6 +14,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 
 import rlforj.los.BresLos;
 import rlforj.los.ILosAlgorithm;
@@ -44,7 +46,9 @@ public class GameBoard implements ILosBoard {
 
 	/** The render dist x. */
 	public int depth, renderDistY = 20, renderDistX = 40;
-
+	
+	public Biome biome;
+	
 	/** The map id. */
 	public String saveID, mapID;
 
@@ -62,21 +66,14 @@ public class GameBoard implements ILosBoard {
 	 *            the map id
 	 */
 	public GameBoard(GameplayElement g, String saveID, String mapID) {
-		this();
 		this.GameplayElement = g;
 		this.saveID = saveID;
 		this.mapID = mapID;
-	}
-
-	/**
-	 * Instantiates a new game board.
-	 */
-	public GameBoard() {
 		ingameEntities = new ArrayList<Entity>(0);
 		overEffects = new ArrayList<GridEffect>(0);
 		underEffects = new ArrayList<GridEffect>(0);
 	}
-
+	
 	/**
 	 * Instantiates a new game board.
 	 * 
@@ -85,15 +82,18 @@ public class GameBoard implements ILosBoard {
 	 * @param height
 	 *            the height
 	 */
-	public GameBoard(int width, int height) {
-		this();
+	public GameBoard(int width, int height, Biome b) {
+		this.biome = b;
+		ingameEntities = new ArrayList<Entity>(0);
+		overEffects = new ArrayList<GridEffect>(0);
+		underEffects = new ArrayList<GridEffect>(0);
 		this.width = width;
 		this.height = height;
 		board = new Tile[width][height];
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 				try {
-					board[x][y] = new Tile(this, x, y, Tile.TILE_NULL);
+					board[x][y] = new Tile(this, x, y, this.biome.getNullTileValue());
 				} catch (SlickException e) {
 					e.printStackTrace();
 				}
@@ -852,11 +852,15 @@ public class GameBoard implements ILosBoard {
 	 */
 	public Tile getValidSpawnTile() {
 		Tile returnTile = this.getTileAt(0, 0);
-		while (returnTile.getTileFace() == Tile.TILE_NULL) {
+		while (returnTile.getTileFace() == this.biome.getNullTileValue()) {
 			returnTile = this.getTileAt(Utilities.randInt(0, this.getWidth()),
 					Utilities.randInt(0, this.getHeight()));
 		}
 		return returnTile;
+	}
+
+	public Biome getBiome() {
+		return this.biome;
 	}
 
 }

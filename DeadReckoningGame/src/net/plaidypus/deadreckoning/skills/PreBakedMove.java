@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.skills;
 
+import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.MoveAction;
 import net.plaidypus.deadreckoning.board.Tile;
@@ -46,7 +47,7 @@ public class PreBakedMove extends Movement {
 	 */
 	public Action makeAction(Tile target) {
 		if (source.getLocation().getRelativeTo(xoff, yoff)
-				.isEmpty(source.getLayer())) {
+				.isEmpty(source.getLayer()) || DeadReckoningGame.debugMode) {
 			return new MoveAction(source, source.getLocation().getRelativeTo(
 					xoff, yoff), source.getLayer());
 		}

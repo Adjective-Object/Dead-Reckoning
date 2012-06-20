@@ -16,6 +16,7 @@ import net.plaidypus.deadreckoning.hudelements.game.MiniMap;
 import net.plaidypus.deadreckoning.hudelements.game.PlayerHudElement;
 import net.plaidypus.deadreckoning.hudelements.game.SkillMonitorElement;
 import net.plaidypus.deadreckoning.hudelements.game.StatusTrackerElement;
+import net.plaidypus.deadreckoning.hudelements.game.substates.BigMap;
 import net.plaidypus.deadreckoning.hudelements.game.substates.ItemGridElement;
 import net.plaidypus.deadreckoning.hudelements.game.substates.ItemGridInteractionElement;
 import net.plaidypus.deadreckoning.hudelements.game.substates.ReturnToGameElement;
@@ -101,6 +102,8 @@ public class DeadReckoningGame extends StateBasedGame {
 
 	/** The various menu fonts. */
 	public static UnicodeFont menuFont, menuSmallFont;
+
+	public static boolean debugMode=false;
 
 	/**
 	 * Instantiates a new dead reckoning game.
@@ -260,6 +263,12 @@ public class DeadReckoningGame extends StateBasedGame {
 				new ItemGridElement(0, 0, HudElement.CENTER_CENTER),
 				new ReturnToGameElement() }));
 
+		this.addState(new HudLayersState(MAPSTATE, new HudElement[] {
+			new StillImageElement(0, 0, HudElement.TOP_LEFT), messages,
+			new BigMap(0,0,HudElement.CENTER_CENTER, game),
+			new ReturnToGameElement()
+		}));
+		
 		this.addState(new HudLayersState(ERRORSTATE, new HudElement[] {
 				new ColorFiller(menuBackgroundColor),
 				new TextElement(0, 0, HudElement.TOP_LEFT, "", menuTextColor,

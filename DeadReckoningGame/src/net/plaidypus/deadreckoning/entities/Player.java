@@ -3,6 +3,7 @@ package net.plaidypus.deadreckoning.entities;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Save;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
@@ -11,7 +12,7 @@ import net.plaidypus.deadreckoning.grideffects.AnimationEffect;
 import net.plaidypus.deadreckoning.items.Equip;
 import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.skills.Attack;
-import net.plaidypus.deadreckoning.skills.CheckInventory;
+import net.plaidypus.deadreckoning.skills.ChangeState;
 import net.plaidypus.deadreckoning.skills.Interacter;
 import net.plaidypus.deadreckoning.skills.Loot;
 import net.plaidypus.deadreckoning.skills.PreBakedMove;
@@ -101,7 +102,7 @@ public class Player extends LivingEntity {
 				Input.KEY_F3, Input.KEY_F4, Input.KEY_F5, Input.KEY_F6,
 				Input.KEY_F7, Input.KEY_F8, Input.KEY_F9, Input.KEY_F10,
 				Input.KEY_F11, Input.KEY_F12, Input.KEY_T, Input.KEY_L,
-				Input.KEY_I, Input.KEY_K, Input.KEY_E, Input.KEY_P};
+				Input.KEY_I, Input.KEY_M, Input.KEY_K, Input.KEY_E, Input.KEY_P};
 		inputSkills = new Skill[] { new PreBakedMove(this, -1, 0),
 				new PreBakedMove(this, 1, 0), new PreBakedMove(this, 0, -1),
 				new PreBakedMove(this, 0, 1), new Attack(this),
@@ -113,7 +114,8 @@ public class Player extends LivingEntity {
 				p.getTrees()[2].getSkills()[0], p.getTrees()[2].getSkills()[1],
 				p.getTrees()[2].getSkills()[2], p.getTrees()[2].getSkills()[3],
 
-				new Wait(this), new Loot(this), new CheckInventory(this),
+				new Wait(this), new Loot(this), new ChangeState(this,DeadReckoningGame.INVENTORYSTATE),
+				new ChangeState(this,DeadReckoningGame.MAPSTATE),
 				new ViewSkills(this), new Interacter(this), new Saver(this)};
 
 		this.skills.addAll(p.getSkillList());
@@ -151,6 +153,9 @@ public class Player extends LivingEntity {
 		}
 		if (gc.getInput().isKeyPressed(Input.KEY_PAUSE)) {
 			this.equips.set(0, new Equip("core", 0));
+		}
+		if (gc.getInput().isKeyPressed(Input.KEY_F6)) {
+			DeadReckoningGame.debugMode=!DeadReckoningGame.debugMode;
 		}
 		if (gc.getInput().isKeyPressed(Input.KEY_F5)) {
 			try {

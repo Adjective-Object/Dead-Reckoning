@@ -16,6 +16,7 @@ import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.Player;
+import net.plaidypus.deadreckoning.generator.Biome;
 import net.plaidypus.deadreckoning.generator.DungeonMap;
 import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
@@ -177,6 +178,7 @@ public class Save {
 		r.readLine();
 		b.height = r.read();
 		r.readLine();
+		b.biome = Biome.getBiome(r.readLine());
 		System.out.println(b.board);
 		b.board = new Tile[b.width][b.height];
 
@@ -275,6 +277,9 @@ public class Save {
 		r.newLine();
 		r.write(b.height);
 		r.newLine();
+		r.write(b.getBiome().getClass().getCanonicalName());
+		r.newLine();
+		
 
 		for (int y = 0; y < b.height; y++) {
 			for (int x = 0; x < b.width; x++) {

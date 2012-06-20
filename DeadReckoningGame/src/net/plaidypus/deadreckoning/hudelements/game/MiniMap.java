@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.hudelements.game;
 
+import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
@@ -14,8 +15,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class MiniMap extends HudElement {
 
-	int scale, width, height;
-	GameplayElement hookState;
+	public int scale, width, height;
+	protected GameplayElement hookState;
 
 	public MiniMap(int x, int y, int bindMethod, int scale, int width,
 			int height, GameplayElement hookState) {
@@ -42,15 +43,15 @@ public class MiniMap extends HudElement {
 
 	@Override
 	public int getWidth() {
-		return this.getWidth();
+		return this.width*this.scale;
 	}
 
 	@Override
 	public int getHeight() {
-		return this.getHeight();
+		return this.height*this.scale;
 	}
 
-	private void renderTo(Graphics g, int xo, int yo) {
+	protected void renderTo(Graphics g, int xo, int yo, int px,int py) {
 		GameBoard target = hookState.getBoard();
 		Player p = hookState.player;
 
@@ -59,15 +60,13 @@ public class MiniMap extends HudElement {
 		g.setColor(Color.black);
 		g.fillRect(xo + 1, yo + 1, width * scale, height * scale);
 
-		int px = p.getX(), py = p.getY();
-
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 				int ax = px - width / 2 + x, ay = py - height / 2 + y;
 
 				if (ax > 0 && ax < target.getWidth() && ay > 0
 						&& ay < target.getHeight()
-						&& target.getTileAt(ax, ay).explored) {
+						&& (target.getTileAt(ax, ay).explored || DeadReckoningGame.debugMode)) {
 					Tile til = target.getTileAt(ax, ay);
 
 					if (!til.isOpen(Tile.LAYER_ACTIVE) && til.canBeSeen()
@@ -101,7 +100,7 @@ public class MiniMap extends HudElement {
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		renderTo(g, getX() - width * scale, getY());
+		renderTo(g, getX() - width * scale, getY(), this.hookState.player.getX(), this.hookState.player.getY() );
 
 	}
 

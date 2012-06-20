@@ -71,16 +71,6 @@ public class Tile {
 	public static final int HIGHLIGHT_NULL = 0, HIGHLIGHT_CONFIRM = 1,
 			HIGHLIGHT_DENY = 2;
 
-	/** The tile textures. */
-	static SpriteSheet tileTextures;
-
-	/** The Constant TILE_NULL. */
-	public static final int TILE_EMPTY = 4, TILE_WALL_UP = 1,
-			TILE_WALL_DOWN = 7, TILE_WALL_LEFT = 3, TILE_WALL_RIGHT = 5,
-			TILE_WALL_UP_RIGHT = 2, TILE_WALL_UP_LEFT = 0,
-			TILE_WALL_DOWN_RIGHT = 8, TILE_WALL_DOWN_LEFT = 6,
-			TILE_SPECIAL = 9, TILE_NULL = 10;
-
 	/**
 	 * Instantiates a new tile.
 	 * 
@@ -115,9 +105,7 @@ public class Tile {
 	 * @throws SlickException
 	 *             the slick exception
 	 */
-	public static void init(String mapImage) throws SlickException {
-		tileTextures = new SpriteSheet("res/wallTiles.png",
-				DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
+	public static void init() throws SlickException {
 	}
 
 	/**
@@ -259,17 +247,23 @@ public class Tile {
 	 *            the y
 	 */
 	public void render(Graphics g, float x, float y) {
-		if (explored) {
+		if ((explored||DeadReckoningGame.debugMode) && this.tileFace!=this.getParent().getBiome().getNullTileValue()) {
 
 			float renderLight = this.lightLevel;
 			if (renderLight == 0 || !this.isVisible()) {
-				renderLight = (float) 0.5;
+				renderLight = 0.5F;
 			}
+			
+			if(DeadReckoningGame.debugMode){
+				renderLight=numLightLevels;
+			}
+			
 			// System.out.println(tileFace);
-			Image toDraw = tileTextures.getSprite(
-					tileFace % tileTextures.getHorizontalCount(), tileFace
-							/ tileTextures.getHorizontalCount());
-			toDraw.setAlpha((1 - ((float) (numLightLevels - renderLight) / (numLightLevels)))
+			SpriteSheet s = this.getParent().getBiome().getTileImage();
+			Image toDraw = s.getSprite(
+					tileFace % s.getHorizontalCount(), tileFace
+							/ s.getHorizontalCount());
+			toDraw.setAlpha((1 - ((numLightLevels - renderLight) / (numLightLevels)))
 					* brightness + (1 - brightness));
 			g.drawImage(toDraw, x, y);
 

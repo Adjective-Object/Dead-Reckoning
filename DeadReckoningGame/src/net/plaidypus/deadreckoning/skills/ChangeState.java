@@ -2,7 +2,6 @@ package net.plaidypus.deadreckoning.skills;
 
 import org.newdawn.slick.SlickException;
 
-import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.ChangeStateAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
@@ -13,12 +12,14 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
 /**
  * The Class CheckInventory.
  */
-public class CheckInventory extends Skill {
-
+public class ChangeState extends Skill {
+	
+	int targetState;
+	
 	/**
 	 * Instantiates a new check inventory.
 	 */
-	public CheckInventory() {
+	public ChangeState() {
 		super();
 	}
 
@@ -28,8 +29,9 @@ public class CheckInventory extends Skill {
 	 * @param source
 	 *            the source
 	 */
-	public CheckInventory(LivingEntity source) {
+	public ChangeState(LivingEntity source, int targetState) {
 		super(source);
+		this.targetState = targetState;
 	}
 
 	/*
@@ -41,7 +43,7 @@ public class CheckInventory extends Skill {
 	@Override
 	public Action makeAction(Tile target) {
 		return new ChangeStateAction(source, target,
-				DeadReckoningGame.INVENTORYSTATE);
+				targetState);
 	}
 
 	/*

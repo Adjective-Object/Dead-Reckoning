@@ -113,7 +113,6 @@ public class GameplayElement extends HudElement {
 		lastMap = "";
 
 		DamageEffect.init();
-		Tile.init("res\\wallTiles.png");
 
 		backgroundScreen = new Image(gc.getWidth(), gc.getHeight());
 
@@ -171,7 +170,7 @@ public class GameplayElement extends HudElement {
 									Tile.LAYER_PASSIVE_MAP));
 							LandingPad pad = LandingPad.class.cast(b.getTileAt(
 									x, y).getEntity(Tile.LAYER_PASSIVE_MAP));
-							System.out.println("HNNG");
+							System.out.println("HNNG "+pad);
 							if (pad.fromFloor.equals(lastMap)) {
 								target = this.gb.getTileAt(x, y);
 							}

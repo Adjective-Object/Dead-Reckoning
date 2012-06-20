@@ -328,13 +328,9 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 */
 	public void onDeath() {
 		this.getParent().removeEntity(this);
-		for (int i = 0; i < this.getLocation().getEntities().length; i++) {
-		}
 		this.getParent().placeEntityNear(this.getX(), this.getY(),
 				new Corpse(this.getLocation(), Tile.LAYER_PASSIVE_PLAY, this),
 				Tile.LAYER_PASSIVE_PLAY);
-		for (int i = 0; i < this.getLocation().getEntities().length; i++) {
-		}
 	}
 
 	/*
