@@ -621,7 +621,7 @@ public class GameBoard implements ILosBoard {
 			for (int y = 0; y < board[i].length; y++) {
 				if (Utilities.getDistance(board[i][y], entity.getLocation()) <= sightDistance
 						&& isLineofSight(entity.getLocation(), board[i][y])) {
-					board[i][y].visibility = true;
+					board[i][y].visible = true;
 					board[i][y].explored = true;
 				}
 			}
@@ -732,7 +732,7 @@ public class GameBoard implements ILosBoard {
 		for (int x = 0; x < board.length; x++) {
 			for (int y = 0; y < board[x].length; y++) {
 				board[x][y].lightLevel = 0;
-				board[x][y].visibility = false; // TODO visibility
+				board[x][y].visible = false;
 			}
 		}
 	}
@@ -838,7 +838,7 @@ public class GameBoard implements ILosBoard {
 	 */
 	public void visit(int x, int y) {
 		if (x < this.getWidth() && x >= 0 && y < this.getHeight() && y >= 0) {
-			this.getTileAt(x, y).visibility = true;
+			this.getTileAt(x, y).visible = true;
 			this.getTileAt(x, y).explored = true;
 		}
 	}

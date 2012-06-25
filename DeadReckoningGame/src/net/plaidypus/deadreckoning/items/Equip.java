@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import net.plaidypus.deadreckoning.modloader.ModLoader;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -43,7 +45,7 @@ public class Equip extends Item {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		name = reader.readLine();
 		description = reader.readLine();
-		image = new Image(reader.readLine());//TODO reading images from jarfiles
+		image = ModLoader.loadImage(reader.readLine());
 
 		equipSlot = Integer.parseInt(reader.readLine());
 		STR = Integer.parseInt(reader.readLine());

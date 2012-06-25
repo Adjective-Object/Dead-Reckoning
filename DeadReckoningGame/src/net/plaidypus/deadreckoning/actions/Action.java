@@ -4,28 +4,32 @@ import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Action.
+ * 
+ * Used as a method of altering the state of the game on a turn-to-turn basis.
  */
 public abstract class Action {
 
-	/** The source. */
+	/** The entity tha produced the action*/
 	public Entity source;
 
-	/** The target. */
+	/** The tile on which the action is focused */
 	public Tile target;
 
-	/** The takes turn. */
-	public boolean completed, takesTurn;
+	/** Indicates if the action has been completed (set to true when done)*/
+	public boolean completed;
+	
+	/** Indicates if carrying out this action should advance the turn (no for invenory management, etc.)*/
+	public boolean takesTurn;
 
 	/**
 	 * actions are the main method of changing things in the game's environment.
 	 * 
 	 * @param source
-	 *            the tile the entity creating the action is standing on
+	 * 			the tile the entity creating the action is standing on
 	 * @param target
-	 *            the tile the action is going to target
+	 * 			the tile the action is going to target
 	 */
 	public Action(Entity source, Tile target) {
 		this.source = source;
@@ -35,26 +39,27 @@ public abstract class Action {
 	}
 
 	/**
-	 * applies the action. called repeatedley.
+	 * Sends a message to the stringputter. A Convenience method.
 	 * 
-	 * @param message
-	 *            the message
-	 * @return if the action is complete (will not continue to call apply once
-	 *         completed)
+	 * @param message the message to be displayed
 	 */
 	public static void sendMessage(String message) {
 		DeadReckoningGame.instance.getMessageElement().addMessage(message);
 	}
 
 	/**
-	 * Checks if is noticed.
+	 * Checks if this action is noticed.
 	 * 
-	 * @return true, if is noticed
+	 * Noticing means that carrying out this action should alert the camera to the action's source
+	 * 
+	 * @return true, if is noticed.
 	 */
 	protected abstract boolean isNoticed();
 
 	/**
-	 * Apply action.
+	 * Applies the action.
+	 * 
+	 * This can be thought of as the rough equivalent of the action's main method
 	 * 
 	 * @param delta
 	 *            the delta
@@ -77,10 +82,12 @@ public abstract class Action {
 	}
 
 	/**
-	 * Apply.
+	 * applies constant updates of the action.
+	 * Used for animation handling and other cosmetics.
+	 * Does not usually directly alter the game.
 	 * 
 	 * @param delta
-	 *            the delta
+	 *            the miliseconds elapsed since the last game update
 	 * @return true, if successful
 	 */
 	protected abstract boolean apply(int delta);

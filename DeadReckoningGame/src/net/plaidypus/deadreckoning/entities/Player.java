@@ -10,6 +10,7 @@ import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.grideffects.AnimationEffect;
 import net.plaidypus.deadreckoning.items.Equip;
+import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.skills.Attack;
 import net.plaidypus.deadreckoning.skills.ChangeState;
@@ -20,6 +21,7 @@ import net.plaidypus.deadreckoning.skills.Saver;
 import net.plaidypus.deadreckoning.skills.Skill;
 import net.plaidypus.deadreckoning.skills.ViewSkills;
 import net.plaidypus.deadreckoning.skills.Wait;
+import net.plaidypus.deadreckoning.state.DeathScreenState;
 import net.plaidypus.deadreckoning.status.OnFire;
 
 import org.newdawn.slick.Animation;
@@ -218,6 +220,12 @@ public class Player extends LivingEntity {
 																		// up
 																		// Animation
 		}
+		
+		if (!this.isAlive()){
+			DeathScreenState s = (DeathScreenState) DeadReckoningGame.instance.getState(DeadReckoningGame.DEATHSTATE);
+			s.makeFrom(this);
+			DeadReckoningGame.instance.enterState(DeadReckoningGame.DEATHSTATE);
+		}
 	}
 
 	/**
@@ -401,7 +409,7 @@ public class Player extends LivingEntity {
 	@Override
 	public void init() throws SlickException {
 		OnFire.init();
-		this.levelUp = new SpriteSheet(new Image("res/fireBurst.png"), 32, 32);
+		this.levelUp = new SpriteSheet( ModLoader.loadImage("core/res/fireBurst.png"), 32, 32);
 	}
 
 	/**

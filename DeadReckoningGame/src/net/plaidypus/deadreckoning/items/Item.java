@@ -42,8 +42,7 @@ public abstract class Item {
 	public Item(String parentMod, int itemID, int classification) {
 		this.itemID = itemID;
 		try {
-			System.out.println("ITEM AT " + parentMod + "/items/"
-					+ Integer.toString(itemID) + ".item");
+			//System.out.println("ITEM AT " + parentMod + "/items/" + Integer.toString(itemID) + ".item");
 			parseItem(ModLoader.getLoaderFor(parentMod).getResourceAsStream(
 					parentMod + "/items/" + Integer.toString(itemID) + ".item"));
 		} catch (FileNotFoundException e) {

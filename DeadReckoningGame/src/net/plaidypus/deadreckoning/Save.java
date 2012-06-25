@@ -179,7 +179,6 @@ public class Save {
 		b.height = r.read();
 		r.readLine();
 		b.biome = Biome.getBiome(r.readLine());
-		System.out.println(b.board);
 		b.board = new Tile[b.width][b.height];
 
 		for (int y = 0; y < b.height; y++) {
@@ -324,9 +323,7 @@ public class Save {
 	 */
 	public static void saveEntities(GameBoard b, BufferedWriter r)
 			throws IOException {
-		System.out.println(r);
 		for (int i = 0; i < b.ingameEntities.size(); i++) {
-			System.out.println(b.ingameEntities.get(i));
 			r.write(b.ingameEntities.get(i).saveToString());
 			r.newLine();
 		}
@@ -423,9 +420,7 @@ public class Save {
 
 	public static void updateSave(String saveLocation, Player p,
 			GameBoard currentMap) throws IOException {
-		System.out.println("updating Save...");
 		File playerFile = new File(saveLocation + "/player.txt");
-		System.out.println(playerFile.getAbsolutePath());
 		BufferedWriter w = new BufferedWriter(new FileWriter(playerFile));
 
 		Save.savePlayerProfession(w, p.getProfession());

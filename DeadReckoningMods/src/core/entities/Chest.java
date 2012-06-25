@@ -11,6 +11,7 @@ import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.grideffects.FadeoutEffect;
 import net.plaidypus.deadreckoning.items.EtcDrop;
 import net.plaidypus.deadreckoning.items.Item;
+import net.plaidypus.deadreckoning.modloader.ModLoader;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -59,8 +60,7 @@ public class Chest extends InteractiveEntity {
 	 * @see net.plaidypus.deadreckoning.entities.Entity#init()
 	 */
 	public void init() throws SlickException {
-		Chest.chest = new Image("res/chest.png");
-		System.out.println(chest);
+		Chest.chest = ModLoader.loadImage("core/res/chest.png");
 	}
 
 	/*

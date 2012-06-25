@@ -54,8 +54,8 @@ public class Tile {
 	/** The explored. */
 	public boolean explored = false, blocking = false;
 
-	/** The visibility. */
-	public boolean visibility;
+	/** The visible. */
+	public boolean visible;
 
 	/** The light level. */
 	public float lightLevel;
@@ -92,7 +92,7 @@ public class Tile {
 		this.x = x;
 		highlighted = 0;
 		lightLevel = 5;
-		visibility = true;
+		visible = true;
 		setTileFace(tileFace);
 		containedEntities = emptyEntityArray();
 	}
@@ -258,7 +258,6 @@ public class Tile {
 				renderLight=numLightLevels;
 			}
 			
-			// System.out.println(tileFace);
 			SpriteSheet s = this.getParent().getBiome().getTileImage();
 			Image toDraw = s.getSprite(
 					tileFace % s.getHorizontalCount(), tileFace
@@ -282,7 +281,7 @@ public class Tile {
 	 * @return true, if is visible
 	 */
 	public boolean isVisible() {
-		return visibility;
+		return visible;
 	}
 
 	/**
@@ -291,7 +290,7 @@ public class Tile {
 	 * @return true, if successful
 	 */
 	public boolean canBeSeen() {
-		return visibility && this.lightLevel > 0;
+		return visible && this.lightLevel > 0;
 	}
 
 	/**

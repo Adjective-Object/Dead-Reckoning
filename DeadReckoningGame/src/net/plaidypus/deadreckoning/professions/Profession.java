@@ -6,12 +6,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.generator.Biome;
 import net.plaidypus.deadreckoning.items.Item;
+import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.skills.Skill;
 
 import org.newdawn.slick.Image;
@@ -108,9 +110,8 @@ public class Profession extends StatMaster {
 				+ treeC);
 		this.baseClassID = baseClassID;
 		this.parentMod = parentMod;
-		this.portrait = new Image("res/professions/" + baseClassID
-				+ "/Portrait.png");
-		parseClassTraits(baseClassID);
+		this.portrait = ModLoader.loadImage(this.parentMod+"/professions/" + baseClassID + "/Portrait.png");
+		parseClassTraits(parentMod, baseClassID);
 	}
 
 	/**
@@ -121,11 +122,10 @@ public class Profession extends StatMaster {
 	 * @param baseClassID
 	 *            the base class id
 	 */
-	private void parseClassTraits(int baseClassID) {
+	private void parseClassTraits(String parentMod, int baseClassID) {
 		double[] stats = new double[6];
 		try {
-			BufferedReader r = new BufferedReader(new FileReader(new File(
-					"res/professions/" + baseClassID + "/ClassTraits.txt")));
+			BufferedReader r = new BufferedReader(new InputStreamReader(ModLoader.getLoaderFor(parentMod).getResourceAsStream(parentMod+"/professions/" + baseClassID + "/ClassTraits.txt")));
 			this.name = r.readLine();
 
 			for (int i = 0; i < 6; i++) {
@@ -293,15 +293,6 @@ public class Profession extends StatMaster {
 	 */
 	public int getBaseClass() {
 		return this.baseClassID;
-	}
-
-	/**
-	 * Enumerate professions.
-	 * 
-	 * @return the int
-	 */
-	public static int enumerateProfessions() {
-		return new File("res/professions/").list().length;
 	}
 
 	/**

@@ -10,6 +10,7 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.entities.Monster;
 import net.plaidypus.deadreckoning.generator.DungeonRoom;
 import net.plaidypus.deadreckoning.generator.RoomBasedBiome;
+import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.professions.StatMaster;
 
 import org.newdawn.slick.Image;
@@ -51,7 +52,7 @@ public class Temple extends RoomBasedBiome {
 
 	@Override
 	public void init() throws SlickException {
-		Image tile = new Image("res/walltiles.png");//TODO reading images from jarfiles
+		Image tile = ModLoader.loadImage("core/res/walltiles.png");//TODO reading images from jarfiles
 		this.tileImage = new SpriteSheet(tile,
 				DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
 	}
@@ -113,16 +114,8 @@ public class Temple extends RoomBasedBiome {
 			
 			drawPath(tilePath,rooms,TILE_TUNNEL);
 			
-			for (int x=0; x<rooms.get(i).width; x++){
-				Tile a = target.getTileAt(rooms.get(i).x+x,rooms.get(i).y-1),
-						b= target.getTileAt(rooms.get(i).x+x,rooms.get(i).y+rooms.get(i).height);
-				if(a.getTileFace()==TILE_TUNNEL){
-					target.placeEntity(a, new Door(null,Tile.LAYER_ACTIVE), Tile.LAYER_ACTIVE);
-				}
-				if(b.getTileFace()==TILE_TUNNEL){
-					target.placeEntity(b, new Door(null,Tile.LAYER_ACTIVE), Tile.LAYER_ACTIVE);
-				}
-			}
+		}
+		for(int i=0; i<rooms.size()-1; i++){
 			for (int y=0; y<rooms.get(i).height; y++){
 				Tile a = target.getTileAt(rooms.get(i).x-1, rooms.get(i).y+y),
 						b= target.getTileAt(rooms.get(i).x+rooms.get(i).width, rooms.get(i).y+y);
@@ -134,6 +127,16 @@ public class Temple extends RoomBasedBiome {
 				}
 			}
 			
+			for (int x=0; x<rooms.get(i).width; x++){
+				Tile a = target.getTileAt(rooms.get(i).x+x,rooms.get(i).y-1),
+						b= target.getTileAt(rooms.get(i).x+x,rooms.get(i).y+rooms.get(i).height);
+				if(a.getTileFace()==TILE_TUNNEL){
+					target.placeEntity(a, new Door(null,Tile.LAYER_ACTIVE), Tile.LAYER_ACTIVE);
+				}
+				if(b.getTileFace()==TILE_TUNNEL){
+					target.placeEntity(b, new Door(null,Tile.LAYER_ACTIVE), Tile.LAYER_ACTIVE);
+				}
+			}
 		}
 		
 		

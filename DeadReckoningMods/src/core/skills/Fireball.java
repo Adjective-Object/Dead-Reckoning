@@ -61,24 +61,10 @@ public class Fireball extends Skill {
 	 * @throws SlickException
 	 *             the slick exception
 	 */
-	public void init() throws SlickException {// TODO things
-		try {
-			Fireball.fireball = new SpriteSheet(new Image(
-					TextureLoader.getTexture(
-							"PNG",
-							ModLoader.getModpackLoader("core")
-									.getResourceAsStream(
-											"core/res/FireBurst.png"))),
-					DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
-			Fireball.image = new Image(TextureLoader.getTexture(
-					"PNG",
-					ModLoader.getModpackLoader("core").getResourceAsStream(
-							"core/res/onFireIcon.png")));
-			System.out.println("FOIAHBAHLL " + fireball + " " + image);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		System.out.println(this.getClass().getCanonicalName());
+	public void init() throws SlickException {
+		Fireball.fireball = new SpriteSheet(ModLoader.loadImage("core/res/FireBurst.png"),
+				DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
+		Fireball.image = ModLoader.loadImage("core/res/onFireIcon.png");
 	}
 
 	/*

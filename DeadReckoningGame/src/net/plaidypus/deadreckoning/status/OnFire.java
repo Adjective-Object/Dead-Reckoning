@@ -7,6 +7,7 @@ import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.AttackAction;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
+import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.professions.StatMaster;
 
 import org.newdawn.slick.Animation;
@@ -56,9 +57,9 @@ public class OnFire extends AnimatedStatus {
 	 *             the slick exception
 	 */
 	public static void init() throws SlickException {
-		image = new Image("res/onFireIcon.png");
+		image = ModLoader.loadImage("core/res/onFireIcon.png");
 		details = "OH SHIT, YOU'RE ON FIRE";
-		sprite = new SpriteSheet("res/fireAnimation.png",
+		sprite = new SpriteSheet( ModLoader.loadImage("core/res/fireAnimation.png"),
 				DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
 	}
 

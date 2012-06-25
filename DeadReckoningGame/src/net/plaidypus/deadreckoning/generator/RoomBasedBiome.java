@@ -119,7 +119,6 @@ public abstract class RoomBasedBiome extends Biome {
 	public int calcWidth(ArrayList<DungeonRoom> r){
 		int mapWidth = 0;
 		for (int i=0; i<r.size(); i++){
-			System.out.println("OH "+mapWidth);
 			if (mapWidth < r.get(i).x + r.get(i).width+1) {
 				mapWidth = r.get(i).x + r.get(i).width+1;
 			}

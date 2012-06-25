@@ -16,7 +16,9 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.opengl.TextureLoader;
 
 import net.plaidypus.deadreckoning.DeadReckoningComponent;
 import net.plaidypus.deadreckoning.generator.Biome;
@@ -220,6 +222,18 @@ public class ModLoader {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+	}
+
+	public static Image loadImage(String imagepath) throws SlickException{
+		String modpack = imagepath.split("(/|\\\\)")[0];
+		System.out.println(modpack+"  "+imagepath+"  "+ModLoader.getModpackLoader(modpack));
+		try {
+			return new Image(
+					TextureLoader.getTexture("PNG",ModLoader.getModpackLoader(modpack)
+									.getResourceAsStream(imagepath)));
+		} catch (IOException e) {
+			return new Image("res/noSkill.png");
 		}
 	}
 

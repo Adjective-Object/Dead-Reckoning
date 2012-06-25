@@ -27,6 +27,7 @@ import net.plaidypus.deadreckoning.hudelements.simple.StringPutter;
 import net.plaidypus.deadreckoning.hudelements.simple.TextElement;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.professions.Profession;
+import net.plaidypus.deadreckoning.state.DeathScreenState;
 import net.plaidypus.deadreckoning.state.ExclusiveHudLayersState;
 import net.plaidypus.deadreckoning.state.HudLayersState;
 import net.plaidypus.deadreckoning.state.MainMenuState;
@@ -60,7 +61,8 @@ public class DeadReckoningGame extends StateBasedGame {
 	/** The Constants that guide the referencing of states. */
 	public static final int LOOTSTATE = 0, INVENTORYSTATE = 1,
 			GAMEPLAYSTATE = 2, MAINMENUSTATE = 3, SAVESELECTSTATE = 4,
-			MAPSTATE = 5, SKILLSTATE = 6, NEWGAMESTATE = 7, ERRORSTATE = 8;
+			MAPSTATE = 5, SKILLSTATE = 6, NEWGAMESTATE = 7, ERRORSTATE = 8,
+			DEATHSTATE = 9;
 
 	/**
 	 * The Constant tileSize, that governs the size of the tiles in the game
@@ -204,8 +206,8 @@ public class DeadReckoningGame extends StateBasedGame {
 			e.printStackTrace();
 		}
 
-		System.out.println(Biome.getBiomes());
-		System.out.println(Profession.getProfessions());
+		//System.out.println(Biome.getBiomes());
+		//System.out.println(Profession.getProfessions());
 
 		this.menuBackground = new ArrayList<HudElement>(0);
 		SpriteSheet particles = new SpriteSheet(new Image(
@@ -277,7 +279,8 @@ public class DeadReckoningGame extends StateBasedGame {
 		this.addState(new SaveSelectorState(SAVESELECTSTATE, menuBackground));
 		this.addState(new PlayerViewerState(SKILLSTATE));
 		this.addState(new NewGameState(NEWGAMESTATE, menuBackground));
-
+		this.addState(new DeathScreenState(DEATHSTATE));
+		
 		this.enterState(MAINMENUSTATE);
 	}
 

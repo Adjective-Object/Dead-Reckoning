@@ -29,6 +29,8 @@ import org.newdawn.slick.SpriteSheet;
 // TODO: Auto-generated Javadoc
 /**
  * The Class LivingEntity.
+ * 
+ * A subclass of entity, used to handle monsters, the player, and (in the future) neutral mobs and pets
  */
 public abstract class LivingEntity extends InteractiveEntity {
 
@@ -54,7 +56,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	/** The skills. */
 	public ArrayList<Skill> skills = new ArrayList<Skill>(0);
 
-	/** The current animation id. */
+	/** The id of the current animation. */
 	int currentAnimationID;
 
 	/** The Constant ANIMATION_DEATH. */
@@ -62,7 +64,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 			ANIMATION_WALK = 2, ANIMATION_FLINCH_FRONT = 3,
 			ANIMATION_FLINCH_BACK = 4, ANIMATION_DEATH = 5;
 
-	/** The stat master. */
+	/** The stat master, used to handle the (somewhat) unchanging stats of the entity */
 	protected StatMaster statMaster;
 
 	// Exists only for the purpose of referencing methods that should be static,
@@ -96,9 +98,9 @@ public abstract class LivingEntity extends InteractiveEntity {
 					.getResourceAsStream(parentMod + "/" + entityFile);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
 					entityReader));
+			this.parentMod = parentMod;
 			loadFromFile(reader);
 			reader.close();
-			this.parentMod = parentMod;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -192,27 +194,23 @@ public abstract class LivingEntity extends InteractiveEntity {
 	/**
 	 * deals the entity some amount of physical damage. This method takes the
 	 * raw damage, and applies the physical defense of the livingentity to it
-	 * (STAT MANAGEMENT)
 	 * 
 	 * @param damage
 	 *            the damage to deal
 	 */
-	public void damagePhysical(int damage) {// TODO math for damage reduction
-											// magic
-		this.HP -= damage;
+	public void damagePhysical(int damage) {
+		this.HP -= this.statMaster.getPhysicalDamage(damage);
 	}
 
 	/**
 	 * deals the entity some amount of magical damage. This method takes the raw
-	 * damage, and applies the magical defense of the livingentity to it (STAT
-	 * MANAGEMENT)
+	 * damage, and applies the magical defense of the livingentity to it 
 	 * 
 	 * @param damage
 	 *            the damage to deal
 	 */
-	public void damageMagical(int damage) {// TODO math for damage reduction
-											// magic
-		this.HP -= damage;
+	public void damageMagical(int damage) {
+		this.HP -= this.statMaster.getMagicalDamage(damage);
 	}
 
 	/**
@@ -441,9 +439,8 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 						String[] toimageB = toimage[1].split("\"");
 
-						SpriteSheet p = new SpriteSheet(toimageB[1],
-								stats.get("TILEX"), stats.get("TILEY"),
-								new Color(255, 255, 255));
+						SpriteSheet p = new SpriteSheet(ModLoader.loadImage(toimageB[1]),
+								stats.get("TILEX"), stats.get("TILEY"));
 
 						images.put(toimage[0], p);
 					} else if (ParsingMode.equals(":SPRITES:")) {

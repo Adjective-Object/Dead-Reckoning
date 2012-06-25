@@ -9,7 +9,7 @@ TILEY=32
 AITYPE=1
 
 :IMAGES:
-StandSheet = "res/Goblin stand.png"
+StandSheet = "core/res/Goblin stand.png"
 
 :SPRITES:
 Stand = StandSheet_120_0,0, 1,0, 2,0, 3,0, 4,0, 5,0,

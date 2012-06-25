@@ -15,10 +15,10 @@ TILEX=32
 TILEY=32
 
 :IMAGES:
-AttackSheet = "res/professions/0/attack.png"
-StandSheet = "res/professions/0/stand.png"
-FlinchFrontSheet = "res/professions/0/flinchFront.png"
-FlinchBackSheet = "res/professions/0/flinchBack.png"
+AttackSheet = "core/professions/1/attack.png"
+StandSheet = "core/professions/	1/stand.png"
+FlinchFrontSheet = "core/professions/1/flinchFront.png"
+FlinchBackSheet = "core/professions/1/flinchBack.png"
 
 :SPRITES:
 Stand = StandSheet_120_0,0, 1,0, 2,0, 3,0, 4,0, 0,1, 1,1, 2,1, 3,1, 4,1

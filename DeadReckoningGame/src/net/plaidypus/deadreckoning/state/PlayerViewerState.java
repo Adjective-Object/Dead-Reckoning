@@ -91,7 +91,6 @@ public class PlayerViewerState extends HudLayersState {
 	public void makeFrom(Object[] args) {
 		this.HudElements.get(0).makeFrom(args[0]);
 		Player p = (Player) (args[1]);
-		System.out.println("PlayerViewerState " + p);
 		this.sourceProf = p.getProfession();
 
 		ArrayList<Skill> skills = this.sourceProf.getSkillList();
@@ -174,8 +173,6 @@ public class PlayerViewerState extends HudLayersState {
 						img = images[0][i * 4 + s];
 					}
 				}
-
-				System.out.println("PlayerViewerState " + img);
 
 				this.buttonPanel.getContents().get(i * 4 + s).makeFrom(img);
 				this.buttonPanel

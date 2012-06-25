@@ -5,6 +5,7 @@ package net.plaidypus.deadreckoning;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 
 /**
  * The Class SaveFilter.
@@ -26,7 +27,22 @@ public class SaveFilter implements FilenameFilter {
 	 * @see java.io.FilenameFilter#accept(java.io.File, java.lang.String)
 	 */
 	public boolean accept(File file, String name) {
-		return name.startsWith("SAVE") && file.isDirectory();
+		try {
+			File f = new File(file.getCanonicalPath()+"/"+name+"/");
+			return f.isDirectory() && fileContains(f, "saveInformation.txt") && fileContains(f, "player.txt");
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	private boolean fileContains(File f, String fileName){
+		String[] names = f.list();
+		for (int i=0;i <names.length; i++){
+			if(names[i].equals(fileName)){ return true;}
+		}
+		return false;
 	}
 
 }

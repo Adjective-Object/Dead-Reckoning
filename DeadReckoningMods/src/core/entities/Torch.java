@@ -6,6 +6,7 @@ import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
+import net.plaidypus.deadreckoning.modloader.ModLoader;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
@@ -61,7 +62,7 @@ public class Torch extends Entity {
 	 * @see net.plaidypus.deadreckoning.entities.Entity#init()
 	 */
 	public void init() throws SlickException {
-		img = new SpriteSheet("res/torch.png", 32, 32);
+		img = new SpriteSheet(ModLoader.loadImage("core/res/torch.png"), 32, 32);
 	}
 
 	/*

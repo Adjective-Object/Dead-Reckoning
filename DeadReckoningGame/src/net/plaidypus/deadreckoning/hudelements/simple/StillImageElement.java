@@ -123,4 +123,12 @@ public class StillImageElement extends HudElement {
 		g.drawImage(img, this.getX(), this.getY());
 	}
 
+	public float getAlpha() {
+		return this.img.getAlpha();
+	}
+	
+	public void setAlpha(float alph) {
+		this.img.setAlpha(alph);
+	}
+
 }

@@ -24,13 +24,15 @@ import org.newdawn.slick.state.StateBasedGame;
  * 
  * anyway, it also allows for the creation of new states
  */
-public class SaveSelectorState extends ExclusiveHudLayersState {
+public class SaveSelectorState extends PrebakedHudLayersState {
 
 	/** The saves. */
 	static Save[] saves;
 
 	/** The button index. */
 	int buttonIndex;
+	
+	ArrayList<TextButton> buttonList;
 
 	/**
 	 * Instantiates a new save selector state.
@@ -47,7 +49,6 @@ public class SaveSelectorState extends ExclusiveHudLayersState {
 			throws SlickException {
 		super(stateID, (ArrayList<HudElement>) background.clone());
 		this.buttonIndex = background.size();
-		this.HudElements.addAll(SaveSelectorState.makeElementsList());
 	}
 
 	/**
@@ -64,14 +65,12 @@ public class SaveSelectorState extends ExclusiveHudLayersState {
 			throws SlickException {
 		super.update(container, game, delta);
 
-		if (this.focus != -1) {
-			TextButton currentPressed = (TextButton) this.HudElements
-					.get(this.focus);
+		for (int i=0; i<buttonList.size(); i++){
+			TextButton currentPressed = buttonList.get(i);
 			if (currentPressed.isPressed()) {
 				try {
-					if (this.focus > buttonIndex) {
-						saves[focus - buttonIndex - 1]
-								.loadGame(
+					if(i!=0){ //because index 0 is the new game button
+						saves[i-1].loadGame(
 										GameplayElement.class
 												.cast(HudLayersState.class
 														.cast(DeadReckoningGame.instance
@@ -80,10 +79,9 @@ public class SaveSelectorState extends ExclusiveHudLayersState {
 										container);
 						DeadReckoningGame.instance
 								.enterState(DeadReckoningGame.GAMEPLAYSTATE);
-					} else if (this.focus == buttonIndex) {
+					} else if (i==0) {
 						DeadReckoningGame.instance
 								.enterState(DeadReckoningGame.NEWGAMESTATE);
-
 					}
 
 				} catch (IOException e) {
@@ -109,28 +107,25 @@ public class SaveSelectorState extends ExclusiveHudLayersState {
 	 * @throws SlickException
 	 *             the slick exception
 	 */
-	private static ArrayList<HudElement> makeElementsList()
-			throws SlickException {
+	protected ArrayList<HudElement> makeContents() throws SlickException {
 		// enumerates the number of saves
+		ArrayList<HudElement> returnElements = new ArrayList<HudElement>(0);
+		
 		File f = new File("saves/");
-		System.out.println("SaveSelectorState " + f.list());
 		String[] savesList = f.list(new SaveFilter());
-		for (int i = 0; i < savesList.length; i++) {
-			System.out.println("SaveSelectorState " + savesList[i]);
-		}
 
-		ArrayList<HudElement> buttons = new ArrayList<HudElement>(
+		buttonList = new ArrayList<TextButton>(
 				savesList.length + 2);
 		saves = new Save[savesList.length];
 
-		buttons.add(new TextButton(10, 30, HudElement.TOP_LEFT, new Color(30,
+		buttonList.add(new TextButton(10, 30, HudElement.TOP_LEFT, new Color(30,
 				50, 70), new Color(40, 60, 80), new Color(60, 80, 100),
 				"New Game", DeadReckoningGame.menuFont));
 
 		// creates the buttons needed to reference those saves
 		for (int i = 0; i < savesList.length; i++) {
 			saves[i] = new Save("saves/" + savesList[i]);
-			buttons.add(new TextButton(
+			buttonList.add(new TextButton(
 					10
 							+ (i * 30)
 							/ (DeadReckoningGame.instance.getContainer()
@@ -142,8 +137,14 @@ public class SaveSelectorState extends ExclusiveHudLayersState {
 							80, 100), saves[i].getName(),
 					DeadReckoningGame.menuFont));
 		}
-
-		return buttons;
+		
+		returnElements.addAll(buttonList);
+		return returnElements;
 	}
 
+	@Override
+	public void makeFrom(Object O) {
+		// TODO Auto-generated method stub
+		
+	}
 }

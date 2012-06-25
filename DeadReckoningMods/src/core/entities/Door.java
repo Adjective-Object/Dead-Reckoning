@@ -6,6 +6,7 @@ import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
+import net.plaidypus.deadreckoning.modloader.ModLoader;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -52,8 +53,8 @@ public class Door extends Entity {
 	 */
 	@Override
 	public void init() throws SlickException {
-		openImg = new Image("res/doorOpen.png");
-		closeImg = new Image("res/doorClosed.png");
+		openImg = ModLoader.loadImage("core/res/doorOpen.png");
+		closeImg = ModLoader.loadImage("core/res/doorClosed.png");
 	}
 
 	/*
