@@ -49,8 +49,8 @@ public abstract class Button extends HudElement {
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 		int mx = gc.getInput().getMouseX(), my = gc.getInput().getMouseY();
-		boolean overlap = mx > getX() && mx < getX() + getWidth()
-				&& my > getY() && my < getY() + getHeight();
+		boolean overlap = mx > getAbsoluteX() && mx < getAbsoluteX() + getWidth()
+				&& my > getAbsoluteY() && my < getAbsoluteY() + getHeight();
 
 		if (overlap) {
 			moused = true;

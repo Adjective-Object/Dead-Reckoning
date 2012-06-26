@@ -120,7 +120,7 @@ public class StillImageElement extends HudElement {
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		g.drawImage(img, this.getX(), this.getY());
+		g.drawImage(img, this.getAbsoluteX(), this.getAbsoluteY());
 	}
 
 	public float getAlpha() {

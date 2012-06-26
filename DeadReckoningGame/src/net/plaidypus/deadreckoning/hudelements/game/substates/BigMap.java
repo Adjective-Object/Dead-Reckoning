@@ -21,7 +21,7 @@ public class BigMap extends MiniMap{
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		renderTo(g, getX() - (width * scale/2), getY()-(height*scale/2), width/2+1, height/2+1);
+		renderTo(g, getAbsoluteX() - (width * scale/2), getAbsoluteY()-(height*scale/2), width/2+1, height/2+1);
 
 	}
 	

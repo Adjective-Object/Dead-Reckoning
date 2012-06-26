@@ -106,8 +106,8 @@ public class StringPutter extends HudElement {
 		for (int i = 0; i < messages.size(); i++) {
 			g.setFont(DeadReckoningGame.menuSmallFont);
 			g.setColor(new Color(255, 255, 255, alphas.get(i).intValue()));
-			g.drawString(messages.get(i), this.getX(),
-					this.getY() - ((messages.size() - i) * 25));
+			g.drawString(messages.get(i), this.getAbsoluteX(),
+					this.getAbsoluteY() - ((messages.size() - i) * 25));
 		}
 	}
 

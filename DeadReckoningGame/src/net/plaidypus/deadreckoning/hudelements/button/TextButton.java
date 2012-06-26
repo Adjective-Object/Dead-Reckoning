@@ -1,5 +1,7 @@
 package net.plaidypus.deadreckoning.hudelements.button;
 
+import net.plaidypus.deadreckoning.DeadReckoningGame;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -44,6 +46,17 @@ public class TextButton extends Button {
 	 * @throws SlickException
 	 *             the slick exception
 	 */
+	
+	public TextButton(int x, int y, int bindMethod, String text) throws SlickException{
+		this(x,y,bindMethod,
+				new Color(30, 50, 70),
+				new Color(40, 60, 80),
+				new Color(60, 80, 100),
+				text,
+				DeadReckoningGame.menuSmallFont
+				);
+	}
+	
 	public TextButton(int x, int y, int bindMethod, Color normalColor,
 			Color highlightC, Color pressedC, String text, UnicodeFont font)
 			throws SlickException {
@@ -130,11 +143,11 @@ public class TextButton extends Button {
 		} else {
 			g.setColor(c);
 		}
-		g.fillRect(getX(), getY(), getWidth(), getHeight());
+		g.fillRect(getAbsoluteX(), getAbsoluteY(), getWidth(), getHeight());
 		g.setFont(font);
 		g.setColor(Color.white);
-		g.drawString(text, getX() + 10, getY() + 1);
-		g.drawRect(getX(), getY(), getWidth(), getHeight());
+		g.drawString(text, getAbsoluteX() + 10, getAbsoluteY() + 1);
+		g.drawRect(getAbsoluteX(), getAbsoluteY(), getWidth(), getHeight());
 	}
 
 }

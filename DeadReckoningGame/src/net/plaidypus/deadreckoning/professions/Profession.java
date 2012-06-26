@@ -16,6 +16,7 @@ import net.plaidypus.deadreckoning.items.Item;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.skills.Skill;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -55,7 +56,9 @@ public class Profession extends StatMaster {
 	private SkillProgression[] skillTrees;
 
 	/** The portrait image of the profession/character. */
-	private Image portrait;
+	private Image portrait, selectImage;
+	
+	public Color color = new Color(255,255,255);
 
 	/**
 	 * The base class id. Used to get stat distributions and the character
@@ -111,6 +114,7 @@ public class Profession extends StatMaster {
 		this.baseClassID = baseClassID;
 		this.parentMod = parentMod;
 		this.portrait = ModLoader.loadImage(this.parentMod+"/professions/" + baseClassID + "/Portrait.png");
+		this.selectImage = ModLoader.loadImage(this.parentMod+"/professions/" + baseClassID + "/selectscreen.png");
 		parseClassTraits(parentMod, baseClassID);
 	}
 
@@ -131,6 +135,11 @@ public class Profession extends StatMaster {
 			for (int i = 0; i < 6; i++) {
 				stats[i] = Double.parseDouble(r.readLine());
 			}
+			this.color = new Color(
+					Integer.parseInt(r.readLine()),
+					Integer.parseInt(r.readLine()),
+					Integer.parseInt(r.readLine()));
+		
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (NumberFormatException e) {
@@ -352,6 +361,10 @@ public class Profession extends StatMaster {
 
 	public static ArrayList<Profession> getProfessions() {
 		return professions;
+	}
+	
+	public static int getNumProfessions(){
+		return professions.size();
 	}
 
 	public static Profession getProfession(int prof) {

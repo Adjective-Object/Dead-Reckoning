@@ -72,11 +72,11 @@ public class MiniMap extends HudElement {
 					if (!til.isOpen(Tile.LAYER_ACTIVE) && til.canBeSeen()
 							&& til.getEntity(Tile.LAYER_ACTIVE).isInteractive()) {
 						if (til.getEntity(Tile.LAYER_ACTIVE).allignmnet == Entity.ALLIGN_HOSTILE) {
+							g.setColor(Color.red);
+						} else if (til.getEntity(Tile.LAYER_ACTIVE)==p) {
 							g.setColor(Color.green);
-						} else if (til.getEntity(Tile.LAYER_ACTIVE) == p) {
+						} else{
 							g.setColor(Color.blue);
-						} else {
-							g.setColor(Color.green);
 						}
 					} else if (til.blocking){
 						g.setColor(Color.lightGray);
@@ -100,7 +100,7 @@ public class MiniMap extends HudElement {
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		renderTo(g, getX() - width * scale, getY(), this.hookState.player.getX(), this.hookState.player.getY() );
+		renderTo(g, getAbsoluteX() - width * scale, getAbsoluteY(), this.hookState.player.getX(), this.hookState.player.getY() );
 
 	}
 

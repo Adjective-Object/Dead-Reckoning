@@ -117,26 +117,26 @@ public class SkillMonitorElement extends HudElement { // TODO turn into a
 			throws SlickException {
 		ArrayList<Skill> skills = this.toMonitor.getSkillList();
 		for (int i = 0; i < skills.size(); i++) {
-			g.drawImage(skills.get(i).getImage(), this.getX() + 5 + i * 35,
-					this.getY() + 5);
+			g.drawImage(skills.get(i).getImage(), this.getAbsoluteX() + 5 + i * 35,
+					this.getAbsoluteY() + 5);
 			if (skills.get(i).getCooldown() > 0
 					|| skills.get(i).getLevel() == 0) {
 				g.setColor(DeadReckoningGame.skillInvalidColor);
-				g.fillRect(this.getX() + 5 + i * 35, this.getY() + 5, 32, 32);
+				g.fillRect(this.getAbsoluteX() + 5 + i * 35, this.getAbsoluteY() + 5, 32, 32);
 			}
 			if (skills.get(i).getCooldown() > 0) {
 				g.setColor(DeadReckoningGame.menuTextColor);
 				g.setFont(DeadReckoningGame.menuFont);
 				g.drawString(
 						Integer.toString(skills.get(i).getCooldown()),
-						this.getX()
+						this.getAbsoluteX()
 								+ 21
 								+ i
 								* 35
 								- g.getFont().getWidth(
 										Integer.toString(skills.get(i)
 												.getCooldown())) / 2,
-						this.getY()
+						this.getAbsoluteY()
 								+ 21
 								- g.getFont().getHeight(
 										Integer.toString(skills.get(i)

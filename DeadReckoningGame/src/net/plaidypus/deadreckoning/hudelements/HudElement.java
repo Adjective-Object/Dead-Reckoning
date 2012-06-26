@@ -29,9 +29,6 @@ public abstract class HudElement {
 	/** The mouseover text. */
 	String mouseoverText = null;
 
-	/** The parent state. */
-	HudLayersState parentState;
-
 	/** The Constant BOTTOM_RIGHT. */
 	public static final int TOP_LEFT = 0, TOP_CENTER = 1, TOP_RIGHT = 2,
 			CENTER_LEFT = 3, CENTER_CENTER = 4, CENTER_RIGHT = 5,
@@ -40,6 +37,8 @@ public abstract class HudElement {
 	/** The offsets. */
 	static int[][] offsets;
 
+	protected HudElementContainer container;
+	
 	/**
 	 * Instantiates a new hud element.
 	 * 
@@ -57,6 +56,7 @@ public abstract class HudElement {
 		this.yoff = y;
 		this.bindMethod = bindMethod;
 		this.needsFocus = needFoc;
+		this.setContainer(HudLayersState.unallocatedState);
 	}
 
 	/**
@@ -94,14 +94,13 @@ public abstract class HudElement {
 		this.update(gc, sbg, delta);
 	}
 
-	/**
-	 * Sets the parent.
-	 * 
-	 * @param parentState
-	 *            the new parent
-	 */
-	public void setParent(HudLayersState parentState) {
-		this.parentState = parentState;
+	
+	public HudElementContainer getContainer() {
+		return this.container;
+	}
+	
+	public void setContainer(HudElementContainer container){
+		this.container=container;
 	}
 
 	/**
@@ -215,8 +214,8 @@ public abstract class HudElement {
 
 		g.setFont(DeadReckoningGame.menuSmallFont);
 
-		if (mx > getX() && mx < getX() + getWidth() && my > getY()
-				&& my < getY() + getHeight() && mouseoverText != null) {
+		if (mx > getAbsoluteX() && mx < getAbsoluteX() + getWidth() && my > getAbsoluteY()
+				&& my < getAbsoluteY() + getHeight() && mouseoverText != null) {
 			g.setColor(DeadReckoningGame.mouseoverBoxColor);
 			g.fillRect(cursorSize + gc.getInput().getMouseX(), cursorSize
 					+ gc.getInput().getMouseY(),
@@ -233,13 +232,21 @@ public abstract class HudElement {
 		}
 	}
 
+	public int getX(){
+		return xoff + offsets[bindMethod][0];
+	}
+	
+	public int getY(){
+		return yoff + offsets[bindMethod][1];
+	}
+	
 	/**
 	 * Gets the x.
 	 * 
 	 * @return the x
 	 */
-	public int getX() {
-		return xoff + offsets[bindMethod][0];
+	public int getAbsoluteX() {
+		return xoff + offsets[bindMethod][0]+ this.container.getX();
 	}
 
 	/**
@@ -247,17 +254,8 @@ public abstract class HudElement {
 	 * 
 	 * @return the y
 	 */
-	public int getY() {
-		return yoff + offsets[bindMethod][1];
-	}
-
-	/**
-	 * Gets the parent.
-	 * 
-	 * @return the parent
-	 */
-	public HudLayersState getParent() {
-		return this.parentState;
+	public int getAbsoluteY() {
+		return yoff + offsets[bindMethod][1] + this.container.getY();
 	}
 
 }

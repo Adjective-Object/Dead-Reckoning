@@ -129,19 +129,19 @@ public class ImageButton extends Button {
 			throws SlickException {
 
 		if (!moused) {
-			g.drawImage(image, getX(), getY());
+			g.drawImage(image, getAbsoluteX(), getAbsoluteY());
 		}
 		if (moused) {
 			if (altImage == null) {
-				g.drawImage(image, getX(), getY());
+				g.drawImage(image, getAbsoluteX(), getAbsoluteY());
 				g.setColor(new Color(255, 255, 255, 100));
-				g.fillRect(getX(), getY(), getWidth(), getHeight());
+				g.fillRect(getAbsoluteX(), getAbsoluteY(), getWidth(), getHeight());
 			} else {
-				g.drawImage(altImage, getX(), getY());
+				g.drawImage(altImage, getAbsoluteX(), getAbsoluteY());
 			}
 		} else if (pressed) {
 			g.setColor(new Color(255, 255, 255, 255));
-			g.drawRect(getX(), getY(), getWidth(), getHeight());
+			g.drawRect(getAbsoluteX(), getAbsoluteY(), getWidth(), getHeight());
 		}
 	}
 

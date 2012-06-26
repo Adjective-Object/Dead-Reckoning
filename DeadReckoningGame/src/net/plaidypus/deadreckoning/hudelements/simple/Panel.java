@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
+import net.plaidypus.deadreckoning.hudelements.HudElementContainer;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -17,7 +18,7 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * The Class Panel.
  */
-public class Panel extends HudElement {
+public class Panel extends HudElement implements HudElementContainer{
 
 	/** The height. */
 	int borderX, borderY, width, height;
@@ -32,7 +33,36 @@ public class Panel extends HudElement {
 	 *            the contents
 	 */
 	public Panel(ArrayList<HudElement> contents) {
-		this(HudElement.TOP_LEFT, true, contents, 10, 10);
+		super(calcX(contents),calcY(contents), HudElement.TOP_LEFT,false);
+		this.borderX = 15;
+		this.borderY = 15;
+		this.contents = contents;
+		
+		for(int i=0; i<contents.size(); i++){
+			contents.get(i).xoff-=this.getAbsoluteX();
+			contents.get(i).yoff-=this.getAbsoluteY();
+			
+			contents.get(i).setContainer(this);
+		}
+		
+		bakeBorders();
+		
+	}
+
+	private static int calcX(ArrayList<HudElement> contents) {
+		int x = 800;//TODO containers
+		for(int i=0; i<contents.size(); i++){
+			if(x>contents.get(i).getAbsoluteX()){x=contents.get(i).getAbsoluteX();}
+		}
+		return x;
+	}
+
+	private static int calcY(ArrayList<HudElement> contents) {
+		int y = 800;
+		for(int i=0; i<contents.size(); i++){
+			if(y>contents.get(i).getAbsoluteY()){y=contents.get(i).getAbsoluteY();}
+		}
+		return y;
 	}
 
 	/**
@@ -49,16 +79,17 @@ public class Panel extends HudElement {
 	 * @param borderY
 	 *            the border y
 	 */
-	public Panel(int bindMethod, boolean needFoc,
+	public Panel(int x, int y, int bindMethod,
 			ArrayList<HudElement> contents, int borderX, int borderY) {
-		super(contents.get(0).getX(), contents.get(0).getY(), bindMethod,
-				needFoc);
+		super(x,y, bindMethod,false);
 		this.borderX = borderX;
 		this.borderY = borderY;
 		this.contents = contents;
-		this.width = 0;
-		this.height = 0;
-
+		
+		for (int i=0; i<contents.size() ; i++){
+			contents.get(i).setContainer(this);
+		}
+		
 		bakeBorders();
 	}
 
@@ -67,27 +98,16 @@ public class Panel extends HudElement {
 	 */
 	public void bakeBorders() {
 		for (int i = 0; i < contents.size(); i++) {
-			int nw = contents.get(i).getX() + contents.get(i).getWidth();
-			int nh = contents.get(i).getY() + contents.get(i).getHeight();
-			int nx = contents.get(i).getX();
-			int ny = contents.get(i).getY();
+			int nw = contents.get(i).getAbsoluteX() + contents.get(i).getWidth();
+			int nh = contents.get(i).getAbsoluteY() + contents.get(i).getHeight();
 
-			if (nw > width) {
-				width = nw;
+			if (nw > this.getAbsoluteX()+width) {
+				width = nw-this.getAbsoluteX();
 			}
-			if (nh > height) {
-				height = nh;
-			}
-			if (nx < xoff) {
-				xoff = nx;
-			}
-			if (ny < yoff) {
-				yoff = ny;
+			if (nh > this.getAbsoluteY()+height) {
+				height = nh-this.getAbsoluteY();
 			}
 		}
-
-		width = width - xoff;
-		height = height - yoff;
 	}
 
 	/*
@@ -119,10 +139,10 @@ public class Panel extends HudElement {
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		g.setColor(DeadReckoningGame.menuColor);
-		g.fillRect(getX() - borderX, getY() - borderY,
+		g.fillRect(getAbsoluteX() - borderX, getAbsoluteY() - borderY,
 				getWidth() + borderX * 2, getHeight() + borderY * 2);
 		g.setColor(Color.white);
-		g.drawRect(getX() - borderX, getY() - borderY,
+		g.drawRect(getAbsoluteX() - borderX, getAbsoluteY() - borderY,
 				getWidth() + borderX * 2, getHeight() + borderY * 2);
 
 		for (int i = 0; i < contents.size(); i++) {

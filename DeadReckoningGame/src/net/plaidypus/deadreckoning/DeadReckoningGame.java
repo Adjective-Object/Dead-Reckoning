@@ -27,8 +27,8 @@ import net.plaidypus.deadreckoning.hudelements.simple.StringPutter;
 import net.plaidypus.deadreckoning.hudelements.simple.TextElement;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.professions.Profession;
+import net.plaidypus.deadreckoning.state.ClassCreationState;
 import net.plaidypus.deadreckoning.state.DeathScreenState;
-import net.plaidypus.deadreckoning.state.ExclusiveHudLayersState;
 import net.plaidypus.deadreckoning.state.HudLayersState;
 import net.plaidypus.deadreckoning.state.MainMenuState;
 import net.plaidypus.deadreckoning.state.NewGameState;
@@ -62,7 +62,7 @@ public class DeadReckoningGame extends StateBasedGame {
 	public static final int LOOTSTATE = 0, INVENTORYSTATE = 1,
 			GAMEPLAYSTATE = 2, MAINMENUSTATE = 3, SAVESELECTSTATE = 4,
 			MAPSTATE = 5, SKILLSTATE = 6, NEWGAMESTATE = 7, ERRORSTATE = 8,
-			DEATHSTATE = 9;
+			DEATHSTATE = 9, NEWCLASSSTATE = 10;
 
 	/**
 	 * The Constant tileSize, that governs the size of the tiles in the game
@@ -248,16 +248,17 @@ public class DeadReckoningGame extends StateBasedGame {
 						game),
 				new MiniMap(-3, 1, HudElement.TOP_RIGHT, 2, 70, 70, game),
 				messages }));
-
-		this.addState(new ExclusiveHudLayersState(LOOTSTATE,
-				new HudElement[] { // TODO create custom state for this, instead
-						// of "interaction" element
+		
+		
+		ItemGridElement a= new ItemGridElement(-241, -132,HudElement.CENTER_CENTER),
+				b = new ItemGridElement(50, -132, HudElement.CENTER_CENTER);
+		this.addState(new HudLayersState(LOOTSTATE,
+				new HudElement[] { // TODO create custom state for this, instead of "interaction" element
 						new StillImageElement(0, 0, HudElement.TOP_LEFT),
 						messages,
-						new ItemGridElement(-241, -132,
-								HudElement.CENTER_CENTER),
-						new ItemGridElement(50, -132, HudElement.CENTER_CENTER),
-						new ItemGridInteractionElement(2, 3),
+						a,
+						b,
+						new ItemGridInteractionElement(a, b),
 						new ReturnToGameElement() }));
 
 		this.addState(new HudLayersState(INVENTORYSTATE, new HudElement[] {
@@ -280,6 +281,7 @@ public class DeadReckoningGame extends StateBasedGame {
 		this.addState(new PlayerViewerState(SKILLSTATE));
 		this.addState(new NewGameState(NEWGAMESTATE, menuBackground));
 		this.addState(new DeathScreenState(DEATHSTATE));
+		this.addState(new ClassCreationState(NEWCLASSSTATE, menuBackground));
 		
 		this.enterState(MAINMENUSTATE);
 	}

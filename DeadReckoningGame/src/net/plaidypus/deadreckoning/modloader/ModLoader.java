@@ -227,13 +227,15 @@ public class ModLoader {
 
 	public static Image loadImage(String imagepath) throws SlickException{
 		String modpack = imagepath.split("(/|\\\\)")[0];
-		System.out.println(modpack+"  "+imagepath+"  "+ModLoader.getModpackLoader(modpack));
 		try {
 			return new Image(
 					TextureLoader.getTexture("PNG",ModLoader.getModpackLoader(modpack)
 									.getResourceAsStream(imagepath)));
 		} catch (IOException e) {
 			return new Image("res/noSkill.png");
+		} catch (NullPointerException e ){
+			System.out.println(modpack+"  "+imagepath+"  "+ModLoader.getModpackLoader(modpack));
+			return null;
 		}
 	}
 

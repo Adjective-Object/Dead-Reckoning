@@ -11,13 +11,12 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class ItemGridInteractionElement extends HudElement {
 
-	int index1, index2;
 	ItemGridElement a, b;
 
-	public ItemGridInteractionElement(int index1, int index2) {
+	public ItemGridInteractionElement(ItemGridElement a, ItemGridElement b) {
 		super(0, 0, HudElement.TOP_LEFT, false);
-		this.index1 = index1;
-		this.index2 = index2;
+		this.a=a;
+		this.b=b;
 	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
@@ -43,18 +42,11 @@ public class ItemGridInteractionElement extends HudElement {
 	}
 
 	@Override
-	public void makeFrom(Object o) {
-	}
+	public void makeFrom(Object o) {}
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
-			throws SlickException {
-		System.out.println(index1 + " " + index2);
-		System.out.println(this.getParent().getElement(index1));
-		System.out.println(this.getParent().getElement(index2));
-		a = (ItemGridElement) this.getParent().getElement(index1);
-		b = (ItemGridElement) this.getParent().getElement(index2);
-	}
+			throws SlickException {}
 
 	@Override
 	public int getWidth() {

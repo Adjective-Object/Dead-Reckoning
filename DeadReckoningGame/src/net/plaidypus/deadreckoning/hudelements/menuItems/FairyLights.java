@@ -164,7 +164,7 @@ public class FairyLights extends HudElement {
 					.getFlippedCopy(false, false);
 			img.setAlpha(particles[i][5]);
 			img.rotate(particles[i][6]);
-			g.drawImage(img, this.getX() + particles[i][1], this.getY()
+			g.drawImage(img, this.getAbsoluteX() + particles[i][1], this.getAbsoluteY()
 					+ particles[i][2]);
 		}
 	}

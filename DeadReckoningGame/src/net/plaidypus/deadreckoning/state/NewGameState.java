@@ -115,29 +115,30 @@ public class NewGameState extends HudLayersState {
 			throws SlickException {
 		super.update(container, game, delta);
 		if (newClassButton.isPressed()) {
-			// TODO make new classes
+			DeadReckoningGame.instance.enterState(DeadReckoningGame.NEWCLASSSTATE);
 		}
-
-		for (int i = 0; i < classButtons.size(); i++) {
-			if (classButtons.get(i).isPressed()
-					&& !text.getContent().equals("")) {
-				try {
-					Save s = Save.makeNewSave(
-							"saves/SAVE " + (Save.enumerateSaves()) + "/",
-							text.getContent(), Profession.getProfession(i));
-					s.loadGame(GameplayElement.class.cast(HudLayersState.class
-							.cast(DeadReckoningGame.instance
-									.getState(DeadReckoningGame.GAMEPLAYSTATE))
-							.getElement(0)), game.getContainer());
-					game.enterState(DeadReckoningGame.GAMEPLAYSTATE);
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				} catch (InstantiationException e) {
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
+		else{
+			for (int i = 0; i < classButtons.size(); i++) {
+				if (classButtons.get(i).isPressed()
+						&& !text.getContent().equals("")) {
+					try {
+						Save s = Save.makeNewSave(
+								"saves/SAVE " + (Save.enumerateSaves()) + "/",
+								text.getContent(), Profession.getProfession(i));
+						s.loadGame(GameplayElement.class.cast(HudLayersState.class
+								.cast(DeadReckoningGame.instance
+										.getState(DeadReckoningGame.GAMEPLAYSTATE))
+								.getElement(0)), game.getContainer());
+						game.enterState(DeadReckoningGame.GAMEPLAYSTATE);
+					} catch (IOException e) {
+						e.printStackTrace();
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					} catch (InstantiationException e) {
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}

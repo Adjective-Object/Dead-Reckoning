@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
+import net.plaidypus.deadreckoning.hudelements.HudElementContainer;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -18,7 +19,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * 
  * generic, used to assemble HudElements into a BasicGameState useable by Slick
  */
-public class HudLayersState extends BasicGameState {
+public class HudLayersState extends BasicGameState implements HudElementContainer{
 
 	/** The state id used for referencing this file */
 	int stateID;
@@ -28,6 +29,8 @@ public class HudLayersState extends BasicGameState {
 
 	/** The Hud elements contained in this HudLayersState */
 	ArrayList<HudElement> HudElements;
+	
+	public static HudLayersState unallocatedState = new HudLayersState(-1,new ArrayList<HudElement>(0));
 
 	/**
 	 * Instantiates a new hud layers state.
@@ -40,9 +43,6 @@ public class HudLayersState extends BasicGameState {
 	public HudLayersState(int stateID, ArrayList<HudElement> elements) {
 		this.stateID = stateID;
 		this.HudElements = elements;
-		for (int i = 0; i < HudElements.size(); i++) {
-			HudElements.get(i).setParent(this);
-		}
 	}
 
 	/**
@@ -58,7 +58,6 @@ public class HudLayersState extends BasicGameState {
 		HudElements = new ArrayList<HudElement>(0);
 		for (int i = 0; i < elementsarr.length; i++) {
 			HudElements.add(elementsarr[i]);
-			HudElements.get(i).setParent(this);
 		}
 	}
 
@@ -162,6 +161,20 @@ public class HudLayersState extends BasicGameState {
 	 */
 	public DeadReckoningGame getParent() {
 		return this.parent;
+	}
+
+	@Override
+	public int getX() {
+		return 0;
+	}
+
+	@Override
+	public int getY() {
+		return 0;
+	}
+
+	public void removeElement(HudElement hudElement) {
+		this.HudElements.remove(hudElement);
 	}
 
 }

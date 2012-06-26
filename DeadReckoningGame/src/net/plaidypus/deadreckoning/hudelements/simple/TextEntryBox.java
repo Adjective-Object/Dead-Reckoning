@@ -136,16 +136,16 @@ public class TextEntryBox extends HudElement {
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		g.setClip(getX(), getY(), getWidth(), getHeight());
+		g.setClip(getAbsoluteX(), getAbsoluteY(), getWidth(), getHeight());
 		g.setColor(DeadReckoningGame.menuTextBackgroundColor);
-		g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+		g.fillRect(this.getAbsoluteX(), this.getAbsoluteY(), this.getWidth(), this.getHeight());
 		g.setFont(DeadReckoningGame.menuFont);
 		g.setColor(DeadReckoningGame.menuTextColor);
 		g.drawString(
 				this.content,
-				getX() + getWidth()
+				getAbsoluteX() + getWidth()
 						- DeadReckoningGame.menuFont.getWidth(content),
-				getY() + this.getHeight() / 2
+				getAbsoluteY() + this.getHeight() / 2
 						- DeadReckoningGame.menuFont.getHeight(content) / 2);
 		g.clearClip();
 	}

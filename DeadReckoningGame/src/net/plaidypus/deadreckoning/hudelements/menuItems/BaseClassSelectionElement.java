@@ -138,7 +138,7 @@ public class BaseClassSelectionElement extends HudElement {
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		g.drawImage(iconImage, getX(), getY());
+		g.drawImage(iconImage, getAbsoluteX(), getAbsoluteY());
 	}
 
 }

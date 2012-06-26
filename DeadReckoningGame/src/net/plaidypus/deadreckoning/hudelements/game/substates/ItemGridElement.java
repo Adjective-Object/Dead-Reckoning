@@ -65,11 +65,11 @@ public class ItemGridElement extends HudElement {
 		}
 
 		if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)
-				&& i.getAbsoluteMouseX() < this.getX() + this.getWidth()
-				&& i.getAbsoluteMouseY() < this.getY() + this.getHeight()) {
-			int rx = (i.getMouseX() - this.getX() - externalBorder)
+				&& i.getAbsoluteMouseX() < this.getAbsoluteX() + this.getWidth()
+				&& i.getAbsoluteMouseY() < this.getAbsoluteY() + this.getHeight()) {
+			int rx = (i.getMouseX() - this.getAbsoluteX() - externalBorder)
 					/ (DeadReckoningGame.tileSize + internalBorder);
-			int ry = (i.getMouseY() - this.getY() - externalBorder)
+			int ry = (i.getMouseY() - this.getAbsoluteY() - externalBorder)
 					/ (DeadReckoningGame.tileSize + internalBorder);
 			selector = rx + ry * width;
 		}
@@ -102,35 +102,35 @@ public class ItemGridElement extends HudElement {
 		g.setColor(new Color(255, 255, 255));
 
 		g.setColor(backgroundColor);
-		g.fillRect(getX(), getY(), getWidth(), getHeight());
+		g.fillRect(getAbsoluteX(), getAbsoluteY(), getWidth(), getHeight());
 
 		g.setColor(Color.white);
 
 		for (int xm = 0; xm < width; xm++) {
 			for (int ym = 0; ym < height; ym++) {
-				g.drawImage(tileimage, getX() + externalBorder + xm
-						* (DeadReckoningGame.tileSize + internalBorder), getY()
+				g.drawImage(tileimage, getAbsoluteX() + externalBorder + xm
+						* (DeadReckoningGame.tileSize + internalBorder), getAbsoluteY()
 						+ externalBorder + ym
 						* (DeadReckoningGame.tileSize + internalBorder));
 				if (xm + ym * width < contents.size()) {
 					contents.get(xm + ym * width)
 							.render(g,
-									getX()
+									getAbsoluteX()
 											+ externalBorder
 											+ xm
 											* (DeadReckoningGame.tileSize + internalBorder),
-									getY()
+									getAbsoluteY()
 											+ externalBorder
 											+ ym
 											* (DeadReckoningGame.tileSize + internalBorder));
 				}
 				if (selector == xm + ym * width) {
 					g.drawRect(
-							getX()
+							getAbsoluteX()
 									+ externalBorder
 									+ xm
 									* (DeadReckoningGame.tileSize + internalBorder),
-							getY()
+							getAbsoluteY()
 									+ externalBorder
 									+ ym
 									* (DeadReckoningGame.tileSize + internalBorder),

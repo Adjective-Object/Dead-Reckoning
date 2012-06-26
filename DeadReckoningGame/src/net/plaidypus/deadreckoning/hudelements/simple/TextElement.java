@@ -117,7 +117,7 @@ public class TextElement extends HudElement {
 			throws SlickException {
 		g.setColor(color);
 		g.setFont(font);
-		g.drawString(text, getX(), getY());
+		g.drawString(text, getAbsoluteX(), getAbsoluteY());
 	}
 
 }

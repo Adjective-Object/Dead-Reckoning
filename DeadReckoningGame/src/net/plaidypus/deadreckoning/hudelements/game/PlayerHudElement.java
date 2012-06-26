@@ -114,31 +114,31 @@ public class PlayerHudElement extends HudElement {
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		g.setFont(DeadReckoningGame.menuSmallFont);
-		g.drawImage(img, getX(), getY());
-		g.drawImage(target.player.getProfession().getPortriat(), getX() + 19,
-				getY() + 23);
+		g.drawImage(img, getAbsoluteX(), getAbsoluteY());
+		g.drawImage(target.player.getProfession().getPortriat(), getAbsoluteX() + 19,
+				getAbsoluteY() + 23);
 		g.setColor(new Color(200, 70, 70));
-		g.fillRect(getX() + 126, getY() + 25, 75 * displayHPValue, 9);
+		g.fillRect(getAbsoluteX() + 126, getAbsoluteY() + 25, 75 * displayHPValue, 9);
 		g.setColor(new Color(70, 70, 200));
-		g.fillRect(getX() + 126, getY() + 49, 75 * displayMPValue, 9);
+		g.fillRect(getAbsoluteX() + 126, getAbsoluteY() + 49, 75 * displayMPValue, 9);
 		g.setColor(new Color(200, 200, 70));
-		g.fillRect(getX() + 126, getY() + 74, 75 * displayEXPValue, 9);
+		g.fillRect(getAbsoluteX() + 126, getAbsoluteY() + 74, 75 * displayEXPValue, 9);
 		g.setColor(DeadReckoningGame.menuTextColor);
 		g.drawString(target.player.HP + "/"
-				+ target.player.getProfession().getMaxHP(), getX() + 128,
-				getY() + 22);
+				+ target.player.getProfession().getMaxHP(), getAbsoluteX() + 128,
+				getAbsoluteY() + 22);
 		g.drawString(target.player.MP + "/"
-				+ target.player.getProfession().getMaxMP(), getX() + 128,
-				getY() + 46);
+				+ target.player.getProfession().getMaxMP(), getAbsoluteX() + 128,
+				getAbsoluteY() + 46);
 		g.drawString(
 				Integer.toString(target.player.getProfession().getLevel()),
-				getX(), getY() + getHeight() + 20);
-		g.drawString(Integer.toString(target.getBoard().depth), getX(), getY()
+				getAbsoluteX(), getAbsoluteY() + getHeight() + 20);
+		g.drawString(Integer.toString(target.getBoard().depth), getAbsoluteX(), getAbsoluteY()
 				+ getHeight() + 40);
-		g.drawString(Integer.toString(target.player.getX()), getX(), getY()
+		g.drawString(Integer.toString(target.player.getX()), getAbsoluteX(), getAbsoluteY()
 				+ getHeight() + 60);
-		g.drawString(Integer.toString(target.player.getY()), getX() + 30,
-				getY() + getHeight() + 60);
+		g.drawString(Integer.toString(target.player.getY()), getAbsoluteX() + 30,
+				getAbsoluteY() + getHeight() + 60);
 	}
 
 }
