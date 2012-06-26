@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.generator.Biome;
+import net.plaidypus.deadreckoning.hudelements.simple.StillImageElement;
 import net.plaidypus.deadreckoning.items.Item;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.skills.Skill;
@@ -56,7 +57,7 @@ public class Profession extends StatMaster {
 	private SkillProgression[] skillTrees;
 
 	/** The portrait image of the profession/character. */
-	private Image portrait, selectImage;
+	private Image portrait, selectImage, icon;
 	
 	public Color color = new Color(255,255,255);
 
@@ -67,7 +68,7 @@ public class Profession extends StatMaster {
 	private int baseClassID;
 
 	/** The name of the playerclass. */
-	public String name, parentMod;
+	public String name, parentMod, description;
 
 	/** The base stats and SP gained per level. */
 	int baseHP = 50, baseMP = 20, baseStat = 4, spPerLevel = 5;
@@ -115,6 +116,7 @@ public class Profession extends StatMaster {
 		this.parentMod = parentMod;
 		this.portrait = ModLoader.loadImage(this.parentMod+"/professions/" + baseClassID + "/Portrait.png");
 		this.selectImage = ModLoader.loadImage(this.parentMod+"/professions/" + baseClassID + "/selectscreen.png");
+		this.icon = ModLoader.loadImage(this.parentMod+"/professions/" + baseClassID + "/icon.png");
 		parseClassTraits(parentMod, baseClassID);
 	}
 
@@ -131,6 +133,7 @@ public class Profession extends StatMaster {
 		try {
 			BufferedReader r = new BufferedReader(new InputStreamReader(ModLoader.getLoaderFor(parentMod).getResourceAsStream(parentMod+"/professions/" + baseClassID + "/ClassTraits.txt")));
 			this.name = r.readLine();
+			this.description=r.readLine();
 
 			for (int i = 0; i < 6; i++) {
 				stats[i] = Double.parseDouble(r.readLine());
@@ -284,6 +287,15 @@ public class Profession extends StatMaster {
 	 */
 	public Image getPortriat() {
 		return portrait;
+	}
+	
+	public Image getSelectImage() {
+		return this.selectImage;
+	}
+	
+
+	public Image getIcon() {
+		return this.icon;
 	}
 
 	/**
