@@ -1,6 +1,5 @@
 package core.skills;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
@@ -20,7 +19,6 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.opengl.TextureLoader;
 
 // TODO: Auto-generated Javadoc
 /**

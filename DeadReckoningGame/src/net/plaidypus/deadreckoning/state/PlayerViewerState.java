@@ -52,8 +52,8 @@ public class PlayerViewerState extends HudLayersState {
 	 */
 	public PlayerViewerState(int stateID) {
 		super(stateID, makeState());
-		this.buttonPanel = (Panel) this.HudElements.get(1);
-		this.statPanel = (Panel) this.HudElements.get(2);
+		this.buttonPanel = (Panel) this.contents.get(1);
+		this.statPanel = (Panel) this.contents.get(2);
 	}
 
 	/*
@@ -89,7 +89,7 @@ public class PlayerViewerState extends HudLayersState {
 	 * @see net.plaidypus.deadreckoning.state.HudLayersState#makeFrom(java.lang.Object[])
 	 */
 	public void makeFrom(Object[] args) {
-		this.HudElements.get(0).makeFrom(args[0]);
+		this.contents.get(0).makeFrom(args[0]);
 		Player p = (Player) (args[1]);
 		this.sourceProf = p.getProfession();
 

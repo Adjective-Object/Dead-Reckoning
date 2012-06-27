@@ -15,7 +15,7 @@ public class FillerBar extends HudElement{
 	public int width, height;
 	
 	public FillerBar(int x, int y, Color color) {
-		this(x,y,HudElement.TOP_LEFT,75,9,color);
+		this(x,y,HudElement.TOP_LEFT,20,75,color);
 	}
 	
 	public FillerBar(int x, int y, int bindMethod, int width, int height, Color color) {
@@ -28,11 +28,15 @@ public class FillerBar extends HudElement{
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {;
-		this.position+= (this.position-this.destination)/200;
+		this.position+= (this.destination-this.position)/10;
 	}
 	
 	public void setDestination(float newValue){
 		this.destination=newValue;
+	}
+	
+	public void setPosition(float newValue){
+		this.position=newValue;
 	}
 
 	@Override
@@ -56,7 +60,7 @@ public class FillerBar extends HudElement{
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		g.setColor(color);
-		g.fillRect(this.getAbsoluteX(), this.getAbsoluteY(), width, height);
+		g.fillRect(this.getAbsoluteX(), this.getAbsoluteY()+height-position*height, width, position*height);
 	}
 
 }

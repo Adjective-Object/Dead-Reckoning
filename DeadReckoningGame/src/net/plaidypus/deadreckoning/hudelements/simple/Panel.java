@@ -24,7 +24,7 @@ public class Panel extends HudElement implements HudElementContainer{
 	int borderX, borderY, width, height;
 
 	/** The contents. */
-	ArrayList<HudElement> contents;
+	protected ArrayList<HudElement> contents;
 
 	/**
 	 * Instantiates a new panel.
@@ -142,8 +142,8 @@ public class Panel extends HudElement implements HudElementContainer{
 		g.fillRect(getAbsoluteX() - borderX, getAbsoluteY() - borderY,
 				getWidth() + borderX * 2, getHeight() + borderY * 2);
 		g.setColor(Color.white);
-		g.drawRect(getAbsoluteX() - borderX, getAbsoluteY() - borderY,
-				getWidth() + borderX * 2, getHeight() + borderY * 2);
+		g.drawRect(getAbsoluteX() - borderX-1, getAbsoluteY() - borderY-1,
+				getWidth() + borderX * 2+1, getHeight() + borderY * 2+1);
 
 		for (int i = 0; i < contents.size(); i++) {
 			contents.get(i).render(gc, sbg, g);
@@ -236,5 +236,26 @@ public class Panel extends HudElement implements HudElementContainer{
 	 */
 	public ArrayList<HudElement> getContents() {
 		return this.contents;
+	}
+	
+	public void addElement(HudElement e){
+		this.contents.add(e);
+		e.setContainer(this);
+		this.bakeBorders();
+	}
+	
+	public void addAllElements(ArrayList<? extends HudElement> e){
+		for(int i=0; i<e.size(); i++){
+			this.contents.add(e.get(i));
+			e.get(i).setContainer(this);
+		}
+		this.bakeBorders();
+	}
+	
+	public void clearElements(){
+		for(int i=0; i<this.contents.size(); i++){
+			this.contents.get(i).setContainer(HudElementContainer.defaultContainer);
+		}
+		this.contents.clear();
 	}
 }

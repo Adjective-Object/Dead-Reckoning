@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.entities.Stair;
-import net.plaidypus.deadreckoning.generator.Biome;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
 import net.plaidypus.deadreckoning.hudelements.game.MiniMap;
@@ -26,7 +25,6 @@ import net.plaidypus.deadreckoning.hudelements.simple.StillImageElement;
 import net.plaidypus.deadreckoning.hudelements.simple.StringPutter;
 import net.plaidypus.deadreckoning.hudelements.simple.TextElement;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
-import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.state.ClassCreationState;
 import net.plaidypus.deadreckoning.state.DeathScreenState;
 import net.plaidypus.deadreckoning.state.HudLayersState;
@@ -103,7 +101,7 @@ public class DeadReckoningGame extends StateBasedGame {
 	protected GameplayElement game;
 
 	/** The various menu fonts. */
-	public static UnicodeFont menuFont, menuSmallFont;
+	public static UnicodeFont menuFont, menuSmallFont, menuLargeFont;
 
 	public static boolean debugMode=false;
 
@@ -225,10 +223,16 @@ public class DeadReckoningGame extends StateBasedGame {
 		menuFont.addNeheGlyphs();
 		menuFont.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
 		menuFont.loadGlyphs();
+		
 		menuSmallFont = new UnicodeFont("/res/visitor.ttf", 15, true, false);
 		menuSmallFont.addNeheGlyphs();
 		menuSmallFont.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
 		menuSmallFont.loadGlyphs();
+		
+		menuLargeFont = new UnicodeFont("/res/visitor.ttf", 32, true, false);
+		menuLargeFont.addNeheGlyphs();
+		menuLargeFont.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
+		menuLargeFont.loadGlyphs();
 
 		container.getInput().enableKeyRepeat();
 

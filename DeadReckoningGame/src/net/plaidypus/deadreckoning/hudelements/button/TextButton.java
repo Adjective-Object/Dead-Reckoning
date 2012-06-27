@@ -57,6 +57,16 @@ public class TextButton extends Button {
 				);
 	}
 	
+	public TextButton(int x, int y, int bindMethod, String text, UnicodeFont font) throws SlickException{
+		this(x,y,bindMethod,
+				new Color(30, 50, 70),
+				new Color(40, 60, 80),
+				new Color(60, 80, 100),
+				text,
+				font
+				);
+	}
+	
 	public TextButton(int x, int y, int bindMethod, Color normalColor,
 			Color highlightC, Color pressedC, String text, UnicodeFont font)
 			throws SlickException {

@@ -1,17 +1,19 @@
 package net.plaidypus.deadreckoning.professions;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import net.plaidypus.deadreckoning.FileNameExtentionFilter;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
-import net.plaidypus.deadreckoning.generator.Biome;
 import net.plaidypus.deadreckoning.items.Item;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.skills.Skill;
@@ -56,7 +58,7 @@ public class Profession extends StatMaster {
 	private SkillProgression[] skillTrees;
 
 	/** The portrait image of the profession/character. */
-	private Image portrait, selectImage;
+	private Image portrait, selectImage, icon;
 	
 	public Color color = new Color(255,255,255);
 
@@ -67,7 +69,7 @@ public class Profession extends StatMaster {
 	private int baseClassID;
 
 	/** The name of the playerclass. */
-	public String name, parentMod;
+	public String name, parentMod, description;
 
 	/** The base stats and SP gained per level. */
 	int baseHP = 50, baseMP = 20, baseStat = 4, spPerLevel = 5;
@@ -83,7 +85,6 @@ public class Profession extends StatMaster {
 		this.skillTrees[0].setSource(parentMod, baseClassID, 0);
 		this.skillTrees[1].setSource(parentMod, baseClassID, 1);
 		this.skillTrees[2].setSource(parentMod, baseClassID, 2);
-
 	}
 
 	/**
@@ -115,6 +116,7 @@ public class Profession extends StatMaster {
 		this.parentMod = parentMod;
 		this.portrait = ModLoader.loadImage(this.parentMod+"/professions/" + baseClassID + "/Portrait.png");
 		this.selectImage = ModLoader.loadImage(this.parentMod+"/professions/" + baseClassID + "/selectscreen.png");
+		this.icon = ModLoader.loadImage(this.parentMod+"/professions/" + baseClassID + "/icon.png");
 		parseClassTraits(parentMod, baseClassID);
 	}
 
@@ -131,6 +133,7 @@ public class Profession extends StatMaster {
 		try {
 			BufferedReader r = new BufferedReader(new InputStreamReader(ModLoader.getLoaderFor(parentMod).getResourceAsStream(parentMod+"/professions/" + baseClassID + "/ClassTraits.txt")));
 			this.name = r.readLine();
+			this.description=r.readLine();
 
 			for (int i = 0; i < 6; i++) {
 				stats[i] = Double.parseDouble(r.readLine());
@@ -285,6 +288,15 @@ public class Profession extends StatMaster {
 	public Image getPortriat() {
 		return portrait;
 	}
+	
+	public Image getSelectImage() {
+		return this.selectImage;
+	}
+	
+
+	public Image getIcon() {
+		return this.icon;
+	}
 
 	/**
 	 * Gets the entity file.
@@ -374,9 +386,79 @@ public class Profession extends StatMaster {
 	public static Profession loadProfession(String modname, int profNumber) {
 		return Profession.profMap.get(modname + profNumber);
 	}
+	
+	
+	public static Profession loadCustomProfession(int profileID) throws SlickException{
+		BufferedReader reader;
+		try {
+			reader = new BufferedReader(new FileReader("classes/"+profileID+".prof"));
+			String name = reader.readLine(),
+					description = reader.readLine(),
+					baseclassMod = reader.readLine(),
+					tree1Mod = reader.readLine(),
+					tree2Mod = reader.readLine(),
+					tree3Mod = reader.readLine();
+			int baseclass = Integer.parseInt(reader.readLine()),
+					tree1class = Integer.parseInt(reader.readLine()),
+					tree1tree = Integer.parseInt(reader.readLine()),
+					tree2class = Integer.parseInt(reader.readLine()),
+					tree2tree = Integer.parseInt(reader.readLine()),
+					tree3class = Integer.parseInt(reader.readLine()),
+					tree3tree = Integer.parseInt(reader.readLine());
+			
+			SkillProgression tree1 = SkillProgression.loadTree(tree1Mod, tree1class, tree1tree),
+					tree2 = SkillProgression.loadTree(tree2Mod, tree2class, tree2tree),
+					tree3 = SkillProgression.loadTree(tree3Mod, tree3class, tree3tree);
+			
+			Profession p = new Profession(baseclassMod, baseclass, tree1, tree2, tree3, 1);
+			p.name=name;
+			p.description=description;
+			reader.close();
+			
+			return p;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static void saveCustomProfession(Profession p) throws IOException{
+		BufferedWriter w = new BufferedWriter(new FileWriter(new File("classes/"+Profession.enumerateCustomProfessions()+".prof")));
+		String[] toWrite = {
+				p.name,
+				p.description,
+				p.parentMod,
+				p.getTrees()[0].sourceMod,
+				p.getTrees()[1].sourceMod,
+				p.getTrees()[2].sourceMod,
+				Integer.toString(p.getBaseClass()),
+				Integer.toString(p.getTrees()[0].sourceClass),
+				Integer.toString(p.getTrees()[0].sourceTree),
+				Integer.toString(p.getTrees()[1].sourceClass),
+				Integer.toString(p.getTrees()[1].sourceTree),
+				Integer.toString(p.getTrees()[2].sourceClass),
+				Integer.toString(p.getTrees()[2].sourceTree)
+		};
+		
+		for(int i=0; i<toWrite.length; i++){
+			w.write(toWrite[i]);
+			w.newLine();
+		}
+		w.close();
+	}
+	
+	public static int enumerateCustomProfessions(){
+		File f = new File("classes/");
+		File[] p = f.listFiles(new FileNameExtentionFilter(".prof"));
+		return p.length;
+	}
 
 	public void setLevel(int level) {
 		this.level = level;
+	}
+	
+	public String toString(){
+		return "<Profession "+this.name+">";
 	}
 
 }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Save;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
+import net.plaidypus.deadreckoning.hudelements.HudElementContainer;
 import net.plaidypus.deadreckoning.hudelements.button.ImageButton;
 import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
 import net.plaidypus.deadreckoning.hudelements.simple.Panel;
@@ -28,8 +29,10 @@ import org.newdawn.slick.state.StateBasedGame;
 public class NewGameState extends HudLayersState {
 
 	/** The buttons that reference the saved and default classes */
-	public ArrayList<ImageButton> classButtons;
-
+	public ArrayList<ImageButton> classButtons, customClassButtons;
+	ArrayList<Profession> customProfessions;
+	Panel customProfessionsPanel;
+	
 	/** The button to create a new class. */
 	public ImageButton newClassButton;
 
@@ -37,7 +40,7 @@ public class NewGameState extends HudLayersState {
 	public TextEntryBox text;
 
 	/** The x, and y locations of the class buttons. */
-	int columA = 15, columB = 300;
+	int columA = 20, columB = 250;
 
 	/**
 	 * Instantiates a new game creator state.
@@ -63,23 +66,18 @@ public class NewGameState extends HudLayersState {
 	 *             the slick exception
 	 */
 	public void loadClasses() throws SlickException {
+		
 		classButtons = new ArrayList<ImageButton>(0);
-		ArrayList<HudElement> elim = new ArrayList<HudElement>(0);
 		ArrayList<HudElement> elimB = new ArrayList<HudElement>(0);
-
-		// this quick block creates a the "create new class" button
-		newClassButton = new ImageButton(columB, 20, HudElement.TOP_LEFT,
-				new Image("res/newClassButton.png"));
-		elim.add(newClassButton);
-		elim.add(new TextElement(columB + 69, 42, HudElement.TOP_LEFT,
-				"New Class", Color.white, DeadReckoningGame.menuFont));
-
-		// this block of fuck loads the custom professions, and creates the
-		// buttons
+		
+		customProfessionsPanel = new Panel(columB,20,HudElement.TOP_LEFT,new ArrayList<HudElement>(0),15,15);
+		customClassButtons = new ArrayList<ImageButton>(0);
+		
+		buildCustomClasses();
+		
+		// this block of fuck loads the pre-defined professions, and creates the buttons
 		// that are needed for them
-		// untested, may or may not work. TODO fix that....
 		for (int prof = 0; prof < Profession.getProfessions().size(); prof++) {
-			int baseClass = 0;
 			ImageButton i = new ImageButton(columA, 15 + (prof) * 79,
 					HudElement.TOP_LEFT, Profession.getProfession(prof)
 							.getPortriat());
@@ -89,9 +87,7 @@ public class NewGameState extends HudLayersState {
 					HudElement.TOP_LEFT, Profession.getProfession(prof).name,
 					Color.white, DeadReckoningGame.menuFont));
 		}
-
-		// TODO add custom loaded professions
-
+		
 		// this creates the text box necessary for saving the game
 		ArrayList<HudElement> elimC = new ArrayList<HudElement>(0);
 		text = new TextEntryBox(-250, 50, HudElement.TOP_RIGHT, 200, 50);
@@ -99,11 +95,35 @@ public class NewGameState extends HudLayersState {
 
 		// this packages the hudelement lists into Panels and drops them into
 		// the "real" HudElements list
-		this.HudElements.add(new Panel(elim));
-		this.HudElements.add(new Panel(elimB));
-		this.HudElements.add(new Panel(elimC));
+		this.contents.add(customProfessionsPanel);
+		this.contents.add(new Panel(elimB));
+		this.contents.add(new Panel(elimC));
 	}
-
+	
+	public void buildCustomClasses() throws SlickException{
+		customProfessionsPanel.clearElements();
+		customClassButtons.clear();
+		
+		// this quick block creates a the "create new class" button
+		newClassButton = new ImageButton(0, 0, HudElement.TOP_LEFT,
+				new Image("res/newClassButton.png"));
+		customProfessionsPanel.addElement(newClassButton);
+		customProfessionsPanel.addElement(new TextElement(69, 22, HudElement.TOP_LEFT,
+				"New Class", Color.white, DeadReckoningGame.menuFont));
+		
+		customClassButtons = new ArrayList<ImageButton>(0);
+		customProfessions = new ArrayList<Profession>(0);
+		// TODO add custom loaded professions
+		for (int i=0; i<Profession.enumerateCustomProfessions(); i++){
+			customProfessions.add(Profession.loadCustomProfession(i));
+			ImageButton b = new ImageButton(0, 79+79*i, HudElement.TOP_LEFT, customProfessions.get(i).getPortriat());
+			customClassButtons.add(b);
+			customProfessionsPanel.addElement(new TextElement(69, 101+79*i, HudElement.TOP_LEFT,
+					customProfessions.get(i).name, Color.white, DeadReckoningGame.menuFont));
+		}
+		customProfessionsPanel.addAllElements(customClassButtons);
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -121,26 +141,36 @@ public class NewGameState extends HudLayersState {
 			for (int i = 0; i < classButtons.size(); i++) {
 				if (classButtons.get(i).isPressed()
 						&& !text.getContent().equals("")) {
-					try {
-						Save s = Save.makeNewSave(
-								"saves/SAVE " + (Save.enumerateSaves()) + "/",
-								text.getContent(), Profession.getProfession(i));
-						s.loadGame(GameplayElement.class.cast(HudLayersState.class
-								.cast(DeadReckoningGame.instance
-										.getState(DeadReckoningGame.GAMEPLAYSTATE))
-								.getElement(0)), game.getContainer());
-						game.enterState(DeadReckoningGame.GAMEPLAYSTATE);
-					} catch (IOException e) {
-						e.printStackTrace();
-					} catch (ClassNotFoundException e) {
-						e.printStackTrace();
-					} catch (InstantiationException e) {
-						e.printStackTrace();
-					} catch (IllegalAccessException e) {
-						e.printStackTrace();
-					}
+					makeNewGame(game,Profession.getProfession(i));
 				}
 			}
+			for (int i = 0; i < customClassButtons.size(); i++) {
+				if (customClassButtons.get(i).isPressed()
+						&& !text.getContent().equals("")) {
+					makeNewGame(game,customProfessions.get(i));
+				}
+			}
+		}
+	}
+	
+	public void makeNewGame(StateBasedGame game, Profession p) throws SlickException{
+		try {
+			Save s = Save.makeNewSave(
+					"saves/SAVE " + (Save.enumerateSaves()) + "/",
+					text.getContent(), p);
+			s.loadGame(GameplayElement.class.cast(HudLayersState.class
+					.cast(DeadReckoningGame.instance
+							.getState(DeadReckoningGame.GAMEPLAYSTATE))
+					.getElement(0)), game.getContainer());
+			game.enterState(DeadReckoningGame.GAMEPLAYSTATE);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
 		}
 	}
 
