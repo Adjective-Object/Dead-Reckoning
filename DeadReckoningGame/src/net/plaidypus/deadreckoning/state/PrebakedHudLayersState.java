@@ -9,8 +9,9 @@ import net.plaidypus.deadreckoning.hudelements.HudElement;
 public abstract class PrebakedHudLayersState extends HudLayersState{
 
 	public PrebakedHudLayersState(int stateID, ArrayList<HudElement> elements) throws SlickException{
-		super(stateID, elements);
-		elements.addAll(makeContents());
+		super(stateID, new ArrayList<HudElement>(0));
+		contents.addAll(elements);
+		contents.addAll(makeContents());
 	}
 	
 	public abstract void makeFrom(Object O);

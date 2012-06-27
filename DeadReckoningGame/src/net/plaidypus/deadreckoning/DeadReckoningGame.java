@@ -30,6 +30,7 @@ import net.plaidypus.deadreckoning.state.DeathScreenState;
 import net.plaidypus.deadreckoning.state.HudLayersState;
 import net.plaidypus.deadreckoning.state.MainMenuState;
 import net.plaidypus.deadreckoning.state.NewGameState;
+import net.plaidypus.deadreckoning.state.OptionsState;
 import net.plaidypus.deadreckoning.state.PlayerViewerState;
 import net.plaidypus.deadreckoning.state.SaveSelectorState;
 
@@ -60,7 +61,7 @@ public class DeadReckoningGame extends StateBasedGame {
 	public static final int LOOTSTATE = 0, INVENTORYSTATE = 1,
 			GAMEPLAYSTATE = 2, MAINMENUSTATE = 3, SAVESELECTSTATE = 4,
 			MAPSTATE = 5, SKILLSTATE = 6, NEWGAMESTATE = 7, ERRORSTATE = 8,
-			DEATHSTATE = 9, NEWCLASSSTATE = 10;
+			DEATHSTATE = 9, NEWCLASSSTATE = 10, OPTIONSSTATE = 13;
 
 	/**
 	 * The Constant tileSize, that governs the size of the tiles in the game
@@ -161,8 +162,9 @@ public class DeadReckoningGame extends StateBasedGame {
 	 */
 	public static void main(String[] args) throws SlickException {
 		try {
+			OptionsHandler.loadSettings();
 			AppGameContainer app = new AppGameContainer(new DeadReckoningGame());
-			app.setDisplayMode(800, 600, false);
+			app.setDisplayMode(OptionsHandler.getResolutionX(), OptionsHandler.getResolutionY(), OptionsHandler.verticalSynch);
 			app.start();
 			app.getInput().enableKeyRepeat();
 		} catch (SlickException e) {
@@ -286,6 +288,7 @@ public class DeadReckoningGame extends StateBasedGame {
 		this.addState(new NewGameState(NEWGAMESTATE, menuBackground));
 		this.addState(new DeathScreenState(DEATHSTATE));
 		this.addState(new ClassCreationState(NEWCLASSSTATE, menuBackground));
+		this.addState(new OptionsState(OPTIONSSTATE, menuBackground));
 		
 		this.enterState(MAINMENUSTATE);
 	}
