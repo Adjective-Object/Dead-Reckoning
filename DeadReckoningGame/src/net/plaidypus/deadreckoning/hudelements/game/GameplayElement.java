@@ -248,8 +248,11 @@ public class GameplayElement extends HudElement {
 	public void updateBoardEffects(GameContainer gc, int delta) {
 		getBoard().HideAll();
 		getBoard().updateBoardEffects(gc, delta);
-		getBoard().revealFromEntity(player, 6);// TODO replace with from player
-												// alligned units?
+		for(int i=0; i<getBoard().ingameEntities.size(); i++){
+			if(getBoard().ingameEntities.get(i).allignmnet==Entity.ALLIGN_FRIENDLY){
+				getBoard().revealFromEntity( getBoard().ingameEntities.get(i) , 10);
+			}
+		}
 	}
 
 	/**
@@ -379,11 +382,11 @@ public class GameplayElement extends HudElement {
 				+ DeadReckoningGame.tileSize / 2;
 		int ny = e.getAbsoluteY() - gc.getHeight() / 2
 				+ DeadReckoningGame.tileSize / 2;
-		if (Math.abs(cameraDestX - nx) > gc.getWidth() / 3) {
+		if (Math.abs(cameraDestX - nx) > gc.getWidth() * 0.4F) {
 			cameraDestX = nx;
 			timeOn = 0;
 		}
-		if (Math.abs(cameraDestY - ny) > gc.getHeight() / 4) {
+		if (Math.abs(cameraDestY - ny) > gc.getHeight() *0.4F) {
 			cameraDestY = ny;
 			timeOn = 0;
 		}
@@ -430,7 +433,7 @@ public class GameplayElement extends HudElement {
 	 */
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		getBoard().render(g, -cameraX, -cameraY);
+		getBoard().render(g, (int)-cameraX, (int)-cameraY);
 
 		g.copyArea(backgroundScreen, 0, 0);
 
