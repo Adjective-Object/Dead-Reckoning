@@ -44,7 +44,7 @@ public class MainMenuState extends HudLayersState {
 			throws SlickException {
 		super(stateID, (ArrayList<HudElement>) background.clone());
 		int x = background.size() + 1;
-		this.HudElements.addAll(makeContents());
+		this.contents.addAll(makeContents());
 		this.startButton = (Button) this.getElement(x);
 		this.optionsButton = (Button) this.getElement(x + 1);
 		this.creditsButton = (Button) this.getElement(x + 2);

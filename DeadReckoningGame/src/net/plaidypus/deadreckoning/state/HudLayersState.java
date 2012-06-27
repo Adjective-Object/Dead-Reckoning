@@ -19,7 +19,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * 
  * generic, used to assemble HudElements into a BasicGameState useable by Slick
  */
-public class HudLayersState extends BasicGameState implements HudElementContainer{
+public class HudLayersState extends BasicGameState{
 
 	/** The state id used for referencing this file */
 	int stateID;
@@ -28,7 +28,7 @@ public class HudLayersState extends BasicGameState implements HudElementContaine
 	DeadReckoningGame parent;
 
 	/** The Hud elements contained in this HudLayersState */
-	ArrayList<HudElement> HudElements;
+	ArrayList<HudElement> contents;
 
 	/**
 	 * Instantiates a new hud layers state.
@@ -40,7 +40,7 @@ public class HudLayersState extends BasicGameState implements HudElementContaine
 	 */
 	public HudLayersState(int stateID, ArrayList<HudElement> elements) {
 		this.stateID = stateID;
-		this.HudElements = elements;
+		this.contents = elements;
 	}
 
 	/**
@@ -53,9 +53,9 @@ public class HudLayersState extends BasicGameState implements HudElementContaine
 	 */
 	public HudLayersState(int stateID, HudElement[] elementsarr) {
 		this.stateID = stateID;
-		HudElements = new ArrayList<HudElement>(0);
+		contents = new ArrayList<HudElement>(0);
 		for (int i = 0; i < elementsarr.length; i++) {
-			HudElements.add(elementsarr[i]);
+			contents.add(elementsarr[i]);
 		}
 	}
 
@@ -70,8 +70,8 @@ public class HudLayersState extends BasicGameState implements HudElementContaine
 	 */
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
-		for (int i = 0; i < this.HudElements.size(); i++) {
-			HudElements.get(i).init(container, game);
+		for (int i = 0; i < this.contents.size(); i++) {
+			contents.get(i).init(container, game);
 		}
 	}
 
@@ -83,8 +83,8 @@ public class HudLayersState extends BasicGameState implements HudElementContaine
 	 */
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-		for (int i = 0; i < HudElements.size(); i++) {
-			HudElements.get(i).update(container, game, delta);
+		for (int i = 0; i < contents.size(); i++) {
+			contents.get(i).update(container, game, delta);
 		}
 	}
 
@@ -99,11 +99,11 @@ public class HudLayersState extends BasicGameState implements HudElementContaine
 			g.setColor(Color.green);
 		}
 		g.fillRect(0, 0, gc.getWidth(), gc.getHeight());
-		for (int i = 0; i < HudElements.size(); i++) {
-			HudElements.get(i).render(gc, game, g);
+		for (int i = 0; i < contents.size(); i++) {
+			contents.get(i).render(gc, game, g);
 		}
-		for (int i = 0; i < HudElements.size(); i++) {
-			HudElements.get(i).renderMouseOver(gc, game, g);
+		for (int i = 0; i < contents.size(); i++) {
+			contents.get(i).renderMouseOver(gc, game, g);
 		}
 	}
 
@@ -119,7 +119,7 @@ public class HudLayersState extends BasicGameState implements HudElementContaine
 	public void makeFrom(Object[] objects) {
 		System.out.println("HudLayersState " + stateID);
 		for (int i = 0; i < objects.length; i++) {
-			this.HudElements.get(i % HudElements.size()).makeFrom(objects[i]);
+			this.contents.get(i % contents.size()).makeFrom(objects[i]);
 		}
 	}
 
@@ -138,7 +138,7 @@ public class HudLayersState extends BasicGameState implements HudElementContaine
 	 * @return the elements
 	 */
 	public ArrayList<HudElement> getElements() {
-		return HudElements;
+		return contents;
 	}
 
 	/**
@@ -149,7 +149,7 @@ public class HudLayersState extends BasicGameState implements HudElementContaine
 	 * @return the element
 	 */
 	public HudElement getElement(int index) {
-		return HudElements.get(index);
+		return contents.get(index);
 	}
 
 	/**
@@ -161,18 +161,8 @@ public class HudLayersState extends BasicGameState implements HudElementContaine
 		return this.parent;
 	}
 
-	@Override
-	public int getX() {
-		return 0;
-	}
-
-	@Override
-	public int getY() {
-		return 0;
-	}
-
 	public void removeElement(HudElement hudElement) {
-		this.HudElements.remove(hudElement);
+		this.contents.remove(hudElement);
 	}
 
 }

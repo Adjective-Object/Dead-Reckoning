@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.state;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
@@ -70,7 +71,22 @@ public class ClassCreationState extends PrebakedHudLayersState{
 				selectors.get(0).getSelectedTree()!=null &&
 				selectors.get(1).getSelectedTree()!=null &&
 				selectors.get(2).getSelectedTree()!=null){
-			System.out.println("OKAY!");
+			Profession saver = new Profession(Profession.getProfession(currentProfession).getParentMod(),
+					Profession.getProfession(currentProfession).getBaseClass(),
+					selectors.get(0).getSelectedTree(),
+					selectors.get(1).getSelectedTree(),
+					selectors.get(2).getSelectedTree(),1);
+			saver.name = "NONAMENEWCLASS";
+			saver.description="FUUUCK";
+			try {
+				Profession.saveCustomProfession(saver);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			NewGameState ng = (NewGameState)DeadReckoningGame.instance.getState(DeadReckoningGame.NEWGAMESTATE);
+			ng.buildCustomClasses();
+			DeadReckoningGame.instance.enterState(DeadReckoningGame.NEWGAMESTATE);
+			this.reset();
 		}
 		
 	}

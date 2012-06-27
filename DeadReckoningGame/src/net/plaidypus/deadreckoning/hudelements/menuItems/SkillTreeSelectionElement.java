@@ -102,6 +102,10 @@ public class SkillTreeSelectionElement extends Panel{
 	
 	public void reset(){
 		this.selectedTree=null;
+		if(this.selectedProfession!=null){
+			this.selectedProfession=null;
+			this.enterClassSelect();
+		}
 	}
 	
 	private void updateToProfession(Profession p) {
