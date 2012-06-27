@@ -279,18 +279,28 @@ public class GameBoard implements ILosBoard {
 	 */
 	public void render(Graphics g, float xoff, float yoff) {
 
-		int lowX = (int) Utilities.limitTo(-xoff / DeadReckoningGame.tileSize,
-				0, this.getWidth()), highX = (int) Utilities.limitTo(-xoff
-				/ DeadReckoningGame.tileSize + renderDistX, 0, this.getWidth()), lowY = (int) Utilities
-				.limitTo(-yoff / DeadReckoningGame.tileSize, 0,
-						this.getHeight()), highY = (int) Utilities.limitTo(
-				-yoff / DeadReckoningGame.tileSize + renderDistY, 0,
-				this.getHeight());
+		int 
+			lowX = (int) Utilities.limitTo(
+				-xoff / DeadReckoningGame.tileSize,
+				0, this.getWidth()),
+				
+			highX = (int) Utilities.limitTo(
+					-xoff/ DeadReckoningGame.tileSize + renderDistX,
+					0, this.getWidth()),
+			
+			lowY = (int) Utilities.limitTo(
+					-yoff / DeadReckoningGame.tileSize,
+					0, this.getHeight()),
+					
+			highY = (int) Utilities.limitTo(
+				-yoff / DeadReckoningGame.tileSize + renderDistY,
+				0,this.getHeight()) ;
 
 		for (int x = lowX; x < highX; x++) {
 			for (int y = lowY; y < highY; y++) {
-				board[x][y].render(g, x * DeadReckoningGame.tileSize + xoff, y
-						* DeadReckoningGame.tileSize + yoff);
+				board[x][y].render(g,
+						(int)(x * DeadReckoningGame.tileSize + xoff),
+						(int)(y * DeadReckoningGame.tileSize + yoff) );
 			}
 		}
 
@@ -303,7 +313,7 @@ public class GameBoard implements ILosBoard {
 		}
 
 		for (int i = 0; i < underEffects.size(); i++) {
-			underEffects.get(i).render(g, xoff, yoff);
+			underEffects.get(i).render(g, (int)xoff, (int)yoff);
 		}
 
 		for (int x = lowX; x < highX; x++) {
@@ -314,8 +324,8 @@ public class GameBoard implements ILosBoard {
 									.isVisible()) || (board[x][y].getEntity(i)
 									.isTerrain() && board[x][y].explored))) {
 						board[x][y].getEntity(i).render(g,
-								x * DeadReckoningGame.tileSize + xoff,
-								y * DeadReckoningGame.tileSize + yoff);
+								(int)(x * DeadReckoningGame.tileSize + xoff),
+								(int)(y * DeadReckoningGame.tileSize + yoff) );
 					}
 				}
 			}
