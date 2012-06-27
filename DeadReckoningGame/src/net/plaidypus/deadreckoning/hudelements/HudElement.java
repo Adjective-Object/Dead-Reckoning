@@ -74,6 +74,7 @@ public abstract class HudElement {
 	public abstract void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException;
 
+	
 	/**
 	 * Update.
 	 * 

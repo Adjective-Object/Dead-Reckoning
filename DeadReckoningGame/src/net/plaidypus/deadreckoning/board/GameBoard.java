@@ -277,7 +277,7 @@ public class GameBoard implements ILosBoard {
 	 * @param yoff
 	 *            the yoff
 	 */
-	public void render(Graphics g, float xoff, float yoff) {
+	public void render(Graphics g, int xoff, int yoff) {
 
 		int lowX = (int) Utilities.limitTo(-xoff / DeadReckoningGame.tileSize,
 				0, this.getWidth()), highX = (int) Utilities.limitTo(-xoff

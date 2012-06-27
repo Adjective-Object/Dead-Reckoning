@@ -13,6 +13,8 @@ public class TickerBox extends Button{
 
 	int width,height;
 	
+	boolean ticked=false;
+	
 	public TickerBox(int x, int y, int bindMethod) {
 		this(x, y, 15,15, bindMethod);
 	}
@@ -23,6 +25,14 @@ public class TickerBox extends Button{
 		this.height=height;
 	}
 
+	public void update(GameContainer gc, StateBasedGame sbg, int delta)
+			throws SlickException{
+		super.update(gc, sbg, delta);
+		if(this.isPressed()){
+			this.ticked=!this.ticked;
+		}
+	}
+	
 	@Override
 	public void makeFrom(Object o) {}
 
@@ -45,10 +55,14 @@ public class TickerBox extends Button{
 			throws SlickException {
 		g.setColor(Color.white);
 		g.fillRect(this.getX(), this.getY(), width, height);
+			if(this.ticked){
+			g.setColor(Color.red);
+			g.setLineWidth(2);
+			g.drawLine(this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height);
+			g.setLineWidth(1);
+		}
 		g.setColor(Color.black);
 		g.drawRect(this.getX(), this.getY(), width, height);
-		g.setColor(DeadReckoningGame.menuHighlightColor);
-		g.drawLine(this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height);
 	}
 
 }
