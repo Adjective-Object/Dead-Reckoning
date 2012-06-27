@@ -16,7 +16,7 @@ TILEY=32
 
 :IMAGES:
 AttackSheet = "core/professions/1/attack.png"
-StandSheet = "core/professions/	1/stand.png"
+StandSheet = "core/professions/1/stand.png"
 FlinchFrontSheet = "core/professions/1/flinchFront.png"
 FlinchBackSheet = "core/professions/1/flinchBack.png"
 
