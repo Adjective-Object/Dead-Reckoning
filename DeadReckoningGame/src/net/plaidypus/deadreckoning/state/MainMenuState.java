@@ -93,6 +93,9 @@ public class MainMenuState extends HudLayersState {
 		if (this.startButton.isPressed()) {
 			game.enterState(DeadReckoningGame.SAVESELECTSTATE);
 		}
+		if(this.optionsButton.isPressed()) {
+			game.enterState(DeadReckoningGame.OPTIONSSTATE);
+		}
 		if (this.quitButton.isPressed()) {
 			container.exit();
 		}

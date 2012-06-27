@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.HudElementContainer;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -18,10 +16,7 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * The Class Panel.
  */
-public class Panel extends HudElement implements HudElementContainer{
-
-	/** The height. */
-	int borderX, borderY, width, height;
+public class Panel extends SimplePanel implements HudElementContainer{
 
 	/** The contents. */
 	protected ArrayList<HudElement> contents;
@@ -33,7 +28,7 @@ public class Panel extends HudElement implements HudElementContainer{
 	 *            the contents
 	 */
 	public Panel(ArrayList<HudElement> contents) {
-		super(calcX(contents),calcY(contents), HudElement.TOP_LEFT,false);
+		super(calcX(contents),calcY(contents), 0,0,HudElement.TOP_LEFT);
 		this.borderX = 15;
 		this.borderY = 15;
 		this.contents = contents;
@@ -81,7 +76,7 @@ public class Panel extends HudElement implements HudElementContainer{
 	 */
 	public Panel(int x, int y, int bindMethod,
 			ArrayList<HudElement> contents, int borderX, int borderY) {
-		super(x,y, bindMethod,false);
+		super(x,y, 0,0,bindMethod);
 		this.borderX = borderX;
 		this.borderY = borderY;
 		this.contents = contents;
@@ -138,13 +133,8 @@ public class Panel extends HudElement implements HudElementContainer{
 	 */
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		g.setColor(DeadReckoningGame.menuColor);
-		g.fillRect(getAbsoluteX() - borderX, getAbsoluteY() - borderY,
-				getWidth() + borderX * 2, getHeight() + borderY * 2);
-		g.setColor(Color.white);
-		g.drawRect(getAbsoluteX() - borderX-1, getAbsoluteY() - borderY-1,
-				getWidth() + borderX * 2+1, getHeight() + borderY * 2+1);
-
+		super.render(gc, sbg, g);
+		
 		for (int i = 0; i < contents.size(); i++) {
 			contents.get(i).render(gc, sbg, g);
 		}

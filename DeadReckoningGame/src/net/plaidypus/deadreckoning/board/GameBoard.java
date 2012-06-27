@@ -289,8 +289,9 @@ public class GameBoard implements ILosBoard {
 
 		for (int x = lowX; x < highX; x++) {
 			for (int y = lowY; y < highY; y++) {
-				board[x][y].render(g, x * DeadReckoningGame.tileSize + xoff, y
-						* DeadReckoningGame.tileSize + yoff);
+				board[x][y].render(g,
+						(int)(x * DeadReckoningGame.tileSize + xoff),
+						(int)(y * DeadReckoningGame.tileSize + yoff) );
 			}
 		}
 

@@ -246,7 +246,7 @@ public class Tile {
 	 * @param y
 	 *            the y
 	 */
-	public void render(Graphics g, float x, float y) {
+	public void render(Graphics g, int x, int y) {
 		if ((explored||DeadReckoningGame.debugMode) && this.tileFace!=this.getParent().getBiome().getNullTileValue()) {
 
 			float renderLight = this.lightLevel;
