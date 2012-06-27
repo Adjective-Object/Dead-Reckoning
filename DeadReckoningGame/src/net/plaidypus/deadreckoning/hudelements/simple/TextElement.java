@@ -24,7 +24,7 @@ public class TextElement extends HudElement {
 	/** The font. */
 	UnicodeFont font;
 
-	private int maxWidth;
+	private int maxWidth, height;
 
 	/**
 	 * Instantiates a new text element.
@@ -44,16 +44,17 @@ public class TextElement extends HudElement {
 	 */
 	public TextElement(int x, int y, int bindMethod, String text, Color color,
 			UnicodeFont f) {
-		this(x,y,-1,bindMethod,text,color,f);
+		this(x,y,-1,-1,bindMethod,text,color,f);
 	}
 	
-	public TextElement(int x, int y, int maxWidth, int bindMethod, String text, Color color,
+	public TextElement(int x, int y, int width, int height, int bindMethod, String text, Color color,
 			UnicodeFont f) {
 		super(x, y, bindMethod, false);
 		this.text = text;
 		this.font = f;
 		this.color = color;
-		this.maxWidth=maxWidth;
+		this.maxWidth=width;
+		this.height=height;
 	}
 
 	/*
@@ -111,7 +112,12 @@ public class TextElement extends HudElement {
 	 */
 	@Override
 	public int getWidth() {
-		return font.getWidth(text);
+		if(this.maxWidth!=-1){
+			return this.maxWidth;
+		}
+		else{
+			return this.font.getWidth(this.text);
+		}
 	}
 
 	/*
@@ -121,7 +127,12 @@ public class TextElement extends HudElement {
 	 */
 	@Override
 	public int getHeight() {
-		return font.getHeight(text);
+		if(this.height!=-1){
+			return this.height;
+		}
+		else{
+			return this.font.getHeight(this.text);
+		}
 	}
 
 	/*

@@ -29,8 +29,6 @@ public class HudLayersState extends BasicGameState implements HudElementContaine
 
 	/** The Hud elements contained in this HudLayersState */
 	ArrayList<HudElement> HudElements;
-	
-	public static HudLayersState unallocatedState = new HudLayersState(-1,new ArrayList<HudElement>(0));
 
 	/**
 	 * Instantiates a new hud layers state.

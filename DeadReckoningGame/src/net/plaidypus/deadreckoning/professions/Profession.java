@@ -390,5 +390,9 @@ public class Profession extends StatMaster {
 	public void setLevel(int level) {
 		this.level = level;
 	}
+	
+	public String toString(){
+		return "<Profession "+this.name+">";
+	}
 
 }

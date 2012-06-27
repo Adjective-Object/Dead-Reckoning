@@ -56,7 +56,7 @@ public abstract class HudElement {
 		this.yoff = y;
 		this.bindMethod = bindMethod;
 		this.needsFocus = needFoc;
-		this.setContainer(HudLayersState.unallocatedState);
+		this.setContainer(HudElementContainer.defaultContainer);
 	}
 
 	/**

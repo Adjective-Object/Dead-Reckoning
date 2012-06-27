@@ -15,6 +15,7 @@ import net.plaidypus.deadreckoning.professions.Profession;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -23,13 +24,14 @@ public class ClassCreationState extends PrebakedHudLayersState{
 	static final int outDistance = 150;
 	int currentProfession = 0;
 	
-	StillImageElement bigImage, iconImage;
+	StillImageElement bigImage;
 	TextElement playerName, descriptionBox;
-	Button leftButton, rightButton;
+	Button leftButton, rightButton, resetButton, okayButton;
 	
 	ArrayList<FillerBar>statBars;
 	
-	SkillTreeSelectionElement selector1, selector2, selector3;
+	ArrayList<SkillTreeSelectionElement> selectors;
+	ArrayList<StillImageElement> treeImages;
 	
 	public ClassCreationState(int stateID, ArrayList<HudElement> elements)
 			throws SlickException {
@@ -49,10 +51,28 @@ public class ClassCreationState extends PrebakedHudLayersState{
 		if(rightButton.isPressed() || leftButton.isPressed()){
 			this.updateToProfession(Profession.getProfession(this.currentProfession));
 		}
-		this.bigImage.xoff+=(outDistance-this.bigImage.xoff)*delta/100;
+		this.bigImage.xoff+=(outDistance-this.bigImage.xoff)*0.1;
 		if(this.bigImage.xoff<this.outDistance){
 			this.bigImage.xoff+=1;
 		}
+		
+		for(int i=0; i<3; i++){
+			if(this.selectors.get(i).isTreeChanged()){
+				this.treeImages.get(i).makeFrom(selectors.get(i).getSelectedTree().getSkills()[0].getImage());
+			}
+		}
+		
+		if(resetButton.isPressed()){
+			this.reset();
+		}
+		
+		if(okayButton.isPressed() &&
+				selectors.get(0).getSelectedTree()!=null &&
+				selectors.get(1).getSelectedTree()!=null &&
+				selectors.get(2).getSelectedTree()!=null){
+			System.out.println("OKAY!");
+		}
+		
 	}
 	
 	@Override
@@ -63,48 +83,49 @@ public class ClassCreationState extends PrebakedHudLayersState{
 		returnElements.add(bigImage);
 		
 		//making the far left part - displays base class information
-		ArrayList<HudElement> leftPanelContents = new ArrayList<HudElement>(0);
-		iconImage = new StillImageElement(25,18,HudElement.TOP_LEFT);
-		playerName = new TextElement(5,0,HudElement.TOP_LEFT,"NO_NAME",DeadReckoningGame.menuTextColor, DeadReckoningGame.menuFont);
+		playerName = new TextElement(50,20,HudElement.TOP_LEFT,"NO_NAME",DeadReckoningGame.menuTextColor, DeadReckoningGame.menuLargeFont);
 		
 		statBars = new ArrayList<FillerBar>(6);
-		statBars.add(new FillerBar(5,70,new Color(200,70,200)));
-		statBars.add(new FillerBar(5,80,new Color(70,200,200)));
-		statBars.add(new FillerBar(5,90,new Color(200,70,70)));
-		statBars.add(new FillerBar(5,100,new Color(70,70,200)));
-		statBars.add(new FillerBar(5,110,new Color(70,200,70)));
-		statBars.add(new FillerBar(5,120,new Color(200,200,70)));
+		statBars.add(new FillerBar(65,330,new Color(200,70,200)));
+		statBars.add(new FillerBar(95,330,new Color(70,200,200)));
+		statBars.add(new FillerBar(125,330,new Color(200,70,70)));
+		statBars.add(new FillerBar(155,330,new Color(70,70,200)));
+		statBars.add(new FillerBar(185,330,new Color(70,200,70)));
+		statBars.add(new FillerBar(215,330,new Color(200,200,70)));
 		
-		leftButton = new TextButton(10,51,HudElement.TOP_LEFT,"<");
-		rightButton = new TextButton(55,51,HudElement.TOP_LEFT,">");
+		//making the tree indication elements and the selectors
+		treeImages = new ArrayList<StillImageElement>(3);
+		selectors = new ArrayList<SkillTreeSelectionElement>(0);
+		for(int i=0; i<3; i++){
+			treeImages.add(new StillImageElement(50,60+52*i,HudElement.TOP_LEFT,new Image("res/noSkill.png")));
+			selectors.add(new SkillTreeSelectionElement(400+120*i, 20, HudElement.TOP_LEFT));
+		}
+		returnElements.addAll(treeImages);
+		returnElements.addAll(selectors);
 		
-		leftPanelContents.add(iconImage);
-		leftPanelContents.add(leftButton);
-		leftPanelContents.add(rightButton);
-		leftPanelContents.add(playerName);
-		leftPanelContents.addAll(statBars);
+		leftButton = new TextButton(50,250,HudElement.TOP_LEFT,"<");
+		rightButton = new TextButton(300,250,HudElement.TOP_LEFT,">");
+		returnElements.add(leftButton);
+		returnElements.add(rightButton);
+		returnElements.add(playerName);
+		returnElements.addAll(statBars);
 		
-		Panel leftPanel = new Panel(40,40,HudElement.TOP_LEFT,leftPanelContents,15,15);
-		returnElements.add(leftPanel);
+		this.descriptionBox = new TextElement(50,-170,600,150,HudElement.BOTTOM_LEFT,"NO_DESC",DeadReckoningGame.menuTextColor, DeadReckoningGame.menuFont);
+		ArrayList<HudElement> boxPanelCont = new ArrayList<HudElement>(1);
+		boxPanelCont.add(this.descriptionBox);
+		returnElements.add(new Panel(boxPanelCont));
 		
-		//making the skill tree selectors
-		selector1= new SkillTreeSelectionElement(400, 100, HudElement.TOP_LEFT);
-		selector2= new SkillTreeSelectionElement(525, 100, HudElement.TOP_LEFT);
-		selector3= new SkillTreeSelectionElement(650, 100, HudElement.TOP_LEFT);
-		returnElements.add(selector1);
-		returnElements.add(selector2);
-		returnElements.add(selector3);
-		
-		this.descriptionBox = new TextElement(50,-170,700,HudElement.BOTTOM_LEFT,"NO_DESC",DeadReckoningGame.menuTextColor, DeadReckoningGame.menuFont);
-		returnElements.add(descriptionBox);
+		this.resetButton = new TextButton(-125,-150, HudElement.BOTTOM_RIGHT,"RESET",DeadReckoningGame.menuLargeFont);
+		this.okayButton = new TextButton(-125,-80, HudElement.BOTTOM_RIGHT,"OKAY",DeadReckoningGame.menuLargeFont);
+		returnElements.add(resetButton);
+		returnElements.add(okayButton);
 		
 		return returnElements;
 	}
 	
 	public void updateToProfession(Profession p){
 		this.bigImage.makeFrom(p.getSelectImage());
-		this.bigImage.xoff=-bigImage.getWidth();
-		this.iconImage.makeFrom(p.getIcon());
+		this.bigImage.xoff=-bigImage.getWidth(); 
 		this.playerName.makeFrom(p.name);
 		this.descriptionBox.makeFrom(p.description);
 		
@@ -117,8 +138,14 @@ public class ClassCreationState extends PrebakedHudLayersState{
 				p.getLUKFrac()};
 		
 		for (int i=0; i<this.statBars.size(); i++){
-			this.statBars.get(i).setPosition(0F);
 			this.statBars.get(i).setDestination((float)fractions[i]);
+		}
+	}
+	
+	public void reset() throws SlickException{
+		for(int i=0; i<3; i++){
+			this.selectors.get(i).reset();
+			this.treeImages.get(i).makeFrom(new Image("res/noSkill.png"));
 		}
 	}
 	

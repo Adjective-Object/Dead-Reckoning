@@ -24,7 +24,7 @@ public class Panel extends HudElement implements HudElementContainer{
 	int borderX, borderY, width, height;
 
 	/** The contents. */
-	ArrayList<HudElement> contents;
+	protected ArrayList<HudElement> contents;
 
 	/**
 	 * Instantiates a new panel.
@@ -244,11 +244,18 @@ public class Panel extends HudElement implements HudElementContainer{
 		this.bakeBorders();
 	}
 	
-	public void addAllElements(ArrayList<HudElement> e){
+	public void addAllElements(ArrayList<? extends HudElement> e){
 		for(int i=0; i<e.size(); i++){
 			this.contents.add(e.get(i));
 			e.get(i).setContainer(this);
 		}
 		this.bakeBorders();
+	}
+	
+	public void clearElements(){
+		for(int i=0; i<this.contents.size(); i++){
+			this.contents.get(i).setContainer(HudElementContainer.defaultContainer);
+		}
+		this.contents.clear();
 	}
 }
