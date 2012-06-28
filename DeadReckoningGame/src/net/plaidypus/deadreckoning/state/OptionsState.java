@@ -28,13 +28,16 @@ public class OptionsState extends PrebakedHudLayersState{
 			throws SlickException {
 		super(stateID, elements);
 		
+		loadFromOptions();
+	}
+	
+	private void loadFromOptions() {
 		resText.makeFrom(OptionsHandler.getResolution(OptionsHandler.resolution));
 		frameText.makeFrom(Integer.toString(OptionsHandler.frameRate));
 		vsynch.makeFrom(OptionsHandler.verticalSynch);
 		stretch.makeFrom(OptionsHandler.stretchScreen);
-		fullscreen.makeFrom(OptionsHandler.fullScreen);
-	}
-	
+		fullscreen.makeFrom(OptionsHandler.fullScreen);	}
+
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		super.update(container, game, delta);
@@ -64,6 +67,7 @@ public class OptionsState extends PrebakedHudLayersState{
 			DeadReckoningGame.instance.enterState(DeadReckoningGame.MAINMENUSTATE);
 		}
 		if(cancel.isPressed()){
+			loadFromOptions();
 			DeadReckoningGame.instance.enterState(DeadReckoningGame.MAINMENUSTATE);
 		}
 

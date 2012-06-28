@@ -26,7 +26,6 @@ import net.plaidypus.deadreckoning.status.OnFire;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
@@ -155,17 +154,6 @@ public class Player extends LivingEntity {
 		}
 		if (gc.getInput().isKeyPressed(Input.KEY_PAUSE)) {
 			this.equips.set(0, new Equip("core", 0));
-		}
-		if (gc.getInput().isKeyPressed(Input.KEY_F6)) {
-			DeadReckoningGame.debugMode=!DeadReckoningGame.debugMode;
-		}
-		if (gc.getInput().isKeyPressed(Input.KEY_F5)) {
-			try {
-				Save.updateSave(this.getGame().saveLocation, this,
-						this.getParent());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 		}
 	}
 

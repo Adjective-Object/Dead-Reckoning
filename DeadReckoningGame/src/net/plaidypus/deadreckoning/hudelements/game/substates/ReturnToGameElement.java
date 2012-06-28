@@ -18,7 +18,7 @@ public class ReturnToGameElement extends HudElement {
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
+		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE) || gc.getInput().isKeyPressed(Input.KEY_DELETE)) {
 			DeadReckoningGame.instance
 					.enterState(DeadReckoningGame.GAMEPLAYSTATE);
 			gc.getInput().clearKeyPressedRecord();

@@ -126,13 +126,13 @@ public class SaveSelectorState extends PrebakedHudLayersState {
 		for (int i = 0; i < savesList.length; i++) {
 			saves[i] = new Save("saves/" + savesList[i]);
 			buttonList.add(new TextButton(
-					10
-							+ (i * 30)
+							10 + (i * 30)
 							/ (DeadReckoningGame.instance.getContainer()
-									.getHeight() - 60) * 150, 60
-							+ (i * 30)
+									.getHeight() - 60) * 150,
+							60 + (i * 30)
 							% (DeadReckoningGame.instance.getContainer()
-									.getHeight() - 60), HudElement.TOP_LEFT,
+									.getHeight() - 60),
+					HudElement.TOP_LEFT,
 					new Color(30, 50, 70), new Color(40, 60, 80), new Color(60,
 							80, 100), saves[i].getName(),
 					DeadReckoningGame.menuFont));
@@ -141,10 +141,15 @@ public class SaveSelectorState extends PrebakedHudLayersState {
 		returnElements.addAll(buttonList);
 		return returnElements;
 	}
+	
+	public void onEnter(GameContainer container, StateBasedGame game) throws SlickException{
+		System.out.println("ENTERING");
+		this.contents.removeAll(this.buttonList);
+		this.contents.addAll(this.makeContents());
+	}
 
+	
 	@Override
 	public void makeFrom(Object O) {
-		// TODO Auto-generated method stub
-		
 	}
 }

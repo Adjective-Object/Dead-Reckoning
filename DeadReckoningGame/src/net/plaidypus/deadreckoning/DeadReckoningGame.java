@@ -19,6 +19,7 @@ import net.plaidypus.deadreckoning.hudelements.game.substates.BigMap;
 import net.plaidypus.deadreckoning.hudelements.game.substates.ItemGridElement;
 import net.plaidypus.deadreckoning.hudelements.game.substates.ItemGridInteractionElement;
 import net.plaidypus.deadreckoning.hudelements.game.substates.ReturnToGameElement;
+import net.plaidypus.deadreckoning.hudelements.game.substates.VicariousRenderer;
 import net.plaidypus.deadreckoning.hudelements.menuItems.FairyLights;
 import net.plaidypus.deadreckoning.hudelements.simple.ColorFiller;
 import net.plaidypus.deadreckoning.hudelements.simple.StillImageElement;
@@ -28,6 +29,7 @@ import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.state.ClassCreationState;
 import net.plaidypus.deadreckoning.state.DeathScreenState;
 import net.plaidypus.deadreckoning.state.HudLayersState;
+import net.plaidypus.deadreckoning.state.InGameMenuState;
 import net.plaidypus.deadreckoning.state.MainMenuState;
 import net.plaidypus.deadreckoning.state.NewGameState;
 import net.plaidypus.deadreckoning.state.OptionsState;
@@ -39,7 +41,6 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.UnicodeFont;
@@ -62,7 +63,7 @@ public class DeadReckoningGame extends StateBasedGame {
 	public static final int LOOTSTATE = 0, INVENTORYSTATE = 1,
 			GAMEPLAYSTATE = 2, MAINMENUSTATE = 3, SAVESELECTSTATE = 4,
 			MAPSTATE = 5, SKILLSTATE = 6, NEWGAMESTATE = 7, ERRORSTATE = 8,
-			DEATHSTATE = 9, NEWCLASSSTATE = 10, OPTIONSSTATE = 13;
+			DEATHSTATE = 9, NEWCLASSSTATE = 10, INGAMEMENUSTATE = 11,OPTIONSSTATE = 13;
 
 	/**
 	 * The Constant tileSize, that governs the size of the tiles in the game
@@ -78,17 +79,10 @@ public class DeadReckoningGame extends StateBasedGame {
 			mouseoverBoxColor = new Color(50, 30, 50, 200),
 			mouseoverTextColor = new Color(255, 255, 255, 200),
 			menuHighlightColor = new Color(210, 210, 0),
-			skillInvalidColor = new Color(0, 0, 0, 80);
+			skillInvalidColor = new Color(0, 0, 0, 120);
 
 	/** The active instance of DeadReckoningGame. */
 	public static DeadReckoningGame instance;
-
-	/**
-	 * The menu background. This is to maintain the same particles and other
-	 * graphical polishes across several states, along with it just being easier
-	 * to deal with this way (no need for repetition)
-	 */
-	protected ArrayList<HudElement> menuBackground;
 
 	/**
 	 * The StringPutter object This that tracks global "announcement" messages.
@@ -215,7 +209,13 @@ public class DeadReckoningGame extends StateBasedGame {
 		//System.out.println(Biome.getBiomes());
 		//System.out.println(Profession.getProfessions());
 
-		this.menuBackground = new ArrayList<HudElement>(0);
+		
+		/*
+		 * The menu background. This is to maintain the same particles and other
+		 * graphical polishes across several states, along with it just being easier
+		 * to deal with this way (no need for repetition)
+		 */
+		ArrayList<HudElement> menuBackground = new ArrayList<HudElement>(0);
 		SpriteSheet particles = new SpriteSheet(new Image(
 				"res/menu/particles.png"), 50, 50);
 		menuBackground.add(new ColorFiller(DeadReckoningGame.menuBackgroundColor));
@@ -226,7 +226,13 @@ public class DeadReckoningGame extends StateBasedGame {
 				container.getWidth()+50, 150, container.getWidth()/8, particles));
 		menuBackground.add(new FairyLights(-50, -100, HudElement.BOTTOM_LEFT,
 				container.getWidth()+50, 100, container.getWidth()/6, particles));
+		
+		ArrayList<HudElement> subBackground = new ArrayList<HudElement>(0);
+		subBackground.add(new VicariousRenderer(DeadReckoningGame.instance.getGameElement()));
+		subBackground.add(new ColorFiller(new Color(0,0,0,100)) );
+		subBackground.add(new ReturnToGameElement());
 
+		
 		menuFont = new UnicodeFont("/res/visitor.ttf", 20, true, false);
 		menuFont.addNeheGlyphs();
 		menuFont.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
@@ -237,7 +243,7 @@ public class DeadReckoningGame extends StateBasedGame {
 		menuSmallFont.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
 		menuSmallFont.loadGlyphs();
 		
-		menuLargeFont = new UnicodeFont("/res/visitor.ttf", 32, true, false);
+		menuLargeFont = new UnicodeFont("/res/visitor.ttf", 30, true, false);
 		menuLargeFont.addNeheGlyphs();
 		menuLargeFont.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
 		menuLargeFont.loadGlyphs();
@@ -250,7 +256,7 @@ public class DeadReckoningGame extends StateBasedGame {
 		new Player().init();
 		new Stair().init();
 
-		this.addState(new MainMenuState(MAINMENUSTATE, this.menuBackground));
+		this.addState(new MainMenuState(MAINMENUSTATE, menuBackground));
 
 		this.addState(new HudLayersState(GAMEPLAYSTATE, new HudElement[] {
 				game,
@@ -265,7 +271,7 @@ public class DeadReckoningGame extends StateBasedGame {
 		ItemGridElement a= new ItemGridElement(-241, -132,HudElement.CENTER_CENTER),
 				b = new ItemGridElement(50, -132, HudElement.CENTER_CENTER);
 		this.addState(new HudLayersState(LOOTSTATE,
-				new HudElement[] { // TODO create custom state for this, instead of "interaction" element
+				new HudElement[] { //TODO create custom state for this, instead of "interaction" element
 						new StillImageElement(0, 0, HudElement.TOP_LEFT),
 						messages,
 						a,
@@ -292,9 +298,10 @@ public class DeadReckoningGame extends StateBasedGame {
 		this.addState(new SaveSelectorState(SAVESELECTSTATE, menuBackground));
 		this.addState(new PlayerViewerState(SKILLSTATE));
 		this.addState(new NewGameState(NEWGAMESTATE, menuBackground));
-		this.addState(new DeathScreenState(DEATHSTATE));
+		this.addState(new DeathScreenState(DEATHSTATE,subBackground));
 		this.addState(new ClassCreationState(NEWCLASSSTATE, menuBackground));
 		this.addState(new OptionsState(OPTIONSSTATE, menuBackground));
+		this.addState(new InGameMenuState(INGAMEMENUSTATE,subBackground));
 		
 		this.enterState(MAINMENUSTATE);
 	}

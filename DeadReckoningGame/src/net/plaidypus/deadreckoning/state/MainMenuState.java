@@ -101,6 +101,12 @@ public class MainMenuState extends PrebakedHudLayersState {
 			container.exit();
 		}
 	}
+	
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
+		super.enter(container, game);
+		DeadReckoningGame.instance.getGameElement().resetBoard();
+		System.out.println("asdasdfdgfaMOO");
+	}
 
 	@Override
 	public void makeFrom(Object O) {}

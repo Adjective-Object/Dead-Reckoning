@@ -15,12 +15,11 @@ import net.plaidypus.deadreckoning.hudelements.simple.TextElement;
 public class DeathScreenState extends PrebakedHudLayersState{
 	
 	String saveName;
-	StillImageElement backgroundImage;
 	StillImageElement imagePanel;
 	float alpha=255F;
 	
-	public DeathScreenState(int stateID) throws SlickException {
-		super(stateID, new ArrayList<HudElement>(0) );
+	public DeathScreenState(int stateID, ArrayList<HudElement> background) throws SlickException {
+		super(stateID, background );
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta)
@@ -29,13 +28,12 @@ public class DeathScreenState extends PrebakedHudLayersState{
 		if(alpha>0.5F){
 			alpha=alpha*0.1F/delta;
 		}
-		backgroundImage.setAlpha(alpha);
+		
 	}
 	
 	@Override
 	public void makeFrom(Object O) {
 		Player p = (Player)O;
-		this.backgroundImage.makeFrom(p.getParent().getGame().getImage());
 		this.imagePanel.makeFrom(p.getProfession().getPortriat());
 		float alpha=255F;
 	}
@@ -43,8 +41,6 @@ public class DeathScreenState extends PrebakedHudLayersState{
 	@Override
 	public ArrayList<HudElement> makeContents() {
 		ArrayList<HudElement> returnElements = new ArrayList<HudElement>(0);
-		
-		backgroundImage = new StillImageElement(-100,0,HudElement.TOP_LEFT);
 		imagePanel = new StillImageElement(0,0,HudElement.CENTER_CENTER);
 		
 		returnElements.add( new TextElement(-100, -100, HudElement.CENTER_CENTER, "GAME OVER",

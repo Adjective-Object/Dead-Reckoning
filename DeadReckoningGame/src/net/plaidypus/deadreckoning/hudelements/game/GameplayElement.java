@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Save;
-import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
@@ -135,6 +134,12 @@ public class GameplayElement extends HudElement {
 		p.setInput(this.input);
 	}
 
+	public void resetBoard(){
+		this.gb=null;
+		this.lastMap="";
+		this.player=null;
+	}
+	
 	/**
 	 * Sets the board.
 	 * 
@@ -144,8 +149,8 @@ public class GameplayElement extends HudElement {
 	public void setBoard(GameBoard b) {
 		if (this.gb != null) {
 			lastMap = this.gb.getMapID();
-			this.gb.removeEntity(player);
 			try {
+				this.gb.removeEntity(player);
 				Save.updateSave(saveLocation, player, gb);
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -201,6 +206,12 @@ public class GameplayElement extends HudElement {
 		this.currentEntity = 0;
 	}
 
+	public void updateSave() throws IOException {
+		this.gb.removeEntity(player);
+		Save.updateSave(saveLocation, player, gb);
+		this.gb.placeEntity(player.getLocation(), player, player.getLayer());
+	}
+
 	/**
 	 * updates the gamestate (called automagically by slick).
 	 * 
@@ -230,6 +241,13 @@ public class GameplayElement extends HudElement {
 					- gc.getHeight()
 					/ 2
 					+ DeadReckoningGame.tileSize / 2;
+		}
+		
+		if(gc.getInput().isKeyPressed(Input.KEY_ESCAPE)){
+			DeadReckoningGame.instance.enterState(DeadReckoningGame.INGAMEMENUSTATE);
+		}
+		if (gc.getInput().isKeyPressed(Input.KEY_BACKSLASH)) {
+			DeadReckoningGame.debugMode=!DeadReckoningGame.debugMode;
 		}
 
 		getBoard().updateSelctor(input, -cameraX, -cameraY);

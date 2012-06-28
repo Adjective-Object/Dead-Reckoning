@@ -106,7 +106,11 @@ public class HudLayersState extends BasicGameState{
 			contents.get(i).renderMouseOver(gc, game, g);
 		}
 	}
-
+	
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
+		super.enter(container, game);
+	}
+	
 	/**
 	 * this function passes each element of the object[] to the corresponding
 	 * HudElement, calling the makeFrom(Object) function on each of them.
