@@ -34,6 +34,7 @@ import net.plaidypus.deadreckoning.state.OptionsState;
 import net.plaidypus.deadreckoning.state.PlayerViewerState;
 import net.plaidypus.deadreckoning.state.SaveSelectorState;
 
+import org.lwjgl.LWJGLException;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -71,7 +72,7 @@ public class DeadReckoningGame extends StateBasedGame {
 
 	/** The Constants that control the User Interface Colors */
 	public static final Color menuColor = new Color(60, 40, 50, 255),
-			menuBackgroundColor = new Color(20, 40, 60),
+			menuBackgroundColor = new Color(48, 64, 104),
 			menuTextColor = new Color(255, 255, 255),
 			menuTextBackgroundColor = new Color(0, 0, 0),
 			mouseoverBoxColor = new Color(50, 30, 50, 200),
@@ -162,12 +163,17 @@ public class DeadReckoningGame extends StateBasedGame {
 	 */
 	public static void main(String[] args) throws SlickException {
 		try {
+			OptionsHandler.bakeResolutions();
 			OptionsHandler.loadSettings();
 			AppGameContainer app = new AppGameContainer(new DeadReckoningGame());
-			app.setDisplayMode(OptionsHandler.getResolutionX(), OptionsHandler.getResolutionY(), OptionsHandler.verticalSynch);
+			app.setDisplayMode(OptionsHandler.getResolutionX(), OptionsHandler.getResolutionY(), OptionsHandler.fullScreen);
+			app.setVSync(OptionsHandler.verticalSynch);
+			app.setTargetFrameRate(OptionsHandler.frameRate);
 			app.start();
 			app.getInput().enableKeyRepeat();
 		} catch (SlickException e) {
+			e.printStackTrace();
+		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
 
@@ -212,14 +218,14 @@ public class DeadReckoningGame extends StateBasedGame {
 		this.menuBackground = new ArrayList<HudElement>(0);
 		SpriteSheet particles = new SpriteSheet(new Image(
 				"res/menu/particles.png"), 50, 50);
-		menuBackground.add(new StillImageElement(0, 0, HudElement.TOP_LEFT,
-				new Image("res/menu/background.png")));
+		menuBackground.add(new ColorFiller(DeadReckoningGame.menuBackgroundColor));
+		menuBackground.add(new StillImageElement(-400,75,HudElement.TOP_CENTER,new Image("res/menu/titleBar.png")));
 		menuBackground.add(new FairyLights(-50, -300, HudElement.BOTTOM_LEFT,
-				850, 250, 80, particles));
+				container.getWidth()+50, 250, container.getWidth()/10, particles));
 		menuBackground.add(new FairyLights(-50, -200, HudElement.BOTTOM_LEFT,
-				850, 150, 100, particles));
+				container.getWidth()+50, 150, container.getWidth()/8, particles));
 		menuBackground.add(new FairyLights(-50, -100, HudElement.BOTTOM_LEFT,
-				850, 100, 120, particles));
+				container.getWidth()+50, 100, container.getWidth()/6, particles));
 
 		menuFont = new UnicodeFont("/res/visitor.ttf", 20, true, false);
 		menuFont.addNeheGlyphs();

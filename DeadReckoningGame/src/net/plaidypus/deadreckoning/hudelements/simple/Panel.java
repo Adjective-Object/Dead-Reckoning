@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.HudElementContainer;
 
@@ -45,7 +46,7 @@ public class Panel extends SimplePanel implements HudElementContainer{
 	}
 
 	private static int calcX(ArrayList<HudElement> contents) {
-		int x = 800;//TODO containers
+		int x = DeadReckoningGame.instance.getContainer().getWidth();//TODO containers
 		for(int i=0; i<contents.size(); i++){
 			if(x>contents.get(i).getAbsoluteX()){x=contents.get(i).getAbsoluteX();}
 		}
@@ -53,7 +54,7 @@ public class Panel extends SimplePanel implements HudElementContainer{
 	}
 
 	private static int calcY(ArrayList<HudElement> contents) {
-		int y = 800;
+		int y = DeadReckoningGame.instance.getContainer().getHeight();
 		for(int i=0; i<contents.size(); i++){
 			if(y>contents.get(i).getAbsoluteY()){y=contents.get(i).getAbsoluteY();}
 		}

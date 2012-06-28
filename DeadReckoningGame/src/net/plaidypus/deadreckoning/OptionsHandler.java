@@ -7,15 +7,16 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
+
 public class OptionsHandler {
 
 	public static int resolution = 0, frameRate = 60;
-	public static boolean verticalSynch = false, stretchScreen=false;
+	public static boolean verticalSynch = false, stretchScreen=false, fullScreen=false;
 	
-	public static final int[][] resolutions = new int[][] {
-			new int[] {800,600},
-			new int[] {900,700},
-	};
+	public static int[][] resolutions;
 	
 	public static String getResolution(int res){
 		int[] r = resolutions[res];
@@ -31,6 +32,7 @@ public class OptionsHandler {
 				frameRate=Integer.parseInt(r.readLine());
 				verticalSynch="true".equals(r.readLine());
 				stretchScreen="true".equals(r.readLine());
+				fullScreen="true".equals(r.readLine());
 				r.close();
 			}catch (IOException e) {
 				e.printStackTrace();
@@ -41,6 +43,7 @@ public class OptionsHandler {
 			frameRate = 60;
 			verticalSynch = false;
 			stretchScreen=false;
+			fullScreen=false;
 		}
 	}
 	
@@ -55,9 +58,12 @@ public class OptionsHandler {
 			w.newLine();
 			if(stretchScreen){ w.write("true");}
 			else{ w.write("false");}
+			w.newLine();
+			if(fullScreen){ w.write("true");}
+			else{ w.write("false");}
 			w.close();
 		} catch (IOException e) {
-			
+			e.printStackTrace();
 		}
 		
 	}
@@ -68,5 +74,13 @@ public class OptionsHandler {
 	
 	public static int getResolutionY() {
 		return resolutions[resolution][1];
+	}
+	
+	public static void bakeResolutions() throws LWJGLException{
+		DisplayMode[] d = Display.getAvailableDisplayModes();
+		resolutions = new int[d.length][2];
+		for(int i=0; i<d.length; i++){
+			resolutions[i]=new int[] {d[i].getWidth(),d[i].getHeight()};
+		}
 	}
 }

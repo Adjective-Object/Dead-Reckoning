@@ -18,7 +18,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * The HudLayersState of the Main Menu.
  * 
  */
-public class MainMenuState extends HudLayersState {
+public class MainMenuState extends PrebakedHudLayersState {
 
 	/** The state id. */
 	int stateID;
@@ -44,11 +44,6 @@ public class MainMenuState extends HudLayersState {
 			throws SlickException {
 		super(stateID, (ArrayList<HudElement>) background.clone());
 		int x = background.size() + 1;
-		this.contents.addAll(makeContents());
-		this.startButton = (Button) this.getElement(x);
-		this.optionsButton = (Button) this.getElement(x + 1);
-		this.creditsButton = (Button) this.getElement(x + 2);
-		this.quitButton = (Button) this.getElement(x + 3);
 	}
 
 	/**
@@ -59,23 +54,29 @@ public class MainMenuState extends HudLayersState {
 	 * @throws SlickException
 	 *             the slick exception
 	 */
-	public static ArrayList<HudElement> makeContents() throws SlickException {
+	public ArrayList<HudElement> makeContents() throws SlickException {
 		System.out.println("Building MainMenuState");
 		ArrayList<HudElement> elements = new ArrayList<HudElement>(0);
 
-		elements.add(new StillImageElement(150, 450, HudElement.TOP_LEFT,
+
+		this.startButton = new ImageButton(-246, -112, HudElement.CENTER_CENTER, new Image(
+				"res/menu/start.png"), new Image("res/menu/startHighlight.png"));
+		this.optionsButton = new ImageButton(-246, -47, HudElement.CENTER_CENTER, new Image(
+				"res/menu/options.png"), new Image(
+				"res/menu/optionsHighlight.png"));
+		this.creditsButton = new ImageButton(4, -112, HudElement.CENTER_CENTER, new Image(
+				"res/menu/credits.png"), new Image(
+				"res/menu/creditsHighlight.png"));
+		this.quitButton = new ImageButton(4, -47, HudElement.CENTER_CENTER, new Image(
+				"res/menu/quit.png"), new Image("res/menu/quitHighlight.png"));
+		
+		elements.add(new StillImageElement(-250, 150, HudElement.CENTER_CENTER,
 				new Image("res/menu/artBar.png")));
 
-		elements.add(new ImageButton(154, 198, HudElement.TOP_LEFT, new Image(
-				"res/menu/start.png"), new Image("res/menu/startHighlight.png")));
-		elements.add(new ImageButton(154, 253, HudElement.TOP_LEFT, new Image(
-				"res/menu/options.png"), new Image(
-				"res/menu/optionsHighlight.png")));
-		elements.add(new ImageButton(404, 198, HudElement.TOP_LEFT, new Image(
-				"res/menu/credits.png"), new Image(
-				"res/menu/creditsHighlight.png")));
-		elements.add(new ImageButton(404, 253, HudElement.TOP_LEFT, new Image(
-				"res/menu/quit.png"), new Image("res/menu/quitHighlight.png")));
+		elements.add(startButton);
+		elements.add(optionsButton);
+		elements.add(creditsButton);
+		elements.add(quitButton);
 
 		return elements;
 	}
@@ -100,5 +101,8 @@ public class MainMenuState extends HudLayersState {
 			container.exit();
 		}
 	}
+
+	@Override
+	public void makeFrom(Object O) {}
 
 }

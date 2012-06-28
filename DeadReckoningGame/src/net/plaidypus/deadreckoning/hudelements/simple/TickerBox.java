@@ -34,7 +34,9 @@ public class TickerBox extends Button{
 	}
 	
 	@Override
-	public void makeFrom(Object o) {}
+	public void makeFrom(Object o) {
+		this.ticked = (Boolean)o;
+	}
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
@@ -63,6 +65,10 @@ public class TickerBox extends Button{
 		}
 		g.setColor(Color.black);
 		g.drawRect(this.getX(), this.getY(), width, height);
+	}
+
+	public boolean isTicked() {
+		return this.ticked;
 	}
 
 }

@@ -1,11 +1,5 @@
 package net.plaidypus.deadreckoning.state;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
@@ -22,7 +16,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class OptionsState extends PrebakedHudLayersState{
 
-	TickerBox vsynch, stretch;
+	TickerBox vsynch, stretch, fullscreen;
 	
 	TextButton resL, resR,
 				frameL, frameR,
@@ -33,6 +27,12 @@ public class OptionsState extends PrebakedHudLayersState{
 	public OptionsState(int stateID, ArrayList<HudElement> elements)
 			throws SlickException {
 		super(stateID, elements);
+		
+		resText.makeFrom(OptionsHandler.getResolution(OptionsHandler.resolution));
+		frameText.makeFrom(Integer.toString(OptionsHandler.frameRate));
+		vsynch.makeFrom(OptionsHandler.verticalSynch);
+		stretch.makeFrom(OptionsHandler.stretchScreen);
+		fullscreen.makeFrom(OptionsHandler.fullScreen);
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta)
@@ -66,6 +66,10 @@ public class OptionsState extends PrebakedHudLayersState{
 		if(cancel.isPressed()){
 			DeadReckoningGame.instance.enterState(DeadReckoningGame.MAINMENUSTATE);
 		}
+
+		OptionsHandler.fullScreen=fullscreen.isTicked();
+		OptionsHandler.stretchScreen=stretch.isTicked();
+		OptionsHandler.verticalSynch=vsynch.isTicked();
 	}
 
 	
@@ -78,12 +82,15 @@ public class OptionsState extends PrebakedHudLayersState{
 		
 		vsynch=new TickerBox(100,-20,HudElement.CENTER_CENTER);
 		stretch=new TickerBox(100,20,HudElement.CENTER_CENTER);
+		fullscreen=new TickerBox(100,60,HudElement.CENTER_CENTER);
 		
 		returnElm.add(vsynch);
 		returnElm.add(stretch);
+		returnElm.add(fullscreen);
 		
 		returnElm.add(new TextElement(120,-20,HudElement.CENTER_CENTER,"V Synch",Color.white,DeadReckoningGame.menuFont));
 		returnElm.add(new TextElement(120,20,HudElement.CENTER_CENTER,"Stretch Screen",Color.white,DeadReckoningGame.menuFont));
+		returnElm.add(new TextElement(120,60,HudElement.CENTER_CENTER,"Fullscreen",Color.white,DeadReckoningGame.menuFont));
 
 		
 		resL = new TextButton(-250,-20,HudElement.CENTER_CENTER,"<");
@@ -111,14 +118,6 @@ public class OptionsState extends PrebakedHudLayersState{
 		returnElm.add(cancel);
 		
 		return returnElm;
-	}
-	
-	public void enter(GameContainer container, StateBasedGame game)
-			throws SlickException{
-		resText.makeFrom(OptionsHandler.getResolution(OptionsHandler.resolution));
-		frameText.makeFrom(Integer.toString(OptionsHandler.frameRate));
-		vsynch.makeFrom(OptionsHandler.verticalSynch);
-		stretch.makeFrom(OptionsHandler.stretchScreen);
 	}
 
 }
