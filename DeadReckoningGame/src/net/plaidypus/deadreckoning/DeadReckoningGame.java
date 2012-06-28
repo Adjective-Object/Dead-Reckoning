@@ -17,7 +17,6 @@ import net.plaidypus.deadreckoning.hudelements.game.SkillMonitorElement;
 import net.plaidypus.deadreckoning.hudelements.game.StatusTrackerElement;
 import net.plaidypus.deadreckoning.hudelements.game.substates.BigMap;
 import net.plaidypus.deadreckoning.hudelements.game.substates.ItemGridElement;
-import net.plaidypus.deadreckoning.hudelements.game.substates.ItemGridInteractionElement;
 import net.plaidypus.deadreckoning.hudelements.game.substates.ReturnToGameElement;
 import net.plaidypus.deadreckoning.hudelements.game.substates.VicariousRenderer;
 import net.plaidypus.deadreckoning.hudelements.menuItems.FairyLights;
@@ -27,14 +26,15 @@ import net.plaidypus.deadreckoning.hudelements.simple.StringPutter;
 import net.plaidypus.deadreckoning.hudelements.simple.TextElement;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.state.ClassCreationState;
-import net.plaidypus.deadreckoning.state.DeathScreenState;
 import net.plaidypus.deadreckoning.state.HudLayersState;
-import net.plaidypus.deadreckoning.state.InGameMenuState;
 import net.plaidypus.deadreckoning.state.MainMenuState;
 import net.plaidypus.deadreckoning.state.NewGameState;
 import net.plaidypus.deadreckoning.state.OptionsState;
-import net.plaidypus.deadreckoning.state.PlayerViewerState;
 import net.plaidypus.deadreckoning.state.SaveSelectorState;
+import net.plaidypus.deadreckoning.state.substates.DeathScreenState;
+import net.plaidypus.deadreckoning.state.substates.InGameMenuState;
+import net.plaidypus.deadreckoning.state.substates.LootState;
+import net.plaidypus.deadreckoning.state.substates.PlayerViewerState;
 
 import org.lwjgl.LWJGLException;
 import org.newdawn.slick.AppGameContainer;
@@ -230,7 +230,6 @@ public class DeadReckoningGame extends StateBasedGame {
 		ArrayList<HudElement> subBackground = new ArrayList<HudElement>(0);
 		subBackground.add(new VicariousRenderer(DeadReckoningGame.instance.getGameElement()));
 		subBackground.add(new ColorFiller(new Color(0,0,0,100)) );
-		subBackground.add(new ReturnToGameElement());
 
 		
 		menuFont = new UnicodeFont("/res/visitor.ttf", 20, true, false);
@@ -270,24 +269,17 @@ public class DeadReckoningGame extends StateBasedGame {
 		
 		ItemGridElement a= new ItemGridElement(-241, -132,HudElement.CENTER_CENTER),
 				b = new ItemGridElement(50, -132, HudElement.CENTER_CENTER);
-		this.addState(new HudLayersState(LOOTSTATE,
-				new HudElement[] { //TODO create custom state for this, instead of "interaction" element
-						new StillImageElement(0, 0, HudElement.TOP_LEFT),
-						messages,
-						a,
-						b,
-						new ItemGridInteractionElement(a, b),
-						new ReturnToGameElement() }));
+		this.addState(new LootState(LOOTSTATE,subBackground));
 
 		this.addState(new HudLayersState(INVENTORYSTATE, new HudElement[] {
 				new StillImageElement(0, 0, HudElement.TOP_LEFT), messages,
 				new ItemGridElement(0, 0, HudElement.CENTER_CENTER),
-				new ReturnToGameElement() }));
+				new ReturnToGameElement(KeyConfig.INVENTORY) }));
 
 		this.addState(new HudLayersState(MAPSTATE, new HudElement[] {
 			new StillImageElement(0, 0, HudElement.TOP_LEFT), messages,
 			new BigMap(0,0,HudElement.CENTER_CENTER, game),
-			new ReturnToGameElement()
+			new ReturnToGameElement(KeyConfig.MINIMAP)
 		}));
 		
 		this.addState(new HudLayersState(ERRORSTATE, new HudElement[] {

@@ -38,7 +38,7 @@ public abstract class Entity extends DeadReckoningComponent {
 	private boolean transparent, visible;
 
 	/** The is interactive. */
-	protected boolean isTerrain, isInteractive;
+	protected boolean isTerrain, makesActions;
 
 	/** The to kill. */
 	public boolean toKill;
@@ -305,8 +305,8 @@ public abstract class Entity extends DeadReckoningComponent {
 	 * 
 	 * @return true, if is interactive
 	 */
-	public boolean isInteractive() {
-		return isInteractive;
+	public boolean makesActions() {
+		return makesActions;
 	}
 
 	/**

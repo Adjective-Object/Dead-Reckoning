@@ -43,6 +43,7 @@ public class Corpse extends InteractiveEntity {
 		super(t, layer);
 		this.entity = e;
 		this.inventory = entity.getInventory();
+		this.setName(e.getName()+"'s corpse");
 	}
 
 	/*
@@ -98,7 +99,7 @@ public class Corpse extends InteractiveEntity {
 	 * @see net.plaidypus.deadreckoning.entities.Entity#isInteractive()
 	 */
 	@Override
-	public boolean isInteractive() {
+	public boolean makesActions() {
 		return false;
 	}
 

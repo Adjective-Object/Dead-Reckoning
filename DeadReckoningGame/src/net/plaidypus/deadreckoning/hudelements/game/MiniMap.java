@@ -70,7 +70,7 @@ public class MiniMap extends HudElement {
 					Tile til = target.getTileAt(ax, ay);
 
 					if (!til.isOpen(Tile.LAYER_ACTIVE) && til.canBeSeen()
-							&& til.getEntity(Tile.LAYER_ACTIVE).isInteractive()) {
+							&& til.getEntity(Tile.LAYER_ACTIVE).makesActions()) {
 						if (til.getEntity(Tile.LAYER_ACTIVE).allignmnet == Entity.ALLIGN_HOSTILE) {
 							g.setColor(Color.red);
 						} else if (til.getEntity(Tile.LAYER_ACTIVE)==p) {

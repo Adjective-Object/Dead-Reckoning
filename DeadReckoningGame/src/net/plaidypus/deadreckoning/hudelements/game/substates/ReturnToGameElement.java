@@ -10,15 +10,18 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class ReturnToGameElement extends HudElement {
-
-	public ReturnToGameElement() {
+	
+	int returnKey;
+	
+	public ReturnToGameElement(int key) {
 		super(0, 0, 0, false);
+		this.returnKey=key;
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE) || gc.getInput().isKeyPressed(Input.KEY_DELETE)) {
+		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE) || gc.getInput().isKeyPressed(Input.KEY_DELETE) || gc.getInput().isKeyPressed(returnKey)) {
 			DeadReckoningGame.instance
 					.enterState(DeadReckoningGame.GAMEPLAYSTATE);
 			gc.getInput().clearKeyPressedRecord();

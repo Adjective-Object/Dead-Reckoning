@@ -109,7 +109,7 @@ public class LandingPad extends Entity {
 	 * @see net.plaidypus.deadreckoning.entities.Entity#isInteractive()
 	 */
 	@Override
-	public boolean isInteractive() {
+	public boolean makesActions() {
 		// TODO Auto-generated method stub
 		return false;
 	}

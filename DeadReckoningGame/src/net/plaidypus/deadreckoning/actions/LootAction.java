@@ -6,6 +6,7 @@ import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
+import net.plaidypus.deadreckoning.state.substates.LootState;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -38,7 +39,7 @@ public class LootAction extends EntityTypeAction { // TODO make it so you can
 	 */
 	protected boolean applyToEntity(Entity entity) {
 		DeadReckoningGame.instance.getMessageElement().addMessage(
-				"That's Not Allowed");
+				"That has nothing to loot.");
 		this.takesTurn = false;
 		return true;
 	}
@@ -67,7 +68,7 @@ public class LootAction extends EntityTypeAction { // TODO make it so you can
 	protected boolean applyToEntity(LivingEntity e) {
 		if (e.isAlive()) {
 			DeadReckoningGame.instance.getMessageElement().addMessage(
-					"That's Not Allowed");
+					"It's Still Alive.");
 			this.takesTurn = false;
 			return true;
 		} else {
@@ -88,10 +89,9 @@ public class LootAction extends EntityTypeAction { // TODO make it so you can
 	 * @return true, if successful
 	 */
 	private boolean gotoLootScreen(InteractiveEntity a, InteractiveEntity b) {
-		DeadReckoningGame.instance.getHudState(DeadReckoningGame.LOOTSTATE)
-				.makeFrom(
-						new Object[] { GameplayElement.getImage(), null, a, b,
-								null, null });
+		LootState l = (LootState) DeadReckoningGame.instance.getState(DeadReckoningGame.LOOTSTATE);
+		l.gridA.makeFrom(a);
+		l.gridB.makeFrom(b);
 		DeadReckoningGame.instance.enterState(DeadReckoningGame.LOOTSTATE);
 		return true;
 	}

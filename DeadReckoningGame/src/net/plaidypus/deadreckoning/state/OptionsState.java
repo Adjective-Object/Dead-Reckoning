@@ -76,10 +76,6 @@ public class OptionsState extends PrebakedHudLayersState{
 		OptionsHandler.verticalSynch=vsynch.isTicked();
 	}
 
-	
-	@Override
-	public void makeFrom(Object O) {}
-
 	@Override
 	protected ArrayList<HudElement> makeContents() throws SlickException {
 		ArrayList<HudElement> returnElm = new ArrayList<HudElement>(0);

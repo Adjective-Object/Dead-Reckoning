@@ -72,7 +72,7 @@ public class Monster extends LivingEntity {
 								.getEntity(k);
 						if (n.getAllignment() != this.getAllignment()
 								&& n.getAllignment() != Entity.ALLIGN_NEUTRAL
-								&& n.isInteractive()
+								&& n.makesActions()
 								&& Utilities.randFloat() <= 0.8) {
 							return attack.makeAction(this.getLocation()
 									.getRelativeTo(i, q));

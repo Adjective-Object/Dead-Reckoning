@@ -287,10 +287,10 @@ public class GameplayElement extends HudElement {
 			while (!getBoard().ingameEntities.get(this.currentEntity)
 					.getLocation().canBeSeen()
 					|| !getBoard().ingameEntities.get(this.currentEntity)
-							.isInteractive()) {// iterate through all invisible
+							.makesActions()) {// iterate through all invisible
 												// entities
 				if (getBoard().ingameEntities.get(this.currentEntity)
-						.isInteractive()) {
+						.makesActions()) {
 					getActions(delta);// get their actions
 					while (!actionsComplete()) {// apply all the actions until
 												// completion
@@ -415,7 +415,7 @@ public class GameplayElement extends HudElement {
 	 */
 	private void advanceEntity() {
 		currentEntity = (currentEntity + 1) % getBoard().ingameEntities.size();
-		while (!getBoard().ingameEntities.get(currentEntity).isInteractive()) {
+		while (!getBoard().ingameEntities.get(currentEntity).makesActions()) {
 			currentEntity = (currentEntity + 1)
 					% getBoard().ingameEntities.size();
 		}

@@ -21,7 +21,7 @@ import net.plaidypus.deadreckoning.skills.Saver;
 import net.plaidypus.deadreckoning.skills.Skill;
 import net.plaidypus.deadreckoning.skills.ViewSkills;
 import net.plaidypus.deadreckoning.skills.Wait;
-import net.plaidypus.deadreckoning.state.DeathScreenState;
+import net.plaidypus.deadreckoning.state.substates.DeathScreenState;
 import net.plaidypus.deadreckoning.status.OnFire;
 
 import org.newdawn.slick.Animation;
@@ -210,8 +210,6 @@ public class Player extends LivingEntity {
 		}
 		
 		if (!this.isAlive()){
-			DeathScreenState s = (DeathScreenState) DeadReckoningGame.instance.getState(DeadReckoningGame.DEATHSTATE);
-			s.makeFrom(this);
 			DeadReckoningGame.instance.enterState(DeadReckoningGame.DEATHSTATE);
 		}
 	}
@@ -385,7 +383,7 @@ public class Player extends LivingEntity {
 	 * @see net.plaidypus.deadreckoning.entities.LivingEntity#isInteractive()
 	 */
 	@Override
-	public boolean isInteractive() {
+	public boolean makesActions() {
 		return true;
 	}
 

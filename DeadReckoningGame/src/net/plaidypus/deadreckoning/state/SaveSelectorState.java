@@ -147,9 +147,4 @@ public class SaveSelectorState extends PrebakedHudLayersState {
 		this.contents.removeAll(this.buttonList);
 		this.contents.addAll(this.makeContents());
 	}
-
-	
-	@Override
-	public void makeFrom(Object O) {
-	}
 }

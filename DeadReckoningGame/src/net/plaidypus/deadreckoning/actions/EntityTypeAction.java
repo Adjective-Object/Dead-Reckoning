@@ -40,17 +40,15 @@ public abstract class EntityTypeAction extends Action {
 		} else if (target.getX() < source.getX()) {
 			source.setFacing(false);
 		}
-
-		try {
-			return applyToEntity((LivingEntity) target.getEntity(layer));
-		} catch (ClassCastException e) {
-			try {
-				return applyToEntity((InteractiveEntity) target
-						.getEntity(layer));
-			} catch (ClassCastException y) {
-				return applyToEntity(target.getEntity(layer));
-			}
-		}
+		
+		
+		if (LivingEntity.class.isAssignableFrom(target.getEntity(layer).getClass())) {
+			return applyToEntity((LivingEntity) (target.getEntity(layer)));
+		} else if (InteractiveEntity.class.isAssignableFrom(target.getEntity(layer).getClass())) {
+			return applyToEntity((InteractiveEntity) (target.getEntity(layer)));
+		} else {
+			return applyToEntity((Entity) (target.getEntity(layer)));
+		} 
 	}
 
 	/**

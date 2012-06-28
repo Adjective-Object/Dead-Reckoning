@@ -108,7 +108,4 @@ public class MainMenuState extends PrebakedHudLayersState {
 		System.out.println("asdasdfdgfaMOO");
 	}
 
-	@Override
-	public void makeFrom(Object O) {}
-
 }

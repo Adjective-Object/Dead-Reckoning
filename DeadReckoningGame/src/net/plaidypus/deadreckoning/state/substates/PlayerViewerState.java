@@ -1,8 +1,9 @@
-package net.plaidypus.deadreckoning.state;
+package net.plaidypus.deadreckoning.state.substates;
 
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
+import net.plaidypus.deadreckoning.KeyConfig;
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.button.Button;
@@ -15,6 +16,7 @@ import net.plaidypus.deadreckoning.hudelements.simple.TextElement;
 import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.professions.SkillProgression;
 import net.plaidypus.deadreckoning.skills.Skill;
+import net.plaidypus.deadreckoning.state.HudLayersState;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -226,7 +228,7 @@ public class PlayerViewerState extends HudLayersState {
 		elements.add(new Panel(skillButton));
 		elements.add(new Panel(playerWindow));
 
-		elements.add(new ReturnToGameElement());
+		elements.add(new ReturnToGameElement(KeyConfig.VIEWPLAYER));
 
 		return elements;
 	}

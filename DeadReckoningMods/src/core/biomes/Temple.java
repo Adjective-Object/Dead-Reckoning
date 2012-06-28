@@ -20,6 +20,7 @@ import org.newdawn.slick.SpriteSheet;
 import core.entities.Door;
 import core.entities.Torch;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Hemple.
@@ -52,7 +53,7 @@ public class Temple extends RoomBasedBiome {
 
 	@Override
 	public void init() throws SlickException {
-		Image tile = ModLoader.loadImage("core/res/walltiles.png");//TODO reading images from jarfiles
+		Image tile = ModLoader.loadImage("core/res/walltiles.png");
 		this.tileImage = new SpriteSheet(tile,
 				DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
 	}

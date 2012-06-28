@@ -54,7 +54,7 @@ public class Attack extends Skill {
 	public boolean canTargetTile(Tile t) {
 		if (!t.isOpen(Tile.LAYER_ACTIVE)
 				&& !(t.getX() == source.getX() && t.getY() == source.getY())) {
-			return t.getEntity(Tile.LAYER_ACTIVE).isInteractive();
+			return t.getEntity(Tile.LAYER_ACTIVE).makesActions();
 		}
 		return false;
 	}

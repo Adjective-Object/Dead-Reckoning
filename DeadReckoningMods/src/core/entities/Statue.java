@@ -105,7 +105,7 @@ public class Statue extends StaticImageEntity {
 	 * @see net.plaidypus.deadreckoning.entities.Entity#isInteractive()
 	 */
 	@Override
-	public boolean isInteractive() {
+	public boolean makesActions() {
 		return false;
 	}
 

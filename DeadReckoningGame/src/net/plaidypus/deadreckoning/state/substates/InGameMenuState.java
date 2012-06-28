@@ -1,10 +1,11 @@
-package net.plaidypus.deadreckoning.state;
+package net.plaidypus.deadreckoning.state.substates;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -12,6 +13,8 @@ import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Save;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.button.TextButton;
+import net.plaidypus.deadreckoning.hudelements.game.substates.ReturnToGameElement;
+import net.plaidypus.deadreckoning.state.PrebakedHudLayersState;
 
 public class InGameMenuState extends PrebakedHudLayersState{
 	
@@ -56,13 +59,10 @@ public class InGameMenuState extends PrebakedHudLayersState{
 		elements.add(saveGameButton);
 		elements.add(quitToMenuButton);
 		elements.add(exitButton);
+		elements.add(new ReturnToGameElement(Input.KEY_ESCAPE));
 		
 		return elements;
 	}
-	
-	@Override
-	public void makeFrom(Object O) {	}
-
 	
 	
 }

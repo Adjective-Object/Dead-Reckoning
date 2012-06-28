@@ -149,7 +149,7 @@ public class Torch extends Entity {
 	 * @see net.plaidypus.deadreckoning.entities.Entity#isInteractive()
 	 */
 	@Override
-	public boolean isInteractive() {
+	public boolean makesActions() {
 		return false;
 	}
 

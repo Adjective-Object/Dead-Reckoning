@@ -165,9 +165,6 @@ public class ClassCreationState extends PrebakedHudLayersState{
 		}
 	}
 	
-	@Override
-	public void makeFrom(Object O) {}
-	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException{
 		this.updateToProfession(Profession.getProfession(0));
 	}

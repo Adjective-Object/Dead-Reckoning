@@ -336,7 +336,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#isInteractive()
 	 */
-	public boolean isInteractive() {
+	public boolean makesActions() {
 		return this.isAlive();
 	}
 

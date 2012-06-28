@@ -17,9 +17,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class ItemGridElement extends HudElement {
-	ArrayList<Item> contents;
+	public ArrayList<Item> contents;
 
-	int width, height, externalBorder, internalBorder, selector;
+	int width, height, externalBorder, internalBorder;
+	public int selector;
 	private Color backgroundColor;
 	static Image tileimage;
 

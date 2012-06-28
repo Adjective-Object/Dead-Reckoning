@@ -124,7 +124,7 @@ public class Door extends Entity {
 	 * @see net.plaidypus.deadreckoning.entities.Entity#isInteractive()
 	 */
 	@Override
-	public boolean isInteractive() {
+	public boolean makesActions() {
 		return false;
 	}
 
@@ -181,10 +181,11 @@ public class Door extends Entity {
 	public Action onInteract(Entity e) {
 		this.open = !open;
 		Tile t = this.getLocation();
-		t.getParent().removeEntity(this);
-		if (open) {
+		if (open && t.isOpen(Tile.LAYER_PASSIVE_MAP)) {
+			t.getParent().removeEntity(this);
 			t.getParent().placeEntity(t, this, Tile.LAYER_PASSIVE_MAP);
-		} else {
+		} else if (t.isOpen(Tile.LAYER_ACTIVE)){
+			t.getParent().removeEntity(this);
 			t.getParent().placeEntity(t, this, Tile.LAYER_ACTIVE);
 		}
 		return null;
