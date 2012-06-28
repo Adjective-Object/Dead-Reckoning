@@ -3,7 +3,7 @@ package net.plaidypus.deadreckoning.state;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.OptionsHandler;
+import net.plaidypus.deadreckoning.config.OptionsHandler;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.button.TextButton;
 import net.plaidypus.deadreckoning.hudelements.simple.TextElement;

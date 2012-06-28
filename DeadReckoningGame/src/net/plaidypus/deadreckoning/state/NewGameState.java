@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.Save;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.HudElementContainer;
 import net.plaidypus.deadreckoning.hudelements.button.ImageButton;
@@ -16,6 +15,7 @@ import net.plaidypus.deadreckoning.hudelements.simple.Panel;
 import net.plaidypus.deadreckoning.hudelements.simple.TextElement;
 import net.plaidypus.deadreckoning.hudelements.simple.TextEntryBox;
 import net.plaidypus.deadreckoning.professions.Profession;
+import net.plaidypus.deadreckoning.save.Save;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;

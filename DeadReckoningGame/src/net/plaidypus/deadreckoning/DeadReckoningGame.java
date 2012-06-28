@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.plaidypus.deadreckoning.config.KeyConfig;
+import net.plaidypus.deadreckoning.config.OptionsHandler;
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.entities.Stair;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
@@ -63,7 +65,8 @@ public class DeadReckoningGame extends StateBasedGame {
 	public static final int LOOTSTATE = 0, INVENTORYSTATE = 1,
 			GAMEPLAYSTATE = 2, MAINMENUSTATE = 3, SAVESELECTSTATE = 4,
 			MAPSTATE = 5, SKILLSTATE = 6, NEWGAMESTATE = 7, ERRORSTATE = 8,
-			DEATHSTATE = 9, NEWCLASSSTATE = 10, INGAMEMENUSTATE = 11,OPTIONSSTATE = 13;
+			DEATHSTATE = 9, NEWCLASSSTATE = 10, INGAMEMENUSTATE = 11,
+			OPTIONSSTATE = 12;
 
 	/**
 	 * The Constant tileSize, that governs the size of the tiles in the game

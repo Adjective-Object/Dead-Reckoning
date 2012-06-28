@@ -1,7 +1,7 @@
 package net.plaidypus.deadreckoning.actions;
 
-import net.plaidypus.deadreckoning.Save;
 import net.plaidypus.deadreckoning.entities.Entity;
+import net.plaidypus.deadreckoning.save.Save;
 
 // TODO: Auto-generated Javadoc
 /**

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.Save;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
@@ -12,6 +11,7 @@ import net.plaidypus.deadreckoning.grideffects.AnimationEffect;
 import net.plaidypus.deadreckoning.items.Equip;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.professions.Profession;
+import net.plaidypus.deadreckoning.save.Save;
 import net.plaidypus.deadreckoning.skills.Attack;
 import net.plaidypus.deadreckoning.skills.ChangeState;
 import net.plaidypus.deadreckoning.skills.Interacter;
@@ -373,8 +373,8 @@ public class Player extends LivingEntity {
 	 */
 	@Override
 	public String saveToString() {
-		return "LOLGONNAPUTSOMETHINGHERELATER";// TODO implement player position
-												// saving
+		System.err.println("PLAYER SAVETOSTRING BEING CALLED. BAD THINGS ARE HAPPENING HERE");
+		return "THIS SHOULD NOT HAVE BEEN CALLED";
 	}
 
 	/*

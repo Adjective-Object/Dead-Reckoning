@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.Save;
-import net.plaidypus.deadreckoning.SaveFilter;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.button.TextButton;
 import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
+import net.plaidypus.deadreckoning.save.Save;
+import net.plaidypus.deadreckoning.save.SaveFilter;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -57,7 +57,7 @@ public class SaveSelectorState extends PrebakedHudLayersState {
 	 * basically, if any button is pressed, that button's corresponding save has
 	 * it's loadGame called
 	 * 
-	 * @see net.plaidypus.deadreckoning.Save#loadGame(GameplayElement)
+	 * @see net.plaidypus.deadreckoning.save.Save#loadGame(GameplayElement)
 	 * @see net.plaidypus.deadreckoning.state.ExclusiveHudLayersState#update(org.newdawn.slick.GameContainer,
 	 *      org.newdawn.slick.state.StateBasedGame, int)
 	 */
@@ -68,30 +68,29 @@ public class SaveSelectorState extends PrebakedHudLayersState {
 		for (int i=0; i<buttonList.size(); i++){
 			TextButton currentPressed = buttonList.get(i);
 			if (currentPressed.isPressed()) {
-				try {
-					if(i!=0){ //because index 0 is the new game button
-						saves[i-1].loadGame(
-										GameplayElement.class
-												.cast(HudLayersState.class
-														.cast(DeadReckoningGame.instance
-																.getState(DeadReckoningGame.GAMEPLAYSTATE))
-														.getElement(0)),
-										container);
-						DeadReckoningGame.instance
-								.enterState(DeadReckoningGame.GAMEPLAYSTATE);
-					} else if (i==0) {
-						DeadReckoningGame.instance
-								.enterState(DeadReckoningGame.NEWGAMESTATE);
+				if(i!=0){ //because index 0 is the new game button
+					try {
+						saves[i-1].loadGame(DeadReckoningGame.instance.getGameElement(),container);
+						DeadReckoningGame.instance.enterState(DeadReckoningGame.GAMEPLAYSTATE);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (SlickException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InstantiationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				} catch (InstantiationException e) {
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
+				} else if (i==0) {
+					DeadReckoningGame.instance
+							.enterState(DeadReckoningGame.NEWGAMESTATE);
 				}
 			}
 		}
@@ -142,8 +141,9 @@ public class SaveSelectorState extends PrebakedHudLayersState {
 		return returnElements;
 	}
 	
-	public void onEnter(GameContainer container, StateBasedGame game) throws SlickException{
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
 		System.out.println("ENTERING");
+		super.enter(container,game);
 		this.contents.removeAll(this.buttonList);
 		this.contents.addAll(this.makeContents());
 	}

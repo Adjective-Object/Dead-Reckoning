@@ -3,7 +3,7 @@ package net.plaidypus.deadreckoning.state.substates;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.KeyConfig;
+import net.plaidypus.deadreckoning.config.KeyConfig;
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.button.Button;

@@ -1,4 +1,4 @@
-package net.plaidypus.deadreckoning;
+package net.plaidypus.deadreckoning.config;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

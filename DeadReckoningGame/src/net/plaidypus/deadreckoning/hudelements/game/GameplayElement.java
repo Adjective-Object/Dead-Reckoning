@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.Save;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
@@ -13,6 +12,7 @@ import net.plaidypus.deadreckoning.entities.LandingPad;
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.grideffects.DamageEffect;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
+import net.plaidypus.deadreckoning.save.Save;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -165,6 +165,7 @@ public class GameplayElement extends HudElement {
 
 		this.gb = b;
 
+		//find the landing pad if it's coming from the old map. Otherwise, use the player's coords
 		Tile target = null;
 		if (!lastMap.equals("")) {
 			for (int x = 0; x < b.getWidth(); x++) {
@@ -188,7 +189,7 @@ public class GameplayElement extends HudElement {
 			target = b.getTileAt(player.getX(), player.getY());
 		}
 
-		System.out.println(target);
+		System.out.println(gb+"  "+player.getLocation());
 		gb.insertEntity(0, target, player, player.getLayer());
 
 		cameraDestX = player.getAbsoluteX() - gc.getWidth() / 2
@@ -208,6 +209,7 @@ public class GameplayElement extends HudElement {
 
 	public void updateSave() throws IOException {
 		this.gb.removeEntity(player);
+		System.out.println(this.gb.ingameEntities);
 		Save.updateSave(saveLocation, player, gb);
 		this.gb.placeEntity(player.getLocation(), player, player.getLayer());
 	}

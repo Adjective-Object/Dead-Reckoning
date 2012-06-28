@@ -1,7 +1,7 @@
 /*
  * 
  */
-package net.plaidypus.deadreckoning;
+package net.plaidypus.deadreckoning.save;
 
 import java.io.File;
 import java.io.FilenameFilter;

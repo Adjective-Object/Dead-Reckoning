@@ -10,10 +10,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.Save;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.button.TextButton;
 import net.plaidypus.deadreckoning.hudelements.game.substates.ReturnToGameElement;
+import net.plaidypus.deadreckoning.save.Save;
 import net.plaidypus.deadreckoning.state.PrebakedHudLayersState;
 
 public class InGameMenuState extends PrebakedHudLayersState{
