@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
+import net.plaidypus.deadreckoning.config.OptionsHandler;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.button.Button;
 import net.plaidypus.deadreckoning.hudelements.button.TextButton;
@@ -27,7 +28,7 @@ public class ClassCreationState extends PrebakedHudLayersState{
 	
 	StillImageElement bigImage;
 	TextElement playerName, descriptionBox;
-	Button leftButton, rightButton, resetButton, okayButton;
+	Button leftButton, rightButton, resetButton, okayButton, cancelButton;
 	
 	ArrayList<FillerBar>statBars;
 	
@@ -65,6 +66,11 @@ public class ClassCreationState extends PrebakedHudLayersState{
 		
 		if(resetButton.isPressed()){
 			this.reset();
+		}
+		
+		if(cancelButton.isPressed()){
+			this.reset();
+			DeadReckoningGame.instance.enterState(DeadReckoningGame.NEWGAMESTATE);
 		}
 		
 		if(okayButton.isPressed() &&
@@ -114,7 +120,7 @@ public class ClassCreationState extends PrebakedHudLayersState{
 		selectors = new ArrayList<SkillTreeSelectionElement>(0);
 		for(int i=0; i<3; i++){
 			treeImages.add(new StillImageElement(50,60+52*i,HudElement.TOP_LEFT,new Image("res/noSkill.png")));
-			selectors.add(new SkillTreeSelectionElement(400+120*i, 20, HudElement.TOP_LEFT));
+			selectors.add(new SkillTreeSelectionElement(350+(OptionsHandler.getResolutionX()-350)/4*(i+1)-25, 20, HudElement.TOP_LEFT,(OptionsHandler.getResolutionY()-214)/40));
 		}
 		returnElements.addAll(treeImages);
 		returnElements.addAll(selectors);
@@ -126,15 +132,17 @@ public class ClassCreationState extends PrebakedHudLayersState{
 		returnElements.add(playerName);
 		returnElements.addAll(statBars);
 		
-		this.descriptionBox = new TextElement(50,-170,600,150,HudElement.BOTTOM_LEFT,"NO_DESC",DeadReckoningGame.menuTextColor, DeadReckoningGame.menuFont);
+		this.descriptionBox = new TextElement(30,-170,OptionsHandler.getResolutionX()-130-30*2,170-30,HudElement.BOTTOM_LEFT,"NO_DESC",DeadReckoningGame.menuTextColor, DeadReckoningGame.menuFont);
 		ArrayList<HudElement> boxPanelCont = new ArrayList<HudElement>(1);
 		boxPanelCont.add(this.descriptionBox);
 		returnElements.add(new Panel(boxPanelCont));
 		
-		this.resetButton = new TextButton(-125,-150, HudElement.BOTTOM_RIGHT,"RESET",DeadReckoningGame.menuLargeFont);
-		this.okayButton = new TextButton(-125,-80, HudElement.BOTTOM_RIGHT,"OKAY",DeadReckoningGame.menuLargeFont);
+		this.resetButton = new TextButton(-130,-170, HudElement.BOTTOM_RIGHT,"RESET",DeadReckoningGame.menuLargeFont);
+		this.cancelButton = new TextButton(-130,-120, HudElement.BOTTOM_RIGHT,"CANCEL",DeadReckoningGame.menuLargeFont);
+		this.okayButton = new TextButton(-130,-70, HudElement.BOTTOM_RIGHT,"OKAY",DeadReckoningGame.menuLargeFont);
 		returnElements.add(resetButton);
 		returnElements.add(okayButton);
+		returnElements.add(cancelButton);
 		
 		return returnElements;
 	}
