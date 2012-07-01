@@ -17,7 +17,7 @@ public abstract class HudElement {
 	static final int cursorSize = 10;
 
 	/** The bind method. */
-	public int xoff, yoff, bindMethod;
+	public int xoff, yoff, bindMethod, personalBindMethod=TOP_LEFT;
 
 	/** The has focus. */
 	public boolean hasFocus;
@@ -231,13 +231,20 @@ public abstract class HudElement {
 					+ gc.getInput().getMouseY());
 		}
 	}
-
+	
+	public int[] getPersonalOffsets(int bindmethod){
+		int[] offsets = new int[2];
+		offsets[0] = (int) (this.getWidth()  / 2.0 * ( bindmethod % 3 ));
+		offsets[1] = (int) (this.getHeight() / 2.0 * ( bindmethod / 3 ));
+		return offsets;
+	}
+	
 	public int getX(){
-		return xoff + offsets[bindMethod][0];
+		return xoff + offsets[bindMethod][0] - this.getPersonalOffsets(this.personalBindMethod)[0];
 	}
 	
 	public int getY(){
-		return yoff + offsets[bindMethod][1];
+		return yoff + offsets[bindMethod][1] - this.getPersonalOffsets(this.personalBindMethod)[1];
 	}
 	
 	/**
@@ -246,7 +253,7 @@ public abstract class HudElement {
 	 * @return the x
 	 */
 	public int getAbsoluteX() {
-		return xoff + offsets[bindMethod][0]+ this.container.getX();
+		return xoff + offsets[bindMethod][0] + this.container.getX() - this.getPersonalOffsets(this.personalBindMethod)[0];
 	}
 
 	/**
@@ -255,7 +262,7 @@ public abstract class HudElement {
 	 * @return the y
 	 */
 	public int getAbsoluteY() {
-		return yoff + offsets[bindMethod][1] + this.container.getY();
+		return yoff + offsets[bindMethod][1] + this.container.getY() - this.getPersonalOffsets(this.personalBindMethod)[1];
 	}
 
 }

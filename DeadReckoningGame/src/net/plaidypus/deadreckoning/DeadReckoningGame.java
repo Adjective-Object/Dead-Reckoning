@@ -270,13 +270,13 @@ public class DeadReckoningGame extends StateBasedGame {
 				messages }));
 		
 		
-		ItemGridElement a= new ItemGridElement(-241, -132,HudElement.CENTER_CENTER),
-				b = new ItemGridElement(50, -132, HudElement.CENTER_CENTER);
 		this.addState(new LootState(LOOTSTATE,subBackground));
 
+		ItemGridElement g = new ItemGridElement(0, 0, HudElement.CENTER_CENTER);
+		g.personalBindMethod=HudElement.CENTER_CENTER;
 		this.addState(new HudLayersState(INVENTORYSTATE, new HudElement[] {
 				new StillImageElement(0, 0, HudElement.TOP_LEFT), messages,
-				new ItemGridElement(0, 0, HudElement.CENTER_CENTER),
+				g,
 				new ReturnToGameElement(KeyConfig.INVENTORY) }));
 
 		this.addState(new HudLayersState(MAPSTATE, new HudElement[] {

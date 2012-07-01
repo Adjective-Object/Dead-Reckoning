@@ -612,21 +612,9 @@ public class GameBoard implements ILosBoard {
 	 * @param sightDistance
 	 *            the sight distance
 	 */
-	public void revealFromEntity(Entity entity, int sightDistance) { // TODO
-																		// temporary,
-																		// only
-																		// in
-																		// place
-																		// bcause
-																		// I
-																		// can't
-																		// get
-																		// the
-																		// Rl4J
-																		// version
-																		// to
-																		// work
-																		// well.
+	public void revealFromEntity(Entity entity, int sightDistance) {
+		// TODO temporary. only in place because I can't get the RL4J version to work
+		// needs to be replaced. it is inefficient and also can see through diagonally adjacent walls.
 		for (int i = 0; i < board.length; i++) {
 			for (int y = 0; y < board[i].length; y++) {
 				if (Utilities.getDistance(board[i][y], entity.getLocation()) <= sightDistance
