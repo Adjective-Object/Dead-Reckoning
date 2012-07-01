@@ -8,7 +8,7 @@ import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.entities.Monster;
-import net.plaidypus.deadreckoning.generator.DungeonRoom;
+import net.plaidypus.deadreckoning.generator.Room;
 import net.plaidypus.deadreckoning.generator.RoomBasedBiome;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.professions.StatMaster;
@@ -59,7 +59,7 @@ public class Temple extends RoomBasedBiome {
 	}
 
 	@Override
-	public GameBoard populateRoom(GameBoard target, DungeonRoom room) {
+	public GameBoard populateRoom(GameBoard target, Room room) {
 		for (int i=room.x; i<room.width+room.x ;i++){
 			target.getTileAt(i,room.y).setTileFace(TILE_WALL_UP);
 			target.getTileAt(i,room.y-1).blocking=true;
@@ -105,7 +105,7 @@ public class Temple extends RoomBasedBiome {
 	}
 
 	@Override
-	public GameBoard populateCooridors(GameBoard target, ArrayList<DungeonRoom> rooms) {
+	public GameBoard populateCooridors(GameBoard target, ArrayList<Room> rooms) {
 		for(int i=0; i<rooms.size()-1; i++){
 			Tile start= rooms.get(i).getCenter(target), end = rooms.get(i+1).getCenter(target);
 			
@@ -159,7 +159,7 @@ public class Temple extends RoomBasedBiome {
 		return tiles;
 	}
 	
-	public void drawPath(ArrayList<Tile> tiles, ArrayList<DungeonRoom> rooms, int tileValue){
+	public void drawPath(ArrayList<Tile> tiles, ArrayList<Room> rooms, int tileValue){
 		
 		//check for collisions along the length of the tunnel
 		//	marking the ones that do not have collisions, allowing for one collision consecutively

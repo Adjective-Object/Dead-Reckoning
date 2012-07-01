@@ -23,7 +23,7 @@ public class SkillTreeSelectionElement extends Panel{
 	
 	int scrollValue = 0;
 	
-	static final int numClassButtons = 9;
+	int numClassButtons = 9;
 	
 	Profession selectedProfession = null;
 	SkillProgression selectedTree = null;
@@ -31,8 +31,10 @@ public class SkillTreeSelectionElement extends Panel{
 	static Image upArrow, downArrow, backButton;
 	boolean treeChanged;
 	
-	public SkillTreeSelectionElement(int x, int y, int bindMethod) throws SlickException {
+	public SkillTreeSelectionElement(int x, int y, int bindMethod, int numbers) throws SlickException {
 		super(x, y, bindMethod, new ArrayList<HudElement>(0),0,0);
+		
+		this.numClassButtons = numbers;
 		
 		downArrow = new Image("res/CharacterSelect/downArrow.png");
 		upArrow = new Image("res/CharacterSelect/upArrow.png");

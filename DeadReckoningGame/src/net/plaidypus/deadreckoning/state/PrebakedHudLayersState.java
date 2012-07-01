@@ -18,7 +18,6 @@ public abstract class PrebakedHudLayersState extends HudLayersState{
 	
 	protected abstract ArrayList<HudElement> makeContents() throws SlickException;
 	
-	
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
 		super.enter(container, game);
 	}

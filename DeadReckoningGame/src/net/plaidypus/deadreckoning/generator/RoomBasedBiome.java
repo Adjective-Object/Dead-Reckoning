@@ -36,7 +36,7 @@ public abstract class RoomBasedBiome extends Biome {
 	 *            the linked levels
 	 * @return the game board
 	 */
-	public GameBoard populateBoard(ArrayList<DungeonRoom> rooms, ArrayList<Stair> linkedLevels){
+	public GameBoard populateBoard(ArrayList<Room> rooms, ArrayList<Stair> linkedLevels){
 		
 		GameBoard target = new GameBoard(calcWidth(rooms), calcHeight(rooms), this);
 		
@@ -52,12 +52,12 @@ public abstract class RoomBasedBiome extends Biome {
 		
 	}
 	
-	public GameBoard placeStairs(GameBoard board, ArrayList<DungeonRoom> rooms, ArrayList<Stair> linkedLevels){
+	public GameBoard placeStairs(GameBoard board, ArrayList<Room> rooms, ArrayList<Stair> linkedLevels){
 		for(int i=0; i<linkedLevels.size(); i++){
 			int failcount = 0;
 			Tile t = null;
 			while (failcount<10){
-				DungeonRoom r = rooms.get(Utilities.randInt(0, rooms.size())) ;
+				Room r = rooms.get(Utilities.randInt(0, rooms.size())) ;
 				t= r.getTileIn(board);
 				if(t.isEmpty(Tile.LAYER_PASSIVE_MAP) && t.getToLeft().isEmpty(Tile.LAYER_PASSIVE_MAP)){
 					break;
@@ -72,9 +72,9 @@ public abstract class RoomBasedBiome extends Biome {
 		return board;
 	}
 	
-	public abstract GameBoard populateRoom( GameBoard target, DungeonRoom room);
+	public abstract GameBoard populateRoom( GameBoard target, Room room);
 
-	public abstract GameBoard populateCooridors(GameBoard target, ArrayList<DungeonRoom> rooms);
+	public abstract GameBoard populateCooridors(GameBoard target, ArrayList<Room> rooms);
 
 	/*
 	 * (non-Javadoc)
@@ -84,7 +84,7 @@ public abstract class RoomBasedBiome extends Biome {
 	 */
 	public GameBoard makeBoard(int depth, ArrayList<Stair> floorLinks) {
 		
-		ArrayList<DungeonRoom> rooms = makeRooms();
+		ArrayList<Room> rooms = makeRooms();
 		
 		GameBoard gb = this.populateBoard(rooms, floorLinks);
 		gb.depth = depth;
@@ -93,13 +93,13 @@ public abstract class RoomBasedBiome extends Biome {
 
 	}
 	
-	public ArrayList<DungeonRoom> makeRooms(){
-		ArrayList<DungeonRoom> rooms = new ArrayList<DungeonRoom>(0);
+	public ArrayList<Room> makeRooms(){
+		ArrayList<Room> rooms = new ArrayList<Room>(0);
 
 		int mapWidth = 1, mapHeight = 1;
 				
 		while (rooms.size() < numRooms) {
-			DungeonRoom newRoom =	new DungeonRoom(Utilities.randInt(1, mapWidth + roomSizeMax),
+			Room newRoom =	new Room(Utilities.randInt(1, mapWidth + roomSizeMax),
 					Utilities.randInt(1, mapWidth + roomSizeMax),
 					Utilities.randInt(roomSizeMin, roomSizeMax),
 					Utilities.randInt(roomSizeMin, roomSizeMax));
@@ -116,7 +116,7 @@ public abstract class RoomBasedBiome extends Biome {
 		return rooms;
 	}
 	
-	public int calcWidth(ArrayList<DungeonRoom> r){
+	public int calcWidth(ArrayList<Room> r){
 		int mapWidth = 0;
 		for (int i=0; i<r.size(); i++){
 			if (mapWidth < r.get(i).x + r.get(i).width+1) {
@@ -126,7 +126,7 @@ public abstract class RoomBasedBiome extends Biome {
 		return mapWidth;
 	}
 	
-	public int calcHeight(ArrayList<DungeonRoom> r){
+	public int calcHeight(ArrayList<Room> r){
 		int mapHeight = 0;
 		for (int i=0; i<r.size(); i++){
 			if (mapHeight < r.get(i).y + r.get(i).height+1) {

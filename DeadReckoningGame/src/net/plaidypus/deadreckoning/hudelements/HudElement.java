@@ -1,7 +1,6 @@
 package net.plaidypus.deadreckoning.hudelements;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.state.HudLayersState;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;

@@ -36,7 +36,7 @@ public class DungeonMap {
 	 * @throws SlickException
 	 *             the slick exception
 	 */
-	public GameBoard makeBoard(int depth) throws SlickException {
+	public GameBoard makeBoard(int depth) throws SlickException { //TODO actual mapping of dungeon
 		ArrayList<Stair> topass = new ArrayList<Stair>(0);
 		if (depth != 0) {
 			topass.add(new Stair(null, Tile.LAYER_PASSIVE_MAP, "floor"
@@ -46,7 +46,11 @@ public class DungeonMap {
 			topass.add(new Stair(null, Tile.LAYER_PASSIVE_MAP, "floor"
 					+ (depth + 1) + ".map", Stair.DOWN));
 		}
-		return Biome.getRandomBiome().makeBoard(depth, topass);
+		Biome b = Biome.getRandomBiome();
+		while((b.minDepth<=depth || b.minDepth==-1) && (b.maxDepth>=b.maxDepth||b.maxDepth==-1)){
+			b = Biome.getRandomBiome();
+		}
+		return b.makeBoard(depth, topass);
 	}
 
 	/**

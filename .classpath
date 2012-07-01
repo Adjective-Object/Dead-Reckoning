@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="DeadReckoningGame/src"/>
 	<classpathentry kind="src" path="DeadReckoningMods/src"/>
+	<classpathentry kind="src" path="DeadReckoningTools/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="slick/lib/slick.jar">
 		<attributes>

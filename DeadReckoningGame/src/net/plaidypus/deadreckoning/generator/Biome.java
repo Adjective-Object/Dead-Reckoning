@@ -19,13 +19,14 @@ import org.newdawn.slick.SpriteSheet;
  * The Class Biome.
  */
 public abstract class Biome extends DeadReckoningComponent {
-
-	/** The biomes. */
+ 
 	static HashMap<String,Biome> biomes = new HashMap<String,Biome>(0);
 	protected SpriteSheet tileImage;
 	
 	protected String parentMod;
 
+	public int minDepth=-1, maxDepth=-1;
+	
 	/**
 	 * Make board.
 	 * 
