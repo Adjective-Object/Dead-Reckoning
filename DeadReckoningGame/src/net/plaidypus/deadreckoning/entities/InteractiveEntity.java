@@ -16,7 +16,7 @@ import org.newdawn.slick.Graphics;
 public abstract class InteractiveEntity extends Entity {
 
 	/** The inventory. */
-	protected ArrayList<Item> inventory;
+	protected ArrayList<Item> inventory = new ArrayList<Item>(0) ;
 
 	/** The inventory size. */
 	int inventorySize = 5;
@@ -51,7 +51,7 @@ public abstract class InteractiveEntity extends Entity {
 	 */
 	public InteractiveEntity(Tile targetTile, int layer, ArrayList<Item> items) {
 		super(targetTile, layer);
-		this.inventory = items;
+		this.inventory.addAll(items);
 	}
 
 	/*
@@ -145,5 +145,29 @@ public abstract class InteractiveEntity extends Entity {
 		}
 		return false;
 	}
+	
+	protected void loadItems(LivingEntity e, String[] split){
+		for(int i=0; i<split.length; i++){
+			if(!split[i].equals("null")){
+				e.inventory.add(Item.loadFromString(split[i].split(",")));
+			}
+		}
+	}
 
+	protected String getGenericSave(){
+		String toRet = super.getGenericSave()+":";
+		for(int i=0; i<this.inventorySize; i++){
+			if(i!=0){toRet+=",";}
+			if(this.inventory.size()>i){
+				System.out.println(this.inventory.get(i));
+				toRet+=this.inventory.get(i).toItemString();
+			}
+			else{
+				toRet+="null";
+			}
+		}
+		return toRet;
+	}
+	
+	
 }

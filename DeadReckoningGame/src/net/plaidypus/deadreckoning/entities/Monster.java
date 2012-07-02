@@ -1,10 +1,16 @@
 package net.plaidypus.deadreckoning.entities;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.WaitAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
+import net.plaidypus.deadreckoning.items.Item;
 import net.plaidypus.deadreckoning.professions.StatMaster;
 import net.plaidypus.deadreckoning.skills.Attack;
 import net.plaidypus.deadreckoning.skills.Movement;
@@ -52,7 +58,7 @@ public class Monster extends LivingEntity {
 		this.skills.add(movement);
 		this.skills.add(attack);
 	}
-
+	
 	/**
 	 * if something is blocking its path, it will turn left.
 	 * 
@@ -114,20 +120,17 @@ public class Monster extends LivingEntity {
 	@Override
 	// TODO loading from jarfile
 	public Entity makeFromString(GameBoard g, String[] toload) {
-		return new Monster(g.getTileAt(Integer.parseInt(toload[1]),
-				Integer.parseInt(toload[2])),// tile
+		Monster toRet = new Monster(g.getTileAt(Integer.parseInt(toload[1]), Integer.parseInt(toload[2])),// tile
 				Integer.parseInt(toload[3]),// layer
-				toload[4], toload[5],// parentMod , entityfile
-				new StatMaster(Integer.parseInt(toload[6]),
-						Integer.parseInt(toload[7]),
-						Integer.parseInt(toload[8]),
-						Integer.parseInt(toload[9]),
-						Integer.parseInt(toload[10]),
-						Integer.parseInt(toload[11]),
-						Integer.parseInt(toload[12])),
-				Integer.parseInt(toload[13]));
+				toload[9], toload[10],// parentMod , entityfile
+				super.loadStatMaster(toload[7].split(",")),
+				Integer.parseInt(toload[8]));//statmaster
+		this.loadItems(toRet,toload[4].split(","));
+		this.HP=Integer.parseInt(toload[5]);
+		this.MP=Integer.parseInt(toload[6]);
+		return toRet;
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -135,9 +138,7 @@ public class Monster extends LivingEntity {
 	 */
 	@Override
 	public String saveToString() {
-		return this.getGenericSave() + ":" + this.parentMod + ":"
-				+ this.entityFile + ":" + this.statMaster.toString() + ":"
-				+ this.allignmnet;
+		return this.getGenericSave();
 	}
 
 	/*
@@ -169,6 +170,10 @@ public class Monster extends LivingEntity {
 	public Action onInteract(Entity e) {
 		// TODO I don't know ehat to put here...
 		return null;
+	}
+	
+	public ArrayList<Item> getDropItems(String DropItems){
+		return null; //TODO uuuhh;
 	}
 
 }

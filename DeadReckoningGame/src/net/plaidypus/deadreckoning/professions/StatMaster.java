@@ -260,8 +260,8 @@ public class StatMaster {
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		return mHP + ":" + mMP + ":" + STR + ":" + DEX + ":" + INT + ":" + LUK
-				+ ":" + level;
+		return mHP + "," + mMP + "," + STR + "," + DEX + "," + INT + "," + LUK
+				+ "," + level;
 	}
 
 	public int getBonusMaxHP() {

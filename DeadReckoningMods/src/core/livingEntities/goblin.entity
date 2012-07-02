@@ -2,6 +2,8 @@
 NAME=Goblin
 DESCRIPTION=Oh Shit, a Goblin!
 
+DROPITEMS=0:core:1:50, 1core:2:1
+
 :STATS:
 
 TILEX=32

@@ -48,7 +48,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	public Animation currentAnimation;
 
 	/** The animations. */
-	public ArrayList<Animation> animations;
+	public HashMap<String,Animation> animations;
 
 	/** The statuses. */
 	public ArrayList<Status> statuses;
@@ -57,12 +57,12 @@ public abstract class LivingEntity extends InteractiveEntity {
 	public ArrayList<Skill> skills = new ArrayList<Skill>(0);
 
 	/** The id of the current animation. */
-	int currentAnimationID;
+	String currentAnimationID;
 
 	/** The Constant ANIMATION_DEATH. */
-	public static final int ANIMATION_STAND = 0, ANIMATION_ATTACK = 1,
-			ANIMATION_WALK = 2, ANIMATION_FLINCH_FRONT = 3,
-			ANIMATION_FLINCH_BACK = 4, ANIMATION_DEATH = 5;
+	public static final String ANIMATION_STAND = "Stand", ANIMATION_ATTACK = "AttackBasic",
+			ANIMATION_WALK = "Walk", ANIMATION_FLINCH_FRONT = "FlinchFront",
+			ANIMATION_FLINCH_BACK = "FlinchBack", ANIMATION_DEATH = "Death";
 
 	/** The stat master, used to handle the (somewhat) unchanging stats of the entity */
 	protected StatMaster statMaster;
@@ -114,14 +114,6 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 		this.setAllignment(allignment);
 		this.statuses = new ArrayList<Status>(0);
-
-		animations = new ArrayList<Animation>(0);
-		animations.add(stand);
-		animations.add(basicAttack);
-		animations.add(walking);
-		animations.add(damageFront);
-		animations.add(damageBack);
-		animations.add(death);
 
 		this.HP = this.statMaster.getMaxHP();
 		this.MP = this.statMaster.getMaxMP();
@@ -240,7 +232,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * @param id
 	 *            the animation id (LivingEntity.ANIMATION_BLAW)
 	 */
-	public void setCurrentAnimation(int id) {
+	public void setCurrentAnimation(String id) {
 		this.currentAnimationID = id;
 		this.currentAnimation.restart();
 		this.currentAnimation = this.animations.get(id);
@@ -262,7 +254,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 *            the iD
 	 * @return the animation
 	 */
-	public Animation getAnimation(int ID) {
+	public Animation getAnimation(String ID) {
 		return animations.get(ID);
 	}
 
@@ -271,7 +263,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * 
 	 * @return the animation
 	 */
-	public int getCurrentAnimationID() {
+	public String getCurrentAnimationID() {
 		return currentAnimationID;
 	}
 
@@ -465,11 +457,24 @@ public abstract class LivingEntity extends InteractiveEntity {
 			}
 		}
 
-		setName(info.get("NAME"));
+		parseInfo(info);
+		parseStats(stats);
+		parseAnims(animations);
+		
+		
+		this.animations=animations;
+	}
 
+	protected void parseInfo(HashMap<String,String> info){
+		setName(info.get("NAME"));
+	}
+	
+	protected void parseStats(HashMap<String,Integer> stats){
 		width = stats.get("TILEX");
 		height = stats.get("TILEY");
-
+	}
+	
+	protected void parseAnims(HashMap<String,Animation> animations){
 		stand = animations.get("Stand");
 		basicAttack = animations.get("AttackBasic");
 		basicAttack.setLooping(false);
@@ -481,7 +486,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 		death = animations.get("Death");
 		death.setLooping(false);
 	}
-
+	
 	/**
 	 * Gets the game.
 	 * 
@@ -526,6 +531,23 @@ public abstract class LivingEntity extends InteractiveEntity {
 			p += "'s corpse";
 		}
 		return p;
+	}
+	
+	protected String getGenericSave() {
+		String toRet = super.getGenericSave()+":"+this.HP+":"+this.MP+":"
+				+this.statMaster.toString()+":"+this.allignmnet+":"+this.parentMod+":"+this.entityFile;
+		return toRet;
+	}
+	
+	protected StatMaster loadStatMaster(String[] toload){
+		return new StatMaster(
+				Integer.parseInt(toload[0]),
+				Integer.parseInt(toload[1]),
+				Integer.parseInt(toload[2]),
+				Integer.parseInt(toload[3]),
+				Integer.parseInt(toload[4]),
+				Integer.parseInt(toload[5]),
+				Integer.parseInt(toload[6]));
 	}
 
 	/**

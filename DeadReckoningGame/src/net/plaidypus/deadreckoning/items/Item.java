@@ -3,6 +3,7 @@ package net.plaidypus.deadreckoning.items;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 
@@ -19,11 +20,13 @@ public abstract class Item {
 	/** The classification. */
 	int classification;
 
-	/** The Constant ITEM_EQUIP. */
+	/** The Constants for defining item type */
 	public static final int ITEM_ETC = 0, ITEM_USE = 1, ITEM_EQUIP = 2;
-
+	public static final Class<? extends Item>[] itemTypes = new Class[] {EtcDrop.class, UseItem.class, Equip.class};
+	
 	/** The item id. */
 	int itemID;
+	
 
 	/** The image. */
 	Image image;
@@ -100,5 +103,38 @@ public abstract class Item {
 	 * @return the item
 	 */
 	public abstract Item combineWith(Item item);
+
+	public String toItemString(){
+		return this.classification+","+this.parentMod+","+this.itemID;
+	}
+	
+	//itemtype, sourcemod, itemID
+	public static Item loadFromString(String[] spl){
+		try {
+			return itemTypes[Integer.parseInt(spl[0])].getConstructor(String.class, Integer.class).newInstance(spl[1],Integer.parseInt(spl[2]));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }

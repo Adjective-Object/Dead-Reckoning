@@ -50,10 +50,14 @@ public class InGameMenuState extends PrebakedHudLayersState{
 	protected ArrayList<HudElement> makeContents() throws SlickException {
 		ArrayList<HudElement> elements = new ArrayList<HudElement>(0);
 		
-		returnToGameButton = new TextButton(-60, -100, HudElement.CENTER_CENTER, "Return To Game", DeadReckoningGame.menuLargeFont);
-		saveGameButton = new TextButton(-60, -50, HudElement.CENTER_CENTER, "Save Game", DeadReckoningGame.menuLargeFont);
-		quitToMenuButton = new TextButton(-60, 0, HudElement.CENTER_CENTER, "Quit To Menu", DeadReckoningGame.menuLargeFont);
-		exitButton = new TextButton(-60, 50, HudElement.CENTER_CENTER, "Exit Game", DeadReckoningGame.menuLargeFont);
+		returnToGameButton = new TextButton(0, -100, HudElement.CENTER_CENTER, "Return To Game", DeadReckoningGame.menuLargeFont);
+		returnToGameButton.personalBindMethod = HudElement.CENTER_CENTER;
+		saveGameButton = new TextButton(0, -50, HudElement.CENTER_CENTER, "Save Game", DeadReckoningGame.menuLargeFont);
+		saveGameButton.personalBindMethod = HudElement.CENTER_CENTER;
+		quitToMenuButton = new TextButton(0, 0, HudElement.CENTER_CENTER, "Quit To Menu", DeadReckoningGame.menuLargeFont);
+		quitToMenuButton.personalBindMethod = HudElement.CENTER_CENTER;
+		exitButton = new TextButton(0, 50, HudElement.CENTER_CENTER, "Exit Game", DeadReckoningGame.menuLargeFont);
+		exitButton.personalBindMethod = HudElement.CENTER_CENTER;
 
 		elements.add(returnToGameButton);
 		elements.add(saveGameButton);
