@@ -1,9 +1,6 @@
 package net.plaidypus.deadreckoning.entities;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
@@ -172,8 +169,22 @@ public class Monster extends LivingEntity {
 		return null;
 	}
 	
-	public ArrayList<Item> getDropItems(String DropItems){
-		return null; //TODO uuuhh;
+	public ArrayList<Item> getDropItems(){
+		ArrayList<Item> toRet = new ArrayList<Item>(0);
+		if(info.containsKey("DROPITEMS")){
+			String[] itemDefs = this.info.get("DROPITEMS").replaceAll(" ","").split(",");
+			for(int i=0; i<itemDefs.length; i++){
+				String[] itemDef = itemDefs[i].split("-");
+				float chance = Float.parseFloat(itemDef[3])/100F;
+				if(Utilities.randFloat()>chance){
+					toRet.add(Item.loadFromString(itemDef));
+				}
+			}
+		}
+		else{
+			System.err.println("NO DROPITEMS: "+info);
+		}
+		return toRet;
 	}
 
 }

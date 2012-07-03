@@ -29,7 +29,7 @@ public class EtcDrop extends Item {
 	 * @param number
 	 *            the number
 	 */
-	public EtcDrop(String parentMod, int itemID, int number) {
+	public EtcDrop(String parentMod, int itemID, int number) throws SlickException{
 		super(parentMod, itemID, Item.ITEM_ETC);
 		this.number = number;
 	}
@@ -80,9 +80,10 @@ public class EtcDrop extends Item {
 	 * deadreckoning.items.Item)
 	 */
 	@Override
-	public Item combineWith(Item item) {
+	public Item combineWith(Item item){
 		EtcDrop drop = (EtcDrop) item;
-		return new EtcDrop(this.parentMod, itemID, this.number + drop.number);
+		this.number +=drop.number;
+		return this;
 	}
 
 }

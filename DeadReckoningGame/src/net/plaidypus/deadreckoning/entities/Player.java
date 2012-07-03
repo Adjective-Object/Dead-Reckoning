@@ -152,9 +152,6 @@ public class Player extends LivingEntity {
 		if (gc.getInput().isKeyDown(Input.KEY_SCROLL)) {
 			this.EXP += delta;
 		}
-		if (gc.getInput().isKeyPressed(Input.KEY_PAUSE)) {
-			this.equips.set(0, new Equip("core", 0));
-		}
 	}
 
 	public ArrayList<Action> advanceTurn() {

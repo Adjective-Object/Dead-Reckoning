@@ -149,7 +149,7 @@ public abstract class InteractiveEntity extends Entity {
 	protected void loadItems(LivingEntity e, String[] split){
 		for(int i=0; i<split.length; i++){
 			if(!split[i].equals("null")){
-				e.inventory.add(Item.loadFromString(split[i].split(",")));
+				e.inventory.add(Item.loadFromString(split[i].split("-")));
 			}
 		}
 	}
@@ -159,7 +159,6 @@ public abstract class InteractiveEntity extends Entity {
 		for(int i=0; i<this.inventorySize; i++){
 			if(i!=0){toRet+=",";}
 			if(this.inventory.size()>i){
-				System.out.println(this.inventory.get(i));
 				toRet+=this.inventory.get(i).toItemString();
 			}
 			else{

@@ -32,7 +32,7 @@ public class Equip extends Item {
 	 * @param itemID
 	 *            the item id
 	 */
-	public Equip(String parentMod, int itemID) {
+	public Equip(String parentMod, Integer itemID) throws SlickException{
 		super(parentMod, itemID, Item.ITEM_EQUIP);
 	}
 
@@ -58,6 +58,8 @@ public class Equip extends Item {
 		WDef = Integer.parseInt(reader.readLine());
 		MAtt = Integer.parseInt(reader.readLine());
 		MDef = Integer.parseInt(reader.readLine());
+		
+		reader.close();
 	}
 
 	/*

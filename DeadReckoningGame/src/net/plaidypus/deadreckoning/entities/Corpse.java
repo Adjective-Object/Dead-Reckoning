@@ -121,7 +121,7 @@ public class Corpse extends InteractiveEntity {
 	 * .deadreckoning.board.GameBoard, java.lang.String[])
 	 */
 	@Override
-	public Entity makeFromString(GameBoard target, String[] attributes) {
+	public Entity makeFromString(GameBoard target, String[] attributes) throws SlickException{
 		LivingEntity e = null;
 		try {
 			e = (LivingEntity) ModLoader.loadClass(attributes[4]).newInstance();

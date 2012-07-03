@@ -118,7 +118,7 @@ public class Chest extends InteractiveEntity {
 	 * .deadreckoning.board.GameBoard, java.lang.String[])
 	 */
 	@Override
-	public Entity makeFromString(GameBoard g, String[] toload) {
+	public Entity makeFromString(GameBoard g, String[] toload) throws SlickException{
 		ArrayList<Item> content = new ArrayList<Item>(0);
 		for (int i = 4; i < toload.length; i++) {
 			content.add(new EtcDrop("core", Integer.parseInt(toload[i]), 1));// TODO

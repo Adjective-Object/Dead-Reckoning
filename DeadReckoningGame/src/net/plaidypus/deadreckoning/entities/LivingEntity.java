@@ -48,7 +48,9 @@ public abstract class LivingEntity extends InteractiveEntity {
 	public Animation currentAnimation;
 
 	/** The animations. */
-	public HashMap<String,Animation> animations;
+	protected HashMap<String,Animation> animations;
+	protected HashMap<String, String> info;
+	protected HashMap<String, Integer> stats;
 
 	/** The statuses. */
 	public ArrayList<Status> statuses;
@@ -413,14 +415,14 @@ public abstract class LivingEntity extends InteractiveEntity {
 			// WHY DID I FEEL THE NEED TO DO THIS?
 			in = reader.readLine();
 			if (!in.equals("")) {
-				if (in.contains(":")) {
+				if (in.substring(0,1).equals(":") && in.substring(in.length()-1).equals(":")) {
 					ParsingMode = in;
 				}
 
 				else {
 					if (ParsingMode.equals(":INFORMATION:")) {
-						String[] tostat = in.split("=");
-						info.put(tostat[0], tostat[1]);
+						String[] toinf = in.split("=");
+						info.put(toinf[0], toinf[1]);
 					}
 					if (ParsingMode.equals(":STATS:")) {
 						String[] tostat = in.replaceAll(" ", "").split("=");
@@ -461,12 +463,16 @@ public abstract class LivingEntity extends InteractiveEntity {
 		parseStats(stats);
 		parseAnims(animations);
 		
-		
+		this.info=info;
+		this.stats=stats;
 		this.animations=animations;
 	}
 
 	protected void parseInfo(HashMap<String,String> info){
 		setName(info.get("NAME"));
+		if(info.containsKey("DESCRIPTION")){
+			this.description=info.get("DESCRIPTION");
+		}
 	}
 	
 	protected void parseStats(HashMap<String,Integer> stats){

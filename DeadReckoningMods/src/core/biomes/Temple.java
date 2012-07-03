@@ -98,7 +98,7 @@ public class Temple extends RoomBasedBiome {
 			if(t.isEmpty(Tile.LAYER_ACTIVE)){
 				Monster m = new Monster(null, Tile.LAYER_ACTIVE, "core", "livingEntities/goblin.entity",
 						new StatMaster(50, 50, 4, 4, 4, 4, 1), LivingEntity.ALLIGN_HOSTILE);
-				
+				m.getInventory().addAll(m.getDropItems());
 				target.placeEntity(t, m, Tile.LAYER_ACTIVE);
 			}
 		}

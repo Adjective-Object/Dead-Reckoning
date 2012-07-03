@@ -42,19 +42,14 @@ public abstract class Item {
 	 * @param classification
 	 *            the classification
 	 */
-	public Item(String parentMod, int itemID, int classification) {
+	public Item(String parentMod, Integer itemID, int classification) throws SlickException{
 		this.itemID = itemID;
 		try {
-			//System.out.println("ITEM AT " + parentMod + "/items/" + Integer.toString(itemID) + ".item");
 			parseItem(ModLoader.getLoaderFor(parentMod).getResourceAsStream(
 					parentMod + "/items/" + Integer.toString(itemID) + ".item"));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+		} 
 		this.classification = classification;
 		this.parentMod = parentMod;
 	}
@@ -105,7 +100,7 @@ public abstract class Item {
 	public abstract Item combineWith(Item item);
 
 	public String toItemString(){
-		return this.classification+","+this.parentMod+","+this.itemID;
+		return this.classification+"-"+this.parentMod+"-"+this.itemID;
 	}
 	
 	//itemtype, sourcemod, itemID

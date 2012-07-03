@@ -19,7 +19,7 @@ public class UseItem extends Item {
 	 * @param itemID
 	 *            the item id
 	 */
-	public UseItem(String parentMod, int itemID) {
+	public UseItem(String parentMod, int itemID) throws SlickException{
 		super(parentMod, itemID, Item.ITEM_USE);
 		// TODO Auto-generated constructor stub
 	}

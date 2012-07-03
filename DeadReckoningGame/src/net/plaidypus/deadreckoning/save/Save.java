@@ -234,7 +234,7 @@ public class Save {
 	 */
 	public static ArrayList<Entity> loadEntities(GameBoard target,
 			BufferedReader r) throws IOException, ClassNotFoundException,
-			InstantiationException, IllegalAccessException {
+			InstantiationException, IllegalAccessException, SlickException{
 		String definition = r.readLine();
 		ArrayList<Entity> entities = new ArrayList<Entity>(0);
 		while (definition != null) {

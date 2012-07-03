@@ -1,8 +1,7 @@
 :INFORMATION:
 NAME=Goblin
 DESCRIPTION=Oh Shit, a Goblin!
-
-DROPITEMS=0:core:1:50, 1core:2:1
+DROPITEMS=2-core-0-50, 2-core-1-50
 
 :STATS:
 

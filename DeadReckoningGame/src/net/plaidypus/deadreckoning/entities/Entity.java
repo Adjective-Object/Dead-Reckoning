@@ -378,8 +378,9 @@ public abstract class Entity extends DeadReckoningComponent {
 	 * @param attributes
 	 *            the attributes
 	 * @return the entity
+	 * @throws SlickException 
 	 */
-	public abstract Entity makeFromString(GameBoard target, String[] attributes);
+	public abstract Entity makeFromString(GameBoard target, String[] attributes) throws SlickException;
 
 	/**
 	 * Save to string.
