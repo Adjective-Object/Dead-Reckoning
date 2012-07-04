@@ -58,6 +58,8 @@ import org.newdawn.slick.state.StateBasedGame;
  * Only once instance of a DeadReckoningGame can be active at any time. This is
  * kind of an ugly hackish workaround for a few problems encountered deeper in,
  * but the limitations it imposes are mostly minimal.
+ * 
+ * This is a test of posting things. This is only a test.
  */
 public class DeadReckoningGame extends StateBasedGame {
 
