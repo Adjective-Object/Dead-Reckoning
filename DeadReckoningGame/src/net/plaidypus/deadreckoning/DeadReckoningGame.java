@@ -5,6 +5,8 @@ package net.plaidypus.deadreckoning;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.config.KeyConfig;
@@ -66,10 +68,10 @@ public class DeadReckoningGame extends StateBasedGame {
 
 	/** The Constants that guide the referencing of states. */
 	public static final int LOOTSTATE = 0, INVENTORYSTATE = 1,
-			GAMEPLAYSTATE = 2, MAINMENUSTATE = 3, SAVESELECTSTATE = 4,
-			MAPSTATE = 5, SKILLSTATE = 6, NEWGAMESTATE = 7, ERRORSTATE = 8,
-			DEATHSTATE = 9, NEWCLASSSTATE = 10, INGAMEMENUSTATE = 11,
-			OPTIONSSTATE = 12;
+	GAMEPLAYSTATE = 2, MAINMENUSTATE = 3, SAVESELECTSTATE = 4,
+	MAPSTATE = 5, SKILLSTATE = 6, NEWGAMESTATE = 7, ERRORSTATE = 8,
+	DEATHSTATE = 9, NEWCLASSSTATE = 10, INGAMEMENUSTATE = 11,
+	OPTIONSSTATE = 12;
 
 	/**
 	 * The Constant tileSize, that governs the size of the tiles in the game
@@ -79,13 +81,13 @@ public class DeadReckoningGame extends StateBasedGame {
 
 	/** The Constants that control the User Interface Colors */
 	public static final Color menuColor = new Color(60, 40, 50, 255),
-			menuBackgroundColor = new Color(48, 64, 104),
-			menuTextColor = new Color(255, 255, 255),
-			menuTextBackgroundColor = new Color(0, 0, 0),
-			mouseoverBoxColor = new Color(50, 30, 50, 200),
-			mouseoverTextColor = new Color(255, 255, 255, 200),
-			menuHighlightColor = new Color(210, 210, 0),
-			skillInvalidColor = new Color(0, 0, 0, 120);
+	menuBackgroundColor = new Color(48, 64, 104),
+	menuTextColor = new Color(255, 255, 255),
+	menuTextBackgroundColor = new Color(0, 0, 0),
+	mouseoverBoxColor = new Color(50, 30, 50, 200),
+	mouseoverTextColor = new Color(255, 255, 255, 200),
+	menuHighlightColor = new Color(210, 210, 0),
+	skillInvalidColor = new Color(0, 0, 0, 120);
 
 	/** The active instance of DeadReckoningGame. */
 	public static DeadReckoningGame instance;
@@ -218,39 +220,39 @@ public class DeadReckoningGame extends StateBasedGame {
 		//System.out.println(Biome.getBiomes());
 		//System.out.println(Profession.getProfessions());
 
-		
+
 		/*
 		 * The menu background. This is to maintain the same particles and other
 		 * graphical polishes across several states, along with it just being easier
 		 * to deal with this way (no need for repetition)
 		 */
 		ArrayList<HudElement> menuBackground = new ArrayList<HudElement>(0);
-		//SpriteSheet particles = new SpriteSheet(new Image(
-				//"res/menu/particles.png"), 50, 50);
+		SpriteSheet particles = new SpriteSheet(new Image(
+		"res/menu/particles.png"), 50, 50);
 		menuBackground.add(new ColorFiller(DeadReckoningGame.menuBackgroundColor));
-		//menuBackground.add(new StillImageElement(-400,75,HudElement.TOP_CENTER,new Image("res/menu/titleBar.png")));
-		//menuBackground.add(new FairyLights(-50, -300, HudElement.BOTTOM_LEFT,
-				//container.getWidth()+50, 250, container.getWidth()/10, particles));
-		//menuBackground.add(new FairyLights(-50, -200, HudElement.BOTTOM_LEFT,
-				//container.getWidth()+50, 150, container.getWidth()/8, particles));
-		//menuBackground.add(new FairyLights(-50, -100, HudElement.BOTTOM_LEFT,
-				//container.getWidth()+50, 100, container.getWidth()/6, particles));
-		
+		menuBackground.add(new StillImageElement(-400,75,HudElement.TOP_CENTER,new Image("res/menu/titleBar.png")));
+		menuBackground.add(new FairyLights(-50, -300, HudElement.BOTTOM_LEFT,
+				container.getWidth()+50, 250, container.getWidth()/10, particles));
+		menuBackground.add(new FairyLights(-50, -200, HudElement.BOTTOM_LEFT,
+				container.getWidth()+50, 150, container.getWidth()/8, particles));
+		menuBackground.add(new FairyLights(-50, -100, HudElement.BOTTOM_LEFT,
+				container.getWidth()+50, 100, container.getWidth()/6, particles));
+
 		ArrayList<HudElement> subBackground = new ArrayList<HudElement>(0);
 		subBackground.add(new VicariousRenderer(DeadReckoningGame.instance.getGameElement()));
 		subBackground.add(new ColorFiller(new Color(0,0,0,100)) );
 
-		
+
 		menuFont = new UnicodeFont("/res/visitor.ttf", 20, true, false);
 		menuFont.addNeheGlyphs();
 		menuFont.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
 		menuFont.loadGlyphs();
-		
+
 		menuSmallFont = new UnicodeFont("/res/visitor.ttf", 15, true, false);
 		menuSmallFont.addNeheGlyphs();
 		menuSmallFont.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
 		menuSmallFont.loadGlyphs();
-		
+
 		menuLargeFont = new UnicodeFont("/res/visitor.ttf", 30, true, false);
 		menuLargeFont.addNeheGlyphs();
 		menuLargeFont.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
@@ -264,52 +266,72 @@ public class DeadReckoningGame extends StateBasedGame {
 		new Player().init();
 		new Stair().init();
 
-		this.addState(new MainMenuState(MAINMENUSTATE, menuBackground));
-
-		this.addState(new HudLayersState(GAMEPLAYSTATE, new HudElement[] {
-				game,
-				new PlayerHudElement(10, 10, HudElement.TOP_LEFT, game),
-				new StatusTrackerElement(10, 120, HudElement.TOP_LEFT, game),
-				new SkillMonitorElement(-200, -45, HudElement.BOTTOM_CENTER,
-						game),
-				new MiniMap(-3, 1, HudElement.TOP_RIGHT, 2, 70, 70, game),
-				messages }));
-		
-		
-		this.addState(new LootState(LOOTSTATE,subBackground));
-
-		ItemGridElement g = new ItemGridElement(0, 0, HudElement.CENTER_CENTER);
-		g.personalBindMethod=HudElement.CENTER_CENTER;
-		this.addState(new HudLayersState(INVENTORYSTATE, new HudElement[] {
-				new StillImageElement(0, 0, HudElement.TOP_LEFT), messages,
-				g,
-				new ReturnToGameElement(KeyConfig.INVENTORY) }));
-
-		this.addState(new HudLayersState(MAPSTATE, new HudElement[] {
-			new StillImageElement(0, 0, HudElement.TOP_LEFT), messages,
-			new BigMap(0,0,HudElement.CENTER_CENTER, game),
-			new ReturnToGameElement(KeyConfig.MINIMAP)
-		}));
-		
-		this.addState(new HudLayersState(ERRORSTATE, new HudElement[] {
-				new ColorFiller(menuBackgroundColor),
-				new TextElement(0, 0, HudElement.TOP_LEFT, "", menuTextColor,
-						menuFont) }));
-
-		this.addState(new SaveSelectorState(SAVESELECTSTATE, menuBackground));
-		this.addState(new PlayerViewerState(SKILLSTATE));
-		this.addState(new NewGameState(NEWGAMESTATE, menuBackground));
-		this.addState(new DeathScreenState(DEATHSTATE,subBackground));
-		this.addState(new ClassCreationState(NEWCLASSSTATE, menuBackground));
-		this.addState(new OptionsState(OPTIONSSTATE, menuBackground));
-		this.addState(new InGameMenuState(INGAMEMENUSTATE,subBackground));
-		
 		if(elpha == null)
 		{
-			this.enterState(MAINMENUSTATE);
+			try
+			{
+				this.addState(new MainMenuState(MAINMENUSTATE, menuBackground));
+
+				this.addState(new HudLayersState(GAMEPLAYSTATE, new HudElement[] {
+						game,
+						new PlayerHudElement(10, 10, HudElement.TOP_LEFT, game),
+						new StatusTrackerElement(10, 120, HudElement.TOP_LEFT, game),
+						new SkillMonitorElement(-200, -45, HudElement.BOTTOM_CENTER,
+								game),
+								new MiniMap(-3, 1, HudElement.TOP_RIGHT, 2, 70, 70, game),
+								messages }));
+
+
+				this.addState(new LootState(LOOTSTATE,subBackground));
+
+				ItemGridElement g = new ItemGridElement(0, 0, HudElement.CENTER_CENTER);
+				g.personalBindMethod=HudElement.CENTER_CENTER;
+				this.addState(new HudLayersState(INVENTORYSTATE, new HudElement[] {
+						new StillImageElement(0, 0, HudElement.TOP_LEFT), messages,
+						g,
+						new ReturnToGameElement(KeyConfig.INVENTORY) }));
+
+				this.addState(new HudLayersState(MAPSTATE, new HudElement[] {
+						new StillImageElement(0, 0, HudElement.TOP_LEFT), messages,
+						new BigMap(0,0,HudElement.CENTER_CENTER, game),
+						new ReturnToGameElement(KeyConfig.MINIMAP)
+				}));
+
+				this.addState(new HudLayersState(ERRORSTATE, new HudElement[] {
+						new ColorFiller(menuBackgroundColor),
+						new TextElement(0, 0, HudElement.TOP_LEFT, "", menuTextColor,
+								menuFont) }));
+
+				this.addState(new SaveSelectorState(SAVESELECTSTATE, menuBackground));
+				this.addState(new PlayerViewerState(SKILLSTATE));
+				this.addState(new NewGameState(NEWGAMESTATE, menuBackground));
+				this.addState(new DeathScreenState(DEATHSTATE,subBackground));
+				this.addState(new ClassCreationState(NEWCLASSSTATE, menuBackground));
+				this.addState(new OptionsState(OPTIONSSTATE, menuBackground));
+				this.addState(new InGameMenuState(INGAMEMENUSTATE,subBackground));
+
+
+				this.enterState(MAINMENUSTATE);
+			}
+			catch (Exception e)
+			{
+				StringWriter errors = new StringWriter();
+				e.printStackTrace(new PrintWriter(errors));
+				this.addState(new HudLayersState(ERRORSTATE, new HudElement[] {
+						new ColorFiller(menuBackgroundColor),
+						new TextElement(0, 0, HudElement.TOP_LEFT, e.getMessage() + "\r\nPlease report this error", menuTextColor,
+								menuFont) }));
+				this.enterState(ERRORSTATE);
+			}
 		}
 		else
 		{
+			StringWriter errors = new StringWriter();
+			elpha.printStackTrace(new PrintWriter(errors));
+			this.addState(new HudLayersState(ERRORSTATE, new HudElement[] {
+					new ColorFiller(menuBackgroundColor),
+					new TextElement(0, 0, HudElement.TOP_LEFT, elpha.getMessage() + "\r\nPlease report this error", menuTextColor,
+							menuFont) }));
 			this.enterState(ERRORSTATE);
 		}
 	}

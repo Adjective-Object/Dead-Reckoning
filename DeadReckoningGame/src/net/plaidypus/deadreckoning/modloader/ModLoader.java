@@ -2,6 +2,7 @@ package net.plaidypus.deadreckoning.modloader;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -23,6 +24,7 @@ import org.newdawn.slick.opengl.TextureLoader;
 import net.plaidypus.deadreckoning.DeadReckoningComponent;
 import net.plaidypus.deadreckoning.exceptions.ErrorType;
 import net.plaidypus.deadreckoning.exceptions.ModLoadException;
+import net.plaidypus.deadreckoning.filters.HiddenFileFilter;
 import net.plaidypus.deadreckoning.generator.Biome;
 import net.plaidypus.deadreckoning.professions.Profession;
 
@@ -41,8 +43,9 @@ public class ModLoader {
 	 * @throws IOException
 	 */
 	public static ArrayList<File> resolveMods(boolean vocal) throws IOException, ModLoadException {
-		File[] mods = new File("modpacks/").listFiles();
-		if(mods == null)
+		HiddenFileFilter filter = new HiddenFileFilter();
+		File[] mods = new File("modpacks/").listFiles(filter);
+		if(mods.length == 0)
 		{
 			mods = new File[0];
 			throw new ModLoadException("No modpacks found.", ErrorType.MISSING);
