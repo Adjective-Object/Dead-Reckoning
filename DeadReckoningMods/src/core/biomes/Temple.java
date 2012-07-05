@@ -91,12 +91,12 @@ public class Temple extends RoomBasedBiome {
 			}
 		}
 		
-		target.placeEntity(room.getCenter(target),new Torch(room.getCenter(target),Tile.LAYER_PASSIVE_MAP,5), Tile.LAYER_PASSIVE_MAP);
+		target.placeEntity(room.getCenter(target),new Torch(5), Tile.LAYER_PASSIVE_MAP);
 		
 		for(int i=0; i<Utilities.randInt(0,4); i++){
 			Tile t = room.getTileIn(target);
 			if(t.isEmpty(Tile.LAYER_ACTIVE)){
-				Monster m = new Monster(null, Tile.LAYER_ACTIVE, "core", "livingEntities/goblin.entity",
+				Monster m = new Monster("core", "livingEntities/goblin.entity",
 						new StatMaster(50, 50, 4, 4, 4, 4, 1), LivingEntity.ALLIGN_HOSTILE);
 				m.getInventory().addAll(m.getDropItems());
 				target.placeEntity(t, m, Tile.LAYER_ACTIVE);
@@ -123,10 +123,10 @@ public class Temple extends RoomBasedBiome {
 				Tile a = target.getTileAt(rooms.get(i).x-1, rooms.get(i).y+y),
 						b= target.getTileAt(rooms.get(i).x+rooms.get(i).width, rooms.get(i).y+y);
 				if(a.getTileFace()==TILE_TUNNEL){
-					target.placeEntity(a, new Door(null,Tile.LAYER_ACTIVE), Tile.LAYER_ACTIVE);
+					target.placeEntity(a, new Door(), Tile.LAYER_ACTIVE);
 				}
 				if(b.getTileFace()==TILE_TUNNEL){
-					target.placeEntity(b, new Door(null,Tile.LAYER_ACTIVE), Tile.LAYER_ACTIVE);
+					target.placeEntity(b, new Door(), Tile.LAYER_ACTIVE);
 				}
 			}
 			
@@ -134,10 +134,10 @@ public class Temple extends RoomBasedBiome {
 				Tile a = target.getTileAt(rooms.get(i).x+x,rooms.get(i).y-1),
 						b= target.getTileAt(rooms.get(i).x+x,rooms.get(i).y+rooms.get(i).height);
 				if(a.getTileFace()==TILE_TUNNEL){
-					target.placeEntity(a, new Door(null,Tile.LAYER_ACTIVE), Tile.LAYER_ACTIVE);
+					target.placeEntity(a, new Door(), Tile.LAYER_ACTIVE);
 				}
 				if(b.getTileFace()==TILE_TUNNEL){
-					target.placeEntity(b, new Door(null,Tile.LAYER_ACTIVE), Tile.LAYER_ACTIVE);
+					target.placeEntity(b, new Door(), Tile.LAYER_ACTIVE);
 				}
 			}
 		}

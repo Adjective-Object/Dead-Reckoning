@@ -32,8 +32,8 @@ public class PreBakedMove extends Movement {
 	 * @param yoff
 	 *            the yoff
 	 */
-	public PreBakedMove(LivingEntity l, int xoff, int yoff) {
-		super(l);
+	public PreBakedMove(int sourceID, int xoff, int yoff) {
+		super(sourceID);
 		this.xoff = xoff;
 		this.yoff = yoff;
 	}
@@ -46,10 +46,10 @@ public class PreBakedMove extends Movement {
 	 * deadreckoning.board.Tile)
 	 */
 	public Action makeAction(Tile target) {
-		if (source.getLocation().getRelativeTo(xoff, yoff)
-				.isEmpty(source.getLayer()) || DeadReckoningGame.debugMode) {
-			return new MoveAction(source, source.getLocation().getRelativeTo(
-					xoff, yoff), source.getLayer());
+		if (getSource().getLocation().getRelativeTo(xoff, yoff) .isEmpty(getSource().getLayer()) ||
+				(DeadReckoningGame.debugMode && getSource().getLocation().getRelativeTo(xoff, yoff).isOpen(getSource().getLayer() )) ) {
+			return new MoveAction(sourceID, getSource().getLocation().getRelativeTo(
+					xoff, yoff), getSource().getLayer());
 		}
 		return null;
 	}

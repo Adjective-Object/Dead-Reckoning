@@ -28,8 +28,8 @@ public class Movement extends Skill {
 	 * @param l
 	 *            the l
 	 */
-	public Movement(LivingEntity l) {
-		super(l);
+	public Movement(int sourceID) {
+		super(sourceID);
 	}
 
 	/*
@@ -50,7 +50,7 @@ public class Movement extends Skill {
 	 * deadreckoning.board.Tile)
 	 */
 	public Action makeAction(Tile target) {
-		return new MoveAction(source, target, source.getLayer());
+		return new MoveAction(sourceID, target, getSource().getLayer());
 	}
 
 	/*

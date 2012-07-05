@@ -30,8 +30,8 @@ public abstract class StaticImageEntity extends Entity {
 	 * @param drawImage
 	 *            the draw image
 	 */
-	public StaticImageEntity(Tile t, int layer, Image drawImage) {
-		super(t, layer);
+	public StaticImageEntity(Image drawImage) {
+		super();
 		draw = drawImage;
 	}
 

@@ -15,9 +15,6 @@ public class ChangeStateAction extends Action {
 	/** The state. */
 	int state;
 
-	/** The args. */
-	Object[] args;
-
 	/**
 	 * Instantiates a new change state action.
 	 * 
@@ -30,27 +27,10 @@ public class ChangeStateAction extends Action {
 	 * @param args
 	 *            the args
 	 */
-	public ChangeStateAction(Entity source, Tile target, int state,
-			Object[] args) {
-		super(source, source.getLocation());
+	public ChangeStateAction(int sourceID, int state) {
+		super(sourceID, null);
 		takesTurn = false;
 		this.state = state;
-		this.args = args;
-	}
-
-	/**
-	 * Instantiates a new change state action.
-	 * 
-	 * @param source
-	 *            the source
-	 * @param target
-	 *            the target
-	 * @param state
-	 *            the state
-	 */
-	public ChangeStateAction(Entity source, Tile target, int state) {
-		this(source, target, state, new Object[] { GameplayElement.getImage(),
-				null, (InteractiveEntity) (source) });
 	}
 
 	/*
@@ -61,7 +41,6 @@ public class ChangeStateAction extends Action {
 	@Override
 	protected boolean apply(int delta) {
 		System.out.println("Moving to State:" + state);
-		DeadReckoningGame.instance.getHudState(state).makeFrom(args);
 		DeadReckoningGame.instance.enterState(state);
 		return true;
 	}

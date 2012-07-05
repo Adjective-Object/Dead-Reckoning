@@ -92,9 +92,9 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * @param allignment
 	 *            the allignment
 	 */
-	public LivingEntity(Tile targetTile, int layer, String parentMod,
+	public LivingEntity(String parentMod,
 			String entityFile, StatMaster statMaster, int allignment) {
-		super(targetTile, layer);
+		super();
 		try {
 			InputStream entityReader = ModLoader.getModpackLoader(parentMod)
 					.getResourceAsStream(parentMod + "/" + entityFile);
@@ -191,9 +191,13 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * 
 	 * @param damage
 	 *            the damage to deal
+	 * @return 
 	 */
-	public void damagePhysical(int damage) {
-		this.HP -= this.statMaster.getPhysicalDamage(damage);
+	public int damagePhysical(int damage) {
+		int x = this.statMaster.getPhysicalDamage(damage);
+		this.HP -= x;
+		return x;
+		
 	}
 
 	/**
@@ -203,8 +207,10 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * @param damage
 	 *            the damage to deal
 	 */
-	public void damageMagical(int damage) {
-		this.HP -= this.statMaster.getMagicalDamage(damage);
+	public int damageMagical(int damage) {
+		int x = this.statMaster.getMagicalDamage(damage);
+		this.HP -= x;
+		return x;
 	}
 
 	/**
@@ -321,7 +327,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	public void onDeath() {
 		this.getParent().removeEntity(this);
 		this.getParent().placeEntityNear(this.getX(), this.getY(),
-				new Corpse(this.getLocation(), Tile.LAYER_PASSIVE_PLAY, this),
+				new Corpse(this),
 				Tile.LAYER_PASSIVE_PLAY);
 	}
 
@@ -331,7 +337,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * @see net.plaidypus.deadreckoning.entities.Entity#isInteractive()
 	 */
 	public boolean makesActions() {
-		return this.isAlive();
+		return true;
 	}
 
 	/**
@@ -582,6 +588,13 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 */
 	public int calculateEXPValue() {
 		return this.statMaster.calculateEXPValue();
+	}
+	
+	public void setID(int newID){
+		super.setID(newID);
+		for(int i=0; i<this.skills.size(); i++){
+			skills.get(i).setSource(this.entityID);
+		}
 	}
 
 }

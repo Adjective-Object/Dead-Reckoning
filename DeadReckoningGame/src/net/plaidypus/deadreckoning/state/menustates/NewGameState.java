@@ -1,4 +1,4 @@
-package net.plaidypus.deadreckoning.state;
+package net.plaidypus.deadreckoning.state.menustates;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,6 +16,7 @@ import net.plaidypus.deadreckoning.hudelements.simple.TextElement;
 import net.plaidypus.deadreckoning.hudelements.simple.TextEntryBox;
 import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.save.Save;
+import net.plaidypus.deadreckoning.state.HudLayersState;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;

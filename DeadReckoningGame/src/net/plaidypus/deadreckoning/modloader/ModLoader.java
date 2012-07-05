@@ -105,7 +105,6 @@ public class ModLoader {
 	 */
 	public static void loadModpack(File f) throws IllegalArgumentException,
 			SecurityException, InvocationTargetException, NoSuchMethodException {
-		System.out.println("loading " + f.getPath());
 		String modname = f.getName().replace(".jar", "");
 
 		try {
@@ -122,7 +121,7 @@ public class ModLoader {
 
 			int numProfessions = 0;
 			String[] classKeys = new String[] { "/biomes/", "/skills/",
-					"/entities/" };
+					"/entities/", "/statuses/" };
 			// populates list of biomes for loading
 			while (contents.hasMoreElements()) {
 				JarEntry e = contents.nextElement();
@@ -148,7 +147,7 @@ public class ModLoader {
 			// handles special cases of biomes
 			for (int i = 0; i < classes.size(); i++) {
 				for (int c = 0; c < classes.get(i).size(); c++) {
-					System.out.println("Initializing entity "
+					System.out.println("Initializing "
 							+ classes.get(i).get(c).getCanonicalName());
 					DeadReckoningComponent e = (DeadReckoningComponent) classes
 							.get(i).get(c)

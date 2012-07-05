@@ -1,6 +1,5 @@
 package net.plaidypus.deadreckoning.entities;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
@@ -9,9 +8,7 @@ import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.grideffects.AnimationEffect;
 import net.plaidypus.deadreckoning.items.Equip;
-import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.professions.Profession;
-import net.plaidypus.deadreckoning.save.Save;
 import net.plaidypus.deadreckoning.skills.Attack;
 import net.plaidypus.deadreckoning.skills.ChangeState;
 import net.plaidypus.deadreckoning.skills.Interacter;
@@ -21,8 +18,6 @@ import net.plaidypus.deadreckoning.skills.Saver;
 import net.plaidypus.deadreckoning.skills.Skill;
 import net.plaidypus.deadreckoning.skills.ViewSkills;
 import net.plaidypus.deadreckoning.skills.Wait;
-import net.plaidypus.deadreckoning.state.substates.DeathScreenState;
-import net.plaidypus.deadreckoning.status.OnFire;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
@@ -49,9 +44,6 @@ public class Player extends LivingEntity {
 
 	/** The key binds. */
 	public static int[] keyBinds;
-
-	/** The input skills. */
-	public static Skill[] inputSkills;
 
 	/** The current skill. */
 	public int currentSkill;
@@ -90,9 +82,9 @@ public class Player extends LivingEntity {
 	 * @throws SlickException
 	 *             the slick exception
 	 */
-	public Player(Tile targetTile, int layer, Profession p, Input in)
+	public Player(Profession p, Input in)
 			throws SlickException {
-		super(targetTile, layer, p.getParentMod(), p.getEntityFile(), p,
+		super(p.getParentMod(), p.getEntityFile(), p,
 				Entity.ALLIGN_FRIENDLY);
 		this.input = in;
 
@@ -105,20 +97,32 @@ public class Player extends LivingEntity {
 				Input.KEY_F7, Input.KEY_F8, Input.KEY_F9, Input.KEY_F10,
 				Input.KEY_F11, Input.KEY_F12, Input.KEY_T, Input.KEY_L,
 				Input.KEY_I, Input.KEY_M, Input.KEY_K, Input.KEY_E, Input.KEY_P};
-		inputSkills = new Skill[] { new PreBakedMove(this, -1, 0),
-				new PreBakedMove(this, 1, 0), new PreBakedMove(this, 0, -1),
-				new PreBakedMove(this, 0, 1), new Attack(this),
+		skills.add( new PreBakedMove(entityID, -1, 0));
+		skills.add( new PreBakedMove(entityID, 1, 0));
+		skills.add( new PreBakedMove(entityID, 0, -1));
+		skills.add( new PreBakedMove(entityID, 0, 1));
+		skills.add( new Attack(entityID));
 
-				p.getTrees()[0].getSkills()[0], p.getTrees()[0].getSkills()[1],
-				p.getTrees()[0].getSkills()[2], p.getTrees()[0].getSkills()[3],
-				p.getTrees()[1].getSkills()[0], p.getTrees()[1].getSkills()[1],
-				p.getTrees()[1].getSkills()[2], p.getTrees()[1].getSkills()[3],
-				p.getTrees()[2].getSkills()[0], p.getTrees()[2].getSkills()[1],
-				p.getTrees()[2].getSkills()[2], p.getTrees()[2].getSkills()[3],
+		skills.add( p.getTrees()[0].getSkills()[0]);
+		skills.add( p.getTrees()[0].getSkills()[1]);
+		skills.add( p.getTrees()[0].getSkills()[2]);
+		skills.add( p.getTrees()[0].getSkills()[3]);
+		skills.add( p.getTrees()[1].getSkills()[0]);
+		skills.add( p.getTrees()[1].getSkills()[1]);
+		skills.add( p.getTrees()[1].getSkills()[2]);
+		skills.add( p.getTrees()[1].getSkills()[3]);
+		skills.add( p.getTrees()[2].getSkills()[0]);
+		skills.add( p.getTrees()[2].getSkills()[1]);
+		skills.add( p.getTrees()[2].getSkills()[2]);
+		skills.add( p.getTrees()[2].getSkills()[3]);
 
-				new Wait(this), new Loot(this), new ChangeState(this,DeadReckoningGame.INVENTORYSTATE),
-				new ChangeState(this,DeadReckoningGame.MAPSTATE),
-				new ViewSkills(this), new Interacter(this), new Saver(this)};
+		skills.add(new Wait(entityID));
+		skills.add(new Loot(entityID));
+		skills.add(new ChangeState(entityID, DeadReckoningGame.INVENTORYSTATE));
+		skills.add(new ChangeState(entityID,DeadReckoningGame.MAPSTATE));
+		skills.add(new ViewSkills(entityID));
+		skills.add(new Interacter(entityID));
+		skills.add(new Saver(entityID));
 
 		this.skills.addAll(p.getSkillList());
 		this.equips = new ArrayList<Equip>(9);
@@ -150,7 +154,7 @@ public class Player extends LivingEntity {
 	 */
 	public void update(GameContainer gc, int delta) {
 		super.update(gc, delta);
-		if (gc.getInput().isKeyDown(Input.KEY_SCROLL)) {
+		if (gc.getInput().isKeyDown(Input.KEY_RBRACKET)) {
 			this.EXP += delta;
 		}
 	}
@@ -227,18 +231,18 @@ public class Player extends LivingEntity {
 			if (input.isKeyPressed(keyBinds[i])) {
 				this.currentSkill = i;
 
-				if (inputSkills[i].isInstant() && inputSkills[i].canBeCast()) {
-					return inputSkills[currentSkill].makeAction(this
+				if (skills.get(i).isInstant() && skills.get(i).canBeCast()) {
+					return skills.get(i).makeAction(this
 							.getLocation());
 				}
 
-				else if (inputSkills[i].canBeCast()) {
-					inputSkills[currentSkill].highlightRange(this.getParent());
+				else if (skills.get(i).canBeCast()) {
+					skills.get(i).highlightRange(this.getParent());
 					if (this.getParent().getPrimairyHighlight() == null) {
 						this.getParent().setPrimairyHighlight(
 								this.getLocation());
 					} else if (canTarget()) {
-						return inputSkills[currentSkill].makeAction(this
+						return skills.get(i).makeAction(this
 								.getParent().getPrimairyHighlight());
 					}
 				}
@@ -248,8 +252,8 @@ public class Player extends LivingEntity {
 		if ((input.isKeyPressed(Input.KEY_ENTER) || input
 				.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
 				&& this.getParent().getPrimairyHighlight() != null
-				&& canTarget() && inputSkills[currentSkill].canBeCast()) {
-			return inputSkills[currentSkill].makeAction(this.getParent()
+				&& canTarget() && skills.get(currentSkill).canBeCast()) {
+			return skills.get(currentSkill).makeAction(this.getParent()
 					.getPrimairyHighlight());
 		}
 
@@ -371,18 +375,8 @@ public class Player extends LivingEntity {
 	 */
 	@Override
 	public String saveToString() {
-		System.err.println("PAYER.SAVETOSTRING() METHOD NOT MEANT TO BE CALLED");
+		System.err.println("PLAYER.SAVETOSTRING() METHOD NOT MEANT TO BE CALLED");
 		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.plaidypus.deadreckoning.entities.LivingEntity#isInteractive()
-	 */
-	@Override
-	public boolean makesActions() {
-		return true;
 	}
 
 	/*
@@ -426,5 +420,4 @@ public class Player extends LivingEntity {
 	public String toString() {
 		return "Player[" + this.getX() + "," + this.getY() + "]";
 	}
-
 }

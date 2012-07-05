@@ -39,8 +39,8 @@ public class Corpse extends InteractiveEntity {
 	 * @param e
 	 *            the e
 	 */
-	public Corpse(Tile t, int layer, LivingEntity e) {
-		super(t, layer);
+	public Corpse( LivingEntity e) {
+		super();
 		this.entity = e;
 		this.inventory = entity.getInventory();
 		this.setName(e.getName()+"'s corpse");
@@ -136,10 +136,11 @@ public class Corpse extends InteractiveEntity {
 		for (int i = 4; i < attributes.length; i++) {
 			subatt[i - 4] = attributes[i];
 		}
-		return new Corpse(target.getTileAt(Integer.parseInt(attributes[1]),
-				Integer.parseInt(attributes[2])),
-				Integer.parseInt(attributes[3]),
-				(LivingEntity) e.makeFromString(target, subatt));
+		Corpse c =  new Corpse(	(LivingEntity) e.makeFromString(target, subatt));
+		c.placeAt(
+				target.getTileAt(Integer.parseInt(attributes[1]),Integer.parseInt(attributes[2])),
+				Integer.parseInt(attributes[3]));
+		return c;
 	}
 
 	/*
@@ -179,7 +180,7 @@ public class Corpse extends InteractiveEntity {
 	 */
 	@Override
 	public Action onInteract(Entity e) {
-		return new LootAction(e, this.getLocation(), this.getLayer());
+		return new LootAction(e.getID(), this.getLocation(), this.getLayer());
 	}
 
 }

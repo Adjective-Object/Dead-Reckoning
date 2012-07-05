@@ -29,8 +29,8 @@ public class ChangeState extends Skill {
 	 * @param source
 	 *            the source
 	 */
-	public ChangeState(LivingEntity source, int targetState) {
-		super(source);
+	public ChangeState(int sourceID, int targetState) {
+		super(sourceID);
 		this.targetState = targetState;
 	}
 
@@ -42,8 +42,7 @@ public class ChangeState extends Skill {
 	 */
 	@Override
 	public Action makeAction(Tile target) {
-		return new ChangeStateAction(source, target,
-				targetState);
+		return new ChangeStateAction(sourceID, targetState);
 	}
 
 	/*
@@ -55,7 +54,7 @@ public class ChangeState extends Skill {
 	 */
 	@Override
 	public boolean canTargetTile(Tile t) {
-		return t == source.getLocation();
+		return t == getSource().getLocation();
 	}
 
 	/*

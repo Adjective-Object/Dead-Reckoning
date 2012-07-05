@@ -1,4 +1,4 @@
-package net.plaidypus.deadreckoning.state;
+package net.plaidypus.deadreckoning.state.menustates;
 
 import java.util.ArrayList;
 
@@ -8,6 +8,8 @@ import net.plaidypus.deadreckoning.hudelements.button.Button;
 import net.plaidypus.deadreckoning.hudelements.button.ImageButton;
 import net.plaidypus.deadreckoning.hudelements.menuItems.FairyLights;
 import net.plaidypus.deadreckoning.hudelements.simple.StillImageElement;
+import net.plaidypus.deadreckoning.state.HudLayersState;
+import net.plaidypus.deadreckoning.state.PrebakedHudLayersState;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;

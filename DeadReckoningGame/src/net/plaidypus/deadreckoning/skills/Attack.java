@@ -27,8 +27,8 @@ public class Attack extends Skill {
 	 * @param source
 	 *            the source
 	 */
-	public Attack(LivingEntity source) {
-		super(source);
+	public Attack(int sourceID) {
+		super(sourceID);
 	}
 
 	/*
@@ -39,8 +39,8 @@ public class Attack extends Skill {
 	 */
 	@Override
 	public Action makeAction(Tile target) {
-		return new AttackAction(source, target,
-				source.getStatMaster().getSTR(), false);
+		return new AttackAction(sourceID, target,
+				getSource().getStatMaster().getSTR(), false);
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class Attack extends Skill {
 	 */
 	public boolean canTargetTile(Tile t) {
 		if (!t.isOpen(Tile.LAYER_ACTIVE)
-				&& !(t.getX() == source.getX() && t.getY() == source.getY())) {
+				&& !(t.getX() == getSource().getX() && t.getY() == getSource().getY())) {
 			return t.getEntity(Tile.LAYER_ACTIVE).makesActions();
 		}
 		return false;
@@ -68,7 +68,7 @@ public class Attack extends Skill {
 	 */
 	@Override
 	public void highlightRange(GameBoard board) {
-		highlightRadial(board, source.getAttackRange());
+		highlightRadial(board, getSource().getAttackRange());
 	}
 
 	@Override

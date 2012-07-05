@@ -1,6 +1,7 @@
 package net.plaidypus.deadreckoning.skills;
 
 import net.plaidypus.deadreckoning.DeadReckoningComponent;
+import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
@@ -35,7 +36,7 @@ public abstract class Skill extends DeadReckoningComponent {
 	Image imageIcon;
 
 	/** The source. */
-	protected LivingEntity source;
+	protected int sourceID;
 
 	/**
 	 * Instantiates a new skill.
@@ -55,8 +56,8 @@ public abstract class Skill extends DeadReckoningComponent {
 	 * @param source
 	 *            the source
 	 */
-	public Skill(LivingEntity source) {
-		this.source = source;
+	public Skill(int sourceID) {
+		this.sourceID = sourceID;
 	}
 
 	/**
@@ -78,7 +79,7 @@ public abstract class Skill extends DeadReckoningComponent {
 	 *            the source
 	 */
 	public void bindTo(LivingEntity source) {
-		this.source = source;
+		this.sourceID = source.getID();
 	}
 
 	/**
@@ -124,8 +125,8 @@ public abstract class Skill extends DeadReckoningComponent {
 		board.clearHighlightedSquares();
 		for (int vy = 0; vy < board.getHeight(); vy++) {
 			for (int vx = 0; vx < board.getWidth(); vx++) {
-				if (Math.sqrt(Math.pow(source.getX() - vx, 2)
-						+ Math.pow(source.getY() - vy, 2)) <= range) {
+				if (Math.sqrt(Math.pow(GameBoard.getEntity(sourceID).getX() - vx, 2)
+						+ Math.pow(GameBoard.getEntity(sourceID).getY() - vy, 2)) <= range) {
 					if (canTargetTile(board.getTileAt(vx, vy))
 							&& board.getTileAt(vx, vy).lightLevel >= 1) {
 						board.getTileAt(vx, vy).setHighlighted(
@@ -273,6 +274,10 @@ public abstract class Skill extends DeadReckoningComponent {
 	public int getCooldown() {
 		return cooldown;
 	}
+	
+	public LivingEntity getSource(){
+		return (LivingEntity)GameBoard.getEntity(sourceID);
+	}
 
 	/**
 	 * loads the resources needed for this class
@@ -282,4 +287,8 @@ public abstract class Skill extends DeadReckoningComponent {
 	 * @throws SlickException
 	 */
 	public abstract void init() throws SlickException;
+
+	public void setSource(int entityID) {
+		this.sourceID = entityID;
+	}
 }

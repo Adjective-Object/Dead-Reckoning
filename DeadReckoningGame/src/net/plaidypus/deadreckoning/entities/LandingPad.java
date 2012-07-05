@@ -35,8 +35,8 @@ public class LandingPad extends Entity {
 	 * @param fromFloor
 	 *            the from floor
 	 */
-	public LandingPad(Tile t, int layer, String fromFloor) {
-		super(t, layer);
+	public LandingPad( String fromFloor) {
+		super();
 		this.fromFloor = fromFloor;
 	}
 
@@ -134,9 +134,11 @@ public class LandingPad extends Entity {
 	 */
 	@Override
 	public Entity makeFromString(GameBoard target, String[] attributes) {
-		return new LandingPad(target.getTileAt(Integer.parseInt(attributes[1]),
-				Integer.parseInt(attributes[2])),
-				Integer.parseInt(attributes[3]), attributes[4]);
+		LandingPad l = new LandingPad(attributes[4]);
+		l.placeAt(
+				target.getTileAt(Integer.parseInt(attributes[1]), Integer.parseInt(attributes[2])),
+				Integer.parseInt(attributes[3]));
+		return l;
 	}
 
 	/*

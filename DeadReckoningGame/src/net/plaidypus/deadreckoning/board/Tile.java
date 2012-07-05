@@ -117,8 +117,7 @@ public class Tile {
 	 *            the layer
 	 */
 	protected void setEntity(Entity e, int layer) {
-		e.setLayer(layer);
-		e.setLocation(this);
+		e.setLocation(this,layer);
 		containedEntities[layer] = e;
 	}
 
@@ -418,5 +417,11 @@ public class Tile {
 	 */
 	public String toString() {
 		return "Tile[" + x + "," + y + "]";
+	}
+	
+	public void swapLayers(int layer1, int layer2){
+		Entity e1 = containedEntities[layer1], e2 = containedEntities[layer2];
+		containedEntities[layer2]=e1;
+		containedEntities[layer1]=e2;
 	}
 }

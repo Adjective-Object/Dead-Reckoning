@@ -45,9 +45,8 @@ public class Chest extends InteractiveEntity {
 	 * @param items
 	 *            the items
 	 */
-	public Chest(Tile t, int layer, ArrayList<Item> items) {
-		super(t, layer);
-		this.setLocation(t);
+	public Chest(ArrayList<Item> items) {
+		super();
 		this.setVisible(true);
 		this.inventory.addAll(items);
 		this.setName("a chest");
@@ -119,16 +118,11 @@ public class Chest extends InteractiveEntity {
 	 */
 	@Override
 	public Entity makeFromString(GameBoard g, String[] toload) throws SlickException{
-		ArrayList<Item> content = new ArrayList<Item>(0);
-		for (int i = 4; i < toload.length; i++) {
-			content.add(new EtcDrop("core", Integer.parseInt(toload[i]), 1));// TODO
-			// equip parsing
-			// making it not automatically assume everything belongs to modpack
-			// "core"
-		}
-		return new Chest(g.getTileAt(Integer.parseInt(toload[1]),
-				Integer.parseInt(toload[2])), Integer.parseInt(toload[3]),
-				content);
+		Chest c = new Chest(new ArrayList<Item>(0));
+		c.placeAt(g.getTileAt(Integer.parseInt(toload[1]),
+				Integer.parseInt(toload[2])), Integer.parseInt(toload[3]));
+		super.loadItems(this, toload[4].split(","));
+		return c;
 	}
 
 	/*
@@ -138,8 +132,7 @@ public class Chest extends InteractiveEntity {
 	 */
 	@Override
 	public String saveToString() {
-		// TODO Auto-generated method stub
-		return null;
+		return super.getGenericSave() + super.getInventoryAsString(this.inventory, -1);
 	}
 
 	/*
@@ -182,7 +175,7 @@ public class Chest extends InteractiveEntity {
 	 */
 	@Override
 	public Action onInteract(Entity observer) {
-		return new LootAction(observer, this.getLocation(), this.getLayer());
+		return new LootAction(observer.getID(), this.getLocation(), this.getLayer());
 	}
 
 }

@@ -17,6 +17,7 @@ import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.professions.SkillProgression;
 import net.plaidypus.deadreckoning.skills.Skill;
 import net.plaidypus.deadreckoning.state.HudLayersState;
+import net.plaidypus.deadreckoning.state.PrebakedHudLayersState;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -32,14 +33,14 @@ import org.newdawn.slick.state.StateBasedGame;
  * along with viewing the player's skills, and when skill points are available,
  * editing them.
  */
-public class PlayerViewerState extends HudLayersState {
+public class PlayerViewerState extends PrebakedHudLayersState {
 
 	/** The Constant ofY. */
 	static final int ofX = 50, ofY = 50;
 
 	/** The stat panel. */
 	Panel buttonPanel, statPanel;
-
+	
 	/** The source prof. */
 	Profession sourceProf;
 
@@ -51,11 +52,10 @@ public class PlayerViewerState extends HudLayersState {
 	 * 
 	 * @param stateID
 	 *            the state id
+	 * @throws SlickException 
 	 */
-	public PlayerViewerState(int stateID) {
-		super(stateID, makeState());
-		this.buttonPanel = (Panel) this.contents.get(1);
-		this.statPanel = (Panel) this.contents.get(2);
+	public PlayerViewerState(int stateID, ArrayList<HudElement> background) throws SlickException {
+		super(stateID, background);
 	}
 
 	/*
@@ -85,14 +85,10 @@ public class PlayerViewerState extends HudLayersState {
 		}
 	}
 
-	/**
-	 * builds the state from a player
-	 * 
-	 * @see net.plaidypus.deadreckoning.state.HudLayersState#makeFrom(java.lang.Object[])
-	 */
-	public void makeFrom(Object[] args) {
-		this.contents.get(0).makeFrom(args[0]);
-		Player p = (Player) (args[1]);
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
+		super.enter(container, game);
+		
+		Player p = DeadReckoningGame.instance.getGameElement().player;
 		this.sourceProf = p.getProfession();
 
 		ArrayList<Skill> skills = this.sourceProf.getSkillList();
@@ -136,6 +132,7 @@ public class PlayerViewerState extends HudLayersState {
 		this.buttonPanel.bakeBorders();
 		this.statPanel.makeFrom(new Object[] { p.profession.getPortriat(), p });
 
+
 	}
 
 	/**
@@ -176,6 +173,7 @@ public class PlayerViewerState extends HudLayersState {
 					}
 				}
 
+				
 				this.buttonPanel.getContents().get(i * 4 + s).makeFrom(img);
 				this.buttonPanel
 						.getContents()
@@ -201,10 +199,8 @@ public class PlayerViewerState extends HudLayersState {
 	 * 
 	 * @return the array list
 	 */
-	public static ArrayList<HudElement> makeState() {
+	public ArrayList<HudElement> makeContents() {
 		ArrayList<HudElement> elements = new ArrayList<HudElement>(0);
-		elements.add(new StillImageElement(0, 0, HudElement.TOP_LEFT));
-
 		// building skill buttons
 		ArrayList<HudElement> skillButton = new ArrayList<HudElement>(12), playerWindow = new ArrayList<HudElement>(
 				2);
@@ -225,8 +221,10 @@ public class PlayerViewerState extends HudLayersState {
 				HudElement.CENTER_RIGHT));// TODO replace with stat display
 											// element;
 
-		elements.add(new Panel(skillButton));
-		elements.add(new Panel(playerWindow));
+		buttonPanel = new Panel(skillButton);
+		elements.add(buttonPanel);
+		statPanel = new Panel(playerWindow);
+		elements.add(statPanel);
 
 		elements.add(new ReturnToGameElement(KeyConfig.VIEWPLAYER));
 

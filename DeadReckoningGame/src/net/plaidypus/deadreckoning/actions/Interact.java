@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.actions;
 
+import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 
@@ -17,8 +18,8 @@ public class Interact extends Action {
 	 * @param target
 	 *            the target
 	 */
-	public Interact(Entity source, Tile target) {
-		super(source, target);
+	public Interact(int sourceID, Tile target) {
+		super(sourceID, target);
 	}
 
 	/*
@@ -40,8 +41,8 @@ public class Interact extends Action {
 	protected boolean apply(int delta) {
 		for (int i = Tile.numLayers - 1; i >= 0; i--) {
 			if (!target.isOpen(i)) {
-				source.getParent().getGame()
-						.addAction(target.getEntity(i).onInteract(source));
+				GameBoard.getEntity(this.sourceID).getParent().getGame()
+						.addAction(target.getEntity(i).onInteract(GameBoard.getEntity(this.sourceID)));
 				break;
 			}
 		}

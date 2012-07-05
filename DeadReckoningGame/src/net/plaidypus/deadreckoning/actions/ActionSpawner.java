@@ -2,6 +2,7 @@ package net.plaidypus.deadreckoning.actions;
 
 import java.util.ArrayList;
 
+import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.entities.Entity;
 
 // TODO: Auto-generated Javadoc
@@ -21,8 +22,8 @@ public class ActionSpawner extends Action {
 	 * @param actions
 	 *            the actions
 	 */
-	public ActionSpawner(Entity source, ArrayList<Action> actions) {
-		super(source, source.getLocation());
+	public ActionSpawner(int source, ArrayList<Action> actions) {
+		super(source, null);
 		this.actions = actions;
 	}
 
@@ -33,7 +34,7 @@ public class ActionSpawner extends Action {
 	 */
 	protected boolean apply(int delta) {
 		for (int i = 0; i < actions.size(); i++) {
-			source.getParent().getGame().addAction(actions.get(i));
+			GameBoard.getEntity(this.sourceID).getParent().getGame().addAction(actions.get(i));
 		}
 		return true;
 	}

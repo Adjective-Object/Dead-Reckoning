@@ -28,33 +28,10 @@ public abstract class Status extends DeadReckoningComponent{
 	public String description, identifier;
 
 	/** The stacks=# stacks of a given buff. */
-	int statusID, duration, stacks, sourceID;
-
-	/** The source. */
-	public InteractiveEntity source;
-
-	/**
-	 * Instantiates a new status object.
-	 * 
-	 * @param source
-	 *            the source
-	 * @param tileImage
-	 *            the tile image
-	 * @param description
-	 *            the description
-	 * @param identifier
-	 *            the identifier
-	 */
-	public Status(InteractiveEntity source, Image tileImage,
-			String description, String identifier) {
-		this.description = description;
-		this.identifier = identifier;
-		this.tileImage = tileImage;
-		this.source = source;
-		this.stacks = 1;
-	}
+	protected Integer sourceID;
+	protected int duration, stacks;
 	
-	public Status(int sourceID, Image tileImage,
+	public Status(Integer sourceID, Image tileImage,
 			String description, String identifier) {
 		this.description = description;
 		this.identifier = identifier;
@@ -147,17 +124,13 @@ public abstract class Status extends DeadReckoningComponent{
 
 	public abstract void alterStatMaster(StatMaster statMaster);
 	
-	public void updateToSource(GameBoard board){
-		this.source=(InteractiveEntity)board.getEntityFromID(this.sourceID);
-	}
-	
 	public abstract String saveToString();
 	
 	public abstract Status loadFromString(String[] args);
 	
 	public String getGenericSave(){
-		return	this.getClass().toString()+"-"
-				+this.source.getID()+"-"
+		return	this.getClass().getCanonicalName()+"-"
+				+this.sourceID+"-"
 				+this.stacks+"-"
 				+this.duration;
 	}

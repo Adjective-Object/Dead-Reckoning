@@ -254,6 +254,7 @@ public class Save {
 			}
 			definition = r.readLine();
 		}
+		
 		return entities;
 	}
 
@@ -501,9 +502,9 @@ public class Save {
 		int currentHP = Integer.parseInt(r.readLine());
 		int currentMP = Integer.parseInt(r.readLine());
 
-		Player player = new Player(null, Tile.LAYER_ACTIVE, p, c.getInput());
+		Player player = new Player(p, c.getInput());
 		
-		player.setLocation(b.getTileAt(tileX, tileY));
+		player.placeAt(b.getTileAt(tileX, tileY),Tile.LAYER_ACTIVE);
 		player.EXP = currentEXP;
 		player.HP=currentHP;
 		player.MP=currentMP;

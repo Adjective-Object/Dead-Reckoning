@@ -67,7 +67,7 @@ public abstract class RoomBasedBiome extends Biome {
 				}
 			}
 			board.placeEntity(t, linkedLevels.get(i), Tile.LAYER_PASSIVE_MAP);
-			board.placeEntity(t.getToLeft(), new LandingPad(null, Tile.LAYER_PASSIVE_MAP, linkedLevels.get(i).targetFloor),Tile.LAYER_PASSIVE_MAP);
+			board.placeEntity(t.getToLeft(), new LandingPad(linkedLevels.get(i).targetFloor),Tile.LAYER_PASSIVE_MAP);
 		}
 		return board;
 	}

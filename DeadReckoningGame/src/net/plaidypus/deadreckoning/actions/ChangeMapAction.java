@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.actions;
 
+import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 
@@ -27,9 +28,9 @@ public class ChangeMapAction extends Action {
 	 * @param toOverWrite
 	 *            the to over write
 	 */
-	public ChangeMapAction(Entity source, Tile target, int layer,
+	public ChangeMapAction(int sourceID, Tile target, int layer,
 			Entity toOverWrite) {
-		super(source, target);
+		super(sourceID, target);
 		toWrite = toOverWrite;
 		this.layer = layer;
 		takesTurn = false;
@@ -41,7 +42,7 @@ public class ChangeMapAction extends Action {
 	 * @see net.plaidypus.deadreckoning.actions.Action#apply(int)
 	 */
 	protected boolean apply(int delta) {
-		source.getParent().placeEntity(target, toWrite, layer);
+		GameBoard.getEntity(this.sourceID).getParent().placeEntity(target, toWrite, layer);
 		return true;
 	}
 

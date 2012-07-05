@@ -30,14 +30,15 @@ import net.plaidypus.deadreckoning.hudelements.simple.StillImageElement;
 import net.plaidypus.deadreckoning.hudelements.simple.StringPutter;
 import net.plaidypus.deadreckoning.hudelements.simple.TextElement;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
-import net.plaidypus.deadreckoning.state.ClassCreationState;
 import net.plaidypus.deadreckoning.state.HudLayersState;
-import net.plaidypus.deadreckoning.state.MainMenuState;
-import net.plaidypus.deadreckoning.state.NewGameState;
-import net.plaidypus.deadreckoning.state.OptionsState;
-import net.plaidypus.deadreckoning.state.SaveSelectorState;
+import net.plaidypus.deadreckoning.state.menustates.ClassCreationState;
+import net.plaidypus.deadreckoning.state.menustates.MainMenuState;
+import net.plaidypus.deadreckoning.state.menustates.NewGameState;
+import net.plaidypus.deadreckoning.state.menustates.OptionsState;
+import net.plaidypus.deadreckoning.state.menustates.SaveSelectorState;
 import net.plaidypus.deadreckoning.state.substates.DeathScreenState;
 import net.plaidypus.deadreckoning.state.substates.InGameMenuState;
+import net.plaidypus.deadreckoning.state.substates.InventoryState;
 import net.plaidypus.deadreckoning.state.substates.LootState;
 import net.plaidypus.deadreckoning.state.substates.PlayerViewerState;
 
@@ -272,45 +273,54 @@ public class DeadReckoningGame extends StateBasedGame {
 			{
 				this.addState(new MainMenuState(MAINMENUSTATE, menuBackground));
 
-				this.addState(new HudLayersState(GAMEPLAYSTATE, new HudElement[] {
-						game,
-						new PlayerHudElement(10, 10, HudElement.TOP_LEFT, game),
-						new StatusTrackerElement(10, 120, HudElement.TOP_LEFT, game),
-						new SkillMonitorElement(-200, -45, HudElement.BOTTOM_CENTER,
-								game),
-								new MiniMap(-3, 1, HudElement.TOP_RIGHT, 2, 70, 70, game),
-								messages }));
-
-
+				this.addState(
+					new HudLayersState(GAMEPLAYSTATE,
+						new HudElement[] {
+							game,
+							new PlayerHudElement(10, 10, HudElement.TOP_LEFT, game),
+							new StatusTrackerElement(10, 120, HudElement.TOP_LEFT, game),
+							new SkillMonitorElement(-200, -45, HudElement.BOTTOM_CENTER,
+									game),
+							new MiniMap(-3, 1, HudElement.TOP_RIGHT, 2, 70, 70, game),
+							messages
+						}
+					)
+				);
+				
+				
 				this.addState(new LootState(LOOTSTATE,subBackground));
 
-				ItemGridElement g = new ItemGridElement(0, 0, HudElement.CENTER_CENTER);
-				g.personalBindMethod=HudElement.CENTER_CENTER;
-				this.addState(new HudLayersState(INVENTORYSTATE, new HudElement[] {
-						new StillImageElement(0, 0, HudElement.TOP_LEFT), messages,
-						g,
-						new ReturnToGameElement(KeyConfig.INVENTORY) }));
+				this.addState(new InventoryState(INVENTORYSTATE,subBackground));
 
-				this.addState(new HudLayersState(MAPSTATE, new HudElement[] {
-						new StillImageElement(0, 0, HudElement.TOP_LEFT), messages,
-						new BigMap(0,0,HudElement.CENTER_CENTER, game),
-						new ReturnToGameElement(KeyConfig.MINIMAP)
-				}));
-
-				this.addState(new HudLayersState(ERRORSTATE, new HudElement[] {
-						new ColorFiller(menuBackgroundColor),
-						new TextElement(0, 0, HudElement.TOP_LEFT, "", menuTextColor,
-								menuFont) }));
+				this.addState(
+					new HudLayersState(MAPSTATE,
+						new HudElement[] {
+							messages,
+							new BigMap(0,0,HudElement.CENTER_CENTER, game),
+							new ReturnToGameElement(KeyConfig.MINIMAP)
+						},
+						subBackground
+					)
+				);
+				
+				this.addState(
+					new HudLayersState(ERRORSTATE,
+						new HudElement[] {
+							new ColorFiller(menuBackgroundColor),
+							new TextElement(0, 0, HudElement.TOP_LEFT, "", menuTextColor,
+								menuFont)
+						}
+					)
+				);
 
 				this.addState(new SaveSelectorState(SAVESELECTSTATE, menuBackground));
-				this.addState(new PlayerViewerState(SKILLSTATE));
+				this.addState(new PlayerViewerState(SKILLSTATE, subBackground));
 				this.addState(new NewGameState(NEWGAMESTATE, menuBackground));
 				this.addState(new DeathScreenState(DEATHSTATE,subBackground));
 				this.addState(new ClassCreationState(NEWCLASSSTATE, menuBackground));
 				this.addState(new OptionsState(OPTIONSSTATE, menuBackground));
 				this.addState(new InGameMenuState(INGAMEMENUSTATE,subBackground));
-
-
+				
 				this.enterState(MAINMENUSTATE);
 			}
 			catch (Exception e)

@@ -27,21 +27,14 @@ public class Door extends Entity {
 
 	/**
 	 * Instantiates a new door.
-	 */
-	public Door() {
-		super();
-	}
-
-	/**
-	 * Instantiates a new door.
 	 * 
 	 * @param t
 	 *            the t
 	 * @param layer
 	 *            the layer
 	 */
-	public Door(Tile t, int layer) {
-		super(t, layer);
+	public Door() {
+		super();
 		open = false;
 		this.isTerrain = true;
 	}
@@ -147,8 +140,12 @@ public class Door extends Entity {
 	 */
 	@Override
 	public Entity makeFromString(GameBoard target, String[] toload) {
-		return new Door(target.getTileAt(Integer.parseInt(toload[1]),
-				Integer.parseInt(toload[2])), Integer.parseInt(toload[3]));
+		Door d = new Door();
+		d.placeAt(
+				target.getTileAt(Integer.parseInt(toload[1]), Integer.parseInt(toload[2])),
+				Integer.parseInt(toload[3]));
+		return d;
+				
 	}
 
 	/*
@@ -183,10 +180,10 @@ public class Door extends Entity {
 		Tile t = this.getLocation();
 		if (open && t.isOpen(Tile.LAYER_PASSIVE_MAP)) {
 			t.getParent().removeEntity(this);
-			t.getParent().placeEntity(t, this, Tile.LAYER_PASSIVE_MAP);
+			t.getParent().insertEntity(this.getID(),t, this, Tile.LAYER_PASSIVE_MAP);
 		} else if (t.isOpen(Tile.LAYER_ACTIVE)){
 			t.getParent().removeEntity(this);
-			t.getParent().placeEntity(t, this, Tile.LAYER_ACTIVE);
+			t.getParent().insertEntity(this.getID(),t, this, Tile.LAYER_ACTIVE);
 		}
 		return null;
 	}

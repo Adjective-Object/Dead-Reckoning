@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.actions;
 
+import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 
@@ -25,10 +26,10 @@ public class MoveAction extends Action {
 	 * @param destLayer
 	 *            the dest layer
 	 */
-	public MoveAction(Entity source, Tile destination, int destLayer) {
-		super(source, destination);
+	public MoveAction(int sourceID, Tile destination, int destLayer) {
+		super(sourceID, destination);
 		animate = false;
-		if (destination.isVisible() || source.isVisible()) {
+		if (destination.isVisible() || GameBoard.getEntity(this.sourceID).isVisible()) {
 			animate = true;
 		}
 		this.destLayer = destLayer;
@@ -40,6 +41,7 @@ public class MoveAction extends Action {
 	 * @see net.plaidypus.deadreckoning.actions.Action#apply(int)
 	 */
 	public boolean apply(int delta) {
+		Entity source = GameBoard.getEntity(this.sourceID);
 		if (target.getX() < source.getX()) {
 			source.setFacing(false);
 		} else if (target.getX() > source.getX()) {

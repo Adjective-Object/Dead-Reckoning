@@ -10,13 +10,13 @@ import org.newdawn.slick.SlickException;
 
 public class Saver extends Skill{
 	
-	public Saver(LivingEntity source){
-		super(source);
+	public Saver(int sourceID){
+		super(sourceID);
 	}
 	
 	@Override
 	public Action makeAction(Tile target) {
-		return new SaveGameAction(source, target);
+		return new SaveGameAction(sourceID);
 	}
 
 	@Override

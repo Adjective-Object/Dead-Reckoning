@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.actions;
 
+import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.entities.Entity;
 
 // TODO: Auto-generated Javadoc
@@ -14,23 +15,8 @@ public class WaitAction extends Action {
 	 * @param source
 	 *            the source
 	 */
-	public WaitAction(Entity source) {
-		super(source, source.getLocation());
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * Instantiates a new wait action.
-	 * 
-	 * @param source
-	 *            the source
-	 * @param takesTurn
-	 *            the takes turn
-	 */
-	public WaitAction(Entity source, boolean takesTurn) {
-		super(source, source.getLocation());
-		this.takesTurn = takesTurn;
-		// TODO Auto-generated constructor stub
+	public WaitAction(int sourceID) {
+		super(sourceID, null);
 	}
 
 	/*
@@ -48,7 +34,7 @@ public class WaitAction extends Action {
 	 * @return the message
 	 */
 	public String getMessage() {
-		return source.getName() + " is useless";
+		return GameBoard.getEntity(this.sourceID).getName() + " is useless";
 	}
 
 	/*

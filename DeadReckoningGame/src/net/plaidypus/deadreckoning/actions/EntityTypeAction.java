@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.actions;
 
+import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
@@ -24,8 +25,8 @@ public abstract class EntityTypeAction extends Action {
 	 * @param targetLayer
 	 *            the target layer
 	 */
-	public EntityTypeAction(Entity source, Tile target, int targetLayer) {
-		super(source, target);
+	public EntityTypeAction(int sourceID, Tile target, int targetLayer) {
+		super(sourceID, target);
 		layer = targetLayer;
 	}
 
@@ -35,10 +36,10 @@ public abstract class EntityTypeAction extends Action {
 	 * @see net.plaidypus.deadreckoning.actions.Action#apply(int)
 	 */
 	protected boolean apply(int delta) {
-		if (target.getX() > source.getX()) {
-			source.setFacing(true);
-		} else if (target.getX() < source.getX()) {
-			source.setFacing(false);
+		if (target.getX() > GameBoard.getEntity(this.sourceID).getX()) {
+			GameBoard.getEntity(this.sourceID).setFacing(true);
+		} else if (target.getX() < GameBoard.getEntity(this.sourceID).getX()) {
+			GameBoard.getEntity(this.sourceID).setFacing(false);
 		}
 		
 		

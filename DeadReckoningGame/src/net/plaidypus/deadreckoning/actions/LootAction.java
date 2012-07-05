@@ -1,6 +1,7 @@
 package net.plaidypus.deadreckoning.actions;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
+import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
@@ -26,8 +27,8 @@ public class LootAction extends EntityTypeAction { // TODO make it so you can
 	 * @param targetLayer
 	 *            the target layer
 	 */
-	public LootAction(Entity source, Tile target, int targetLayer) {
-		super(source, target, targetLayer);
+	public LootAction(int sourceID, Tile target, int targetLayer) {
+		super(sourceID, target, targetLayer);
 	}
 
 	/*
@@ -53,9 +54,9 @@ public class LootAction extends EntityTypeAction { // TODO make it so you can
 	 */
 	protected boolean applyToEntity(InteractiveEntity e) {
 		DeadReckoningGame.instance.getMessageElement().addMessage(
-				source.getName() + " looted "
+				GameBoard.getEntity(this.sourceID).getName() + " looted "
 						+ target.getEntity(this.layer).getName());
-		return gotoLootScreen(((InteractiveEntity) source), e);
+		return gotoLootScreen(((InteractiveEntity) GameBoard.getEntity(this.sourceID)), e);
 	}
 
 	/*
@@ -73,9 +74,9 @@ public class LootAction extends EntityTypeAction { // TODO make it so you can
 			return true;
 		} else {
 			DeadReckoningGame.instance.getMessageElement().addMessage(
-					source.getName() + " looted "
+					GameBoard.getEntity(this.sourceID).getName() + " looted "
 							+ target.getEntity(this.layer).getName());
-			return gotoLootScreen(((InteractiveEntity) source), e);
+			return gotoLootScreen(((InteractiveEntity) GameBoard.getEntity(this.sourceID)), e);
 		}
 	}
 

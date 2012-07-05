@@ -51,12 +51,17 @@ public class HudLayersState extends BasicGameState{
 	 * @param elementsarr
 	 *            the elementsarr
 	 */
-	public HudLayersState(int stateID, HudElement[] elementsarr) {
+	public HudLayersState(int stateID, HudElement[] elementsarr, ArrayList<HudElement> background) {
 		this.stateID = stateID;
 		contents = new ArrayList<HudElement>(0);
+		contents.addAll(background);
 		for (int i = 0; i < elementsarr.length; i++) {
 			contents.add(elementsarr[i]);
 		}
+	}
+
+	public HudLayersState(int stateID, HudElement[] hudElements) {
+		this(stateID, hudElements, new ArrayList<HudElement>(0));
 	}
 
 	/**

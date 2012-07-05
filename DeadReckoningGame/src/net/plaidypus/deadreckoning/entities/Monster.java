@@ -47,11 +47,11 @@ public class Monster extends LivingEntity {
 	 * @param allign
 	 *            the allign
 	 */
-	public Monster(Tile targetTile, int layer, String parentMod,
-			String entityFile, StatMaster stats, int allign) {
-		super(targetTile, layer, parentMod, entityFile, stats, allign);
-		movement = new Movement(this);
-		attack = new Attack(this);
+	public Monster(String parentMod, String entityFile,
+			StatMaster stats, int allign) {
+		super(parentMod, entityFile, stats, allign);
+		movement = new Movement(this.getID());
+		attack = new Attack(this.getID());
 		this.skills.add(movement);
 		this.skills.add(attack);
 	}
@@ -66,7 +66,6 @@ public class Monster extends LivingEntity {
 	 * @return the action
 	 */
 	public Action decideNextAction(GameContainer gc, int delta) {
-
 		for (int i = -1; i < 2; i++) {
 			for (int q = -1; q < 2; q++) {
 				for (int k = 0; k < Tile.numLayers; k++) {
@@ -94,7 +93,7 @@ public class Monster extends LivingEntity {
 			return movement.makeAction(dest);
 		}
 
-		return new WaitAction(this);
+		return new WaitAction(this.getID());
 	}
 
 	/*
@@ -117,15 +116,16 @@ public class Monster extends LivingEntity {
 	@Override
 	// TODO loading from jarfile
 	public Entity makeFromString(GameBoard g, String[] toload) {
-		Monster toRet = new Monster(g.getTileAt(Integer.parseInt(toload[1]), Integer.parseInt(toload[2])),// tile
-				Integer.parseInt(toload[3]),// layer
-				toload[10], toload[11],// parentMod , entityfile
+		Monster toRet = new Monster(toload[10], toload[11],// parentMod , entityfile
 				super.loadStatMaster(toload[8].split(",")),//statmaster
 				Integer.parseInt(toload[9]));// Alignment
-		this.loadItems(toRet,toload[4].split(","));
-		this.loadStatuses(toRet, toload[5].split(","));
-		this.HP=Integer.parseInt(toload[6]);
-		this.MP=Integer.parseInt(toload[7]);
+		toRet.placeAt(
+				g.getTileAt(Integer.parseInt(toload[1]), Integer.parseInt(toload[2])),
+				Integer.parseInt(toload[3]));
+		toRet.loadItems(toRet,toload[4].split(","));
+		toRet.loadStatuses(toRet, toload[5].split(","));
+		toRet.HP=Integer.parseInt(toload[6]);
+		toRet.MP=Integer.parseInt(toload[7]);
 		return toRet;
 	}
 	

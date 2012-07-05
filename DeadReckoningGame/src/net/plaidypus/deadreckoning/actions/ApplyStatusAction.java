@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.actions;
 
+import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
@@ -27,9 +28,9 @@ public class ApplyStatusAction extends EntityTypeAction {
 	 * @param toApply
 	 *            the to apply
 	 */
-	public ApplyStatusAction(Entity source, Tile target, int targetTile,
+	public ApplyStatusAction(int sourceID, Tile target, int targetTile,
 			Status toApply) {
-		super(source, target, targetTile);
+		super(sourceID, target, targetTile);
 		this.s = toApply;
 	}
 
@@ -75,7 +76,7 @@ public class ApplyStatusAction extends EntityTypeAction {
 	 * @see net.plaidypus.deadreckoning.actions.Action#isNoticed()
 	 */
 	protected boolean isNoticed() {
-		return target.canBeSeen() || source.getLocation().canBeSeen();
+		return target.canBeSeen() || GameBoard.getEntity(this.sourceID).getLocation().canBeSeen();
 	}
 
 }

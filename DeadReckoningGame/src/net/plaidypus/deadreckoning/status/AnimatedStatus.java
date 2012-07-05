@@ -21,8 +21,8 @@ public abstract class AnimatedStatus extends Status {
 	/**
 	 * Instantiates a new animated status.
 	 * 
-	 * @param source
-	 *            the source
+	 * @param sourceID
+	 *            the source's ID
 	 * @param tile
 	 *            the tile image
 	 * @param description
@@ -32,13 +32,7 @@ public abstract class AnimatedStatus extends Status {
 	 * @param effectAnimation
 	 *            the animation applies over the target Entity
 	 */
-	public AnimatedStatus(InteractiveEntity source, Image tile,
-			String description, String identifier, Animation effectAnimation) {
-		super(source, tile, description, identifier);
-		this.animation = effectAnimation;
-	}
-	
-	public AnimatedStatus(int sourceID, Image tile,
+	public AnimatedStatus(Integer sourceID, Image tile,
 			String description, String identifier, Animation effectAnimation) {
 		super(sourceID, tile, description, identifier);
 		this.animation = effectAnimation;

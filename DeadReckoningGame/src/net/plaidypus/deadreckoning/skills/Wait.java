@@ -27,8 +27,8 @@ public class Wait extends Skill {
 	 * @param l
 	 *            the l
 	 */
-	public Wait(LivingEntity l) {
-		super(l);
+	public Wait(int sourceID) {
+		super(sourceID);
 	}
 
 	/*
@@ -39,7 +39,7 @@ public class Wait extends Skill {
 	 */
 	@Override
 	public Action makeAction(Tile target) {
-		return new WaitAction(source);
+		return new WaitAction(sourceID);
 	}
 
 	/*
@@ -51,7 +51,7 @@ public class Wait extends Skill {
 	 */
 	@Override
 	public boolean canTargetTile(Tile t) {
-		return t == source.getLocation();
+		return t == getSource().getLocation();
 	}
 
 	/*

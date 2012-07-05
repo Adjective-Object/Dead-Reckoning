@@ -1,4 +1,4 @@
-package net.plaidypus.deadreckoning.status;
+package core.statuses;
 
 import java.util.ArrayList;
 
@@ -9,6 +9,8 @@ import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.professions.StatMaster;
+import net.plaidypus.deadreckoning.status.AnimatedStatus;
+import net.plaidypus.deadreckoning.status.Status;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
@@ -35,23 +37,6 @@ public class OnFire extends AnimatedStatus {
 
 	public OnFire(){
 		super(null,null,null,null,null);
-	}
-	
-	/**
-	 * Instantiates a new on fire status.
-	 * 
-	 * @param source
-	 *            the source
-	 * @param duration
-	 *            the duration
-	 * @param power
-	 *            the power
-	 */
-	public OnFire(InteractiveEntity source, int duration, int power) {
-		super(source, image, details, "OnFire", new Animation(sprite, 60));
-		this.duration = duration;
-		this.power = power;
-		this.statusID = "core/status/OnFire";
 	}
 	
 	public OnFire(int sourceID, int duration, int power) {
@@ -96,7 +81,7 @@ public class OnFire extends AnimatedStatus {
 	@Override
 	public ArrayList<Action> advanceTurnEffects(LivingEntity target) {
 		ArrayList<Action> actions = new ArrayList<Action>(0);
-		actions.add(new AttackAction(source, target.getLocation(), power
+		actions.add(new AttackAction(sourceID, target.getLocation(), power
 				* this.stacks, false, false, null, null, null, null));
 		duration--;
 		System.out.println(actions);

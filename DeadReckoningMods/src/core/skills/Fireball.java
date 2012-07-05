@@ -13,12 +13,13 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.grideffects.AnimationEffect;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.skills.Skill;
-import net.plaidypus.deadreckoning.status.OnFire;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+
+import core.statuses.OnFire;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -47,8 +48,8 @@ public class Fireball extends Skill {
 	 * @param source
 	 *            the source
 	 */
-	public Fireball(LivingEntity source) {
-		super(source);
+	public Fireball(int sourceID) {
+		super(sourceID);
 		this.setName("fireball");
 		this.setDescriptor("sets target living entity on fire, dealing damage over time");
 	}
@@ -75,12 +76,12 @@ public class Fireball extends Skill {
 		ArrayList<Action> toRet = new ArrayList<Action>(0);
 		Animation an = new Animation(fireball, 40);
 		an.setLooping(false);
-		toRet.add(new ApplyStatusAction(source, target, Tile.LAYER_ACTIVE,
-				new OnFire(this.source, 2, 2 * this.level)));
-		toRet.add(new AttackAction(source, target, 2, true, true, null, null,
+		toRet.add(new ApplyStatusAction(sourceID, target, Tile.LAYER_ACTIVE,
+				new OnFire(this.sourceID, 2, 2 * this.level)));
+		toRet.add(new AttackAction(sourceID, target, 2, true, true, null, null,
 				new AnimationEffect(target, an), null));
 		this.setCooldown(10);
-		return new ActionSpawner(source, toRet);
+		return new ActionSpawner(sourceID, toRet);
 	}
 
 	/*
@@ -90,7 +91,7 @@ public class Fireball extends Skill {
 	 */
 	public void updateSkill() {
 		super.updateSkill();
-		this.levelcap = (this.source.getStatMaster().getLevel() - 1) * 1;
+		this.levelcap = (this.getSource().getStatMaster().getLevel() - 1) * 1;
 	}
 
 	/*
@@ -102,7 +103,7 @@ public class Fireball extends Skill {
 	 */
 	public boolean canTargetTile(Tile t) {
 		if (!t.isOpen(Tile.LAYER_ACTIVE)
-				&& !(t.getX() == source.getX() && t.getY() == source.getY())) {
+				&& !(t.getX() == getSource().getX() && t.getY() == getSource().getY())) {
 			return t.getEntity(Tile.LAYER_ACTIVE).makesActions();
 		}
 		return false;

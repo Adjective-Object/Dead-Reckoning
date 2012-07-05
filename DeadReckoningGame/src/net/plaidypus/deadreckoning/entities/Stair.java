@@ -41,8 +41,8 @@ public class Stair extends StaticImageEntity {
 	 * @param updownNull
 	 *            the updown null
 	 */
-	public Stair(Tile target, int layer, String targetFloor, int updownNull) {
-		super(target, layer, stairImages.get(updownNull));
+	public Stair( String targetFloor, int updownNull) {
+		super( stairImages.get(updownNull));
 		this.targetFloor = targetFloor;
 		this.updownNull = updownNull;
 		this.isTerrain = true;
@@ -121,10 +121,11 @@ public class Stair extends StaticImageEntity {
 	 */
 	@Override
 	public Entity makeFromString(GameBoard target, String[] attributes) {
-		return new Stair(target.getTileAt(Integer.parseInt(attributes[1]),
-				Integer.parseInt(attributes[2])),
-				Integer.parseInt(attributes[3]), attributes[4],
-				Integer.parseInt(attributes[5]));
+		Stair s = new Stair( attributes[4], Integer.parseInt(attributes[5]));
+		s.placeAt(
+				target.getTileAt(Integer.parseInt(attributes[1]), Integer.parseInt(attributes[2])),
+				Integer.parseInt(attributes[3]) );
+		return s;
 	}
 
 	/*
@@ -155,8 +156,7 @@ public class Stair extends StaticImageEntity {
 	 */
 	@Override
 	public Action onInteract(Entity e) {
-		return new ChangeBoardAction(this.getParent().getGame().player,
-				targetFloor);
+		return new ChangeBoardAction(this.getParent().getGame().player.getID(), targetFloor);
 	}
 
 }

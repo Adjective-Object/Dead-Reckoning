@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.actions;
 
+import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
@@ -39,8 +40,8 @@ public class AttackAction extends EntityTypeAction {
 	 * @param physical
 	 *            the physical
 	 */
-	public AttackAction(Entity source, Tile target, int damage, boolean physical) {
-		this(source, target, damage, physical, true, null, null, null, null);
+	public AttackAction(int sourceID, Tile target, int damage, boolean physical) {
+		this(sourceID, target, damage, physical, true, null, null, null, null);
 	}
 
 	/**
@@ -57,9 +58,9 @@ public class AttackAction extends EntityTypeAction {
 	 * @param animateSource
 	 *            the animate source
 	 */
-	public AttackAction(Entity source, Tile target, int damage,
+	public AttackAction(int sourceID, Tile target, int damage,
 			boolean physical, boolean animateSource) {
-		this(source, target, damage, physical, animateSource, null, null, null,
+		this(sourceID, target, damage, physical, animateSource, null, null, null,
 				null);
 	}
 
@@ -85,11 +86,11 @@ public class AttackAction extends EntityTypeAction {
 	 * @param targetBottomEffect
 	 *            the target bottom effect
 	 */
-	public AttackAction(Entity source, Tile target, int damage,
+	public AttackAction(int sourceID, Tile target, int damage,
 			boolean physical, boolean animateSource,
 			GridEffect sourceTopEffect, GridEffect sourceBottomEffect,
 			GridEffect targetTopEffect, GridEffect targetBottomEffect) {
-		super(source, target, Tile.LAYER_ACTIVE);
+		super(sourceID, target, Tile.LAYER_ACTIVE);
 		this.damage = damage;
 		this.animateSource = animateSource;
 		this.physical = physical;
@@ -130,14 +131,14 @@ public class AttackAction extends EntityTypeAction {
 	 */
 	protected boolean applyToEntity(LivingEntity e) {
 
-		LivingEntity s = (LivingEntity) source;
-		if (animateSource && source.getLocation().canBeSeen()) {
+		LivingEntity s = (LivingEntity) GameBoard.getEntity(this.sourceID);
+		if (animateSource && GameBoard.getEntity(this.sourceID).getLocation().canBeSeen()) {
 			s.setCurrentAnimation(LivingEntity.ANIMATION_ATTACK);
 		}
 		if (physical) {
-			e.damagePhysical(damage);
+			damage = e.damagePhysical(damage);
 		} else {
-			e.damageMagical(damage);
+			damage = e.damageMagical(damage);
 		}
 		if (e.HP <= 0) {
 			try {
@@ -148,8 +149,8 @@ public class AttackAction extends EntityTypeAction {
 
 		}
 
-		int xdiff = source.getX() - target.getX();
-		int ydiff = source.getY() - target.getY();
+		int xdiff = s.getX() - target.getX();
+		int ydiff = s.getY() - target.getY();
 
 		if (e.getLocation().canBeSeen()) {
 			if ((xdiff < 0 ^ e.getFacing()) || (xdiff == 0 && ydiff > 0)) {
@@ -158,9 +159,9 @@ public class AttackAction extends EntityTypeAction {
 				e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_FRONT);
 			}
 
-			e.getParent().addEffectOver(source.getLocation(),
+			e.getParent().addEffectOver(s.getLocation(),
 					this.sourceEffectTop);
-			e.getParent().addEffectUnder(source.getLocation(),
+			e.getParent().addEffectUnder(s.getLocation(),
 					this.sourceEffectBottom);
 			e.getParent().addEffectOver(target, this.targetEffectTop);
 			e.getParent().addEffectUnder(target, this.targetEffectBottom);
@@ -170,7 +171,7 @@ public class AttackAction extends EntityTypeAction {
 		}
 
 		if (damage > 0) {
-			sendMessage(source.getName() + " attacked "
+			sendMessage(s.getName() + " attacked "
 					+ target.getEntity(Tile.LAYER_ACTIVE).getName() + " for "
 					+ damage + " damage");
 		}
@@ -186,6 +187,6 @@ public class AttackAction extends EntityTypeAction {
 	 */
 	@Override
 	protected boolean isNoticed() {
-		return source.getLocation().canBeSeen() || target.canBeSeen();
+		return GameBoard.getEntity(this.sourceID).getLocation().canBeSeen() || target.canBeSeen();
 	}
 }

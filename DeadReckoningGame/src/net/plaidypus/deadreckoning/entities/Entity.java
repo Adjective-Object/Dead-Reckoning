@@ -45,18 +45,12 @@ public abstract class Entity extends DeadReckoningComponent {
 
 	/** The allignmnet. */
 	public int allignmnet;
+	
+	public int entityID=-1;
 
 	/** The Constant ALLIGN_FRIENDLY. */
 	public static final int ALLIGN_NEUTRAL = 0, ALLIGN_HOSTILE = 1,
 			ALLIGN_FRIENDLY = 2;
-
-	// Exists only for the purpose of referencing methods that should be static,
-	// but need to be abstract, because fuck Java
-	/**
-	 * Instantiates a new entity.
-	 */
-	public Entity() {
-	}
 
 	/**
 	 * Instantiates a new entity.
@@ -66,13 +60,10 @@ public abstract class Entity extends DeadReckoningComponent {
 	 * @param layer
 	 *            the layer
 	 */
-	public Entity(Tile t, int layer) {
+	public Entity() {
 		this.visible = true;
 		this.transparent = true;
 		this.allignmnet = 0;
-		if (t != null) {
-			t.getParent().placeEntity(t, this, layer);
-		}
 	}
 
 	/**
@@ -145,7 +136,7 @@ public abstract class Entity extends DeadReckoningComponent {
 	public Action getUse() {
 		DeadReckoningGame.instance.getMessageElement().addMessage(
 				"That's Not Allowed");
-		return new WaitAction(this, false);
+		return new WaitAction(this.getID());
 	}
 
 	/**
@@ -176,8 +167,8 @@ public abstract class Entity extends DeadReckoningComponent {
 	 * @param t
 	 *            the new location
 	 */
-	public void setLocation(Tile t) {
-		location = t;
+	public void placeAt(Tile t, int layer) {
+		t.getParent().placeEntity(t, this, layer);
 	}
 
 	/**
@@ -433,7 +424,16 @@ public abstract class Entity extends DeadReckoningComponent {
 	}
 	
 	public int getID() {
-		return this.getParent().getEntityID(this);
+		return this.entityID;
+	}
+	
+	public void setID(int ID) {
+		this.entityID=ID;
+	}
+
+	public void setLocation(Tile tile, int layer) {
+		this.location=tile;
+		this.layer=layer;
 	}
 
 }

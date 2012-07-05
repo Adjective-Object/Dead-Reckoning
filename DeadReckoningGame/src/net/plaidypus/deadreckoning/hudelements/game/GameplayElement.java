@@ -2,6 +2,7 @@ package net.plaidypus.deadreckoning.hudelements.game;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.actions.Action;
@@ -32,7 +33,8 @@ public class GameplayElement extends HudElement {
 
 	/** The current action. */
 	int currentEntity, currentAction;
-
+	Iterator<Integer> entityIterator;
+	
 	/** The save number. */
 	public String saveLocation;
 
@@ -138,6 +140,7 @@ public class GameplayElement extends HudElement {
 		this.gb=null;
 		this.lastMap="";
 		this.player=null;
+		this.entityIterator=null;
 	}
 	
 	/**
@@ -204,7 +207,8 @@ public class GameplayElement extends HudElement {
 
 		updateBoardEffects(gc, 0);
 		this.currentAction = 0;
-		this.currentEntity = 0;
+		this.entityIterator = gb.ingameEntities.keySet().iterator();
+		this.currentEntity = entityIterator.next();
 	}
 
 	public void updateSave() throws IOException {
@@ -268,9 +272,11 @@ public class GameplayElement extends HudElement {
 	public void updateBoardEffects(GameContainer gc, int delta) {
 		getBoard().HideAll();
 		getBoard().updateBoardEffects(gc, delta);
-		for(int i=0; i<getBoard().ingameEntities.size(); i++){
-			if(getBoard().ingameEntities.get(i).allignmnet==Entity.ALLIGN_FRIENDLY){
-				getBoard().revealFromEntity( getBoard().ingameEntities.get(i) , 10);
+		Iterator<Integer> i = getBoard().ingameEntities.keySet().iterator();
+		while(i.hasNext()){
+			Entity e = getBoard().ingameEntities.get(i.next());
+			if(e.allignmnet==Entity.ALLIGN_FRIENDLY){
+				getBoard().revealFromEntity(e , 10);
 			}
 		}
 	}
@@ -415,12 +421,16 @@ public class GameplayElement extends HudElement {
 	/**
 	 * Advance entity.
 	 */
-	private void advanceEntity() {
-		currentEntity = (currentEntity + 1) % getBoard().ingameEntities.size();
-		while (!getBoard().ingameEntities.get(currentEntity).makesActions()) {
-			currentEntity = (currentEntity + 1)
-					% getBoard().ingameEntities.size();
+	private void advanceEntity() {//assumes contiguous keyset. there is no scenario in which this would NOT be the case, but just to be safe, I will put a warning here for future generations
+		boolean f = true;
+		while(!gb.ingameEntities.get(currentEntity).makesActions() || f){
+			f=false;
+			if(!entityIterator.hasNext()){
+				entityIterator = this.gb.ingameEntities.keySet().iterator();
+			}
+			currentEntity = entityIterator.next();
 		}
+
 		actions.clear();
 		currentAction = 0;
 	}

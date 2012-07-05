@@ -30,9 +30,9 @@ public abstract class AnimatedEntity extends Entity {
 	 * @throws SlickException
 	 *             the slick exception
 	 */
-	public AnimatedEntity(Tile location, int layer, String imageRef)
+	public AnimatedEntity(String imageRef)
 			throws SlickException {
-		super(location, layer);
+		super();
 		int[] frames = new int[] { 0, 0, 1, 0, 2, 0, 3, 0, 4, 0, 0, 1, 1, 1, 2,
 				1, 3, 1, 4, 1 };
 		int[] durations = new int[] { 120, 120, 120, 120, 120, 120, 120, 120,

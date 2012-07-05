@@ -28,8 +28,8 @@ public class Loot extends Skill {
 	 * @param source
 	 *            the source
 	 */
-	public Loot(LivingEntity source) {
-		super(source);
+	public Loot(int sourceID) {
+		super(sourceID);
 	}
 
 	/*
@@ -42,15 +42,14 @@ public class Loot extends Skill {
 	public Action makeAction(Tile target) {
 		for (int i = 0; i < Tile.numLayers; i++) {
 			if (!target.isOpen(i)) {
-				return new LootAction(source, target, i);// TODO fix that shit.
+				return new LootAction(this.sourceID, target, i);// TODO fix that shit.
 															// make it so I can
 															// loot corpses on
 															// the ground;
 			}
 		}
-		return new WaitAction(source);
+		return new WaitAction(sourceID);
 	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -60,7 +59,7 @@ public class Loot extends Skill {
 	 */
 	@Override
 	public boolean canTargetTile(Tile t) {
-		if (t != source.getLocation()) {
+		if (t != getSource().getLocation()) {
 			for (int i = 0; i < Tile.numLayers; i++) {
 				if (!t.isOpen(i)) {
 					return true;

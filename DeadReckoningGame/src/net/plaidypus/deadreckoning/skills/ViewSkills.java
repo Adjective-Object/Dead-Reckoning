@@ -22,8 +22,8 @@ public class ViewSkills extends Skill {
 	 * @param source
 	 *            the source
 	 */
-	public ViewSkills(LivingEntity source) {
-		super(source);
+	public ViewSkills(int sourceID) {
+		super(sourceID);
 	}
 
 	/*
@@ -34,9 +34,8 @@ public class ViewSkills extends Skill {
 	 */
 	@Override
 	public Action makeAction(Tile target) {
-		return new ChangeStateAction(source, target,
-				DeadReckoningGame.SKILLSTATE, new Object[] {
-						GameplayElement.getImage(), source });
+		return new ChangeStateAction(sourceID,
+				DeadReckoningGame.SKILLSTATE);
 	}
 
 	/*

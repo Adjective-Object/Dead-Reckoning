@@ -1,5 +1,6 @@
 package net.plaidypus.deadreckoning.actions;
 
+import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.save.Save;
 
@@ -20,8 +21,8 @@ public class ChangeBoardAction extends Action {
 	 * @param targetFloor
 	 *            the target floor
 	 */
-	public ChangeBoardAction(Entity source, String targetFloor) {
-		super(source, source.getLocation());
+	public ChangeBoardAction(int sourceID, String targetFloor) {
+		super(sourceID, null);
 		this.targetFloor = targetFloor;
 	}
 
@@ -42,10 +43,10 @@ public class ChangeBoardAction extends Action {
 	 */
 	@Override
 	protected boolean apply(int delta) {
-		source.getParent()
+		GameBoard.getEntity(this.sourceID).getParent()
 				.getGame()
 				.setBoard(
-						Save.loadGame(source.getParent().getGame(), source
+						Save.loadGame(GameBoard.getEntity(this.sourceID).getParent().getGame(), GameBoard.getEntity(this.sourceID)
 								.getParent().getSaveID(), targetFloor));
 		return true;
 	}

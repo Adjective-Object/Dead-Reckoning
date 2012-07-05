@@ -23,14 +23,6 @@ public class Statue extends StaticImageEntity {
 	/** The i. */
 	static Image i;
 
-	// Exists only for the purpose of referencing methods that should be static,
-	// but need to be abstract, because fuck Java
-	/**
-	 * Instantiates a new statue.
-	 */
-	public Statue() {
-	}
-
 	/**
 	 * Instantiates a new statue.
 	 * 
@@ -39,8 +31,8 @@ public class Statue extends StaticImageEntity {
 	 * @param layer
 	 *            the layer
 	 */
-	public Statue(Tile t, int layer) {
-		super(t, layer, i);
+	public Statue() {
+		super(i);
 		this.description = "the placeholder object that loads when something glitches during load";
 	}
 
@@ -84,7 +76,7 @@ public class Statue extends StaticImageEntity {
 	 */
 	@Override
 	public Action chooseAction(GameContainer gc, int delta) {
-		return new WaitAction(this);
+		return new WaitAction(this.getID());
 	}
 
 	/*
@@ -128,9 +120,11 @@ public class Statue extends StaticImageEntity {
 	 */
 	@Override
 	public Entity makeFromString(GameBoard target, String[] attributes) {
-		return new Statue(target.getTileAt(Integer.parseInt(attributes[1]),
-				Integer.parseInt(attributes[2])),
+		Statue s = new Statue();
+		s.placeAt(
+				target.getTileAt(Integer.parseInt(attributes[1]),Integer.parseInt(attributes[2])),
 				Integer.parseInt(attributes[3]));
+		return s;
 	}
 
 	/*

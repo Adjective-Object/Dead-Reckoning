@@ -1,8 +1,10 @@
 package net.plaidypus.deadreckoning.actions;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
+import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
+import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 
 /**
  * The Class Action.
@@ -11,8 +13,8 @@ import net.plaidypus.deadreckoning.entities.Entity;
  */
 public abstract class Action {
 
-	/** The entity tha produced the action*/
-	public Entity source;
+	/** The ID of the entity that produced the action*/
+	public int sourceID;
 
 	/** The tile on which the action is focused */
 	public Tile target;
@@ -21,7 +23,7 @@ public abstract class Action {
 	public boolean completed;
 	
 	/** Indicates if carrying out this action should advance the turn (no for invenory management, etc.)*/
-	public boolean takesTurn;
+	public boolean takesTurn = true;
 
 	/**
 	 * actions are the main method of changing things in the game's environment.
@@ -31,11 +33,10 @@ public abstract class Action {
 	 * @param target
 	 * 			the tile the action is going to target
 	 */
-	public Action(Entity source, Tile target) {
-		this.source = source;
+	public Action(int sourceID, Tile target) {
+		this.sourceID = sourceID;
 		this.target = target;
 		completed = false;
-		takesTurn = true;
 	}
 
 	/**
@@ -78,7 +79,7 @@ public abstract class Action {
 	public String toString() {
 		String[] p = this.getClass().toString().split("actions.");
 
-		return p[p.length - 1] + " " + this.source + " -> " + this.target;
+		return p[p.length - 1] + " " + GameBoard.getEntity(this.sourceID) + " -> " + this.target;
 	}
 
 	/**

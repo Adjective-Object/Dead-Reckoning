@@ -20,13 +20,6 @@ public abstract class InteractiveEntity extends Entity {
 
 	/** The inventory size. */
 	int inventorySize = 5;
-
-	/**
-	 * Instantiates a new interactive entity.
-	 */
-	public InteractiveEntity() {
-	}
-
 	/**
 	 * Instantiates a new interactive entity.
 	 * 
@@ -35,8 +28,8 @@ public abstract class InteractiveEntity extends Entity {
 	 * @param layer
 	 *            the layer
 	 */
-	public InteractiveEntity(Tile targetTile, int layer) {
-		this(targetTile, layer, new ArrayList<Item>(0));
+	public InteractiveEntity() {
+		this(new ArrayList<Item>(0));
 	}
 
 	/**
@@ -49,8 +42,8 @@ public abstract class InteractiveEntity extends Entity {
 	 * @param items
 	 *            the items
 	 */
-	public InteractiveEntity(Tile targetTile, int layer, ArrayList<Item> items) {
-		super(targetTile, layer);
+	public InteractiveEntity(ArrayList<Item> items) {
+		super();
 		this.inventory.addAll(items);
 	}
 
@@ -146,7 +139,7 @@ public abstract class InteractiveEntity extends Entity {
 		return false;
 	}
 	
-	protected void loadItems(LivingEntity e, String[] split){
+	protected void loadItems(InteractiveEntity e, String[] split){
 		for(int i=0; i<split.length; i++){
 			if(!split[i].equals("null")){
 				e.inventory.add(Item.loadFromString(split[i].split("-")));
@@ -160,6 +153,9 @@ public abstract class InteractiveEntity extends Entity {
 	
 	protected String getInventoryAsString(ArrayList<? extends Item> inv, int maxLen){
 		String toRet="";
+		if(maxLen==-1){
+			maxLen=inv.size();
+		}
 		for(int i=0; i<maxLen; i++){
 			if(i!=0){toRet+=",";}
 			if(this.inventory.size()>i){
