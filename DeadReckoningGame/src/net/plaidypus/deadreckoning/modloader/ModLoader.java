@@ -21,6 +21,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.opengl.TextureLoader;
 
 import net.plaidypus.deadreckoning.DeadReckoningComponent;
+import net.plaidypus.deadreckoning.exceptions.ErrorType;
+import net.plaidypus.deadreckoning.exceptions.ModLoadException;
 import net.plaidypus.deadreckoning.generator.Biome;
 import net.plaidypus.deadreckoning.professions.Profession;
 
@@ -38,8 +40,13 @@ public class ModLoader {
 	 *         happen
 	 * @throws IOException
 	 */
-	public static ArrayList<File> resolveMods(boolean vocal) throws IOException {
+	public static ArrayList<File> resolveMods(boolean vocal) throws IOException, ModLoadException {
 		File[] mods = new File("modpacks/").listFiles();
+		if(mods == null)
+		{
+			mods = new File[0];
+			throw new ModLoadException("No modpacks found.", ErrorType.MISSING);
+		}
 				
 		HashMap<String, File> uncountedMods = new HashMap<String, File>();
 		HashMap<String, ArrayList<String>> modReqs = new HashMap<String, ArrayList<String>>();

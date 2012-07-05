@@ -11,6 +11,7 @@ import net.plaidypus.deadreckoning.config.KeyConfig;
 import net.plaidypus.deadreckoning.config.OptionsHandler;
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.entities.Stair;
+import net.plaidypus.deadreckoning.exceptions.ModLoadException;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
 import net.plaidypus.deadreckoning.hudelements.game.MiniMap;
@@ -204,11 +205,14 @@ public class DeadReckoningGame extends StateBasedGame {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
+		Exception elpha = null;
 
 		try {
 			ModLoader.loadModpacks(ModLoader.resolveMods(true));
 		} catch (IOException e) {
-			e.printStackTrace();
+			elpha = e;
+		} catch (ModLoadException e) {
+			elpha = e;
 		}
 
 		//System.out.println(Biome.getBiomes());
@@ -221,16 +225,16 @@ public class DeadReckoningGame extends StateBasedGame {
 		 * to deal with this way (no need for repetition)
 		 */
 		ArrayList<HudElement> menuBackground = new ArrayList<HudElement>(0);
-		SpriteSheet particles = new SpriteSheet(new Image(
-				"res/menu/particles.png"), 50, 50);
+		//SpriteSheet particles = new SpriteSheet(new Image(
+				//"res/menu/particles.png"), 50, 50);
 		menuBackground.add(new ColorFiller(DeadReckoningGame.menuBackgroundColor));
-		menuBackground.add(new StillImageElement(-400,75,HudElement.TOP_CENTER,new Image("res/menu/titleBar.png")));
-		menuBackground.add(new FairyLights(-50, -300, HudElement.BOTTOM_LEFT,
-				container.getWidth()+50, 250, container.getWidth()/10, particles));
-		menuBackground.add(new FairyLights(-50, -200, HudElement.BOTTOM_LEFT,
-				container.getWidth()+50, 150, container.getWidth()/8, particles));
-		menuBackground.add(new FairyLights(-50, -100, HudElement.BOTTOM_LEFT,
-				container.getWidth()+50, 100, container.getWidth()/6, particles));
+		//menuBackground.add(new StillImageElement(-400,75,HudElement.TOP_CENTER,new Image("res/menu/titleBar.png")));
+		//menuBackground.add(new FairyLights(-50, -300, HudElement.BOTTOM_LEFT,
+				//container.getWidth()+50, 250, container.getWidth()/10, particles));
+		//menuBackground.add(new FairyLights(-50, -200, HudElement.BOTTOM_LEFT,
+				//container.getWidth()+50, 150, container.getWidth()/8, particles));
+		//menuBackground.add(new FairyLights(-50, -100, HudElement.BOTTOM_LEFT,
+				//container.getWidth()+50, 100, container.getWidth()/6, particles));
 		
 		ArrayList<HudElement> subBackground = new ArrayList<HudElement>(0);
 		subBackground.add(new VicariousRenderer(DeadReckoningGame.instance.getGameElement()));
@@ -300,7 +304,14 @@ public class DeadReckoningGame extends StateBasedGame {
 		this.addState(new OptionsState(OPTIONSSTATE, menuBackground));
 		this.addState(new InGameMenuState(INGAMEMENUSTATE,subBackground));
 		
-		this.enterState(MAINMENUSTATE);
+		if(elpha == null)
+		{
+			this.enterState(MAINMENUSTATE);
+		}
+		else
+		{
+			this.enterState(ERRORSTATE);
+		}
 	}
 
 }
