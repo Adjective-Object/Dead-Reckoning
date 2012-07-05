@@ -540,8 +540,27 @@ public abstract class LivingEntity extends InteractiveEntity {
 	}
 	
 	protected String getGenericSave() {
-		String toRet = super.getGenericSave()+":"+this.HP+":"+this.MP+":"
+		String toRet = super.getGenericSave()+":"+this.getStatusesAsString(this.statuses)+":"+this.HP+":"+this.MP+":"
 				+this.statMaster.toString()+":"+this.allignmnet+":"+this.parentMod+":"+this.entityFile;
+		return toRet;
+	}
+	
+	protected void loadStatuses(LivingEntity target, String[] statuses){
+		for(int i=0; i<statuses.length; i++){
+			if(statuses[i].length()>0){
+				target.addCondition(Status.loadStatusFromString(statuses[i]));
+			}
+		}
+	}
+	
+	protected static String getStatusesAsString(ArrayList<Status> stati) {
+		String toRet = "";
+		for(int i=0; i<stati.size(); i++){
+			if(i!=0){
+				toRet+=",";
+			}
+			toRet+=stati.get(i).saveToString();
+		}
 		return toRet;
 	}
 	

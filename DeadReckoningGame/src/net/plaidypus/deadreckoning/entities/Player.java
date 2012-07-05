@@ -26,6 +26,7 @@ import net.plaidypus.deadreckoning.status.OnFire;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
@@ -370,8 +371,8 @@ public class Player extends LivingEntity {
 	 */
 	@Override
 	public String saveToString() {
-		System.err.println("PLAYER SAVETOSTRING BEING CALLED. BAD THINGS ARE HAPPENING HERE");
-		return "THIS SHOULD NOT HAVE BEEN CALLED";
+		System.err.println("PAYER.SAVETOSTRING() METHOD NOT MEANT TO BE CALLED");
+		return null;
 	}
 
 	/*
@@ -391,8 +392,7 @@ public class Player extends LivingEntity {
 	 */
 	@Override
 	public void init() throws SlickException {
-		OnFire.init();
-		this.levelUp = new SpriteSheet( ModLoader.loadImage("core/res/fireBurst.png"), 32, 32);
+		Player.levelUp = new SpriteSheet( new Image("res/levelUp.png"), 32, 32);
 	}
 
 	/**

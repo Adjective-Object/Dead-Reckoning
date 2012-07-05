@@ -51,7 +51,7 @@ public class Equip extends Item {
 		STR = Integer.parseInt(reader.readLine());
 		INT = Integer.parseInt(reader.readLine());
 		DEX = Integer.parseInt(reader.readLine());
-		DEX = Integer.parseInt(reader.readLine());
+		LUK = Integer.parseInt(reader.readLine());
 		HP = Integer.parseInt(reader.readLine());
 		MP = Integer.parseInt(reader.readLine());
 		WAtt = Integer.parseInt(reader.readLine());

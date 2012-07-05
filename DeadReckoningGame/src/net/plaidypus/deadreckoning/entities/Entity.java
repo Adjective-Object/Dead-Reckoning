@@ -431,5 +431,9 @@ public abstract class Entity extends DeadReckoningComponent {
 	public boolean isTerrain() {
 		return isTerrain;
 	}
+	
+	public int getID() {
+		return this.getParent().getEntityID(this);
+	}
 
 }

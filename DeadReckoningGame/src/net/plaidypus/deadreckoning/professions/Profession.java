@@ -72,7 +72,7 @@ public class Profession extends StatMaster {
 	public String name, parentMod, description;
 
 	/** The base stats and SP gained per level. */
-	int baseHP = 50, baseMP = 20, baseStat = 4, spPerLevel = 5;
+	int baseHP = 50, baseMP = 20, baseStat = 4, spPerLevel = 1;
 
 	/** The skill points earned, distributed with the ratios in statDist. */
 	public int skillPoints;

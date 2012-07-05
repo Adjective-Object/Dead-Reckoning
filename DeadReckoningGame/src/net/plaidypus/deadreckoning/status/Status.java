@@ -2,9 +2,12 @@ package net.plaidypus.deadreckoning.status;
 
 import java.util.ArrayList;
 
+import net.plaidypus.deadreckoning.DeadReckoningComponent;
 import net.plaidypus.deadreckoning.actions.Action;
+import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
+import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.professions.StatMaster;
 
 import org.newdawn.slick.Graphics;
@@ -16,7 +19,7 @@ import org.newdawn.slick.Image;
  * (abstract) used for persistent effects on entities, like buffs, debuffs, DOT,
  * etc.
  */
-public abstract class Status {
+public abstract class Status extends DeadReckoningComponent{
 
 	/** The image tile used by the Status, displayed by . */
 	public Image tileImage;
@@ -25,13 +28,10 @@ public abstract class Status {
 	public String description, identifier;
 
 	/** The stacks=# stacks of a given buff. */
-	int statusID, duration, stacks;
+	int statusID, duration, stacks, sourceID;
 
 	/** The source. */
 	public InteractiveEntity source;
-
-	/** The Constant STATUS_ONFIRE - identifier # of onFire */
-	static final int STATUS_ONFIRE = 1;
 
 	/**
 	 * Instantiates a new status object.
@@ -53,7 +53,15 @@ public abstract class Status {
 		this.source = source;
 		this.stacks = 1;
 	}
-
+	
+	public Status(int sourceID, Image tileImage,
+			String description, String identifier) {
+		this.description = description;
+		this.identifier = identifier;
+		this.tileImage = tileImage;
+		this.sourceID = sourceID;
+		this.stacks = 1;
+	}
 	// Only called if they have the same identifier string
 	/**
 	 * Collapses with a status that has the same identifier string.
@@ -138,5 +146,43 @@ public abstract class Status {
 	public abstract String getName();
 
 	public abstract void alterStatMaster(StatMaster statMaster);
-
+	
+	public void updateToSource(GameBoard board){
+		this.source=(InteractiveEntity)board.getEntityFromID(this.sourceID);
+	}
+	
+	public abstract String saveToString();
+	
+	public abstract Status loadFromString(String[] args);
+	
+	public String getGenericSave(){
+		return	this.getClass().toString()+"-"
+				+this.source.getID()+"-"
+				+this.stacks+"-"
+				+this.duration;
+	}
+	
+	public static Status loadStatusFromString(String stringstatus){
+		String[] split = stringstatus.split("-");
+		try {
+			Class<? extends Status> c  = ModLoader.loadClass(split[0]);
+			return c.newInstance().loadFromString(split);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }

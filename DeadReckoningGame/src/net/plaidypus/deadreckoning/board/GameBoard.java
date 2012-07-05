@@ -860,5 +860,18 @@ public class GameBoard implements ILosBoard {
 	public Biome getBiome() {
 		return this.biome;
 	}
+	
+	public int getEntityID(Entity e){
+		if(this.ingameEntities.contains(e)){
+			return this.ingameEntities.indexOf(e);
+		}
+		else{
+			return -1;
+		}
+	}
+	
+	public Entity getEntityFromID(int id){
+		return this.ingameEntities.get(id);
+	}
 
 }

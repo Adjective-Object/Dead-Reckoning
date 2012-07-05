@@ -119,12 +119,13 @@ public class Monster extends LivingEntity {
 	public Entity makeFromString(GameBoard g, String[] toload) {
 		Monster toRet = new Monster(g.getTileAt(Integer.parseInt(toload[1]), Integer.parseInt(toload[2])),// tile
 				Integer.parseInt(toload[3]),// layer
-				toload[9], toload[10],// parentMod , entityfile
-				super.loadStatMaster(toload[7].split(",")),
-				Integer.parseInt(toload[8]));//statmaster
+				toload[10], toload[11],// parentMod , entityfile
+				super.loadStatMaster(toload[8].split(",")),//statmaster
+				Integer.parseInt(toload[9]));// Alignment
 		this.loadItems(toRet,toload[4].split(","));
-		this.HP=Integer.parseInt(toload[5]);
-		this.MP=Integer.parseInt(toload[6]);
+		this.loadStatuses(toRet, toload[5].split(","));
+		this.HP=Integer.parseInt(toload[6]);
+		this.MP=Integer.parseInt(toload[7]);
 		return toRet;
 	}
 	

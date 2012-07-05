@@ -28,11 +28,15 @@ public class OnFire extends AnimatedStatus {
 	static Image image;
 
 	/** The details. */
-	static String details;
+	static String details, statusID;
 
 	/** The sprite. */
 	static SpriteSheet sprite;
 
+	public OnFire(){
+		super(null,null,null,null,null);
+	}
+	
 	/**
 	 * Instantiates a new on fire status.
 	 * 
@@ -47,7 +51,13 @@ public class OnFire extends AnimatedStatus {
 		super(source, image, details, "OnFire", new Animation(sprite, 60));
 		this.duration = duration;
 		this.power = power;
-		this.statusID = Status.STATUS_ONFIRE;
+		this.statusID = "core/status/OnFire";
+	}
+	
+	public OnFire(int sourceID, int duration, int power) {
+		super(sourceID, image, details, "OnFire", new Animation(sprite, 60));
+		this.duration = duration;
+		this.power = power;
 	}
 
 	/**
@@ -56,7 +66,7 @@ public class OnFire extends AnimatedStatus {
 	 * @throws SlickException
 	 *             the slick exception
 	 */
-	public static void init() throws SlickException {
+	public void init() throws SlickException {
 		image = ModLoader.loadImage("core/res/onFireIcon.png");
 		details = "OH SHIT, YOU'RE ON FIRE";
 		sprite = new SpriteSheet( ModLoader.loadImage("core/res/fireAnimation.png"),
@@ -128,6 +138,15 @@ public class OnFire extends AnimatedStatus {
 	@Override
 	public void alterStatMaster(StatMaster statMaster) {
 		statMaster.editDEX(-1);
+	}
+
+	@Override
+	public String saveToString() {
+		return super.getGenericSave()+"-"+this.power;
+	}
+	
+	public Status loadFromString(String[] args){
+		return new OnFire(Integer.parseInt(args[1]),Integer.parseInt(args[2]),Integer.parseInt(args[3]));
 	}
 
 }

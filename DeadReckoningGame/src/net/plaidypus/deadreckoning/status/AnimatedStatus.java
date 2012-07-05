@@ -37,6 +37,12 @@ public abstract class AnimatedStatus extends Status {
 		super(source, tile, description, identifier);
 		this.animation = effectAnimation;
 	}
+	
+	public AnimatedStatus(int sourceID, Image tile,
+			String description, String identifier, Animation effectAnimation) {
+		super(sourceID, tile, description, identifier);
+		this.animation = effectAnimation;
+	}
 
 	/*
 	 * (non-Javadoc)

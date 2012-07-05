@@ -155,8 +155,12 @@ public abstract class InteractiveEntity extends Entity {
 	}
 
 	protected String getGenericSave(){
-		String toRet = super.getGenericSave()+":";
-		for(int i=0; i<this.inventorySize; i++){
+		return super.getGenericSave()+":"+getInventoryAsString(this.inventory, this.inventorySize);
+	}
+	
+	protected String getInventoryAsString(ArrayList<? extends Item> inv, int maxLen){
+		String toRet="";
+		for(int i=0; i<maxLen; i++){
 			if(i!=0){toRet+=",";}
 			if(this.inventory.size()>i){
 				toRet+=this.inventory.get(i).toItemString();
