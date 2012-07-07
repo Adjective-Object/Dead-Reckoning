@@ -74,27 +74,6 @@ public abstract class HudElement {
 			throws SlickException;
 
 	
-	/**
-	 * Update.
-	 * 
-	 * @param gc
-	 *            the gc
-	 * @param sbg
-	 *            the sbg
-	 * @param delta
-	 *            the delta
-	 * @param hasFocus
-	 *            the has focus
-	 * @throws SlickException
-	 *             the slick exception
-	 */
-	public void update(GameContainer gc, StateBasedGame sbg, int delta,
-			boolean hasFocus) throws SlickException {
-		this.setFocus(hasFocus);
-		this.update(gc, sbg, delta);
-	}
-
-	
 	public HudElementContainer getContainer() {
 		return this.container;
 	}

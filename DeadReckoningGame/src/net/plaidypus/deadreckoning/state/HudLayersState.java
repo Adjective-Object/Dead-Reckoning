@@ -23,6 +23,10 @@ public class HudLayersState extends BasicGameState{
 
 	/** The state id used for referencing this file */
 	int stateID;
+	
+	int clickCount, lastClick;
+	private static final int clickSize=400;
+	public static boolean doubleClick=false;
 
 	/** The parent DeadReckoningGame. */
 	DeadReckoningGame parent;
@@ -91,6 +95,19 @@ public class HudLayersState extends BasicGameState{
 		for (int i = 0; i < contents.size(); i++) {
 			contents.get(i).update(container, game, delta);
 		}
+		doubleClick=false;
+		if (container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)){
+			if(lastClick>clickSize){
+				lastClick=0;
+			}
+			else{
+				doubleClick=true;
+			}
+		}
+		else{
+			lastClick+=delta;
+		}
+		
 	}
 
 	/**

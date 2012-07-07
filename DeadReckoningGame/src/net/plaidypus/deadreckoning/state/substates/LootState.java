@@ -24,21 +24,20 @@ public class LootState extends PrebakedHudLayersState{
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException{
 		super.update(container, game, delta);
 		
-		if (container.getInput().isKeyPressed(Input.KEY_ENTER)) {
-			if (gridA.hasFocus && gridA.selector < gridA.contents.size()) {
-				gridB.contents.add(gridA.contents.remove(gridA.selector));
-			} else if (gridB.hasFocus && gridB.selector < gridB.contents.size()) {
-				gridA.contents.add(gridB.contents.remove(gridB.selector));
+		if(this.doubleClick ||container.getInput().isKeyPressed(Input.KEY_ENTER)){
+			if(gridA.getSelected()!=null){
+				gridB.addItem(gridA.getSelected());
+				gridA.removeItem(gridA.getSelected());
+			}
+			else if(gridB.getClicked()!=null){
+				gridA.addItem(gridB.getSelected());
+				gridB.removeItem(gridB.getSelected());
 			}
 		}
+		
 		if (container.getInput().isKeyPressed(Input.KEY_A)) {
-			if (gridA.hasFocus) {
-				gridA.contents.addAll(gridB.contents);
-				gridB.contents.clear();
-			} else if (gridB.hasFocus) {
-				gridB.contents.addAll(gridA.contents);
-				gridA.contents.clear();
-			}
+			gridA.contents.addAll(gridB.contents);
+			gridB.contents.clear();
 		}
 	}
 	

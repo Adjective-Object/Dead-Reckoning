@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
@@ -324,8 +325,9 @@ public class Save {
 	 */
 	public static void saveEntities(GameBoard b, BufferedWriter r)
 			throws IOException {
-		for (int i = 0; i < b.ingameEntities.size(); i++) {
-			r.write(b.ingameEntities.get(i).saveToString());
+		Iterator<Integer> e = b.ingameEntities.keySet().iterator();
+		while(e.hasNext()){
+			r.write(b.ingameEntities.get(e.next()).saveToString());
 			r.newLine();
 		}
 	}

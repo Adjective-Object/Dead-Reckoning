@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
-import net.plaidypus.deadreckoning.hudelements.HudElement;
+import net.plaidypus.deadreckoning.hudelements.simple.SimplePanel;
 import net.plaidypus.deadreckoning.items.Item;
+import net.plaidypus.deadreckoning.state.HudLayersState;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -16,31 +16,34 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class ItemGridElement extends HudElement {
+public class ItemGridElement extends SimplePanel {
 	public ArrayList<Item> contents;
 
-	int width, height, externalBorder, internalBorder;
+	int gridWidth, gridHeight, externalBorder, internalBorder;
 	public int selector;
-	private Color backgroundColor;
+	
+	public int fromLastSelect, selectThreshold=1000;
+	Item clickedItem;
+	
 	static Image tileimage;
 
 	public ItemGridElement(int x, int y, int borderMeth) {
-		this(DeadReckoningGame.menuColor, x, y, borderMeth, 5, 8, 2, 10);
+		this(x, y, borderMeth, 5, 8, 2, 10);
 	}
 
-	public ItemGridElement(Color background, int x, int y, int borderMeth,
-			int width, int height, int internalBorder, int externalBorder) {
-		super(x, y, borderMeth, true);
-		this.width = width;
-		this.height = height;
-		this.externalBorder = externalBorder;
+	public ItemGridElement(int x, int y, int bindMethod,
+			int gridWidth, int gridHeight, int internalBorder, int externalBorder) {
+		super(x, y,
+				gridWidth*(32+internalBorder)-internalBorder, gridHeight*(32+internalBorder)-internalBorder,
+				externalBorder, externalBorder, bindMethod);
 		this.internalBorder = internalBorder;
-		this.selector = 0;
-		this.backgroundColor = background;
+		this.selector = -1;
+		this.gridWidth=gridWidth;
+		this.gridHeight=gridHeight;
 	}
 
 	public void makeFrom(Object o) {
-		this.selector = 0;
+		this.selector = -1;
 		InteractiveEntity e = (InteractiveEntity) (o);// TODO making
 		this.setContents(e.getInventory());
 	}
@@ -53,26 +56,38 @@ public class ItemGridElement extends HudElement {
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
 		Input i = gc.getInput();
 		if (i.isKeyPressed(Input.KEY_LEFT)) {
-			selector = Utilities.limitTo(selector - 1, 0, width * height);
+			selector = Utilities.limitTo(selector - 1, 0, gridWidth * gridHeight);
 		}
 		if (i.isKeyPressed(Input.KEY_RIGHT)) {
-			selector = Utilities.limitTo(selector + 1, 0, width * height);
+			selector = Utilities.limitTo(selector + 1, 0, gridWidth * gridHeight);
 		}
 		if (i.isKeyPressed(Input.KEY_UP)) {
-			selector = Utilities.limitTo(selector - width, 0, width * height);
+			selector = Utilities.limitTo(selector - gridWidth, 0, gridWidth * gridHeight);
 		}
 		if (i.isKeyPressed(Input.KEY_DOWN)) {
-			selector = Utilities.limitTo(selector + width, 0, width * height);
+			selector = Utilities.limitTo(selector + gridWidth, 0, gridWidth * gridHeight);
 		}
-
-		if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)
-				&& i.getAbsoluteMouseX() < this.getAbsoluteX() + this.getWidth()
-				&& i.getAbsoluteMouseY() < this.getAbsoluteY() + this.getHeight()) {
+		
+		fromLastSelect+=delta;
+		
+		if (i.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)
+				&& i.getMouseX() > this.getAbsoluteX()
+				&& i.getMouseY() > this.getAbsoluteY()
+				&& i.getMouseX() < this.getAbsoluteX() + this.getWidth()
+				&& i.getMouseY() < this.getAbsoluteY() + this.getHeight()) {
 			int rx = (i.getMouseX() - this.getAbsoluteX() - externalBorder)
 					/ (DeadReckoningGame.tileSize + internalBorder);
 			int ry = (i.getMouseY() - this.getAbsoluteY() - externalBorder)
 					/ (DeadReckoningGame.tileSize + internalBorder);
-			selector = rx + ry * width;
+			selector = rx + ry * gridWidth;
+			fromLastSelect=0;
+			if(HudLayersState.doubleClick){
+				this.clickedItem=this.getSelected();
+			}
+		}
+		else if(i.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) || fromLastSelect>selectThreshold){
+			selector=-1;
+			clickedItem=null;
 		}
 	}
 
@@ -80,41 +95,28 @@ public class ItemGridElement extends HudElement {
 		this.contents = newcont;
 	}
 
-	public void setColor(Color newColor) {
-		backgroundColor = newColor;
-	}
-
 	public ArrayList<Item> getContents() {
 		return contents;
 	}
-
-	public int getWidth() {
-		return 2 * externalBorder + width
-				* (DeadReckoningGame.tileSize + internalBorder);
-	}
-
-	public int getHeight() {
-		return 2 * externalBorder + height
-				* (DeadReckoningGame.tileSize + internalBorder);
+	
+	public void addItem(Item e){
+		if(e!=null){
+			this.contents.add(e);
+		}
+		this.selector=-1;
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		g.setColor(new Color(255, 255, 255));
-
-		g.setColor(backgroundColor);
-		g.fillRect(getAbsoluteX(), getAbsoluteY(), getWidth(), getHeight());
-
-		g.setColor(Color.white);
-
-		for (int xm = 0; xm < width; xm++) {
-			for (int ym = 0; ym < height; ym++) {
+		super.render(gc, sbg, g);
+		for (int xm = 0; xm < gridWidth; xm++) {
+			for (int ym = 0; ym < gridHeight; ym++) {
 				g.drawImage(tileimage, getAbsoluteX() + externalBorder + xm
 						* (DeadReckoningGame.tileSize + internalBorder), getAbsoluteY()
 						+ externalBorder + ym
 						* (DeadReckoningGame.tileSize + internalBorder));
-				if (xm + ym * width < contents.size()) {
-					contents.get(xm + ym * width)
+				if (xm + ym * gridWidth < contents.size()) {
+					contents.get(xm + ym * gridWidth)
 							.render(g,
 									getAbsoluteX()
 											+ externalBorder
@@ -125,7 +127,7 @@ public class ItemGridElement extends HudElement {
 											+ ym
 											* (DeadReckoningGame.tileSize + internalBorder));
 				}
-				if (selector == xm + ym * width) {
+				if (selector == xm + ym * gridWidth) {
 					g.drawRect(
 							getAbsoluteX()
 									+ externalBorder
@@ -143,7 +145,10 @@ public class ItemGridElement extends HudElement {
 	}
 
 	public Item getSelected() {
-		return contents.get(selector);
+		if(contents.size()>selector && selector!=-1){
+			return contents.get(selector);
+		}
+		return null;
 	}
 
 	public boolean isValidSelected() {
@@ -152,5 +157,14 @@ public class ItemGridElement extends HudElement {
 
 	public void clearSelected() {
 		this.contents.remove(selector);
+	}
+
+	public Item getClicked() {
+		return this.clickedItem;
+	}
+
+	public void removeItem(Item item) {
+		this.contents.remove(item);
+		this.selector=-1;
 	}
 }

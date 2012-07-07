@@ -18,7 +18,7 @@ import org.newdawn.slick.SlickException;
 public abstract class Item {
 
 	/** The classification. */
-	int classification;
+	public int classification;
 
 	/** The Constants for defining item type */
 	public static final int ITEM_ETC = 0, ITEM_USE = 1, ITEM_EQUIP = 2;
@@ -27,7 +27,6 @@ public abstract class Item {
 	/** The item id. */
 	int itemID;
 	
-
 	/** The image. */
 	Image image;
 
@@ -130,6 +129,10 @@ public abstract class Item {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public Image getImage(){
+		return image;
 	}
 
 }

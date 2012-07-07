@@ -26,10 +26,8 @@ public class SimplePanel extends HudElement{
 	}
 
 	@Override
-	public void update(GameContainer gc, StateBasedGame sbg, int delta)
-			throws SlickException {
-		super.update(gc, sbg, delta, hasFocus);
-	}
+	public  void update(GameContainer gc, StateBasedGame sbg, int delta)
+			throws SlickException {}
 
 	@Override
 	public void makeFrom(Object o) {}

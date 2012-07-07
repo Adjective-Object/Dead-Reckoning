@@ -84,5 +84,9 @@ public class Equip extends Item {
 	public Item combineWith(Item item) {
 		return null;
 	}
+	
+	public int getSlot(){
+		return this.equipSlot;
+	}
 
 }

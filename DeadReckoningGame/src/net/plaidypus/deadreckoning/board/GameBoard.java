@@ -1,7 +1,6 @@
 package net.plaidypus.deadreckoning.board;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
@@ -29,6 +28,11 @@ public class GameBoard implements ILosBoard {
 
 	/** The in game entities. */
 	public ConcurrentSkipListMap<Integer,Entity> ingameEntities;
+	//this doesn't even ensure that the list will always run in the same order.
+	//:<
+	//potential glitches, but whogivesafuck.
+	//Necessary so the iterator won't flip fucks when entities are moved around.
+	
 	protected int entityCounter;
 	
 	/** The board. */
@@ -208,11 +212,11 @@ public class GameBoard implements ILosBoard {
 	public boolean placeEntityNear(int x, int y, Entity e, int layer) {
 		for (int scanRadius = 0; scanRadius < 10; scanRadius++) {
 			for (int i = -scanRadius + 1; i < scanRadius; i++) {
-				if (getTileAt(x + i, y - scanRadius).isOpen(layer)) {
+				if (getTileAt(x + i, y - scanRadius).isEmpty(layer)) {
 					placeEntity(x+i,y - scanRadius,e,layer);
 					return true;
 				}
-				if (getTileAt(x - scanRadius, y + i).isOpen(layer)) {
+				if (getTileAt(x - scanRadius, y + i).isEmpty(layer)) {
 					placeEntity(x-scanRadius,y+i,e,layer);
 					return true;
 				}
