@@ -88,5 +88,17 @@ public class Equip extends Item {
 	public int getSlot(){
 		return this.equipSlot;
 	}
+	
+	public String getMouseoverText(){
+		String toRet = super.getMouseoverText()+"\n";
+		int[] ppp = new int[] {this.HP, this.MP, this.STR, this.INT, this.DEX, this.LUK, this.WAtt, this.WDef, this.MAtt, this.MDef};
+		String[] names = new String[]{"HP","MP","STR","INT","DEX","LUK","Weapon Attack","Armor", "Magic Attack", "Magic Defense"};
+		for(int i=0; i<ppp.length; i++){
+			if(ppp[i]!=0){
+				toRet+=names[i]+" +"+ppp[i]+"\n";
+			}
+		}
+		return toRet;
+	}
 
 }

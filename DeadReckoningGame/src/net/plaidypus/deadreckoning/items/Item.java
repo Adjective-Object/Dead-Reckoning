@@ -135,4 +135,9 @@ public abstract class Item {
 		return image;
 	}
 
+	public String getMouseoverText() {
+		return this.name+"\n"+
+				this.description;
+	}
+
 }

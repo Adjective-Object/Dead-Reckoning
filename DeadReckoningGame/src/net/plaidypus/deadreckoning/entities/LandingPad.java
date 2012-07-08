@@ -121,7 +121,6 @@ public class LandingPad extends Entity {
 	 */
 	@Override
 	public ArrayList<Action> advanceTurn() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

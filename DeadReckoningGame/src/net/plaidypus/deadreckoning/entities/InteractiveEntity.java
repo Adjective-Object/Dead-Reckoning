@@ -19,7 +19,7 @@ public abstract class InteractiveEntity extends Entity {
 	protected ArrayList<Item> inventory = new ArrayList<Item>(0) ;
 
 	/** The inventory size. */
-	int inventorySize = 5;
+	public int inventorySize = 5;
 	/**
 	 * Instantiates a new interactive entity.
 	 * 
@@ -139,27 +139,29 @@ public abstract class InteractiveEntity extends Entity {
 		return false;
 	}
 	
-	protected void loadItems(InteractiveEntity e, String[] split){
+	public static ArrayList<Item> loadItems(String[] split){
+		ArrayList<Item> e = new ArrayList<Item>(0);
 		for(int i=0; i<split.length; i++){
 			if(!split[i].equals("null")){
-				e.inventory.add(Item.loadFromString(split[i].split("-")));
+				e.add(Item.loadFromString(split[i].split("-")));
 			}
 		}
+		return e;
 	}
 
 	protected String getGenericSave(){
 		return super.getGenericSave()+":"+getInventoryAsString(this.inventory, this.inventorySize);
 	}
 	
-	protected String getInventoryAsString(ArrayList<? extends Item> inv, int maxLen){
+	public static String getInventoryAsString(ArrayList<? extends Item> inv, int maxLen){
 		String toRet="";
 		if(maxLen==-1){
 			maxLen=inv.size();
 		}
 		for(int i=0; i<maxLen; i++){
 			if(i!=0){toRet+=",";}
-			if(this.inventory.size()>i){
-				toRet+=this.inventory.get(i).toItemString();
+			if(inv.size()>i && inv.get(i)!=null){
+				toRet+=inv.get(i).toItemString();
 			}
 			else{
 				toRet+="null";

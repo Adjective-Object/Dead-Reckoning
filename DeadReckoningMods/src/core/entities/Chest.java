@@ -121,7 +121,7 @@ public class Chest extends InteractiveEntity {
 		Chest c = new Chest(new ArrayList<Item>(0));
 		c.placeAt(g.getTileAt(Integer.parseInt(toload[1]),
 				Integer.parseInt(toload[2])), Integer.parseInt(toload[3]));
-		super.loadItems(this, toload[4].split(","));
+		this.inventory.addAll(loadItems(toload[4].split(",")));
 		return c;
 	}
 

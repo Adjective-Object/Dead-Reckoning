@@ -16,10 +16,13 @@ import java.util.Iterator;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
+import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.generator.Biome;
 import net.plaidypus.deadreckoning.generator.DungeonMap;
 import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
+import net.plaidypus.deadreckoning.items.Equip;
+import net.plaidypus.deadreckoning.items.Item;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.professions.SkillProgression;
@@ -414,7 +417,9 @@ public class Save {
 		playerFile.createNewFile();
 		BufferedWriter w = new BufferedWriter(new FileWriter(playerFile));
 		savePlayerProfession(w, p);
-		savePlayerStatus(w, spawnTile, 0,p.getMaxHP(), p.getMaxMP());
+		Player pl = new Player(p,null);
+		pl.setLocation(spawnTile, Tile.LAYER_ACTIVE);
+		savePlayerStatus(w, pl);
 		w.close();
 
 		Save s = new Save(fileLocation);
@@ -503,6 +508,8 @@ public class Save {
 		int currentEXP = Integer.parseInt(r.readLine());
 		int currentHP = Integer.parseInt(r.readLine());
 		int currentMP = Integer.parseInt(r.readLine());
+		ArrayList<Item> inventory = InteractiveEntity.loadItems(r.readLine().split(","));
+		ArrayList<Item> equips = InteractiveEntity.loadItems(r.readLine().split(","));
 
 		Player player = new Player(p, c.getInput());
 		
@@ -510,27 +517,32 @@ public class Save {
 		player.EXP = currentEXP;
 		player.HP=currentHP;
 		player.MP=currentMP;
+		player.getInventory().addAll(inventory);
+		for(int i=0; i<equips.size(); i++){	
+			if(equips.get(i)!=null){
+				player.equipItem((Equip)equips.get(i));
+			}
+		}
 
 		return player;
 	}
 
 	private static void savePlayerStatus(BufferedWriter w, Player p)
 			throws IOException {
-		savePlayerStatus(w,p.getLocation(),p.EXP,p.HP,p.MP);
-	}
-
-	private static void savePlayerStatus(BufferedWriter w, Tile spawnTile,
-			int experience, int HP, int MP) throws IOException {
 		w.newLine();
-		w.write(Integer.toString(spawnTile.getX()));
+		w.write(Integer.toString(p.getX()));
 		w.newLine();
-		w.write(Integer.toString(spawnTile.getY()));
+		w.write(Integer.toString(p.getY()));
 		w.newLine();
-		w.write(Integer.toString(experience));
+		w.write(Integer.toString(p.EXP));
 		w.newLine();
-		w.write(Integer.toString(HP));
+		w.write(Integer.toString(p.HP));
 		w.newLine();
-		w.write(Integer.toString(MP));
+		w.write(Integer.toString(p.MP));
+		w.newLine();
+		w.write(InteractiveEntity.getInventoryAsString( p.getInventory(), p.inventorySize ));
+		w.newLine();
+		w.write(InteractiveEntity.getInventoryAsString( p.getEquips(), p.inventorySize ));
 	}
 
 	/**

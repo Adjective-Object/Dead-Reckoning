@@ -122,7 +122,7 @@ public class Monster extends LivingEntity {
 		toRet.placeAt(
 				g.getTileAt(Integer.parseInt(toload[1]), Integer.parseInt(toload[2])),
 				Integer.parseInt(toload[3]));
-		toRet.loadItems(toRet,toload[4].split(","));
+		toRet.inventory.addAll(loadItems(toload[4].split(",")));
 		toRet.loadStatuses(toRet, toload[5].split(","));
 		toRet.HP=Integer.parseInt(toload[6]);
 		toRet.MP=Integer.parseInt(toload[7]);

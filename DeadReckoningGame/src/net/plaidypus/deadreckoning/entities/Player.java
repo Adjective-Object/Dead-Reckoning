@@ -8,6 +8,7 @@ import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.grideffects.AnimationEffect;
 import net.plaidypus.deadreckoning.items.Equip;
+import net.plaidypus.deadreckoning.items.Item;
 import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.skills.Attack;
 import net.plaidypus.deadreckoning.skills.ChangeState;
@@ -58,7 +59,7 @@ public class Player extends LivingEntity {
 	 * The epuips. 0 = hat 1 = top / shirt 2 = bottom / pants 3 = feet / shoes
 	 * 4 = weapon hand 1 5 = weapon hand 2 6 = accesory 1 7 = accesory 2
 	 * */
-	public ArrayList<Equip> equips;
+	ArrayList<Equip> equips;
 
 	static protected SpriteSheet levelUp;
 
@@ -161,25 +162,24 @@ public class Player extends LivingEntity {
 
 	public ArrayList<Action> advanceTurn() {
 		ArrayList<Action> c = super.advanceTurn();
-		updateProfessionToEquips();
 		return c;
 	}
 	
-	public void updateProfessionToEquips(){
+	public void recalculateStatBonuses(){
+		super.recalculateStatBonuses();
 		for (int i = 0; i < 8; i++) {// updating the stat alterations based on
-			// equips
-		if (this.equips.get(i) != null) {
-		Equip e = this.equips.get(i);
-		this.profession.editHP(e.HP);
-		this.profession.editMP(e.MP);
-		this.profession.editINT(e.INT);
-		this.profession.editLUK(e.LUK);
-		this.profession.editDEX(e.DEX);
-		this.profession.editSTR(e.STR);
-		this.profession.editAtt(e.WAtt);
-		this.profession.editDef(e.WDef);
-		this.profession.editMAtt(e.MAtt);
-		this.profession.editMDef(e.MDef);
+			if (this.equips.get(i) != null) {
+			Equip e = this.equips.get(i);
+			this.profession.editHP(e.HP);
+			this.profession.editMP(e.MP);
+			this.profession.editINT(e.INT);
+			this.profession.editLUK(e.LUK);
+			this.profession.editDEX(e.DEX);
+			this.profession.editSTR(e.STR);
+			this.profession.editAtt(e.WAtt);
+			this.profession.editDef(e.WDef);
+			this.profession.editMAtt(e.MAtt);
+			this.profession.editMDef(e.MDef);
 		}
 }
 	}
@@ -187,7 +187,7 @@ public class Player extends LivingEntity {
 	public Equip equipItem(Equip item){
 		Equip retVal = this.equips.get(item.getSlot());
 		this.equips.set(item.getSlot(),item);
-		updateProfessionToEquips();
+		recalculateStatBonuses();
 		return retVal;
 		
 	}
@@ -431,5 +431,9 @@ public class Player extends LivingEntity {
 	 */
 	public String toString() {
 		return "Player[" + this.getX() + "," + this.getY() + "]";
+	}
+
+	public ArrayList<Equip> getEquips() {
+		return this.equips;
 	}
 }

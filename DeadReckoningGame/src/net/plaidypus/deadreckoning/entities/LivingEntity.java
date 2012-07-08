@@ -515,12 +515,18 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 */
 	public ArrayList<Action> advanceTurn() {
 		ArrayList<Action> actions = new ArrayList<Action>(0);
-		this.statMaster.resetStatBonuses();
 		for (int i = 0; i < statuses.size(); i++) {
 			actions.addAll(statuses.get(i).advanceTurnEffects(this));
+		}
+		recalculateStatBonuses();
+		return actions;
+	}
+	
+	public void recalculateStatBonuses(){
+		this.statMaster.resetStatBonuses();
+		for (int i = 0; i < statuses.size(); i++) {
 			statuses.get(i).alterStatMaster(this.statMaster);
 		}
-		return actions;
 	}
 
 	/**

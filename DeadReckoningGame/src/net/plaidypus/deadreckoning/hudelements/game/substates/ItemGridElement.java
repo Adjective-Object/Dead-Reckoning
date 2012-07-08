@@ -70,8 +70,7 @@ public class ItemGridElement extends SimplePanel {
 		
 		fromLastSelect+=delta;
 		
-		if (i.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)
-				&& i.getMouseX() > this.getAbsoluteX()
+		if (i.getMouseX() > this.getAbsoluteX()
 				&& i.getMouseY() > this.getAbsoluteY()
 				&& i.getMouseX() < this.getAbsoluteX() + this.getWidth()
 				&& i.getMouseY() < this.getAbsoluteY() + this.getHeight()) {
@@ -79,10 +78,17 @@ public class ItemGridElement extends SimplePanel {
 					/ (DeadReckoningGame.tileSize + internalBorder);
 			int ry = (i.getMouseY() - this.getAbsoluteY() - externalBorder)
 					/ (DeadReckoningGame.tileSize + internalBorder);
-			selector = rx + ry * gridWidth;
-			fromLastSelect=0;
-			if(HudLayersState.doubleClick){
-				this.clickedItem=this.getSelected();
+			
+			int k =rx + ry * gridWidth;
+			if(this.contents.size()>k){
+				this.setMouseoverText(this.contents.get(k).getMouseoverText());
+			}
+			if(i.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)){	
+				selector = k;
+				fromLastSelect=0;
+				if(HudLayersState.doubleClick){
+					this.clickedItem=this.getSelected();
+				}
 			}
 		}
 		else if(i.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) || fromLastSelect>selectThreshold){
@@ -164,7 +170,7 @@ public class ItemGridElement extends SimplePanel {
 	}
 
 	public void removeItem(Item item) {
-		this.contents.remove(item);
+		this.contents.set(contents.indexOf(item),null);
 		this.selector=-1;
 	}
 }
