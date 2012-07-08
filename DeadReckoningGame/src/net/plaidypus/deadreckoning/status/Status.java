@@ -86,6 +86,11 @@ public abstract class Status extends DeadReckoningComponent{
 	 * @return the array list
 	 */
 	public abstract ArrayList<Action> advanceTurnEffects(LivingEntity target);
+	
+	public abstract void onActionProduce(Action a);
+	
+	public abstract void onActionReceive(Action a);
+
 
 	/**
 	 * Removes the from entity.

@@ -1,10 +1,14 @@
 package net.plaidypus.deadreckoning.actions;
 
+import java.util.ArrayList;
+
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
+import net.plaidypus.deadreckoning.entities.LivingEntity;
+import net.plaidypus.deadreckoning.status.Status;
 
 /**
  * The Class Action.
@@ -68,6 +72,22 @@ public abstract class Action {
 	public void applyAction(int delta) {
 		if (!completed) {
 			completed = apply(delta);
+			if(completed){
+				
+				LivingEntity e = (LivingEntity) GameBoard.getEntity(this.sourceID);
+				ArrayList<Status> stats = e.getConditions();
+				for(int i=0; i<stats.size(); i++){
+					stats.get(i).onActionProduce(this);
+				}
+				
+				if(!this.target.isOpen(Tile.LAYER_ACTIVE)){
+					e = (LivingEntity) this.target.getEntity(Tile.LAYER_ACTIVE);
+					stats = e.getConditions();
+					for(int i=0; i<stats.size(); i++){
+						stats.get(i).onActionReceive(this);
+					}
+				}
+			}
 		}
 	}
 

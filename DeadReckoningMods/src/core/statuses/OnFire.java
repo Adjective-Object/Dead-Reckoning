@@ -87,6 +87,17 @@ public class OnFire extends AnimatedStatus {
 		System.out.println(actions);
 		return actions;
 	}
+	
+	@Override
+	public void onActionProduce(Action a) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void onActionReceive(Action a) {
+		// TODO Auto-generated method stub
+	}
+
 
 	/*
 	 * (non-Javadoc)
@@ -133,5 +144,4 @@ public class OnFire extends AnimatedStatus {
 	public Status loadFromString(String[] args){
 		return new OnFire(Integer.parseInt(args[1]),Integer.parseInt(args[2]),Integer.parseInt(args[3]));
 	}
-
 }
