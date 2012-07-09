@@ -154,9 +154,9 @@ public class AttackAction extends EntityTypeAction {
 
 		if (e.getLocation().canBeSeen()) {
 			if ((xdiff < 0 ^ e.getFacing()) || (xdiff == 0 && ydiff > 0)) {
-				e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_BACK);
-			} else {
 				e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_FRONT);
+			} else {
+				e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_BACK);
 			}
 
 			e.getParent().addEffectOver(s.getLocation(),

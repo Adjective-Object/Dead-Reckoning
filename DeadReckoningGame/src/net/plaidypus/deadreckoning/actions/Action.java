@@ -80,7 +80,8 @@ public abstract class Action {
 					stats.get(i).onActionProduce(this);
 				}
 				
-				if(!this.target.isOpen(Tile.LAYER_ACTIVE)){
+				if(this.target!=null && !this.target.isOpen(Tile.LAYER_ACTIVE) &&
+						LivingEntity.class.isAssignableFrom(this.target.getEntity(Tile.LAYER_ACTIVE).getClass())){
 					e = (LivingEntity) this.target.getEntity(Tile.LAYER_ACTIVE);
 					stats = e.getConditions();
 					for(int i=0; i<stats.size(); i++){

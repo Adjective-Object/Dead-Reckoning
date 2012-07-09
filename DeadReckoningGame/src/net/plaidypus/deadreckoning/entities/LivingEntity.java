@@ -456,10 +456,15 @@ public abstract class LivingEntity extends InteractiveEntity {
 							frames[i] = Integer.parseInt(toAnimationC[i]);
 							durations[i] = Integer.parseInt(toAnimationB[1]);
 						}
-
-						animations.put(toAnimation[0],
+						try{
+							animations.put(toAnimation[0],
 								new Animation(images.get(toAnimationB[0]),
 										frames, durations));
+						} catch (RuntimeException e){
+							 System.err.println("Animation "+toAnimation[0]+" in "+info.get("NAME")+" is invalid");
+							 System.err.println(images.get(toAnimationB[0]).getHorizontalCount()+","+images.get(toAnimationB[0]).getVerticalCount());
+							 e.printStackTrace();
+						}
 					}
 				}
 			}
