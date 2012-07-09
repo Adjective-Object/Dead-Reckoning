@@ -32,10 +32,11 @@ public class MiniMap extends HudElement {
 			throws SlickException {
 	}
 
-	@Override
-	public void makeFrom(Object o) {
+	
+	public void makeFrom(Object o){
+		this.hookState=(GameplayElement)o;
 	}
-
+	
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
@@ -50,7 +51,7 @@ public class MiniMap extends HudElement {
 	public int getHeight() {
 		return this.height*this.scale;
 	}
-
+	
 	protected void renderTo(Graphics g, int xo, int yo, int px,int py) {
 		GameBoard target = hookState.getBoard();
 		Player p = hookState.player;

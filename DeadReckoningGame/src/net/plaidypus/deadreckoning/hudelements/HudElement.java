@@ -243,5 +243,7 @@ public abstract class HudElement {
 	public int getAbsoluteY() {
 		return yoff + offsets[bindMethod][1] + this.container.getY() - this.getPersonalOffsets(this.personalBindMethod)[1];
 	}
+	
+	public void onEnter(GameContainer container, StateBasedGame game)throws SlickException{}
 
 }

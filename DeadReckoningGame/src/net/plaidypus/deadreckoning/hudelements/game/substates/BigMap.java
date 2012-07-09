@@ -25,4 +25,8 @@ public class BigMap extends MiniMap{
 
 	}
 	
+	public void onEnter(GameContainer container, StateBasedGame game){
+		this.makeFrom(null);
+	}
+	
 }
