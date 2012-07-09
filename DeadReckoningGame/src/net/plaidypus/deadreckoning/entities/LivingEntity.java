@@ -325,7 +325,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * @see net.plaidypus.deadreckoning.entities.Entity#onDeath()
 	 */
 	public void onDeath() {
-		this.getParent().removeEntity(this);
+		System.out.println("FUUUCK");
 		this.getParent().placeEntityNear(this.getX(), this.getY(),
 				new Corpse(this),
 				Tile.LAYER_PASSIVE_PLAY);

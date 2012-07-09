@@ -150,7 +150,7 @@ public class Corpse extends InteractiveEntity {
 	 */
 	@Override
 	public String saveToString() {
-		return this.getX() + ":" + this.getY() + ":" + this.getLayer() + ":" + this.entity.saveToString();
+		return this.getClass().getCanonicalName()+":"+this.getX() + ":" + this.getY() + ":" + this.getLayer() + ":" + this.entity.saveToString();
 	}
 
 	/*

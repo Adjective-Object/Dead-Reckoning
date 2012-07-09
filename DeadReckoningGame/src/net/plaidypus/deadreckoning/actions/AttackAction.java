@@ -20,6 +20,8 @@ public class AttackAction extends EntityTypeAction {
 
 	/** The animate source. */
 	boolean animateSource;
+	
+	protected boolean effectsApplied = false;
 
 	/** The physical. */
 	boolean physical;
@@ -132,51 +134,59 @@ public class AttackAction extends EntityTypeAction {
 	protected boolean applyToEntity(LivingEntity e) {
 
 		LivingEntity s = (LivingEntity) GameBoard.getEntity(this.sourceID);
-		if (animateSource && GameBoard.getEntity(this.sourceID).getLocation().canBeSeen()) {
-			s.setCurrentAnimation(LivingEntity.ANIMATION_ATTACK);
-		}
-		if (physical) {
-			damage = e.damagePhysical(damage);
-		} else {
-			damage = e.damageMagical(damage);
-		}
-		if (e.HP <= 0) {
-			try {
-				Player p = (Player) (s);
-				p.addExp(e.calculateEXPValue());
-			} catch (ClassCastException cce) {
+		if(!effectsApplied){
+			if (animateSource && GameBoard.getEntity(this.sourceID).getLocation().canBeSeen()) {
+				s.setCurrentAnimation(LivingEntity.ANIMATION_ATTACK);
 			}
-
-		}
-
-		int xdiff = s.getX() - target.getX();
-		int ydiff = s.getY() - target.getY();
-
-		if (e.getLocation().canBeSeen()) {
-			if ((xdiff < 0 ^ e.getFacing()) || (xdiff == 0 && ydiff > 0)) {
-				e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_FRONT);
+			if (physical) {
+				damage = e.damagePhysical(damage);
 			} else {
-				e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_BACK);
+				damage = e.damageMagical(damage);
 			}
-
-			e.getParent().addEffectOver(s.getLocation(),
-					this.sourceEffectTop);
-			e.getParent().addEffectUnder(s.getLocation(),
-					this.sourceEffectBottom);
-			e.getParent().addEffectOver(target, this.targetEffectTop);
-			e.getParent().addEffectUnder(target, this.targetEffectBottom);
-
-			e.getParent().addEffectOver(
-					new DamageEffect(target, Integer.toString(damage)));
+			if (e.HP <= 0) {
+				try {
+					Player p = (Player) (s);
+					p.addExp(e.calculateEXPValue());
+				} catch (ClassCastException cce) {
+				}
+	
+			}
+	
+			int xdiff = s.getX() - target.getX();
+			int ydiff = s.getY() - target.getY();
+	
+			if (e.getLocation().canBeSeen()) {
+				if ((xdiff < 0 ^ e.getFacing()) || (xdiff == 0 && ydiff > 0)) {
+					e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_FRONT);
+				} else {
+					e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_BACK);
+				}
+	
+				e.getParent().addEffectOver(s.getLocation(),
+						this.sourceEffectTop);
+				e.getParent().addEffectUnder(s.getLocation(),
+						this.sourceEffectBottom);
+				e.getParent().addEffectOver(target, this.targetEffectTop);
+				e.getParent().addEffectUnder(target, this.targetEffectBottom);
+	
+				e.getParent().addEffectOver(
+						new DamageEffect(target, Integer.toString(damage)));
+			}
+	
+			if (damage > 0) {
+				sendMessage(s.getName() + " attacked "
+						+ target.getEntity(Tile.LAYER_ACTIVE).getName() + " for "
+						+ damage + " damage");
+			}
+			effectsApplied=true;
 		}
-
-		if (damage > 0) {
-			sendMessage(s.getName() + " attacked "
-					+ target.getEntity(Tile.LAYER_ACTIVE).getName() + " for "
-					+ damage + " damage");
+		else{
+			if(s.getCurrentAnimationID() == LivingEntity.ANIMATION_STAND &&
+					e.getCurrentAnimationID() == LivingEntity.ANIMATION_STAND){
+				return true;
+			}
 		}
-
-		return true;
+		return false;
 
 	}
 

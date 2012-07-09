@@ -210,6 +210,10 @@ public class GameBoard implements ILosBoard {
 	 * @return true, if successful
 	 */
 	public boolean placeEntityNear(int x, int y, Entity e, int layer) {
+		if(this.board[x][y].isOpen(layer)){
+			placeEntity(x,y,e,layer);
+			return true;
+		}
 		for (int scanRadius = 0; scanRadius < 10; scanRadius++) {
 			for (int i = -scanRadius + 1; i < scanRadius; i++) {
 				if (getTileAt(x + i, y - scanRadius).isEmpty(layer)) {
@@ -414,9 +418,10 @@ public class GameBoard implements ILosBoard {
 				for (int i = 0; i < Tile.numLayers; i++) {
 					if (!board[x][y].isOpen(i)) {
 						board[x][y].getEntity(i).update(gc, delta);
-						if (board[x][y].getEntity(i).toKill) {
-							board[x][y].getEntity(i).onDeath();
-							board[x][y].disconnectEntity(i);
+						Entity e = board[x][y].getEntity(i);
+						if (e.toKill) {
+							this.removeEntity(e);
+							e.onDeath();
 						}
 					}
 				}

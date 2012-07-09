@@ -159,7 +159,7 @@ public class Tile {
 	}
 
 	/**
-	 * Checks if is open.
+	 * Checks if the tile has an entity on it
 	 * 
 	 * @param layer
 	 *            the layer
@@ -175,11 +175,20 @@ public class Tile {
 	 * @return true, if is open
 	 */
 	public boolean isOpen() {
-		return this.containedEntities.length == 0;// TODO not sure
-																// if this will
-		// work
+		for(int i=0; i<this.containedEntities.length; i++){
+			if(this.containedEntities[i]!=null){
+				return false;
+			}
+		}
+		return true;
 	}
 	
+	/**
+	 * checks if there is an entity on the tile OR if the tile blocks movement(is a wall)
+	 * 
+	 * @param layer
+	 * @return
+	 */
 	public boolean isEmpty(int layer) {
 		return this.containedEntities[layer] == null && !blocking;
 

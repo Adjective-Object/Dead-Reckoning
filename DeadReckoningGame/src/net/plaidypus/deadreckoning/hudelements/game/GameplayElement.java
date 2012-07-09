@@ -335,7 +335,6 @@ public class GameplayElement extends HudElement {
 		advanceEntity();
 		updateBoardEffects(gc, delta);
 		getBoard().clearHighlightedSquares();
-		getBoard().clearPrimaryHighlight();
 		input.clearKeyPressedRecord();
 	}
 
