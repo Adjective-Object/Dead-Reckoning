@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
-import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.skills.Skill;
+import net.plaidypus.deadreckoning.statmaster.Profession;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;

@@ -11,7 +11,7 @@ import net.plaidypus.deadreckoning.entities.Monster;
 import net.plaidypus.deadreckoning.generator.Room;
 import net.plaidypus.deadreckoning.generator.RoomBasedBiome;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
-import net.plaidypus.deadreckoning.professions.StatMaster;
+import net.plaidypus.deadreckoning.statmaster.StatMaster;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;

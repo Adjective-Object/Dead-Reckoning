@@ -1,4 +1,4 @@
-package net.plaidypus.deadreckoning.professions;
+package net.plaidypus.deadreckoning.statmaster;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

@@ -9,7 +9,7 @@ import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.grideffects.AnimationEffect;
 import net.plaidypus.deadreckoning.items.Equip;
 import net.plaidypus.deadreckoning.items.Item;
-import net.plaidypus.deadreckoning.professions.Profession;
+import net.plaidypus.deadreckoning.statmaster.Profession;
 import net.plaidypus.deadreckoning.skills.Attack;
 import net.plaidypus.deadreckoning.skills.ChangeState;
 import net.plaidypus.deadreckoning.skills.Interacter;
@@ -19,7 +19,6 @@ import net.plaidypus.deadreckoning.skills.Saver;
 import net.plaidypus.deadreckoning.skills.Skill;
 import net.plaidypus.deadreckoning.skills.ViewSkills;
 import net.plaidypus.deadreckoning.skills.Wait;
-
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
@@ -158,6 +157,9 @@ public class Player extends LivingEntity {
 		if (gc.getInput().isKeyDown(Input.KEY_RBRACKET)) {
 			this.EXP += delta;
 		}
+		if (gc.getInput().isKeyPressed(Input.KEY_LBRACKET)) {
+			this.stealthed = !this.stealthed;
+		}
 	}
 
 	public ArrayList<Action> advanceTurn() {
@@ -167,6 +169,7 @@ public class Player extends LivingEntity {
 	
 	public void recalculateStatBonuses(){
 		super.recalculateStatBonuses();
+		this.profession.setDodge(50);
 		for (int i = 0; i < 8; i++) {// updating the stat alterations based on
 			if (this.equips.get(i) != null) {
 			Equip e = this.equips.get(i);

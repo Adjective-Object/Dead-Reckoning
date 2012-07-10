@@ -98,7 +98,8 @@ public class DamageEffect extends GridEffect {
 	 */
 	public void render(Graphics g, float xOff, float yOff) {
 		g.setColor(new Color(200, 0, 0, 255 * visibility));
-		g.drawString(damage, location.getX() * DeadReckoningGame.tileSize + x
-				+ xOff, location.getY() * DeadReckoningGame.tileSize + y + yOff);
+		g.drawString(damage,
+				location.getX() * DeadReckoningGame.tileSize -g.getFont().getWidth(damage) /2 + x + xOff,
+				location.getY() * DeadReckoningGame.tileSize -g.getFont().getHeight(damage)/2 + y + yOff);
 	}
 }

@@ -26,7 +26,7 @@ import net.plaidypus.deadreckoning.exceptions.ErrorType;
 import net.plaidypus.deadreckoning.exceptions.ModLoadException;
 import net.plaidypus.deadreckoning.filters.HiddenFileFilter;
 import net.plaidypus.deadreckoning.generator.Biome;
-import net.plaidypus.deadreckoning.professions.Profession;
+import net.plaidypus.deadreckoning.statmaster.Profession;
 
 public class ModLoader {
 

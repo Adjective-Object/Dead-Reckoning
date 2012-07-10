@@ -11,8 +11,8 @@ import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.button.Button;
 import net.plaidypus.deadreckoning.hudelements.button.ImageButton;
 import net.plaidypus.deadreckoning.hudelements.simple.Panel;
-import net.plaidypus.deadreckoning.professions.Profession;
-import net.plaidypus.deadreckoning.professions.SkillProgression;
+import net.plaidypus.deadreckoning.statmaster.Profession;
+import net.plaidypus.deadreckoning.statmaster.SkillProgression;
 
 public class SkillTreeSelectionElement extends Panel{
 

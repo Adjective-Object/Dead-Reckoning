@@ -8,7 +8,7 @@ import net.plaidypus.deadreckoning.actions.AttackAction;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
-import net.plaidypus.deadreckoning.professions.StatMaster;
+import net.plaidypus.deadreckoning.statmaster.StatMaster;
 import net.plaidypus.deadreckoning.status.AnimatedStatus;
 import net.plaidypus.deadreckoning.status.Status;
 

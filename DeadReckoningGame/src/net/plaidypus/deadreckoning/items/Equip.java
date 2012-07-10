@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 
 import org.newdawn.slick.Image;
@@ -44,7 +45,7 @@ public class Equip extends Item {
 	protected void parseItem(InputStream in) throws IOException, SlickException {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		name = reader.readLine();
-		description = reader.readLine();
+		description = Utilities.collapseNewlines(reader.readLine());
 		image = ModLoader.loadImage(reader.readLine());
 
 		equipSlot = Integer.parseInt(reader.readLine());

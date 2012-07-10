@@ -1,4 +1,4 @@
-package net.plaidypus.deadreckoning.professions;
+package net.plaidypus.deadreckoning.statmaster;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -29,7 +29,7 @@ import org.newdawn.slick.SlickException;
  * The profession class is a custom kind of statmaster that also keeps the
  * skills that the player has access to in a series of skillprogressions
  * 
- * @see net.plaidypus.deadreckoning.professions.SkillProgression
+ * @see net.plaidypus.deadreckoning.statmaster.SkillProgression
  */
 public class Profession extends StatMaster {
 

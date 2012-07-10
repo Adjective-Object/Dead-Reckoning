@@ -13,11 +13,11 @@ import net.plaidypus.deadreckoning.hudelements.game.substates.StatDisplayElement
 import net.plaidypus.deadreckoning.hudelements.simple.Panel;
 import net.plaidypus.deadreckoning.hudelements.simple.StillImageElement;
 import net.plaidypus.deadreckoning.hudelements.simple.TextElement;
-import net.plaidypus.deadreckoning.professions.Profession;
-import net.plaidypus.deadreckoning.professions.SkillProgression;
 import net.plaidypus.deadreckoning.skills.Skill;
 import net.plaidypus.deadreckoning.state.HudLayersState;
 import net.plaidypus.deadreckoning.state.PrebakedHudLayersState;
+import net.plaidypus.deadreckoning.statmaster.Profession;
+import net.plaidypus.deadreckoning.statmaster.SkillProgression;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;

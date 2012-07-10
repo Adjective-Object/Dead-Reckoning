@@ -4,13 +4,13 @@
 	<classpathentry kind="src" path="DeadReckoningMods/src"/>
 	<classpathentry kind="src" path="DeadReckoningTools/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="slick/lib/slick.jar">
+	<classpathentry exported="true" kind="lib" path="slick/lib/slick.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="file:/Users/mhuan13/Desktop/Dead-Reckoning/slick/javadoc/"/>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Dead-Reckoning/slick"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="slick/lib/lwjgl.jar"/>
-	<classpathentry kind="lib" path="rlforj.0.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="slick/lib/lwjgl.jar"/>
+	<classpathentry exported="true" kind="lib" path="rlforj.0.2.jar"/>
 	<classpathentry kind="output" path="DeadReckoningMods/bin"/>
 </classpath>

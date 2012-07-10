@@ -1,4 +1,4 @@
-package net.plaidypus.deadreckoning.professions;
+package net.plaidypus.deadreckoning.statmaster;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -13,12 +13,12 @@ package net.plaidypus.deadreckoning.professions;
  * Maplestory, Immediately after the Big Bang update, or from League of Legends,
  * shortly after the varus patch.
  * 
- * @see net.plaidypus.deadreckoning.professions.Profession
+ * @see net.plaidypus.deadreckoning.statmaster.Profession
  */
 public class StatMaster {
 
 	/** The internal stats */
-	protected int mHP, mMP, STR, DEX, INT, LUK, level;
+	protected int mHP, mMP, STR, DEX, INT, LUK, level, dodge;
 
 	protected int modHP, modMP, modSTR, modDEX, modINT, modLUK, modAtt, modDef,
 			modMagAtt, modMagDef;
@@ -287,5 +287,28 @@ public class StatMaster {
 	public int getBonusLUK() {
 		return modLUK;
 	}
+	
+	public int getDodge() {
+		return this.dodge;
+	}
+	
+	/**
+	 * dodge does not stack.
+	 * Higher values will be kept.
+	 * Must be re-assigned every turn.
+	 * 
+	 * @param value
+	 * @return
+	 */
+	public void setDodge(int value) {
+		if (value>this.dodge){
+			this.dodge=value;
+		}
+	}
+	
+	public float getDodgeChance(){
+		return 100F/(100+this.dodge); 
+	}
+
 
 }

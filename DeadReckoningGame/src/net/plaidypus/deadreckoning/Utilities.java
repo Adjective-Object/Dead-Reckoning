@@ -255,4 +255,8 @@ public class Utilities {
 	public static int roundDown(double d) {
 		return roundDown((float) d);
 	}
+	
+	public static String collapseNewlines(String s){
+		return s.replaceAll("\\\\n", "\n");
+	}
 }

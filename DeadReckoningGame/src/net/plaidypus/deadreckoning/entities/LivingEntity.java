@@ -10,13 +10,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
+import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
 import net.plaidypus.deadreckoning.items.Equip;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
-import net.plaidypus.deadreckoning.professions.StatMaster;
 import net.plaidypus.deadreckoning.skills.Skill;
+import net.plaidypus.deadreckoning.statmaster.StatMaster;
 import net.plaidypus.deadreckoning.status.Status;
 
 import org.newdawn.slick.Animation;
@@ -194,7 +195,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * @return 
 	 */
 	public int damagePhysical(int damage) {
-		int x = this.statMaster.getPhysicalDamage(damage);
+		int x = attemptDodge(this.statMaster.getPhysicalDamage(damage));
 		this.HP -= x;
 		return x;
 		
@@ -208,9 +209,16 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 *            the damage to deal
 	 */
 	public int damageMagical(int damage) {
-		int x = this.statMaster.getMagicalDamage(damage);
+		int x = attemptDodge(this.statMaster.getMagicalDamage(damage));
 		this.HP -= x;
 		return x;
+	}
+	
+	public int attemptDodge(int damage){
+		if(Utilities.randFloat() <= this.statMaster.getDodgeChance()){
+			return damage;
+		}
+		return 0;
 	}
 
 	/**
@@ -325,7 +333,6 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * @see net.plaidypus.deadreckoning.entities.Entity#onDeath()
 	 */
 	public void onDeath() {
-		System.out.println("FUUUCK");
 		this.getParent().placeEntityNear(this.getX(), this.getY(),
 				new Corpse(this),
 				Tile.LAYER_PASSIVE_PLAY);

@@ -37,6 +37,8 @@ public abstract class Entity extends DeadReckoningComponent {
 	/** The visible. */
 	private boolean transparent, visible;
 
+	protected boolean stealthed;
+
 	/** The is interactive. */
 	protected boolean isTerrain, makesActions;
 
@@ -112,7 +114,13 @@ public abstract class Entity extends DeadReckoningComponent {
 	 */
 	public void render(Graphics g, float x, float y) {
 		if (this.visible) {
-			forceRender(g, x, y);
+			if( this.stealthed && (this.allignmnet==Entity.ALLIGN_FRIENDLY||DeadReckoningGame.debugMode) ){
+				g.setDrawMode(Graphics.MODE_COLOR_MULTIPLY);
+			}
+			else if(!this.stealthed){
+				forceRender(g, x, y);
+			}
+			g.setDrawMode(Graphics.MODE_NORMAL);
 		}
 	}
 
@@ -306,7 +314,7 @@ public abstract class Entity extends DeadReckoningComponent {
 	 * @return true, if is visible
 	 */
 	public boolean isVisible() {
-		return visible;
+		return visible && (!stealthed || allignmnet==ALLIGN_NEUTRAL);
 	}
 
 	/**
@@ -434,6 +442,10 @@ public abstract class Entity extends DeadReckoningComponent {
 	public void setLocation(Tile tile, int layer) {
 		this.location=tile;
 		this.layer=layer;
+	}
+
+	public boolean isStealthed() {
+		return this.stealthed;
 	}
 
 }

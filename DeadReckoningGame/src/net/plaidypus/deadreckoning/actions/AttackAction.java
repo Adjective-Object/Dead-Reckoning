@@ -169,15 +169,22 @@ public class AttackAction extends EntityTypeAction {
 				e.getParent().addEffectOver(target, this.targetEffectTop);
 				e.getParent().addEffectUnder(target, this.targetEffectBottom);
 	
-				e.getParent().addEffectOver(
-						new DamageEffect(target, Integer.toString(damage)));
+				
+				if (damage > 0) {
+					sendMessage(s.getName() + " attacked "
+							+ target.getEntity(Tile.LAYER_ACTIVE).getName() + " for "
+							+ damage + " damage");
+					e.getParent().addEffectOver(
+							new DamageEffect(target, Integer.toString(damage)));
+				}
+				else{
+					sendMessage(target.getEntity(Tile.LAYER_ACTIVE).getName() +
+							" dodged " + s.getName() +  "'s attack ");
+					e.getParent().addEffectOver(
+							new DamageEffect(target,"dodged"));
+				}
 			}
 	
-			if (damage > 0) {
-				sendMessage(s.getName() + " attacked "
-						+ target.getEntity(Tile.LAYER_ACTIVE).getName() + " for "
-						+ damage + " damage");
-			}
 			effectsApplied=true;
 		}
 		else{

@@ -14,9 +14,9 @@ import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
 import net.plaidypus.deadreckoning.hudelements.simple.Panel;
 import net.plaidypus.deadreckoning.hudelements.simple.TextElement;
 import net.plaidypus.deadreckoning.hudelements.simple.TextEntryBox;
-import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.save.Save;
 import net.plaidypus.deadreckoning.state.HudLayersState;
+import net.plaidypus.deadreckoning.statmaster.Profession;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;

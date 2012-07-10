@@ -24,8 +24,8 @@ import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
 import net.plaidypus.deadreckoning.items.Equip;
 import net.plaidypus.deadreckoning.items.Item;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
-import net.plaidypus.deadreckoning.professions.Profession;
-import net.plaidypus.deadreckoning.professions.SkillProgression;
+import net.plaidypus.deadreckoning.statmaster.Profession;
+import net.plaidypus.deadreckoning.statmaster.SkillProgression;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;

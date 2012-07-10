@@ -8,7 +8,7 @@ import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
-import net.plaidypus.deadreckoning.professions.StatMaster;
+import net.plaidypus.deadreckoning.statmaster.StatMaster;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;

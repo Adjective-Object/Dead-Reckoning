@@ -8,10 +8,10 @@ import net.plaidypus.deadreckoning.actions.WaitAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.items.Item;
-import net.plaidypus.deadreckoning.professions.StatMaster;
 import net.plaidypus.deadreckoning.skills.Attack;
 import net.plaidypus.deadreckoning.skills.Movement;
 import net.plaidypus.deadreckoning.skills.Skill;
+import net.plaidypus.deadreckoning.statmaster.StatMaster;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -75,6 +75,7 @@ public class Monster extends LivingEntity {
 						if (n.getAllignment() != this.getAllignment()
 								&& n.getAllignment() != Entity.ALLIGN_NEUTRAL
 								&& n.makesActions()
+								&& !n.isStealthed()
 								&& Utilities.randFloat() <= 0.8) {
 							return attack.makeAction(this.getLocation()
 									.getRelativeTo(i, q));

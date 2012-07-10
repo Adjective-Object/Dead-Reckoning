@@ -13,8 +13,8 @@ import net.plaidypus.deadreckoning.hudelements.simple.FillerBar;
 import net.plaidypus.deadreckoning.hudelements.simple.Panel;
 import net.plaidypus.deadreckoning.hudelements.simple.StillImageElement;
 import net.plaidypus.deadreckoning.hudelements.simple.TextElement;
-import net.plaidypus.deadreckoning.professions.Profession;
 import net.plaidypus.deadreckoning.state.PrebakedHudLayersState;
+import net.plaidypus.deadreckoning.statmaster.Profession;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
