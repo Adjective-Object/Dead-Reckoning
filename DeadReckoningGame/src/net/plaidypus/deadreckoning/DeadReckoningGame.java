@@ -271,6 +271,17 @@ public class DeadReckoningGame extends StateBasedGame {
 		{
 			try
 			{
+				TextElement t = new TextElement(0, 0, HudElement.CENTER_CENTER, "", menuTextColor,menuFont);
+				t.personalBindMethod=HudElement.CENTER_CENTER;
+				this.addState(
+					new HudLayersState(ERRORSTATE,
+						new HudElement[] {
+							new ColorFiller(menuBackgroundColor),
+							t
+						}
+					)
+				);
+				
 				this.addState(new MainMenuState(MAINMENUSTATE, menuBackground));
 
 				this.addState(
@@ -302,17 +313,6 @@ public class DeadReckoningGame extends StateBasedGame {
 						subBackground
 					)
 				);
-				
-				TextElement t = new TextElement(0, 0, HudElement.CENTER_CENTER, "", menuTextColor,menuFont);
-				t.personalBindMethod=HudElement.CENTER_CENTER;
-				this.addState(
-					new HudLayersState(ERRORSTATE,
-						new HudElement[] {
-							new ColorFiller(menuBackgroundColor),
-							t
-						}
-					)
-				);
 
 				this.addState(new SaveSelectorState(SAVESELECTSTATE, menuBackground));
 				this.addState(new PlayerViewerState(SKILLSTATE, subBackground));
@@ -322,27 +322,22 @@ public class DeadReckoningGame extends StateBasedGame {
 				this.addState(new OptionsState(OPTIONSSTATE, menuBackground));
 				this.addState(new InGameMenuState(INGAMEMENUSTATE,subBackground));
 				
+				Integer e = null;
+				e.toString();
+				
 				this.enterState(MAINMENUSTATE);
 			}
 			catch (Exception e)
 			{
-				StringWriter errors = new StringWriter();
-				e.printStackTrace(new PrintWriter(errors));
-				this.addState(new HudLayersState(ERRORSTATE, new HudElement[] {
-						new ColorFiller(menuBackgroundColor),
-						new TextElement(0, 0, HudElement.TOP_LEFT, e.getMessage() + "\r\nPlease report this error", menuTextColor,
-								menuFont) }));
-				this.enterState(ERRORSTATE);
+				elpha = e;
 			}
 		}
-		else
+		if (elpha!=null)
 		{
 			StringWriter errors = new StringWriter();
 			elpha.printStackTrace(new PrintWriter(errors));
-			this.addState(new HudLayersState(ERRORSTATE, new HudElement[] {
-					new ColorFiller(menuBackgroundColor),
-					new TextElement(0, 0, HudElement.TOP_LEFT, elpha.getMessage() + "\r\nPlease report this error", menuTextColor,
-							menuFont) }));
+			HudLayersState s = (HudLayersState)(this.getState(ERRORSTATE));
+			s.getElement(1).makeFrom(elpha.getMessage()+"\r\n" + errors.toString().replaceAll("	","") + "\r\nPlease report this error");
 			this.enterState(ERRORSTATE);
 		}
 	}
