@@ -38,6 +38,8 @@ public abstract class Skill extends DeadReckoningComponent {
 	/** The source. */
 	protected int sourceID;
 
+	protected boolean instant=false;
+	
 	/**
 	 * Skills are a method of having arbitrary abilities on entites (able to be
 	 * stored in an arrayList) while keeping the Action class unique for each
@@ -136,7 +138,7 @@ public abstract class Skill extends DeadReckoningComponent {
 	 * @return true, if is instant
 	 */
 	public boolean isInstant() {
-		return false;
+		return instant;
 	}
 
 	/**

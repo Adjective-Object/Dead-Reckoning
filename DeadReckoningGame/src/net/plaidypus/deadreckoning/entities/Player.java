@@ -8,15 +8,12 @@ import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.grideffects.AnimationEffect;
 import net.plaidypus.deadreckoning.items.Equip;
-import net.plaidypus.deadreckoning.items.Item;
 import net.plaidypus.deadreckoning.statmaster.Profession;
 import net.plaidypus.deadreckoning.skills.Attack;
 import net.plaidypus.deadreckoning.skills.ChangeState;
 import net.plaidypus.deadreckoning.skills.Interacter;
 import net.plaidypus.deadreckoning.skills.Loot;
 import net.plaidypus.deadreckoning.skills.PreBakedMove;
-import net.plaidypus.deadreckoning.skills.Saver;
-import net.plaidypus.deadreckoning.skills.Skill;
 import net.plaidypus.deadreckoning.skills.ViewSkills;
 import net.plaidypus.deadreckoning.skills.Wait;
 import org.newdawn.slick.Animation;
@@ -96,7 +93,7 @@ public class Player extends LivingEntity {
 				Input.KEY_F3, Input.KEY_F4, Input.KEY_F5, Input.KEY_F6,
 				Input.KEY_F7, Input.KEY_F8, Input.KEY_F9, Input.KEY_F10,
 				Input.KEY_F11, Input.KEY_F12, Input.KEY_T, Input.KEY_L,
-				Input.KEY_I, Input.KEY_M, Input.KEY_K, Input.KEY_E, Input.KEY_P};
+				Input.KEY_I, Input.KEY_M, Input.KEY_K, Input.KEY_E};
 		skills.add( new PreBakedMove(entityID, -1, 0));
 		skills.add( new PreBakedMove(entityID, 1, 0));
 		skills.add( new PreBakedMove(entityID, 0, -1));
@@ -122,7 +119,6 @@ public class Player extends LivingEntity {
 		skills.add(new ChangeState(entityID,DeadReckoningGame.MAPSTATE));
 		skills.add(new ViewSkills(entityID));
 		skills.add(new Interacter(entityID));
-		skills.add(new Saver(entityID));
 
 		this.skills.addAll(p.getSkillList());
 		this.equips = new ArrayList<Equip>(9);

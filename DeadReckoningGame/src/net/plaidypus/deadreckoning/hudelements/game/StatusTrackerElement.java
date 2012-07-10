@@ -1,9 +1,13 @@
 package net.plaidypus.deadreckoning.hudelements.game;
 
+import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
+import net.plaidypus.deadreckoning.skills.Skill;
+import net.plaidypus.deadreckoning.status.Status;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -43,6 +47,16 @@ public class StatusTrackerElement extends HudElement {
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
+		Input i = gc.getInput();
+	
+		if (i.getMouseX() > this.getAbsoluteX()
+				&& i.getMouseY() > this.getAbsoluteY()
+				&& i.getMouseX() < this.getAbsoluteX() + this.getWidth()
+				&& i.getMouseY() < this.getAbsoluteY() + this.getHeight()) {
+			int rx = (i.getMouseX() - this.getAbsoluteX()) / (DeadReckoningGame.tileSize +6);
+			Status x = target.player.getConditions().get(rx);
+			this.setMouseoverText(x.getName()+"\n"+x.description+"\n"+x.getDuration()+" turns left");
+		}
 	}
 
 	/*
@@ -75,7 +89,7 @@ public class StatusTrackerElement extends HudElement {
 	 */
 	@Override
 	public int getWidth() {
-		return target.player.statuses.size() * 37;
+		return target.player.statuses.size() * 38;
 	}
 
 	/*

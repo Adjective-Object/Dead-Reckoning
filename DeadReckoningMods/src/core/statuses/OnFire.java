@@ -30,7 +30,7 @@ public class OnFire extends AnimatedStatus {
 	static Image image;
 
 	/** The details. */
-	static String details, statusID;
+	static String details;
 
 	/** The sprite. */
 	static SpriteSheet sprite;
@@ -62,19 +62,6 @@ public class OnFire extends AnimatedStatus {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * net.plaidypus.deadreckoning.status.Status#applyToEntity(net.plaidypus
-	 * .deadreckoning.entities.LivingEntity)
-	 */
-	@Override
-	public void applyToEntity(LivingEntity target) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
 	 * net.plaidypus.deadreckoning.status.Status#advanceTurnEffects(net.plaidypus
 	 * .deadreckoning.entities.LivingEntity)
 	 */
@@ -98,18 +85,6 @@ public class OnFire extends AnimatedStatus {
 		// TODO Auto-generated method stub
 	}
 
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.plaidypus.deadreckoning.status.Status#removeFromEntity(net.plaidypus
-	 * .deadreckoning.entities.LivingEntity)
-	 */
-	@Override
-	public void removeFromEntity(LivingEntity target) {
-
-	}
 
 	/*
 	 * (non-Javadoc)

@@ -1,5 +1,7 @@
 package net.plaidypus.deadreckoning.statmaster;
 
+import net.plaidypus.deadreckoning.Utilities;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class StatMaster.
@@ -19,6 +21,8 @@ public class StatMaster {
 
 	/** The internal stats */
 	protected int mHP, mMP, STR, DEX, INT, LUK, level, dodge;
+
+	private int crit;
 
 	protected int modHP, modMP, modSTR, modDEX, modINT, modLUK, modAtt, modDef,
 			modMagAtt, modMagDef;
@@ -235,6 +239,8 @@ public class StatMaster {
 		this.modMagAtt = 0;
 		this.modDef = 0;
 		this.modMagDef = 0;
+		this.dodge=0;
+		this.setCrit(0);
 	}
 
 	public int getPhysicalDamageTo(int rawDamageValue) {
@@ -246,7 +252,11 @@ public class StatMaster {
 	}
 	
 	public int getPhysicalDamageFrom(){
-		return this.getSTR();
+		int x = this.getSTR();
+		if(Utilities.randFloat()<=this.getCrit()/100F){
+			x=2*x;
+		}
+		return x;
 	}
 	
 	/**
@@ -312,6 +322,14 @@ public class StatMaster {
 	
 	public float getDodgeChance(){
 		return 100F/(100+this.dodge); 
+	}
+
+	public int getCrit() {
+		return crit;
+	}
+
+	public void setCrit(int crit) {
+		this.crit = crit;
 	}
 
 

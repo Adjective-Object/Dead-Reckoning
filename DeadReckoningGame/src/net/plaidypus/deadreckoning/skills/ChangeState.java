@@ -32,6 +32,7 @@ public class ChangeState extends Skill {
 	public ChangeState(int sourceID, int targetState) {
 		super(sourceID);
 		this.targetState = targetState;
+		this.instant = true;
 	}
 
 	/*
@@ -55,15 +56,6 @@ public class ChangeState extends Skill {
 	@Override
 	public boolean canTargetTile(Tile t) {
 		return t == getSource().getLocation();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.plaidypus.deadreckoning.skills.Skill#isInstant()
-	 */
-	public boolean isInstant() {
-		return true;
 	}
 
 	/*

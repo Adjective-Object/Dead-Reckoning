@@ -1,5 +1,5 @@
-Destruction
-core.skills.Fireball
+Discipline
+core.skills.FocusedMindSkill
 core.skills.Fireball
 core.skills.Fireball
 core.skills.Fireball

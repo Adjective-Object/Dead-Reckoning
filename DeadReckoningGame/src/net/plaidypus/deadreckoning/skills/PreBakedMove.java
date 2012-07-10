@@ -36,6 +36,7 @@ public class PreBakedMove extends Movement {
 		super(sourceID);
 		this.xoff = xoff;
 		this.yoff = yoff;
+		instant=true;
 	}
 
 	/*
@@ -52,15 +53,6 @@ public class PreBakedMove extends Movement {
 					xoff, yoff), getSource().getLayer());
 		}
 		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.plaidypus.deadreckoning.skills.Skill#isInstant()
-	 */
-	public boolean isInstant() {
-		return true;
 	}
 
 }

@@ -24,6 +24,7 @@ public class ViewSkills extends Skill {
 	 */
 	public ViewSkills(int sourceID) {
 		super(sourceID);
+		this.instant=true;
 	}
 
 	/*
@@ -58,17 +59,7 @@ public class ViewSkills extends Skill {
 	 * .deadreckoning.board.GameBoard)
 	 */
 	@Override
-	public void highlightRange(GameBoard board) {
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.plaidypus.deadreckoning.skills.Skill#isInstant()
-	 */
-	public boolean isInstant() {
-		return true;
-	}
+	public void highlightRange(GameBoard board) {}
 
 	@Override
 	public void init() throws SlickException {

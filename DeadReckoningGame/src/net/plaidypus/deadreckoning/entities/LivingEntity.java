@@ -367,7 +367,6 @@ public abstract class LivingEntity extends InteractiveEntity {
 		while (i < this.statuses.size()) {
 			if (this.statuses.get(i).identifier.equals(s.identifier)) {
 				Status p = s.collapseWithStatus(statuses.get(i));
-				p.applyToEntity(this);
 				this.statuses.remove(i);
 				break;
 			}
@@ -375,7 +374,6 @@ public abstract class LivingEntity extends InteractiveEntity {
 		}
 		if (i == this.statuses.size()) {
 			this.statuses.add(s);
-			s.applyToEntity(this);
 		}
 	}
 
@@ -383,9 +381,6 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * Clear conditions.
 	 */
 	public void clearConditions() {
-		for (int i = 0; i < statuses.size(); i++) {
-			statuses.get(i).removeFromEntity(this);
-		}
 		statuses.clear();
 	}
 
@@ -531,6 +526,12 @@ public abstract class LivingEntity extends InteractiveEntity {
 			actions.addAll(statuses.get(i).advanceTurnEffects(this));
 		}
 		recalculateStatBonuses();
+		for (int i = 0; i < statuses.size(); i++) {
+			if(statuses.get(i).isFinished()){
+				this.statuses.remove(i);
+				i--;
+			}
+		}
 		return actions;
 	}
 	

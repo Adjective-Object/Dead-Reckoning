@@ -35,7 +35,6 @@ public class Door extends Entity {
 	 */
 	public Door() {
 		super();
-		open = false;
 		this.isTerrain = true;
 	}
 
@@ -141,6 +140,7 @@ public class Door extends Entity {
 	@Override
 	public Entity makeFromString(GameBoard target, String[] toload) {
 		Door d = new Door();
+		d.open = Integer.parseInt(toload[3])==Tile.LAYER_PASSIVE_MAP;
 		d.placeAt(
 				target.getTileAt(Integer.parseInt(toload[1]), Integer.parseInt(toload[2])),
 				Integer.parseInt(toload[3]));

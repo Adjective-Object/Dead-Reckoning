@@ -29,6 +29,7 @@ public class Wait extends Skill {
 	 */
 	public Wait(int sourceID) {
 		super(sourceID);
+		this.instant=true;
 	}
 
 	/*
@@ -65,16 +66,7 @@ public class Wait extends Skill {
 	public void highlightRange(GameBoard board) {
 		highlightRadial(board, 0);
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.plaidypus.deadreckoning.skills.Skill#isInstant()
-	 */
-	public boolean isInstant() {
-		return true;
-	}
-
+	
 	@Override
 	public void init() throws SlickException {
 	}

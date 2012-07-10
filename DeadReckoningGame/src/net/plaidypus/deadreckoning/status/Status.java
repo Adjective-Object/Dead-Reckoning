@@ -25,11 +25,15 @@ public abstract class Status extends DeadReckoningComponent{
 	public Image tileImage;
 
 	/** The name and description of the Status. */
-	public String description, identifier;
+	public String description, identifier, name;
 
 	/** The stacks=# stacks of a given buff. */
 	protected Integer sourceID;
-	protected int duration, stacks;
+	protected int duration;
+
+	protected int stacks;
+	
+	public Status(){}
 	
 	public Status(Integer sourceID, Image tileImage,
 			String description, String identifier) {
@@ -49,21 +53,12 @@ public abstract class Status extends DeadReckoningComponent{
 	 */
 	public Status collapseWithStatus(Status s) {
 		Status p = this;
-		if (s.duration > this.duration) {
+		if (s.getDuration() > this.getDuration()) {
 			p = s;
 		}
 		p.stacks = this.stacks + s.stacks;
 		return p;
 	}
-
-	/**
-	 * Applies the effects of the status to an entity. It's called once per turn
-	 * advance (from one entity to the next)
-	 * 
-	 * @param target
-	 *            the target
-	 */
-	public abstract void applyToEntity(LivingEntity target);
 
 	/**
 	 * Updates the status.
@@ -91,15 +86,6 @@ public abstract class Status extends DeadReckoningComponent{
 	
 	public abstract void onActionReceive(Action a);
 
-
-	/**
-	 * Removes the from entity.
-	 * 
-	 * @param target
-	 *            the target
-	 */
-	public abstract void removeFromEntity(LivingEntity target);
-
 	/**
 	 * Render.
 	 * 
@@ -125,7 +111,13 @@ public abstract class Status extends DeadReckoningComponent{
 	 * 
 	 * @return the name
 	 */
-	public abstract String getName();
+	public String getName(){
+		return this.name;
+	}
+
+	public int getDuration() {
+		return duration;
+	}
 
 	public abstract void alterStatMaster(StatMaster statMaster);
 	
@@ -133,11 +125,15 @@ public abstract class Status extends DeadReckoningComponent{
 	
 	public abstract Status loadFromString(String[] args);
 	
+	/**
+	 * class name:sourceID:stacks:duration;
+	 * @return
+	 */
 	public String getGenericSave(){
 		return	this.getClass().getCanonicalName()+"-"
 				+this.sourceID+"-"
 				+this.stacks+"-"
-				+this.duration;
+				+this.getDuration();
 	}
 	
 	public static Status loadStatusFromString(String stringstatus){
