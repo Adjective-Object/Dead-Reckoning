@@ -117,7 +117,7 @@ public class SkillMonitorElement extends HudElement { // TODO turn into a
 			throws SlickException {
 		ArrayList<Skill> skills = this.toMonitor.getSkillList();
 		for (int i = 0; i < skills.size(); i++) {
-			g.drawImage(skills.get(i).getImage(), this.getAbsoluteX() + 5 + i * 35,
+			g.drawImage(skills.get(i).getIcon(), this.getAbsoluteX() + 5 + i * 35,
 					this.getAbsoluteY() + 5);
 			if (skills.get(i).getCooldown() > 0
 					|| skills.get(i).getLevel() == 0) {

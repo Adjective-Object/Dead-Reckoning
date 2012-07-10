@@ -24,7 +24,7 @@ import org.newdawn.slick.SlickException;
 public abstract class Skill extends DeadReckoningComponent {
 
 	/** The levelcap. */
-	protected int level, levelcap;
+	protected int level, levelcap, levelReq;
 
 	/** The cooldown. */
 	protected int cooldown;
@@ -37,16 +37,6 @@ public abstract class Skill extends DeadReckoningComponent {
 
 	/** The source. */
 	protected int sourceID;
-
-	/**
-	 * Instantiates a new skill.
-	 * 
-	 * @param icon
-	 *            the icon
-	 */
-	public Skill(Image icon) {
-		this.imageIcon = icon;
-	}
 
 	/**
 	 * Skills are a method of having arbitrary abilities on entites (able to be
@@ -173,7 +163,10 @@ public abstract class Skill extends DeadReckoningComponent {
 	 * 
 	 * @return the image
 	 */
-	public Image getImage() {
+	public Image getIcon() {
+		if(imageIcon==null){
+			System.err.println(this.getClass().getCanonicalName());
+		}
 		return imageIcon;
 	}
 
@@ -253,7 +246,7 @@ public abstract class Skill extends DeadReckoningComponent {
 	 * @return the level req
 	 */
 	public int getLevelReq() {
-		return 0;
+		return this.levelReq;
 	}
 
 	/**
@@ -290,5 +283,9 @@ public abstract class Skill extends DeadReckoningComponent {
 
 	public void setSource(int entityID) {
 		this.sourceID = entityID;
+	}
+	
+	public void setIcon(Image icon){
+		this.imageIcon=icon;
 	}
 }

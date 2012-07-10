@@ -83,6 +83,9 @@ public class ItemGridElement extends SimplePanel {
 			if(this.contents.size()>k){
 				this.setMouseoverText(this.contents.get(k).getMouseoverText());
 			}
+			else{
+				this.setMouseoverText(null);
+			}
 			if(i.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)){	
 				selector = k;
 				fromLastSelect=0;

@@ -1,5 +1,5 @@
-Destruction
-core.skills.Fireball
-core.skills.Fireball
+Combat
+core.skills.DaggerToss
+core.skills.RapidBlows
 core.skills.Fireball
 core.skills.Fireball

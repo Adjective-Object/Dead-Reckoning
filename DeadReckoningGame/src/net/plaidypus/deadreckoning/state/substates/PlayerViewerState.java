@@ -97,34 +97,30 @@ public class PlayerViewerState extends PrebakedHudLayersState {
 		// it creates a sizable amount of lag on call.
 		// this makes me sad
 		for (int i = 0; i < skills.size(); i++) {
-			Image img = skills.get(i).getImage().getFlippedCopy(false, false);
 			try {
+
+				Image img = skills.get(i).getIcon().getFlippedCopy(false, false);
 				Graphics g = img.getGraphics();
 				g.setColor(new Color(0, 0, 0, 80));
 				g.fillRect(0, 0, 32, 32);
 				images[0][i] = img;
-			} catch (SlickException e) {
-			}
+			
+				img = skills.get(i).getIcon().getFlippedCopy(false, false);
 
-			img = skills.get(i).getImage().getFlippedCopy(false, false);
-			try {
-				Graphics g = img.getGraphics();
+				g = img.getGraphics();
 				g.setColor(DeadReckoningGame.skillInvalidColor);
 				g.fillRect(0, 0, 32, 32);
 				g.setColor(DeadReckoningGame.menuHighlightColor);
 				g.drawRect(0, 0, 31, 31);
 				images[2][i] = img;
-			} catch (SlickException e) {
-			}
 
-			img = skills.get(i).getImage().getFlippedCopy(false, false);
-			try {
-				Graphics g = img.getGraphics();
+				img = skills.get(i).getIcon().getFlippedCopy(false, false);
+
+				g = img.getGraphics();
 				g.setColor(DeadReckoningGame.menuHighlightColor);
 				g.drawRect(0, 0, 31, 31);
 				images[1][i] = img;
-			} catch (SlickException e) {
-			}
+			} catch (SlickException e) {}
 		}
 
 		bakeFromProfession(sourceProf);
@@ -167,7 +163,7 @@ public class PlayerViewerState extends PrebakedHudLayersState {
 				// otherwise, if a skill is not available for level up
 				else {
 					if (prog.getSkills()[s].getLevel() >= 1) {
-						img = prog.getSkills()[s].getImage();
+						img = prog.getSkills()[s].getIcon();
 					} else {
 						img = images[0][i * 4 + s];
 					}

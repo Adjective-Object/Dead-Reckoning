@@ -16,7 +16,7 @@ import net.plaidypus.deadreckoning.grideffects.GridEffect;
 public class AttackAction extends EntityTypeAction {
 
 	/** The damage. */
-	int damage;
+	int damage, damageFrame, elapsedFrames;
 
 	/** The animate source. */
 	boolean animateSource;
@@ -43,7 +43,7 @@ public class AttackAction extends EntityTypeAction {
 	 *            the physical
 	 */
 	public AttackAction(int sourceID, Tile target, int damage, boolean physical) {
-		this(sourceID, target, damage, physical, true, null, null, null, null);
+		this(sourceID, target, damage, physical, true, 0, null, null, null, null);
 	}
 
 	/**
@@ -62,7 +62,13 @@ public class AttackAction extends EntityTypeAction {
 	 */
 	public AttackAction(int sourceID, Tile target, int damage,
 			boolean physical, boolean animateSource) {
-		this(sourceID, target, damage, physical, animateSource, null, null, null,
+		this(sourceID, target, damage, physical, animateSource, 0, null, null, null,
+				null);
+	}
+	
+	public AttackAction(int sourceID, Tile target, int damage,
+			boolean physical, boolean animateSource, int damageFrame) {
+		this(sourceID, target, damage, physical, animateSource, damageFrame, null, null, null,
 				null);
 	}
 
@@ -89,13 +95,14 @@ public class AttackAction extends EntityTypeAction {
 	 *            the target bottom effect
 	 */
 	public AttackAction(int sourceID, Tile target, int damage,
-			boolean physical, boolean animateSource,
+			boolean physical, boolean animateSource, int damageFrame,
 			GridEffect sourceTopEffect, GridEffect sourceBottomEffect,
 			GridEffect targetTopEffect, GridEffect targetBottomEffect) {
 		super(sourceID, target, Tile.LAYER_ACTIVE);
 		this.damage = damage;
 		this.animateSource = animateSource;
 		this.physical = physical;
+		this.damageFrame=damageFrame;
 		this.sourceEffectTop = sourceTopEffect;
 		this.sourceEffectBottom = sourceBottomEffect;
 		this.targetEffectTop = targetTopEffect;
@@ -109,7 +116,7 @@ public class AttackAction extends EntityTypeAction {
 	 * net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net
 	 * .plaidypus.deadreckoning.entities.Entity)
 	 */
-	protected boolean applyToEntity(Entity entity) {
+	protected boolean applyToEntity(Entity entity, int delta) {
 		return true;
 	}
 
@@ -120,7 +127,7 @@ public class AttackAction extends EntityTypeAction {
 	 * net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net
 	 * .plaidypus.deadreckoning.entities.InteractiveEntity)
 	 */
-	protected boolean applyToEntity(InteractiveEntity e) {
+	protected boolean applyToEntity(InteractiveEntity e, int delta) {
 		return true;
 	}
 
@@ -131,66 +138,69 @@ public class AttackAction extends EntityTypeAction {
 	 * net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net
 	 * .plaidypus.deadreckoning.entities.LivingEntity)
 	 */
-	protected boolean applyToEntity(LivingEntity e) {
-
-		LivingEntity s = (LivingEntity) GameBoard.getEntity(this.sourceID);
-		if(!effectsApplied){
-			if (animateSource && GameBoard.getEntity(this.sourceID).getLocation().canBeSeen()) {
-				s.setCurrentAnimation(LivingEntity.ANIMATION_ATTACK);
-			}
-			if (physical) {
-				damage = e.damagePhysical(damage);
-			} else {
-				damage = e.damageMagical(damage);
-			}
-			if (e.HP <= 0) {
-				try {
-					Player p = (Player) (s);
-					p.addExp(e.calculateEXPValue());
-				} catch (ClassCastException cce) {
+	protected boolean applyToEntity(LivingEntity e, int delta) {
+		elapsedFrames+=delta;
+		
+		if(elapsedFrames>=damageFrame){
+			LivingEntity s = (LivingEntity) GameBoard.getEntity(this.sourceID);
+			if(!effectsApplied){
+				if (animateSource && GameBoard.getEntity(this.sourceID).getLocation().canBeSeen()) {
+					s.setCurrentAnimation(LivingEntity.ANIMATION_ATTACK);
 				}
-	
-			}
-	
-			int xdiff = s.getX() - target.getX();
-			int ydiff = s.getY() - target.getY();
-	
-			if (e.getLocation().canBeSeen()) {
-				if ((xdiff < 0 ^ e.getFacing()) || (xdiff == 0 && ydiff > 0)) {
-					e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_FRONT);
+				if (physical) {
+					damage = e.damagePhysical(damage);
 				} else {
-					e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_BACK);
+					damage = e.damageMagical(damage);
 				}
-	
-				e.getParent().addEffectOver(s.getLocation(),
-						this.sourceEffectTop);
-				e.getParent().addEffectUnder(s.getLocation(),
-						this.sourceEffectBottom);
-				e.getParent().addEffectOver(target, this.targetEffectTop);
-				e.getParent().addEffectUnder(target, this.targetEffectBottom);
-	
-				
-				if (damage > 0) {
-					sendMessage(s.getName() + " attacked "
-							+ target.getEntity(Tile.LAYER_ACTIVE).getName() + " for "
-							+ damage + " damage");
-					e.getParent().addEffectOver(
-							new DamageEffect(target, Integer.toString(damage)));
+				if (e.HP <= 0) {
+					try {
+						Player p = (Player) (s);
+						p.addExp(e.calculateEXPValue());
+					} catch (ClassCastException cce) {
+					}
+		
 				}
-				else{
-					sendMessage(target.getEntity(Tile.LAYER_ACTIVE).getName() +
-							" dodged " + s.getName() +  "'s attack ");
-					e.getParent().addEffectOver(
-							new DamageEffect(target,"dodged"));
+		
+				int xdiff = s.getX() - target.getX();
+				int ydiff = s.getY() - target.getY();
+		
+				if (e.getLocation().canBeSeen()) {
+					if ((xdiff < 0 ^ e.getFacing()) || (xdiff == 0 && ydiff > 0)) {
+						e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_FRONT);
+					} else {
+						e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_BACK);
+					}
+		
+					e.getParent().addEffectOver(s.getLocation(),
+							this.sourceEffectTop);
+					e.getParent().addEffectUnder(s.getLocation(),
+							this.sourceEffectBottom);
+					e.getParent().addEffectOver(target, this.targetEffectTop);
+					e.getParent().addEffectUnder(target, this.targetEffectBottom);
+		
+					
+					if (damage > 0) {
+						sendMessage(s.getName() + " attacked "
+								+ target.getEntity(Tile.LAYER_ACTIVE).getName() + " for "
+								+ damage + " damage");
+						e.getParent().addEffectOver(
+								new DamageEffect(target, Integer.toString(damage)));
+					}
+					else{
+						sendMessage(target.getEntity(Tile.LAYER_ACTIVE).getName() +
+								" dodged " + s.getName() +  "'s attack ");
+						e.getParent().addEffectOver(
+								new DamageEffect(target,"dodged"));
+					}
 				}
+		
+				effectsApplied=true;
 			}
-	
-			effectsApplied=true;
-		}
-		else{
-			if(s.getCurrentAnimationID() == LivingEntity.ANIMATION_STAND &&
-					e.getCurrentAnimationID() == LivingEntity.ANIMATION_STAND){
-				return true;
+			else{
+				if( (s.getCurrentAnimationID() == LivingEntity.ANIMATION_STAND || !animateSource) &&
+						e.getCurrentAnimationID() == LivingEntity.ANIMATION_STAND){
+					return true;
+				}
 			}
 		}
 		return false;

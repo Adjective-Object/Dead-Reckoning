@@ -195,7 +195,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * @return 
 	 */
 	public int damagePhysical(int damage) {
-		int x = attemptDodge(this.statMaster.getPhysicalDamage(damage));
+		int x = attemptDodge(this.statMaster.getPhysicalDamageTo(damage));
 		this.HP -= x;
 		return x;
 		
@@ -209,7 +209,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 *            the damage to deal
 	 */
 	public int damageMagical(int damage) {
-		int x = attemptDodge(this.statMaster.getMagicalDamage(damage));
+		int x = attemptDodge(this.statMaster.getMagicalDamageTo(damage));
 		this.HP -= x;
 		return x;
 	}

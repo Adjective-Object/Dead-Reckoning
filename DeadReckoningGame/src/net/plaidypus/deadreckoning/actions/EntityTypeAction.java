@@ -44,11 +44,11 @@ public abstract class EntityTypeAction extends Action {
 		
 		if(!target.isOpen(layer)){
 			if (LivingEntity.class.isAssignableFrom(target.getEntity(layer).getClass())) {
-				return applyToEntity((LivingEntity) (target.getEntity(layer)));
+				return applyToEntity((LivingEntity) (target.getEntity(layer)),delta);
 			} else if (InteractiveEntity.class.isAssignableFrom(target.getEntity(layer).getClass())) {
-				return applyToEntity((InteractiveEntity) (target.getEntity(layer)));
+				return applyToEntity((InteractiveEntity) (target.getEntity(layer)),delta);
 			} else {
-				return applyToEntity((Entity) (target.getEntity(layer)));
+				return applyToEntity((Entity) (target.getEntity(layer)),delta);
 			} 
 		}
 		return true;
@@ -61,7 +61,7 @@ public abstract class EntityTypeAction extends Action {
 	 *            the entity
 	 * @return true, if successful
 	 */
-	protected abstract boolean applyToEntity(Entity entity);
+	protected abstract boolean applyToEntity(Entity entity, int delta);
 
 	/**
 	 * Apply to entity.
@@ -70,7 +70,7 @@ public abstract class EntityTypeAction extends Action {
 	 *            the e
 	 * @return true, if successful
 	 */
-	protected abstract boolean applyToEntity(LivingEntity e);
+	protected abstract boolean applyToEntity(LivingEntity e, int delta);
 
 	/**
 	 * Apply to entity.
@@ -79,6 +79,6 @@ public abstract class EntityTypeAction extends Action {
 	 *            the e
 	 * @return true, if successful
 	 */
-	protected abstract boolean applyToEntity(InteractiveEntity e);
+	protected abstract boolean applyToEntity(InteractiveEntity e, int delta);
 
 }

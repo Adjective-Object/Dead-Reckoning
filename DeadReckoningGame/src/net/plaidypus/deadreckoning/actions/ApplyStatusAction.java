@@ -41,7 +41,7 @@ public class ApplyStatusAction extends EntityTypeAction {
 	 * net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net
 	 * .plaidypus.deadreckoning.entities.Entity)
 	 */
-	protected boolean applyToEntity(Entity entity) {
+	protected boolean applyToEntity(Entity entity, int delta) {
 		return true;
 	}
 
@@ -52,7 +52,7 @@ public class ApplyStatusAction extends EntityTypeAction {
 	 * net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net
 	 * .plaidypus.deadreckoning.entities.LivingEntity)
 	 */
-	protected boolean applyToEntity(LivingEntity e) {
+	protected boolean applyToEntity(LivingEntity e, int delta) {
 		e.addCondition(s);
 		sendMessage(target.getEntity(Tile.LAYER_ACTIVE).getName() + " become "
 				+ s.getName());
@@ -66,7 +66,7 @@ public class ApplyStatusAction extends EntityTypeAction {
 	 * net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net
 	 * .plaidypus.deadreckoning.entities.InteractiveEntity)
 	 */
-	protected boolean applyToEntity(InteractiveEntity e) {
+	protected boolean applyToEntity(InteractiveEntity e, int delta) {
 		return true;
 	}
 

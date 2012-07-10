@@ -61,7 +61,7 @@ public class ClassCreationState extends PrebakedHudLayersState{
 		
 		for(int i=0; i<3; i++){
 			if(this.selectors.get(i).isTreeChanged()){
-				this.treeImages.get(i).makeFrom(selectors.get(i).getSelectedTree().getSkills()[0].getImage());
+				this.treeImages.get(i).makeFrom(selectors.get(i).getSelectedTree().getSkills()[0].getIcon());
 			}
 		}
 		

@@ -12,6 +12,7 @@ import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.grideffects.AnimationEffect;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
+import net.plaidypus.deadreckoning.skills.OffensiveSkill;
 import net.plaidypus.deadreckoning.skills.Skill;
 
 import org.newdawn.slick.Animation;
@@ -25,31 +26,19 @@ import core.statuses.OnFire;
 /**
  * The Class Fireball.
  */
-public class Fireball extends Skill {
+public class Fireball extends OffensiveSkill {
 
 	/** The fireball. */
-	public static SpriteSheet fireball;
-
-	/** The image. */
-	private static Image image;
-
-	/**
-	 * Instantiates a new fireball.
-	 */
-	public Fireball() {
-		super(image);
-		this.setName("Fireball");
-		this.setDescriptor("sets target living entity\non fire, dealing damage\nover time");
+	static SpriteSheet fireball;
+	static Image image;
+	
+	public Fireball(){
+		this(-1);
 	}
-
-	/**
-	 * Instantiates a new fireball.
-	 * 
-	 * @param source
-	 *            the source
-	 */
+	 
 	public Fireball(int sourceID) {
 		super(sourceID);
+		this.setIcon(image);
 		this.setName("fireball");
 		this.setDescriptor("sets target living entity on fire, dealing damage over time");
 	}
@@ -78,7 +67,7 @@ public class Fireball extends Skill {
 		an.setLooping(false);
 		toRet.add(new ApplyStatusAction(sourceID, target, Tile.LAYER_ACTIVE,
 				new OnFire(this.sourceID, 2, 2 * this.level)));
-		toRet.add(new AttackAction(sourceID, target, 2, true, true, null, null,
+		toRet.add(new AttackAction(sourceID, target, 2, true, true, 300, null, null,
 				new AnimationEffect(target, an), null));
 		this.setCooldown(10);
 		return new ActionSpawner(sourceID, toRet);
@@ -92,21 +81,6 @@ public class Fireball extends Skill {
 	public void updateSkill() {
 		super.updateSkill();
 		this.levelcap = (this.getSource().getStatMaster().getLevel() - 1) * 1;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.plaidypus.deadreckoning.skills.Skill#canTargetTile(net.plaidypus.
-	 * deadreckoning.board.Tile)
-	 */
-	public boolean canTargetTile(Tile t) {
-		if (!t.isOpen(Tile.LAYER_ACTIVE)
-				&& !(t.getX() == getSource().getX() && t.getY() == getSource().getY())) {
-			return t.getEntity(Tile.LAYER_ACTIVE).makesActions();
-		}
-		return false;
 	}
 
 	/*

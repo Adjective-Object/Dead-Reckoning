@@ -169,7 +169,6 @@ public class Player extends LivingEntity {
 	
 	public void recalculateStatBonuses(){
 		super.recalculateStatBonuses();
-		this.profession.setDodge(50);
 		for (int i = 0; i < 8; i++) {// updating the stat alterations based on
 			if (this.equips.get(i) != null) {
 			Equip e = this.equips.get(i);

@@ -38,7 +38,7 @@ public class LootAction extends EntityTypeAction { // TODO make it so you can
 	 * net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net
 	 * .plaidypus.deadreckoning.entities.Entity)
 	 */
-	protected boolean applyToEntity(Entity entity) {
+	protected boolean applyToEntity(Entity entity, int delta) {
 		DeadReckoningGame.instance.getMessageElement().addMessage(
 				"That has nothing to loot.");
 		this.takesTurn = false;
@@ -52,7 +52,7 @@ public class LootAction extends EntityTypeAction { // TODO make it so you can
 	 * net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net
 	 * .plaidypus.deadreckoning.entities.InteractiveEntity)
 	 */
-	protected boolean applyToEntity(InteractiveEntity e) {
+	protected boolean applyToEntity(InteractiveEntity e, int delta) {
 		DeadReckoningGame.instance.getMessageElement().addMessage(
 				GameBoard.getEntity(this.sourceID).getName() + " looted "
 						+ target.getEntity(this.layer).getName());
@@ -66,7 +66,7 @@ public class LootAction extends EntityTypeAction { // TODO make it so you can
 	 * net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net
 	 * .plaidypus.deadreckoning.entities.LivingEntity)
 	 */
-	protected boolean applyToEntity(LivingEntity e) {
+	protected boolean applyToEntity(LivingEntity e, int delta) {
 		if (e.isAlive()) {
 			DeadReckoningGame.instance.getMessageElement().addMessage(
 					"It's Still Alive.");

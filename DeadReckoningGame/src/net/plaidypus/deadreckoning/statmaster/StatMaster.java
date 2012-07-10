@@ -237,14 +237,18 @@ public class StatMaster {
 		this.modMagDef = 0;
 	}
 
-	public int getPhysicalDamage(int rawDamageValue) {
+	public int getPhysicalDamageTo(int rawDamageValue) {
 		return (int) (rawDamageValue * (100F / (100 + this.getWepDefense())));
 	}
 
-	public int getMagicalDamage(int rawDamageValue) {
+	public int getMagicalDamageTo(int rawDamageValue) {
 		return (int) (rawDamageValue * (100F / (100 + this.getMagDefense())));
 	}
-
+	
+	public int getPhysicalDamageFrom(){
+		return this.getSTR();
+	}
+	
 	/**
 	 * Gets the level of the creature this covers.
 	 * 

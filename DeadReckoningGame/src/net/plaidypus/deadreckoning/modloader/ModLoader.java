@@ -176,15 +176,7 @@ public class ModLoader {
 
 			}
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (SlickException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -243,7 +235,7 @@ public class ModLoader {
 		} catch (IOException e) {
 			return new Image("res/noSkill.png");
 		} catch (NullPointerException e ){
-			System.out.println(modpack+"  "+imagepath+"  "+ModLoader.getModpackLoader(modpack));
+			System.err.println("can't load image "+imagepath+" in "+modpack+" with "+ModLoader.getModpackLoader(modpack));
 			return null;
 		}
 	}

@@ -113,7 +113,7 @@ public class SkillTreeSelectionElement extends Panel{
 	private void updateToProfession(Profession p) {
 		this.skillSelectButtons.get(0).makeFrom(backButton);
 		for(int i=1; i<this.skillSelectButtons.size(); i++){
-			this.skillSelectButtons.get(i).makeFrom(p.getTrees()[i-1].getSkills()[0].getImage());
+			this.skillSelectButtons.get(i).makeFrom(p.getTrees()[i-1].getSkills()[0].getIcon());
 		}
 	}
 

@@ -12,7 +12,7 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
 /**
  * The Class Attack.
  */
-public class Attack extends Skill {
+public class Attack extends OffensiveSkill {
 
 	/**
 	 * Instantiates a new attack.
@@ -40,25 +40,9 @@ public class Attack extends Skill {
 	@Override
 	public Action makeAction(Tile target) {
 		return new AttackAction(sourceID, target,
-				getSource().getStatMaster().getSTR(), false);
+				getSource().getStatMaster().getPhysicalDamageFrom(), false);
 	}
-
-	/**
-	 * says (in essence) that any occupied tile that is not the same tile as the
-	 * source's tile can be passed.
-	 * 
-	 * @param t
-	 *            the t
-	 * @return true, if successful
-	 */
-	public boolean canTargetTile(Tile t) {
-		if (!t.isOpen(Tile.LAYER_ACTIVE)
-				&& !(t.getX() == getSource().getX() && t.getY() == getSource().getY())) {
-			return t.getEntity(Tile.LAYER_ACTIVE).makesActions();
-		}
-		return false;
-	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
