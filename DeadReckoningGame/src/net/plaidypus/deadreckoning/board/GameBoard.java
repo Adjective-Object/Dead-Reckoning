@@ -351,9 +351,9 @@ public class GameBoard implements ILosBoard {
 			for (int y = lowY; y < highY; y++) {
 				for (int i = Tile.numLayers - 1; i >= 0; i--) {
 					if (!board[x][y].isOpen(i)
-							&& ((board[x][y].lightLevel >= 1 && board[x][y]
+							&& ( (board[x][y].lightLevel >= 1 && board[x][y]
 									.isVisible()) || (board[x][y].getEntity(i)
-									.isTerrain() && board[x][y].explored))) {
+									.isTerrain() && board[x][y].explored) || DeadReckoningGame.debugMode )) {
 						board[x][y].getEntity(i).render(g,
 								(int)(x * DeadReckoningGame.tileSize + xoff),
 								(int)(y * DeadReckoningGame.tileSize + yoff) );

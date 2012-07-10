@@ -47,6 +47,7 @@ public class PreBakedMove extends Movement {
 	 * deadreckoning.board.Tile)
 	 */
 	public Action makeAction(Tile target) {
+		this.getSource().getParent().clearPrimaryHighlight();
 		if (getSource().getLocation().getRelativeTo(xoff, yoff) .isEmpty(getSource().getLayer()) ||
 				(DeadReckoningGame.debugMode && getSource().getLocation().getRelativeTo(xoff, yoff).isOpen(getSource().getLayer() )) ) {
 			return new MoveAction(sourceID, getSource().getLocation().getRelativeTo(

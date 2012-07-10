@@ -28,7 +28,7 @@ public class RapidBlows extends OffensiveSkill{
 		this.levelReq=4;
 		this.setIcon(image);
 		this.setName("Rapid Blows");
-		this.setDescriptor("Attacks a random number of times, dealing 80% damage each hit");
+		this.setDescriptor("Attacks a random number of times,\ndealing "+(80+this.level*5)+"% damage each hit");
 	}
 	
 	@Override
@@ -55,6 +55,11 @@ public class RapidBlows extends OffensiveSkill{
 	@Override
 	public void init() throws SlickException {
 		RapidBlows.image = ModLoader.loadImage("core/res/RAPIDBLOWS.png");
+	}
+	
+	public void setLevel(int level){
+		super.setLevel(level);
+		this.setDescriptor("Attacks a random number of times,\ndealing "+80+this.level*5+"% damage each hit");
 	}
 
 }

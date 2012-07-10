@@ -113,13 +113,11 @@ public abstract class Entity extends DeadReckoningComponent {
 	 *            the y
 	 */
 	public void render(Graphics g, float x, float y) {
-		if (this.visible) {
+		if (this.isVisible() || DeadReckoningGame.debugMode) {
 			if( this.stealthed && (this.allignmnet==Entity.ALLIGN_FRIENDLY||DeadReckoningGame.debugMode) ){
 				g.setDrawMode(Graphics.MODE_COLOR_MULTIPLY);
 			}
-			else if(!this.stealthed){
-				forceRender(g, x, y);
-			}
+			forceRender(g, x, y);
 			g.setDrawMode(Graphics.MODE_NORMAL);
 		}
 	}
@@ -314,7 +312,7 @@ public abstract class Entity extends DeadReckoningComponent {
 	 * @return true, if is visible
 	 */
 	public boolean isVisible() {
-		return visible && (!stealthed || allignmnet==ALLIGN_NEUTRAL);
+		return visible && (!stealthed || allignmnet==ALLIGN_FRIENDLY);
 	}
 
 	/**
