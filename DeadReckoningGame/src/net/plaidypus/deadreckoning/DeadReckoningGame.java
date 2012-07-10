@@ -322,9 +322,6 @@ public class DeadReckoningGame extends StateBasedGame {
 				this.addState(new OptionsState(OPTIONSSTATE, menuBackground));
 				this.addState(new InGameMenuState(INGAMEMENUSTATE,subBackground));
 				
-				Integer e = null;
-				e.toString();
-				
 				this.enterState(MAINMENUSTATE);
 			}
 			catch (Exception e)
