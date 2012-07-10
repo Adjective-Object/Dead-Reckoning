@@ -271,7 +271,7 @@ public class DeadReckoningGame extends StateBasedGame {
 		{
 			try
 			{
-				TextElement t = new TextElement(0, 0, HudElement.CENTER_CENTER, "", menuTextColor,menuFont);
+				TextElement t = new TextElement(0, 0, HudElement.CENTER_CENTER, "", menuTextColor,menuSmallFont);
 				t.personalBindMethod=HudElement.CENTER_CENTER;
 				this.addState(
 					new HudLayersState(ERRORSTATE,

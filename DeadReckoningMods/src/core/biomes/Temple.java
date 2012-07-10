@@ -53,7 +53,7 @@ public class Temple extends RoomBasedBiome {
 
 	@Override
 	public void init() throws SlickException {
-		Image tile = ModLoader.loadImage("core/res/walltiles.png");
+		Image tile = ModLoader.loadImage("core/res/wallTiles.png");
 		this.tileImage = new SpriteSheet(tile,
 				DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
 	}
@@ -97,7 +97,7 @@ public class Temple extends RoomBasedBiome {
 			Tile t = room.getTileIn(target);
 			if(t.isEmpty(Tile.LAYER_ACTIVE)){
 				Monster m = new Monster("core", "livingEntities/goblin.entity",
-						new StatMaster(50, 50, 4, 4, 4, 4, 1), LivingEntity.ALLIGN_HOSTILE);
+						new StatMaster(15, 15, 4, 4, 4, 4, 1), LivingEntity.ALLIGN_HOSTILE);
 				m.getInventory().addAll(m.getDropItems());
 				target.placeEntity(t, m, Tile.LAYER_ACTIVE);
 			}
