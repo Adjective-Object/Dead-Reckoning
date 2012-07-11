@@ -22,6 +22,7 @@ public class Interacter extends Skill {
 	 */
 	public Interacter(int sourceID) {
 		super(sourceID);
+		this.level=1;
 	}
 
 	/*

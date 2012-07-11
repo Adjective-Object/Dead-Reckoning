@@ -6,6 +6,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import core.skills.thief.FocusedMindSkill;
+
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
@@ -15,7 +17,6 @@ import net.plaidypus.deadreckoning.status.Status;
 
 public class FocusedMindStatus extends Status{
 
-	static Image statusIcon;
 	int critChance;
 	
 	public FocusedMindStatus(){
@@ -23,10 +24,11 @@ public class FocusedMindStatus extends Status{
 	}
 	
 	public FocusedMindStatus(Integer sourceID, int critChance, int duration) {
-		super(sourceID, statusIcon, "The mind is focused,\ngiving increased\ncritical strike chance (+"+Integer.toString(critChance)+"%)", "FocusedMind");
+		super(sourceID, FocusedMindSkill.icon, 
+				"The mind is focused,\ngiving increased\ncritical strike chance (+"+Integer.toString(critChance)+"%)", "FocusedMind");
 		this.name="Focused Mind";
 		this.critChance=critChance;
-		this.duration = duration;
+		this.setDuration(duration);
 	}
 
 	@Override
@@ -35,8 +37,7 @@ public class FocusedMindStatus extends Status{
 
 	@Override
 	public ArrayList<Action> advanceTurnEffects(LivingEntity target) {
-		this.duration--;
-		return new ArrayList<Action>(0);
+		return super.advanceTurnEffects(target);
 	}
 
 	@Override
@@ -50,11 +51,6 @@ public class FocusedMindStatus extends Status{
 	@Override
 	public void render(Graphics g, int x, int y) {
 		
-	}
-
-	@Override
-	public boolean isFinished() {
-		return this.getDuration()<=0;
 	}
 
 	@Override
@@ -75,8 +71,6 @@ public class FocusedMindStatus extends Status{
 	}
 
 	@Override
-	public void init() throws SlickException {
-		statusIcon = ModLoader.loadImage("core/res/FOCUSEDMIND.png");
-	}
+	public void init() throws SlickException {}
 
 }

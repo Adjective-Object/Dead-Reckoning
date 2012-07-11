@@ -15,13 +15,6 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
 public class ChangeState extends Skill {
 	
 	int targetState;
-	
-	/**
-	 * Instantiates a new check inventory.
-	 */
-	public ChangeState() {
-		super();
-	}
 
 	/**
 	 * Instantiates a new check inventory.
@@ -33,6 +26,7 @@ public class ChangeState extends Skill {
 		super(sourceID);
 		this.targetState = targetState;
 		this.instant = true;
+		this.level=1;
 	}
 
 	/*

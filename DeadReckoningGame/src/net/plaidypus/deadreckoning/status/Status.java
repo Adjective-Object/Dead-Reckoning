@@ -7,6 +7,8 @@ import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
+import net.plaidypus.deadreckoning.entities.Entity;
+
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.statmaster.StatMaster;
 
@@ -29,7 +31,7 @@ public abstract class Status extends DeadReckoningComponent{
 
 	/** The stacks=# stacks of a given buff. */
 	protected Integer sourceID;
-	protected int duration;
+	private int duration, maxDuration;
 
 	protected int stacks;
 	
@@ -80,7 +82,10 @@ public abstract class Status extends DeadReckoningComponent{
 	 *            the target
 	 * @return the array list
 	 */
-	public abstract ArrayList<Action> advanceTurnEffects(LivingEntity target);
+	public ArrayList<Action> advanceTurnEffects(LivingEntity target){
+		this.setDuration(this.getDuration() - 1);
+		return new ArrayList<Action>(0);
+	}
 	
 	public abstract void onActionProduce(Action a);
 	
@@ -104,8 +109,9 @@ public abstract class Status extends DeadReckoningComponent{
 	 * 
 	 * @return true, if is finished
 	 */
-	public abstract boolean isFinished();
-
+	public boolean isFinished() {
+		return this.getDuration()<=0;
+	}
 	/**
 	 * Gets the name of the status.
 	 * 
@@ -157,6 +163,25 @@ public abstract class Status extends DeadReckoningComponent{
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public Entity getSource(){
+		return GameBoard.getEntity(sourceID);
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
+		if(duration>this.getMaxDuration()){
+			this.setMaxDuration(duration);
+		}
+	}
+
+	public int getMaxDuration() {
+		return maxDuration;
+	}
+
+	public void setMaxDuration(int maxDuration) {
+		this.maxDuration = maxDuration;
 	}
 	
 }

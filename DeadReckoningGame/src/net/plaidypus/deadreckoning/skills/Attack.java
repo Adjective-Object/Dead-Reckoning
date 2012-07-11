@@ -13,14 +13,7 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
  * The Class Attack.
  */
 public class Attack extends OffensiveSkill {
-
-	/**
-	 * Instantiates a new attack.
-	 */
-	public Attack() {
-		super();
-	}
-
+	
 	/**
 	 * Instantiates a new attack.
 	 * 
@@ -29,6 +22,7 @@ public class Attack extends OffensiveSkill {
 	 */
 	public Attack(int sourceID) {
 		super(sourceID);
+		this.level=1;
 	}
 
 	/*

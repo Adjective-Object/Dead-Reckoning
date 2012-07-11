@@ -67,8 +67,10 @@ public class Fireball extends OffensiveSkill {
 		an.setLooping(false);
 		toRet.add(new ApplyStatusAction(sourceID, target, Tile.LAYER_ACTIVE,
 				new OnFire(this.sourceID, 2, 2 * this.level)));
-		toRet.add(new AttackAction(sourceID, target, 2, true, true, 300, null, null,
-				new AnimationEffect(target, an), null));
+		AttackAction attack = new AttackAction(sourceID, target, 2, true, true, 300);
+		attack.setGridEffects( null, null, new AnimationEffect(target, an), null);
+		toRet.add(attack);
+		
 		this.setCooldown(10);
 		return new ActionSpawner(sourceID, toRet);
 	}

@@ -18,8 +18,8 @@ public class AttackAction extends EntityTypeAction {
 	/** The damage. */
 	int damage, damageFrame, elapsedFrames;
 
-	/** The animate source. */
-	boolean animateSource;
+	/** should the target and source be animated? */
+	boolean animate;
 	
 	protected boolean effectsApplied = false;
 
@@ -43,7 +43,7 @@ public class AttackAction extends EntityTypeAction {
 	 *            the physical
 	 */
 	public AttackAction(int sourceID, Tile target, int damage, boolean physical) {
-		this(sourceID, target, damage, physical, true, 0, null, null, null, null);
+		this(sourceID, target, damage, physical, true, 0);
 	}
 
 	/**
@@ -61,15 +61,8 @@ public class AttackAction extends EntityTypeAction {
 	 *            the animate source
 	 */
 	public AttackAction(int sourceID, Tile target, int damage,
-			boolean physical, boolean animateSource) {
-		this(sourceID, target, damage, physical, animateSource, 0, null, null, null,
-				null);
-	}
-	
-	public AttackAction(int sourceID, Tile target, int damage,
-			boolean physical, boolean animateSource, int damageFrame) {
-		this(sourceID, target, damage, physical, animateSource, damageFrame, null, null, null,
-				null);
+			boolean physical, boolean animate) {
+		this(sourceID, target, damage, physical, animate, 0);
 	}
 
 	/**
@@ -95,14 +88,16 @@ public class AttackAction extends EntityTypeAction {
 	 *            the target bottom effect
 	 */
 	public AttackAction(int sourceID, Tile target, int damage,
-			boolean physical, boolean animateSource, int damageFrame,
-			GridEffect sourceTopEffect, GridEffect sourceBottomEffect,
-			GridEffect targetTopEffect, GridEffect targetBottomEffect) {
+			boolean physical, boolean animate, int damageFrame) {
 		super(sourceID, target, Tile.LAYER_ACTIVE);
 		this.damage = damage;
-		this.animateSource = animateSource;
+		this.animate = animate;
 		this.physical = physical;
 		this.damageFrame=damageFrame;
+	}
+	
+	public void setGridEffects(GridEffect sourceTopEffect, GridEffect sourceBottomEffect,
+			GridEffect targetTopEffect, GridEffect targetBottomEffect){
 		this.sourceEffectTop = sourceTopEffect;
 		this.sourceEffectBottom = sourceBottomEffect;
 		this.targetEffectTop = targetTopEffect;
@@ -144,7 +139,7 @@ public class AttackAction extends EntityTypeAction {
 		if(elapsedFrames>=damageFrame){
 			LivingEntity s = (LivingEntity) GameBoard.getEntity(this.sourceID);
 			if(!effectsApplied){
-				if (animateSource && GameBoard.getEntity(this.sourceID).getLocation().canBeSeen()) {
+				if (animate && GameBoard.getEntity(this.sourceID).getLocation().canBeSeen()) {
 					s.setCurrentAnimation(LivingEntity.ANIMATION_ATTACK);
 				}
 				if (physical) {
@@ -164,7 +159,7 @@ public class AttackAction extends EntityTypeAction {
 				int xdiff = s.getX() - target.getX();
 				int ydiff = s.getY() - target.getY();
 		
-				if (e.getLocation().canBeSeen()) {
+				if (e.getLocation().canBeSeen() && animate) {
 					if ((xdiff < 0 ^ e.getFacing()) || (xdiff == 0 && ydiff > 0)) {
 						e.setCurrentAnimation(LivingEntity.ANIMATION_FLINCH_FRONT);
 					} else {
@@ -197,8 +192,8 @@ public class AttackAction extends EntityTypeAction {
 				effectsApplied=true;
 			}
 			else{
-				if( (s.getCurrentAnimationID() == LivingEntity.ANIMATION_STAND || !animateSource) &&
-						e.getCurrentAnimationID() == LivingEntity.ANIMATION_STAND){
+				if( (s.getCurrentAnimationID() == LivingEntity.ANIMATION_STAND  &&
+						e.getCurrentAnimationID() == LivingEntity.ANIMATION_STAND) || !animate){
 					return true;
 				}
 			}

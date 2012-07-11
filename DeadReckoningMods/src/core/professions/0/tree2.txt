@@ -1,5 +1,5 @@
 Discipline
-core.skills.FocusedMindSkill
-core.skills.Fireball
-core.skills.Fireball
-core.skills.Fireball
+core.skills.thief.FocusedMindSkill
+core.skills.thief.DesperationSkill
+core.skills.thief.PoisonBladesSkill
+core.skills.thief.KillerInstinctSkill

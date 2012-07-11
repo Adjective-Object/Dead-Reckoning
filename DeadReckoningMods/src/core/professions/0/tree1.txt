@@ -1,5 +1,5 @@
 Combat
-core.skills.DaggerToss
-core.skills.RapidBlows
-core.skills.Fireball
-core.skills.Fireball
+core.skills.thief.DaggerToss
+core.skills.thief.RapidBlows
+core.skills.thief.DaggerToss
+core.skills.thief.DaggerToss

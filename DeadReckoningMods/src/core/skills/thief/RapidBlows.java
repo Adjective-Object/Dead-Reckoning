@@ -1,4 +1,4 @@
-package core.skills;
+package core.skills.thief;
 
 import java.util.ArrayList;
 

@@ -5,6 +5,7 @@ import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.skills.Skill;
 import net.plaidypus.deadreckoning.status.Status;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -114,8 +115,16 @@ public class StatusTrackerElement extends HudElement {
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		for (int i = 0; i < target.player.statuses.size(); i++) {
-			g.drawImage(target.player.statuses.get(i).tileImage, getAbsoluteX() + i
-					* 37, getAbsoluteY() + 2);
+			int x=getAbsoluteX() + i * 37, y = getAbsoluteY() + 2;
+			Status s=target.player.statuses.get(i);
+			g.drawImage(s.tileImage, x,y);
+			g.setColor(DeadReckoningGame.skillInvalidColor);
+			float frac = 1F-(1F*s.getDuration()/s.getMaxDuration());
+			g.fillRect(x+32*(1-frac)/2, y+32*(1-frac)/2, 32*frac, 32*frac);
+			g.setColor(DeadReckoningGame.menuTextColor);
+			g.drawString(Integer.toString(s.getDuration()),
+					x+16-g.getFont().getWidth(Integer.toString(s.getDuration()))/2,
+					y+16-g.getFont().getHeight(Integer.toString(s.getDuration()))/2);
 		}
 	}
 

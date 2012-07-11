@@ -223,7 +223,7 @@ public abstract class Skill extends DeadReckoningComponent {
 	 * @return true, if successful
 	 */
 	public boolean canBeCast() {
-		return getCooldown() <= 0;
+		return getCooldown() <= 0 && this.level>0;
 	}
 
 	/**

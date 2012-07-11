@@ -67,11 +67,9 @@ public class OnFire extends AnimatedStatus {
 	 */
 	@Override
 	public ArrayList<Action> advanceTurnEffects(LivingEntity target) {
-		ArrayList<Action> actions = new ArrayList<Action>(0);
+		ArrayList<Action> actions = super.advanceTurnEffects(target);
 		actions.add(new AttackAction(sourceID, target.getLocation(), power
-				* this.stacks, false, false, 0, null, null, null, null));
-		duration--;
-		System.out.println(actions);
+				* this.stacks, false, false, 0));
 		return actions;
 	}
 	
@@ -83,17 +81,6 @@ public class OnFire extends AnimatedStatus {
 	@Override
 	public void onActionReceive(Action a) {
 		// TODO Auto-generated method stub
-	}
-
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.plaidypus.deadreckoning.status.Status#isFinished()
-	 */
-	@Override
-	public boolean isFinished() {
-		return duration <= 0;
 	}
 
 	/*

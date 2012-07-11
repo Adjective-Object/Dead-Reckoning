@@ -14,14 +14,6 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
  * The Class Loot.
  */
 public class Loot extends Skill {
-
-	/**
-	 * Instantiates a new loot.
-	 */
-	public Loot() {
-		super();
-	}
-
 	/**
 	 * Instantiates a new loot.
 	 * 
@@ -30,6 +22,7 @@ public class Loot extends Skill {
 	 */
 	public Loot(int sourceID) {
 		super(sourceID);
+		this.level=1;
 	}
 
 	/*

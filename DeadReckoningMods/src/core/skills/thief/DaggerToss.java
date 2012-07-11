@@ -1,4 +1,4 @@
-package core.skills;
+package core.skills.thief;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;

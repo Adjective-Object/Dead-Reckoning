@@ -15,12 +15,6 @@ public class PreBakedMove extends Movement {
 	/** The yoff. */
 	int xoff, yoff;
 
-	/**
-	 * Instantiates a new pre baked move.
-	 */
-	public PreBakedMove() {
-		super();
-	}
 
 	/**
 	 * Instantiates a new pre baked move.
@@ -37,6 +31,7 @@ public class PreBakedMove extends Movement {
 		this.xoff = xoff;
 		this.yoff = yoff;
 		instant=true;
+		this.level=1;
 	}
 
 	/*

@@ -14,12 +14,6 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
  */
 public class Movement extends Skill {
 
-	/**
-	 * Instantiates a new movement.
-	 */
-	public Movement() {
-		super();
-	}
 
 	/**
 	 * movement subclass of skill allows for easy generation of MoveAction
@@ -30,6 +24,7 @@ public class Movement extends Skill {
 	 */
 	public Movement(int sourceID) {
 		super(sourceID);
+		this.level=1;
 	}
 
 	/*

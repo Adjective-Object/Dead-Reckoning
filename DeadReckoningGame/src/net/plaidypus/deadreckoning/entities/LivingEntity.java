@@ -521,6 +521,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * @see net.plaidypus.deadreckoning.entities.Entity#advanceTurn()
 	 */
 	public ArrayList<Action> advanceTurn() {
+		this.stealthed=false;
 		ArrayList<Action> actions = new ArrayList<Action>(0);
 		for (int i = 0; i < statuses.size(); i++) {
 			actions.addAll(statuses.get(i).advanceTurnEffects(this));

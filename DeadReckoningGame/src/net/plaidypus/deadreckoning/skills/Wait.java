@@ -16,13 +16,6 @@ public class Wait extends Skill {
 
 	/**
 	 * Instantiates a new wait.
-	 */
-	public Wait() {
-		super();
-	}
-
-	/**
-	 * Instantiates a new wait.
 	 * 
 	 * @param l
 	 *            the l
@@ -30,6 +23,7 @@ public class Wait extends Skill {
 	public Wait(int sourceID) {
 		super(sourceID);
 		this.instant=true;
+		this.level=1;
 	}
 
 	/*

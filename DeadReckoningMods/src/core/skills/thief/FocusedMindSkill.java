@@ -1,4 +1,4 @@
-package core.skills;
+package core.skills.thief;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -14,7 +14,7 @@ import net.plaidypus.deadreckoning.skills.Skill;
 
 public class FocusedMindSkill extends Skill{
 
-	static Image icon;
+	public static Image icon;
 	
 	public FocusedMindSkill(){
 		this(-1);

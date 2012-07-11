@@ -25,6 +25,7 @@ public class ViewSkills extends Skill {
 	public ViewSkills(int sourceID) {
 		super(sourceID);
 		this.instant=true;
+		this.level=1;
 	}
 
 	/*
