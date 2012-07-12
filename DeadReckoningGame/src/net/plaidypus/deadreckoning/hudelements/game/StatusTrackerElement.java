@@ -123,7 +123,7 @@ public class StatusTrackerElement extends HudElement {
 			g.fillRect(x+32*(1-frac)/2, y+32*(1-frac)/2, 32*frac, 32*frac);
 			g.setColor(DeadReckoningGame.menuTextColor);
 			g.drawString(Integer.toString(s.getDuration()),
-					x+16-g.getFont().getWidth(Integer.toString(s.getDuration()))/2,
+					x+16-g.getFont().getWidth (Integer.toString(s.getDuration()))/2,
 					y+16-g.getFont().getHeight(Integer.toString(s.getDuration()))/2);
 		}
 	}
