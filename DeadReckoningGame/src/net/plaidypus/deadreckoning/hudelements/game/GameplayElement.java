@@ -2,7 +2,6 @@ package net.plaidypus.deadreckoning.hudelements.game;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.actions.Action;
@@ -33,7 +32,6 @@ public class GameplayElement extends HudElement {
 
 	/** The current action. */
 	int currentEntity, currentAction;
-	Iterator<Integer> entityIterator;
 	
 	/** The save number. */
 	public String saveLocation;
@@ -140,7 +138,6 @@ public class GameplayElement extends HudElement {
 		this.gb=null;
 		this.lastMap="";
 		this.player=null;
-		this.entityIterator=null;
 	}
 	
 	/**
@@ -207,13 +204,12 @@ public class GameplayElement extends HudElement {
 
 		updateBoardEffects(gc, 0);
 		this.currentAction = 0;
-		this.entityIterator = gb.ingameEntities.keySet().iterator();
-		this.currentEntity = entityIterator.next();
+		this.currentEntity = 0;
 	}
 
 	public void updateSave() throws IOException {
 		this.gb.removeEntity(player);
-		System.out.println(this.gb.ingameEntities);
+		System.out.println(this.gb.getIngameEntities());
 		Save.updateSave(saveLocation, player, gb);
 		this.gb.placeEntity(player.getLocation(), player, player.getLayer());
 	}
@@ -237,12 +233,12 @@ public class GameplayElement extends HudElement {
 		cameraY = cameraY + (cameraDestY - cameraY) * cameraRate;
 
 		if (gc.getInput().isKeyPressed(Input.KEY_Y)) {
-			cameraDestX = getBoard().ingameEntities.get(currentEntity)
+			cameraDestX = getBoard().getIngameEntities().get(currentEntity)
 					.getAbsoluteX()
 					- gc.getWidth()
 					/ 2
 					+ DeadReckoningGame.tileSize / 2;
-			cameraDestY = getBoard().ingameEntities.get(currentEntity)
+			cameraDestY = getBoard().getIngameEntities().get(currentEntity)
 					.getAbsoluteY()
 					- gc.getHeight()
 					/ 2
@@ -272,9 +268,8 @@ public class GameplayElement extends HudElement {
 	public void updateBoardEffects(GameContainer gc, int delta) {
 		getBoard().HideAll();
 		getBoard().updateBoardEffects(gc, delta);
-		Iterator<Integer> i = getBoard().ingameEntities.keySet().iterator();
-		while(i.hasNext()){
-			Entity e = getBoard().ingameEntities.get(i.next());
+		for(int i=0; i<getBoard().getIngameEntities().size(); i++){
+			Entity e = getBoard().getIngameEntities().get(i);
 			if(e.allignmnet==Entity.ALLIGN_FRIENDLY){
 				getBoard().revealFromEntity(e , 10);
 			}
@@ -292,12 +287,12 @@ public class GameplayElement extends HudElement {
 	private void updateActions(GameContainer gc, int delta) {
 		if (actions.size() == 0) {// if the current entity is in the middle of
 									// being parsed..
-			while (!getBoard().ingameEntities.get(this.currentEntity)
+			while (!getBoard().getIngameEntities().get(this.currentEntity)
 					.getLocation().canBeSeen()
-					|| !getBoard().ingameEntities.get(this.currentEntity)
+					|| !getBoard().getIngameEntities().get(this.currentEntity)
 							.makesActions()) {// iterate through all invisible
 												// entities
-				if (getBoard().ingameEntities.get(this.currentEntity)
+				if (getBoard().getIngameEntities().get(this.currentEntity)
 						.makesActions()) {
 					getActions(delta);// get their actions
 					while (!actionsComplete()) {// apply all the actions until
@@ -311,7 +306,7 @@ public class GameplayElement extends HudElement {
 			// when it hits an entity that is on screen and is interactive
 			// (takes multiple updateActions calls)
 			getActions(delta);
-			alertCameraTo(this.getBoard().ingameEntities.get(currentEntity));
+			alertCameraTo(this.getBoard().getIngameEntities().get(currentEntity));
 		} else if (cameraIsFocused()) {
 			applyAllActions(delta);
 			if (actionsComplete()) {
@@ -373,11 +368,11 @@ public class GameplayElement extends HudElement {
 	 * @return the actions
 	 */
 	private void getActions(int delta) {
-		Action a = this.getBoard().ingameEntities.get(currentEntity)
+		Action a = this.getBoard().getIngameEntities().get(currentEntity)
 				.chooseAction(gc, delta);
 		if (a != null) {
 			if (a.takesTurn) {
-				actions.addAll(this.getBoard().ingameEntities
+				actions.addAll(this.getBoard().getIngameEntities()
 						.get(currentEntity).advanceTurn());
 			}
 			actions.add(a);
@@ -392,7 +387,7 @@ public class GameplayElement extends HudElement {
 	private boolean cameraIsFocused() {
 		return (Math.abs(cameraDestX - cameraX) < cameraSensitivityFrac && Math
 				.abs(cameraDestY - cameraY) < cameraSensitivityFrac)
-				|| !this.getBoard().ingameEntities.get(currentEntity)
+				|| !this.getBoard().getIngameEntities().get(currentEntity)
 						.getLocation().canBeSeen();
 	}
 
@@ -422,12 +417,9 @@ public class GameplayElement extends HudElement {
 	 */
 	private void advanceEntity() {//assumes contiguous keyset. there is no scenario in which this would NOT be the case, but just to be safe, I will put a warning here for future generations
 		boolean f = true;
-		while(!gb.ingameEntities.get(currentEntity).makesActions() || f){
+		while(!gb.getIngameEntities().get(currentEntity).makesActions() || f){
 			f=false;
-			if(!entityIterator.hasNext()){
-				entityIterator = this.gb.ingameEntities.keySet().iterator();
-			}
-			currentEntity = entityIterator.next();
+			currentEntity = (currentEntity+1)%gb.getIngameEntities().size();
 		}
 
 		actions.clear();

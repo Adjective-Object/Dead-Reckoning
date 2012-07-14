@@ -8,7 +8,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.config.KeyConfig;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.game.substates.EquipGridElement;
 import net.plaidypus.deadreckoning.hudelements.game.substates.ItemGridElement;
@@ -16,6 +15,7 @@ import net.plaidypus.deadreckoning.hudelements.game.substates.ReturnToGameElemen
 import net.plaidypus.deadreckoning.items.Equip;
 import net.plaidypus.deadreckoning.items.Item;
 import net.plaidypus.deadreckoning.state.PrebakedHudLayersState;
+import net.plaidypus.deadreckoning.utilities.KeyConfig;
 
 public class InventoryState extends PrebakedHudLayersState{
 

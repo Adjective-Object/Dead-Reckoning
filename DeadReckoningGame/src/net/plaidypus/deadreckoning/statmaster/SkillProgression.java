@@ -87,19 +87,16 @@ public class SkillProgression {
 			}
 
 			return new SkillProgression(name, array, levels);
+			
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			throw new SlickException ("Cannot find the requisite files to make a profession",e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new SlickException ("Cannot find the requisite files to make a profession",e);
+		} catch (InstantiationException e) {
+			throw new SlickException ("Cannot Instanciate the skills in this skill progression. All skill classes require an empty constructor.",e);
+		} catch (IllegalAccessException e) {
+			throw new SlickException ("The constructor for the loaded class is not public",e);
 		}
-
-		return s;
 	}
 
 	/**

@@ -1,7 +1,7 @@
 package net.plaidypus.deadreckoning.hudelements.menuItems;
 
-import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
+import net.plaidypus.deadreckoning.utilities.Utilities;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;

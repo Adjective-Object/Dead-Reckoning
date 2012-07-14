@@ -7,11 +7,11 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import net.plaidypus.deadreckoning.config.KeyConfig;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.game.substates.ItemGridElement;
 import net.plaidypus.deadreckoning.hudelements.game.substates.ReturnToGameElement;
 import net.plaidypus.deadreckoning.state.PrebakedHudLayersState;
+import net.plaidypus.deadreckoning.utilities.KeyConfig;
 
 public class LootState extends PrebakedHudLayersState{
 	

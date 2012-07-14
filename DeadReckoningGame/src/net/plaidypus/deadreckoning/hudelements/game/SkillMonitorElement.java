@@ -21,6 +21,8 @@ public class SkillMonitorElement extends HudElement { // TODO turn into a
 														// allow for clicking ->
 														// use skill.
 
+	static final String[] overlayTexts = new String[] {"1","2","3","4","5","6","7","8","9","0","-","="};
+	
 	/** The to monitor. */
 	Profession toMonitor;
 
@@ -124,8 +126,12 @@ public class SkillMonitorElement extends HudElement { // TODO turn into a
 				g.setColor(DeadReckoningGame.skillInvalidColor);
 				g.fillRect(this.getAbsoluteX() + 5 + i * 35, this.getAbsoluteY() + 5, 32, 32);
 			}
+			g.setFont(DeadReckoningGame.menuDispFont);
+			g.drawString(
+					overlayTexts[i],
+					this.getAbsoluteX() + 7 + i * 35,
+					this.getAbsoluteY() + 39 - DeadReckoningGame.menuSmallFont.getLineHeight());
 			if (skills.get(i).getCooldown() > 0) {
-				g.setColor(DeadReckoningGame.menuTextColor);
 				g.setFont(DeadReckoningGame.menuFont);
 				g.drawString(
 						Integer.toString(skills.get(i).getCooldown()),

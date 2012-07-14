@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
@@ -19,6 +18,7 @@ import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.skills.Skill;
 import net.plaidypus.deadreckoning.statmaster.StatMaster;
 import net.plaidypus.deadreckoning.status.Status;
+import net.plaidypus.deadreckoning.utilities.Utilities;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
@@ -521,7 +521,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * @see net.plaidypus.deadreckoning.entities.Entity#advanceTurn()
 	 */
 	public ArrayList<Action> advanceTurn() {
-		this.stealthed=false;
+		this.setStealthed(false);
 		ArrayList<Action> actions = new ArrayList<Action>(0);
 		for (int i = 0; i < statuses.size(); i++) {
 			actions.addAll(statuses.get(i).advanceTurnEffects(this));
@@ -571,7 +571,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 		return toRet;
 	}
 	
-	protected void loadStatuses(LivingEntity target, String[] statuses){
+	protected void loadStatuses(LivingEntity target, String[] statuses) throws SlickException{
 		for(int i=0; i<statuses.length; i++){
 			if(statuses[i].length()>0){
 				target.addCondition(Status.loadStatusFromString(statuses[i]));

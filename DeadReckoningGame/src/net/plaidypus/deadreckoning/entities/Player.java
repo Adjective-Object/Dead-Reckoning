@@ -89,10 +89,10 @@ public class Player extends LivingEntity {
 		this.profession.parentTo(this);
 
 		keyBinds = new int[] { Input.KEY_A, Input.KEY_D, Input.KEY_W,
-				Input.KEY_S, Input.KEY_Q, Input.KEY_F1, Input.KEY_F2,
-				Input.KEY_F3, Input.KEY_F4, Input.KEY_F5, Input.KEY_F6,
-				Input.KEY_F7, Input.KEY_F8, Input.KEY_F9, Input.KEY_F10,
-				Input.KEY_F11, Input.KEY_F12, Input.KEY_T, Input.KEY_L,
+				Input.KEY_S, Input.KEY_Q, Input.KEY_1, Input.KEY_2,
+				Input.KEY_3, Input.KEY_4, Input.KEY_5, Input.KEY_6,
+				Input.KEY_7, Input.KEY_8, Input.KEY_9, Input.KEY_0,
+				Input.KEY_MINUS, Input.KEY_EQUALS, Input.KEY_T, Input.KEY_L,
 				Input.KEY_I, Input.KEY_M, Input.KEY_K, Input.KEY_E};
 		skills.add( new PreBakedMove(entityID, -1, 0));
 		skills.add( new PreBakedMove(entityID, 1, 0));
@@ -154,7 +154,7 @@ public class Player extends LivingEntity {
 			this.EXP += delta;
 		}
 		if (gc.getInput().isKeyPressed(Input.KEY_LBRACKET)) {
-			this.stealthed = !this.stealthed;
+			this.setStealthed(!this.isStealthed());
 		}
 	}
 

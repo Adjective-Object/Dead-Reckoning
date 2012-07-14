@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.LootAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
-import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 
 import org.newdawn.slick.GameContainer;
@@ -128,8 +127,6 @@ public class Corpse extends InteractiveEntity {
 		} catch (InstantiationException e1) {
 			e1.printStackTrace();
 		} catch (IllegalAccessException e1) {
-			e1.printStackTrace();
-		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
 		}
 		String[] subatt = new String[attributes.length - 3];

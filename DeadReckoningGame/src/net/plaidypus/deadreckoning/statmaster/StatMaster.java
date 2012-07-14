@@ -1,6 +1,6 @@
 package net.plaidypus.deadreckoning.statmaster;
 
-import net.plaidypus.deadreckoning.Utilities;
+import net.plaidypus.deadreckoning.utilities.Utilities;
 
 // TODO: Auto-generated Javadoc
 /**

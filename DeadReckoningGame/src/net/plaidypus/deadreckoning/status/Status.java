@@ -14,6 +14,7 @@ import net.plaidypus.deadreckoning.statmaster.StatMaster;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 /**
  * Statuses to be applied to entities.
@@ -142,31 +143,21 @@ public abstract class Status extends DeadReckoningComponent{
 				+this.getDuration();
 	}
 	
-	public static Status loadStatusFromString(String stringstatus){
+	public static Status loadStatusFromString(String stringstatus) throws SlickException{
 		String[] split = stringstatus.split("-");
+
+		Class<? extends Status> c  = ModLoader.loadClass(split[0]).asSubclass(Status.class);
 		try {
-			Class<? extends Status> c  = ModLoader.loadClass(split[0]);
 			return c.newInstance().loadFromString(split);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SlickException("Stauts."+c.getSimpleName()+" lacks a blank constructor",e);
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SlickException("Status"+c.getSimpleName()+" either has no public, blank constructor, or lacks the required loadFromString(String[] args) method",e);
 		}
-		return null;
 	}
 	
-	public Entity getSource(){
-		return GameBoard.getEntity(sourceID);
+	public LivingEntity getSource(){
+		return (LivingEntity) GameBoard.getEntity(sourceID);
 	}
 
 	public void setDuration(int duration) {

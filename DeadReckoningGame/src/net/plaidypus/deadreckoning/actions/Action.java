@@ -2,10 +2,11 @@ package net.plaidypus.deadreckoning.actions;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.util.Log;
+
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
-import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.status.Status;
@@ -18,7 +19,7 @@ import net.plaidypus.deadreckoning.status.Status;
 public abstract class Action {
 
 	/** The ID of the entity that produced the action*/
-	public int sourceID;
+	public int sourceID, millisTaken;
 
 	/** The tile on which the action is focused */
 	public Tile target;
@@ -73,7 +74,11 @@ public abstract class Action {
 		if (!completed) {
 			completed = apply(delta);
 			if(completed){
-				
+				if(this.target!=null){
+					Log.info(this.getClass().getSimpleName()+" applied from entity "+this.sourceID+" ("+getSource()+") to "+this.target+" containing "+this.target.getEntity(Tile.LAYER_ACTIVE)+" over "+millisTaken+" milliseconds.");
+				} else{
+					Log.info(this.getClass().getSimpleName()+" applied from entity "+this.sourceID+" ("+getSource()+") to nothing, over "+millisTaken+" milliseconds.");
+				}
 				LivingEntity e = (LivingEntity) GameBoard.getEntity(this.sourceID);
 				ArrayList<Status> stats = e.getConditions();
 				for(int i=0; i<stats.size(); i++){
@@ -89,7 +94,12 @@ public abstract class Action {
 					}
 				}
 			}
+			millisTaken+=delta;		
 		}
+	}
+
+	private InteractiveEntity getSource() {
+		return (InteractiveEntity)GameBoard.getEntity(sourceID);
 	}
 
 	/*

@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
+import net.plaidypus.deadreckoning.utilities.Utilities;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;

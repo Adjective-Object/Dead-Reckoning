@@ -3,7 +3,6 @@ package core.biomes;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
@@ -12,6 +11,8 @@ import net.plaidypus.deadreckoning.generator.Room;
 import net.plaidypus.deadreckoning.generator.RoomBasedBiome;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.statmaster.StatMaster;
+import net.plaidypus.deadreckoning.utilities.BiomeUtils;
+import net.plaidypus.deadreckoning.utilities.Utilities;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -34,22 +35,19 @@ public class Temple extends RoomBasedBiome {
 			TILE_WALL_DOWN_RIGHT = 8, TILE_WALL_DOWN_LEFT = 2,
 			TILE_TUNNEL = 9, TILE_NULL = 10;
 
-	
 	public Temple() {
 		this(20);
 	}
 
 	/**
-	 * Instantiates a new hemple.
+	 * Instantiates a new Temple.
 	 * 
 	 * @param numRooms
-	 *            the num rooms
+	 *            the number rooms to be placed
 	 */
 	public Temple(int numRooms) {
 		super(numRooms);
 	}
-
-	
 
 	@Override
 	public void init() throws SlickException {
@@ -111,14 +109,12 @@ public class Temple extends RoomBasedBiome {
 		for(int i=0; i<rooms.size()-1; i++){
 			Tile start= rooms.get(i).getCenter(target), end = rooms.get(i+1).getCenter(target);
 			
-			ArrayList<Tile> tilePath = tileLine(start.getX(), start.getY(), end.getX(), start.getY(), target);
-			tilePath.addAll(tileLine(end.getX(), start.getY(), end.getX(), end.getY(), target));
-			tilePath.add(end);
+			ArrayList<Tile> tilePath = BiomeUtils.getShitPath(start,end, target);
 			
 			drawPath(tilePath,rooms,TILE_TUNNEL);
 			
 		}
-		for(int i=0; i<rooms.size()-1; i++){
+		for(int i=0; i<rooms.size(); i++){
 			for (int y=0; y<rooms.get(i).height; y++){
 				Tile a = target.getTileAt(rooms.get(i).x-1, rooms.get(i).y+y),
 						b= target.getTileAt(rooms.get(i).x+rooms.get(i).width, rooms.get(i).y+y);
@@ -145,23 +141,8 @@ public class Temple extends RoomBasedBiome {
 		
 		return target;
 	}
-
-	public ArrayList<Tile> tileLine(int startx, int starty, int endx, int endy, GameBoard target){
-		ArrayList<Tile> tiles = new ArrayList<Tile>(Math.abs(startx-endx)+Math.abs(starty-endy)+1);
-		if(startx==endx){
-			for(int y=starty; y!=endy; y+=(endy-starty)/Math.abs(endy-starty)){
-				tiles.add(target.getTileAt(startx, y));
-			}
-		}
-		else if (starty==endy){
-			for(int x=startx; x!=endx; x+=(endx-startx)/Math.abs(endx-startx)){
-				tiles.add(target.getTileAt(x,starty));
-			}
-		}
-		return tiles;
-	}
 	
-	public void drawPath(ArrayList<Tile> tiles, ArrayList<Room> rooms, int tileValue){
+	public static void drawPath(ArrayList<Tile> tiles, ArrayList<Room> rooms, int tileValue){
 		
 		//check for collisions along the length of the tunnel
 		//	marking the ones that do not have collisions, allowing for one collision consecutively
@@ -198,12 +179,12 @@ public class Temple extends RoomBasedBiome {
 		}
 	}
 	
-	private boolean checkTileColl(Tile t){
+	private static boolean checkTileColl(Tile t){
 		return t.getToLeft().getTileFace()!=TILE_NULL || t.getToRight().getTileFace()!=TILE_NULL ||
 				t.getToDown().getTileFace()!=TILE_NULL || t.getToUp().getTileFace()!=TILE_NULL;
 	}
 	
-	private void tunnelTile(Tile t){
+	private static void tunnelTile(Tile t){
 		for (int x=-1; x<=1; x++){
 			for(int y=-1; y<=1; y++){
 				Tile p = t.getRelativeTo(x, y);
@@ -216,7 +197,7 @@ public class Temple extends RoomBasedBiome {
 	}
 	
 	public int getNullTileValue(){
-		return 10;
+		return TILE_NULL;
 	}
 	
 }

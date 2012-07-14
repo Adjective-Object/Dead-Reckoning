@@ -2,11 +2,11 @@ package net.plaidypus.deadreckoning.generator;
 
 import java.util.ArrayList;
 
-import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.LandingPad;
 import net.plaidypus.deadreckoning.entities.Stair;
+import net.plaidypus.deadreckoning.utilities.Utilities;
 
 // TODO: Auto-generated Javadoc
 /**

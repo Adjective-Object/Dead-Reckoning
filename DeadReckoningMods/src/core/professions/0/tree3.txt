@@ -1,5 +1,5 @@
 Destruction
-core.skills.Fireball
+core.skills.thief.SmokeBomb
 core.skills.Fireball
 core.skills.Fireball
 core.skills.Fireball

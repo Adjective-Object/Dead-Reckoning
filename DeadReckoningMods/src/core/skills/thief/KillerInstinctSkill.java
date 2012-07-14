@@ -4,6 +4,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import core.statuses.FocusedMindStatus;
+import core.statuses.KillerInstinctStatus;
 
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.ApplyStatusAction;
@@ -37,9 +38,8 @@ public class KillerInstinctSkill extends Skill{
 				sourceID,//TODO the status for killer instinct
 				getSource().getLocation(),
 				getSource().getLayer(),
-				new FocusedMindStatus(
+				new KillerInstinctStatus(
 						this.sourceID,
-						calculatePoisonDamage(level),
 						calculateDuration(level)
 						)
 				);

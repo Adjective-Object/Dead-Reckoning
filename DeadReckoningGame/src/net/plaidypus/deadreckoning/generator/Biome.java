@@ -7,9 +7,9 @@ import java.util.Set;
 
 
 import net.plaidypus.deadreckoning.DeadReckoningComponent;
-import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.entities.Stair;
+import net.plaidypus.deadreckoning.utilities.Utilities;
 
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;

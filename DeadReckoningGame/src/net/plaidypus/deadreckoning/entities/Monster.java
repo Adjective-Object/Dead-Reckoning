@@ -2,7 +2,6 @@ package net.plaidypus.deadreckoning.entities;
 
 import java.util.ArrayList;
 
-import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.WaitAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
@@ -12,6 +11,7 @@ import net.plaidypus.deadreckoning.skills.Attack;
 import net.plaidypus.deadreckoning.skills.Movement;
 import net.plaidypus.deadreckoning.skills.Skill;
 import net.plaidypus.deadreckoning.statmaster.StatMaster;
+import net.plaidypus.deadreckoning.utilities.Utilities;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -116,7 +116,7 @@ public class Monster extends LivingEntity {
 	 */
 	@Override
 	// TODO loading from jarfile
-	public Entity makeFromString(GameBoard g, String[] toload) {
+	public Entity makeFromString(GameBoard g, String[] toload) throws SlickException {
 		Monster toRet = new Monster(toload[10], toload[11],// parentMod , entityfile
 				super.loadStatMaster(toload[8].split(",")),//statmaster
 				Integer.parseInt(toload[9]));// Alignment

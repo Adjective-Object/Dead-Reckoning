@@ -2,11 +2,11 @@ package net.plaidypus.deadreckoning.modloader;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -20,6 +20,7 @@ import java.util.jar.JarFile;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.opengl.TextureLoader;
+import org.newdawn.slick.util.Log;
 
 import net.plaidypus.deadreckoning.DeadReckoningComponent;
 import net.plaidypus.deadreckoning.exceptions.ErrorType;
@@ -42,48 +43,47 @@ public class ModLoader {
 	 *         happen
 	 * @throws IOException
 	 */
-	public static ArrayList<File> resolveMods(boolean vocal) throws IOException, ModLoadException {
+	public static ArrayList<File> resolveMods(boolean vocal) throws SlickException {
+		
 		HiddenFileFilter filter = new HiddenFileFilter();
 		File[] mods = new File("modpacks/").listFiles(filter);
 		if(mods.length == 0)
 		{
 			mods = new File[0];
-			throw new ModLoadException("No modpacks found.", ErrorType.MISSING);
+			throw new SlickException("No modpacks found.");
 		}
 				
 		HashMap<String, File> uncountedMods = new HashMap<String, File>();
 		HashMap<String, ArrayList<String>> modReqs = new HashMap<String, ArrayList<String>>();
-
-		for (int i = 0; i < mods.length; i++) {
-			if (mods[i].getName().contains(".jar")) {
-				String name = mods[i].getName().split("\\.")[0];
-				System.out.println(name);
-				uncountedMods.put(name, mods[i]);
-
-				URL x = mods[i].toURI().toURL();
-				URLClassLoader urlLoader = new URLClassLoader(new URL[] { x },
-						ClassLoader.getSystemClassLoader());
-				InputStream in = urlLoader.getResourceAsStream(name
-						+ "/requirements.txt");
-				BufferedReader b = new BufferedReader(new InputStreamReader(in));
-				String requirement = b.readLine();
-				ArrayList<String> tempReqs = new ArrayList<String>(0);
-				while (requirement != null) {
-					tempReqs.add(requirement);
-					requirement = b.readLine();
+		
+		try{
+			for (int i = 0; i < mods.length; i++) {
+				if (mods[i].getName().contains(".jar")) {
+					String name = mods[i].getName().split("\\.")[0];
+					uncountedMods.put(name, mods[i]);
+	
+					URL x = mods[i].toURI().toURL();
+					URLClassLoader urlLoader = new URLClassLoader(new URL[] { x },
+							ClassLoader.getSystemClassLoader());
+					InputStream in = urlLoader.getResourceAsStream(name
+							+ "/requirements.txt");
+					BufferedReader b = new BufferedReader(new InputStreamReader(in));
+					String requirement = b.readLine();
+					ArrayList<String> tempReqs = new ArrayList<String>(0);
+					while (requirement != null) {
+						tempReqs.add(requirement);
+						requirement = b.readLine();
+						modReqs.put(name, tempReqs);
+					}
 				}
-				modReqs.put(name, tempReqs);
 			}
+		} catch (MalformedURLException e){
+			throw new SlickException ("Malformed URL? lolwut I dunno how this could even be thrown. name your mods right next time?",e);
+		} catch (IOException e) {
+			throw new SlickException ("IOException. You're probably missing requirements.txt.",e);
 		}
 
-		Set<String> fileNames = uncountedMods.keySet();
-		Iterator<String> iter = fileNames.iterator();
-
-		// the list of mods that are properley formatted and have the
-		// dependencies met
 		ArrayList<File> returnMods = new ArrayList<File>(uncountedMods.size());
-
-		// TODO
 
 		returnMods.addAll(uncountedMods.values());
 
@@ -103,8 +103,7 @@ public class ModLoader {
 	 * @throws SecurityException
 	 * @throws IllegalArgumentException
 	 */
-	public static void loadModpack(File f) throws IllegalArgumentException,
-			SecurityException, InvocationTargetException, NoSuchMethodException {
+	public static void loadModpack(File f) throws SlickException {
 		String modname = f.getName().replace(".jar", "");
 
 		try {
@@ -116,8 +115,8 @@ public class ModLoader {
 			JarFile jarFile = new JarFile(f);
 			Enumeration<JarEntry> contents = jarFile.entries();
 
-			ArrayList<ArrayList<Class>> classes = new ArrayList<ArrayList<Class>>(
-					0);
+			@SuppressWarnings("rawtypes")
+			ArrayList<ArrayList<Class>> classes = new ArrayList<ArrayList<Class>>(0);
 
 			int numProfessions = 0;
 			String[] classKeys = new String[] { "/biomes/", "/skills/",
@@ -147,8 +146,9 @@ public class ModLoader {
 			// handles special cases of biomes
 			for (int i = 0; i < classes.size(); i++) {
 				for (int c = 0; c < classes.get(i).size(); c++) {
-					System.out.println("Initializing "
+					Log.info("Initializing "
 							+ classes.get(i).get(c).getCanonicalName());
+					@SuppressWarnings("unchecked")
 					DeadReckoningComponent e = (DeadReckoningComponent) classes
 							.get(i).get(c)
 							.asSubclass(DeadReckoningComponent.class)
@@ -177,7 +177,7 @@ public class ModLoader {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new SlickException("Error loading mod "+modname, e);
 		}
 
 	}
@@ -190,12 +190,17 @@ public class ModLoader {
 		return getModpackLoader(classpath.split("\\.")[0]);
 	}
 
-	public static Class loadClass(String line) throws ClassNotFoundException {
-		URLClassLoader l = getLoaderFor(line);
-		if (l != null) {
-			return l.loadClass(line);
-		} else {
-			return ClassLoader.getSystemClassLoader().loadClass(line);
+	public static Class<? extends DeadReckoningComponent> loadClass(String line) throws SlickException {
+		try{
+			URLClassLoader l = getLoaderFor(line);
+			if (l != null) {
+				return l.loadClass(line).asSubclass(DeadReckoningComponent.class);
+			} else {
+				Log.error("the appropriate loader is not present. attempting to use System class loader.");
+				return ClassLoader.getSystemClassLoader().loadClass(line).asSubclass(DeadReckoningComponent.class);
+			}
+		} catch (ClassNotFoundException e) {
+			throw new SlickException("Cannot find the class indicated by "+line+".",e);
 		}
 	}
 
@@ -206,23 +211,9 @@ public class ModLoader {
 	 *            Arraylist of Files, pointing to the directories of the
 	 *            modpacks
 	 */
-	public static void loadModpacks(ArrayList<File> f) {
+	public static void loadModpacks(ArrayList<File> f) throws SlickException{
 		for (int i = 0; i < f.size(); i++) {
-			try {
-				loadModpack(f.get(i));
-			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (NoSuchMethodException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			loadModpack(f.get(i));
 		}
 	}
 
@@ -235,7 +226,7 @@ public class ModLoader {
 		} catch (IOException e) {
 			return new Image("res/noSkill.png");
 		} catch (NullPointerException e ){
-			System.err.println("can't load image "+imagepath+" in "+modpack+" with "+ModLoader.getModpackLoader(modpack));
+			Log.error("can't load image "+imagepath+" in "+modpack+" with "+ModLoader.getModpackLoader(modpack));
 			return null;
 		}
 	}

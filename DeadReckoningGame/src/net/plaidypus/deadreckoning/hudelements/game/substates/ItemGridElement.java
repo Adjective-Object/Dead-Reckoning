@@ -3,11 +3,11 @@ package net.plaidypus.deadreckoning.hudelements.game.substates;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.hudelements.simple.SimplePanel;
 import net.plaidypus.deadreckoning.items.Item;
 import net.plaidypus.deadreckoning.state.HudLayersState;
+import net.plaidypus.deadreckoning.utilities.Utilities;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;

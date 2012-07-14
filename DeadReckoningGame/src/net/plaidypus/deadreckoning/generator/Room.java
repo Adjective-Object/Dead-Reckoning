@@ -2,9 +2,9 @@ package net.plaidypus.deadreckoning.generator;
 
 import java.util.ArrayList;
 
-import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
+import net.plaidypus.deadreckoning.utilities.Utilities;
 
 public class Room {
 	

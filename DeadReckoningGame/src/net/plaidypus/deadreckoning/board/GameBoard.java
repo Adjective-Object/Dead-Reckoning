@@ -1,20 +1,22 @@
 package net.plaidypus.deadreckoning.board;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.Utilities;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.generator.Biome;
 import net.plaidypus.deadreckoning.grideffects.GridEffect;
 import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
+import net.plaidypus.deadreckoning.utilities.Utilities;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.util.Log;
 
 import rlforj.los.BresLos;
 import rlforj.los.ILosAlgorithm;
@@ -27,13 +29,14 @@ import rlforj.los.ILosBoard;
 public class GameBoard implements ILosBoard {
 
 	/** The in game entities. */
-	public ConcurrentSkipListMap<Integer,Entity> ingameEntities;
+	private ArrayList<Entity> ingameEntities = new ArrayList<Entity>(0);;
+	HashMap<Integer, Entity> entityReferenceMap = new HashMap<Integer,Entity>(0);
 	//this doesn't even ensure that the list will always run in the same order.
 	//:<
 	//potential glitches, but whogivesafuck.
 	//Necessary so the iterator won't flip fucks when entities are moved around.
 	
-	protected int entityCounter;
+	protected int entityCounter = 0;
 	
 	/** The board. */
 	public Tile[][] board;
@@ -45,7 +48,7 @@ public class GameBoard implements ILosBoard {
 	public int width, height;
 
 	/** The under effects. */
-	ArrayList<GridEffect> overEffects, underEffects;
+	ArrayList<GridEffect> overEffects =  new ArrayList<GridEffect>(0), underEffects =  new ArrayList<GridEffect>(0);
 
 	/** The Gameplay element. */
 	GameplayElement GameplayElement;
@@ -75,10 +78,6 @@ public class GameBoard implements ILosBoard {
 		this.GameplayElement = g;
 		this.saveID = saveID;
 		this.mapID = mapID;
-		ingameEntities = new ConcurrentSkipListMap<Integer,Entity>();
-		entityCounter=0;
-		overEffects = new ArrayList<GridEffect>(0);
-		underEffects = new ArrayList<GridEffect>(0);
 	}
 	
 	/**
@@ -91,10 +90,6 @@ public class GameBoard implements ILosBoard {
 	 */
 	public GameBoard(int width, int height, Biome b) {
 		this.biome = b;
-		ingameEntities = new ConcurrentSkipListMap<Integer,Entity>();
-		entityCounter=0;
-		overEffects = new ArrayList<GridEffect>(0);
-		underEffects = new ArrayList<GridEffect>(0);
 		this.width = width;
 		this.height = height;
 		board = new Tile[width][height];
@@ -152,8 +147,8 @@ public class GameBoard implements ILosBoard {
 	 *            the layer
 	 */
 	public void placeEntity(int x, int y, Entity e, int layer) {
-		addEntity(e,-1);
 		board[x][y].setEntity(e, layer);
+		addEntity(e,-1);
 	}
 
 	/**
@@ -162,14 +157,17 @@ public class GameBoard implements ILosBoard {
 	 */
 	public void addEntity(Entity e, int index) {
 		if(index==-1){//if it is not already given an ID on the board
-			this.ingameEntities.put(entityCounter,e);
+			this.ingameEntities.add(e);
+			this.entityReferenceMap.put(entityCounter,e);
 			e.setID(entityCounter);
 			this.entityCounter++;
 		}
 		else{
-			this.ingameEntities.put(index,e);
+			this.ingameEntities.add(e);
+			this.entityReferenceMap.put(index,e);
 			e.setID(index);
 		}
+		Log.info("Entity "+e+" added to Game Board "+super.toString()+" with Entity ID "+e.getID());
 	}
 	
 	public Integer iterateCounter(){
@@ -240,8 +238,7 @@ public class GameBoard implements ILosBoard {
 	 *            the layer
 	 */
 	public void removeEntity(int x, int y, int layer) {
-		ingameEntities.remove(board[x][y].getEntity(layer).getID());
-		board[x][y].disconnectEntity(layer);
+		removeEntity(board[x][y].getEntity(layer));
 	}
 
 	/**
@@ -251,8 +248,10 @@ public class GameBoard implements ILosBoard {
 	 *            the e
 	 */
 	public void removeEntity(Entity e) {
+		entityReferenceMap.remove(e.getID());
 		ingameEntities.remove(e.getID());
 		e.getLocation().disconnectEntity(e.getLayer());
+		Log.info("Entity "+e+" removed from Game Board "+super.toString());
 	}
 
 	/**
@@ -894,11 +893,21 @@ public class GameBoard implements ILosBoard {
 	}
 	
 	public Entity getEntityFromID(int id){
-		return this.ingameEntities.get(id);
+		if(this.entityReferenceMap.containsKey(id)){
+			return this.entityReferenceMap.get(id);
+		}
+		else{
+			System.err.println("Entity of ID "+id+" does not exist!");
+			return null;
+		}
 	}
 	
 	public static Entity getEntity(int sourceID) {
 		return DeadReckoningGame.instance.getGameElement().getBoard().getEntityFromID(sourceID);
+	}
+	
+	public ArrayList<Entity> getIngameEntities() {
+		return ingameEntities;
 	}
 
 }

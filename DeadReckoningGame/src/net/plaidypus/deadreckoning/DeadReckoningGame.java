@@ -4,13 +4,14 @@
 package net.plaidypus.deadreckoning;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 
-import net.plaidypus.deadreckoning.config.KeyConfig;
-import net.plaidypus.deadreckoning.config.OptionsHandler;
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.entities.Stair;
 import net.plaidypus.deadreckoning.exceptions.ModLoadException;
@@ -41,6 +42,9 @@ import net.plaidypus.deadreckoning.state.substates.InGameMenuState;
 import net.plaidypus.deadreckoning.state.substates.InventoryState;
 import net.plaidypus.deadreckoning.state.substates.LootState;
 import net.plaidypus.deadreckoning.state.substates.PlayerViewerState;
+import net.plaidypus.deadreckoning.utilities.FileSaveLogSystem;
+import net.plaidypus.deadreckoning.utilities.KeyConfig;
+import net.plaidypus.deadreckoning.utilities.OptionsHandler;
 
 import org.lwjgl.LWJGLException;
 import org.newdawn.slick.AppGameContainer;
@@ -51,7 +55,9 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.font.effects.OutlineEffect;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.Log;
 
 /**
  * The Class DeadReckoningGame. the Central Game class of the DeadReckoningGame.
@@ -106,7 +112,7 @@ public class DeadReckoningGame extends StateBasedGame {
 	protected GameplayElement game;
 
 	/** The various menu fonts. */
-	public static UnicodeFont menuFont, menuSmallFont, menuLargeFont;
+	public static UnicodeFont menuFont, menuSmallFont, menuLargeFont, menuDispFont;
 
 	public static boolean debugMode=false;
 
@@ -163,22 +169,21 @@ public class DeadReckoningGame extends StateBasedGame {
 	 *            included in Java by default. have no meaning here.
 	 * @throws SlickException
 	 *             the slick exception
+	 * @throws FileNotFoundException 
 	 */
-	public static void main(String[] args) throws SlickException {
-		try {
-			OptionsHandler.bakeResolutions();
-			OptionsHandler.loadSettings();
-			AppGameContainer app = new AppGameContainer(new DeadReckoningGame());
-			app.setDisplayMode(OptionsHandler.getResolutionX(), OptionsHandler.getResolutionY(), OptionsHandler.fullScreen);
-			app.setVSync(OptionsHandler.verticalSynch);
-			app.setTargetFrameRate(OptionsHandler.frameRate);
-			app.start();
-			app.getInput().enableKeyRepeat();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		} catch (LWJGLException e) {
-			e.printStackTrace();
-		}
+	public static void main(String[] args) throws SlickException, LWJGLException, FileNotFoundException {
+		//for saving things to Log
+		Log.setLogSystem(new FileSaveLogSystem("log.txt"));
+		// for options
+		OptionsHandler.bakeResolutions();
+		OptionsHandler.loadSettings();
+		//making thr actual game
+		AppGameContainer app = new DeadReckoningContainer(new DeadReckoningGame());
+		app.setDisplayMode(OptionsHandler.getResolutionX(), OptionsHandler.getResolutionY(), OptionsHandler.fullScreen);
+		app.setVSync(OptionsHandler.verticalSynch);
+		app.setTargetFrameRate(OptionsHandler.frameRate);
+		app.start();
+		app.getInput().enableKeyRepeat();
 
 	}
 
@@ -208,26 +213,91 @@ public class DeadReckoningGame extends StateBasedGame {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
-		Exception elpha = null;
+		
+		HudElement.calculateOffsets(container);
+		defineFonts();
 
-		try {
-			ModLoader.loadModpacks(ModLoader.resolveMods(true));
-		} catch (IOException e) {
-			elpha = e;
-		} catch (ModLoadException e) {
-			elpha = e;
-		}
+		//this is built before everything else because exception handling
+		TextElement t = new TextElement(0, 0, HudElement.CENTER_CENTER, "", menuTextColor,menuSmallFont);
+		t.personalBindMethod=HudElement.CENTER_CENTER;
+		this.addState(
+			new HudLayersState(ERRORSTATE,
+				new HudElement[] {
+					new ColorFiller(menuBackgroundColor),
+					t
+				}
+			)
+		);
+		
+		container.getInput().enableKeyRepeat();
+		
+		ModLoader.loadModpacks(ModLoader.resolveMods(true));
+		
+		
+		// initialization of internal entities and things that will not be
+		// initialized by classloader
+		new Player().init();
+		new Stair().init();
+			
+			ArrayList<HudElement> subBackground = new ArrayList<HudElement>(0);
+			subBackground.add(new VicariousRenderer(DeadReckoningGame.instance.getGameElement()));
+			subBackground.add(new ColorFiller(new Color(0,0,0,100)) );
+			
+			defineStates(makeMenuBackground(container), subBackground);
+	}
 
-		//System.out.println(Biome.getBiomes());
-		//System.out.println(Profession.getProfessions());
+	private void defineStates(ArrayList<HudElement> menuBackground, ArrayList<HudElement> subBackground) throws SlickException {
+				
+		this.addState(new MainMenuState(MAINMENUSTATE, menuBackground));
 
+		this.addState(
+			new HudLayersState(GAMEPLAYSTATE,
+				new HudElement[] {
+					game,
+					new PlayerHudElement(10, 10, HudElement.TOP_LEFT, game),
+					new StatusTrackerElement(10, 120, HudElement.TOP_LEFT, game),
+					new SkillMonitorElement(-200, -45, HudElement.BOTTOM_CENTER,
+							game),
+					new MiniMap(-3, 1, HudElement.TOP_RIGHT, 2, 70, 70, game),
+					messages
+				}
+			)
+		);
+		
+		
+		this.addState(new LootState(LOOTSTATE,subBackground));
 
-		/*
-		 * The menu background. This is to maintain the same particles and other
-		 * graphical polishes across several states, along with it just being easier
-		 * to deal with this way (no need for repetition)
-		 */
-		ArrayList<HudElement> menuBackground = new ArrayList<HudElement>(0);
+		this.addState(new InventoryState(INVENTORYSTATE,subBackground));
+
+		this.addState(
+			new HudLayersState(MAPSTATE,
+				new HudElement[] {
+					messages,
+					new BigMap(0,0,HudElement.CENTER_CENTER, game),
+					new ReturnToGameElement(KeyConfig.MINIMAP)
+				},
+				subBackground
+			)
+		);
+
+		this.addState(new SaveSelectorState(SAVESELECTSTATE, menuBackground));
+		this.addState(new PlayerViewerState(SKILLSTATE, subBackground));
+		this.addState(new NewGameState(NEWGAMESTATE, menuBackground));
+		this.addState(new DeathScreenState(DEATHSTATE,subBackground));
+		this.addState(new ClassCreationState(NEWCLASSSTATE, menuBackground));
+		this.addState(new OptionsState(OPTIONSSTATE, menuBackground));
+		this.addState(new InGameMenuState(INGAMEMENUSTATE,subBackground));
+		
+		this.enterState(MAINMENUSTATE);
+	}
+
+	/*
+	 * The menu background. This is to maintain the same particles and other
+	 * graphical polishes across several states, along with it just being easier
+	 * to deal with this way (no need for repetition)
+	 */
+	private ArrayList<HudElement> makeMenuBackground(GameContainer container) throws SlickException {
+		ArrayList<HudElement> menuBackground= new ArrayList<HudElement>(0);
 		SpriteSheet particles = new SpriteSheet(new Image(
 		"res/menu/particles.png"), 50, 50);
 		menuBackground.add(new ColorFiller(DeadReckoningGame.menuBackgroundColor));
@@ -238,12 +308,10 @@ public class DeadReckoningGame extends StateBasedGame {
 				container.getWidth()+50, 150, container.getWidth()/8, particles));
 		menuBackground.add(new FairyLights(-50, -100, HudElement.BOTTOM_LEFT,
 				container.getWidth()+50, 100, container.getWidth()/6, particles));
+		return menuBackground;
+	}
 
-		ArrayList<HudElement> subBackground = new ArrayList<HudElement>(0);
-		subBackground.add(new VicariousRenderer(DeadReckoningGame.instance.getGameElement()));
-		subBackground.add(new ColorFiller(new Color(0,0,0,100)) );
-
-
+	private static void defineFonts() throws SlickException {
 		menuFont = new UnicodeFont("/res/visitor.ttf", 20, true, false);
 		menuFont.addNeheGlyphs();
 		menuFont.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
@@ -253,90 +321,17 @@ public class DeadReckoningGame extends StateBasedGame {
 		menuSmallFont.addNeheGlyphs();
 		menuSmallFont.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
 		menuSmallFont.loadGlyphs();
+		
+		menuDispFont = new UnicodeFont("/res/visitor.ttf", 15, true, false);
+		menuDispFont.addNeheGlyphs();
+		menuDispFont.getEffects().add(new OutlineEffect(2,java.awt.Color.BLACK));
+		menuDispFont.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
+		menuDispFont.loadGlyphs();
 
 		menuLargeFont = new UnicodeFont("/res/visitor.ttf", 30, true, false);
 		menuLargeFont.addNeheGlyphs();
 		menuLargeFont.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
 		menuLargeFont.loadGlyphs();
-
-		container.getInput().enableKeyRepeat();
-
-		HudElement.calculateOffsets(container);
-		// initialization of internal entities and things that will not be
-		// initialized by classloader
-		new Player().init();
-		new Stair().init();
-
-		if(elpha == null)
-		{
-			try
-			{
-				TextElement t = new TextElement(0, 0, HudElement.CENTER_CENTER, "", menuTextColor,menuSmallFont);
-				t.personalBindMethod=HudElement.CENTER_CENTER;
-				this.addState(
-					new HudLayersState(ERRORSTATE,
-						new HudElement[] {
-							new ColorFiller(menuBackgroundColor),
-							t
-						}
-					)
-				);
-				
-				this.addState(new MainMenuState(MAINMENUSTATE, menuBackground));
-
-				this.addState(
-					new HudLayersState(GAMEPLAYSTATE,
-						new HudElement[] {
-							game,
-							new PlayerHudElement(10, 10, HudElement.TOP_LEFT, game),
-							new StatusTrackerElement(10, 120, HudElement.TOP_LEFT, game),
-							new SkillMonitorElement(-200, -45, HudElement.BOTTOM_CENTER,
-									game),
-							new MiniMap(-3, 1, HudElement.TOP_RIGHT, 2, 70, 70, game),
-							messages
-						}
-					)
-				);
-				
-				
-				this.addState(new LootState(LOOTSTATE,subBackground));
-
-				this.addState(new InventoryState(INVENTORYSTATE,subBackground));
-
-				this.addState(
-					new HudLayersState(MAPSTATE,
-						new HudElement[] {
-							messages,
-							new BigMap(0,0,HudElement.CENTER_CENTER, game),
-							new ReturnToGameElement(KeyConfig.MINIMAP)
-						},
-						subBackground
-					)
-				);
-
-				this.addState(new SaveSelectorState(SAVESELECTSTATE, menuBackground));
-				this.addState(new PlayerViewerState(SKILLSTATE, subBackground));
-				this.addState(new NewGameState(NEWGAMESTATE, menuBackground));
-				this.addState(new DeathScreenState(DEATHSTATE,subBackground));
-				this.addState(new ClassCreationState(NEWCLASSSTATE, menuBackground));
-				this.addState(new OptionsState(OPTIONSSTATE, menuBackground));
-				this.addState(new InGameMenuState(INGAMEMENUSTATE,subBackground));
-				
-				this.enterState(MAINMENUSTATE);
-			}
-			catch (Exception e)
-			{
-				elpha = e;
-			}
-		}
-		if (elpha!=null)
-		{
-			StringWriter errors = new StringWriter();
-			elpha.printStackTrace(new PrintWriter(errors));
-			HudLayersState s = (HudLayersState)(this.getState(ERRORSTATE));
-			s.getElement(1).makeFrom(elpha.getMessage()+"\r\n" + errors.toString().replaceAll("	","") + "\r\nPlease report this error");
-			this.enterState(ERRORSTATE);
-		}
 	}
 
 }

@@ -328,9 +328,9 @@ public class Save {
 	 */
 	public static void saveEntities(GameBoard b, BufferedWriter r)
 			throws IOException {
-		Iterator<Integer> e = b.ingameEntities.keySet().iterator();
+		Iterator<Entity> e = b.getIngameEntities().iterator();
 		while(e.hasNext()){
-			r.write(b.ingameEntities.get(e.next()).saveToString());
+			r.write(e.next().saveToString());
 			r.newLine();
 		}
 	}
