@@ -57,7 +57,7 @@ public class Temple extends RoomBasedBiome {
 	}
 
 	@Override
-	public GameBoard populateRoom(GameBoard target, Room room) {
+	public GameBoard populateRoom(GameBoard target, Room room) throws SlickException {
 		for (int i=room.x; i<room.width+room.x ;i++){
 			target.getTileAt(i,room.y).setTileFace(TILE_WALL_UP);
 			target.getTileAt(i,room.y-1).blocking=true;

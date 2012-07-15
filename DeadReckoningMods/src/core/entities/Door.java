@@ -141,8 +141,10 @@ public class Door extends Entity {
 	public Entity makeFromString(GameBoard target, String[] toload) {
 		Door d = new Door();
 		d.open = Integer.parseInt(toload[3])==Tile.LAYER_PASSIVE_MAP;
-		d.placeAt(
-				target.getTileAt(Integer.parseInt(toload[1]), Integer.parseInt(toload[2])),
+		d.setLocation(
+				target.getTileAt(
+						Integer.parseInt(toload[1]),
+						Integer.parseInt(toload[2])),
 				Integer.parseInt(toload[3]));
 		return d;
 				

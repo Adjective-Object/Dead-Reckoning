@@ -58,8 +58,9 @@ public class DeadReckoningContainer extends AppGameContainer{
 		StringWriter errors = new StringWriter();
 		e.printStackTrace(new PrintWriter(errors));
 		HudLayersState s = (HudLayersState)(DeadReckoningGame.instance.getState(DeadReckoningGame.ERRORSTATE));
-		s.getElement(1).makeFrom(e.getMessage()+"\r\n" + errors.toString().replaceAll("	","") + "\r\n"+
-				"A logfile has been dumped at "+FileSaveLogSystem.fileName+".\r\nPlease report this error");
+		s.getElement(1).makeFrom(e.getMessage()+"\r\n" + errors.toString().replaceAll("	",""));
+		s.getElement(2).makeFrom("A logfile has been dumped at "+FileSaveLogSystem.fileName+".\r\nPlease report this error");
+		s.getElement(2).setPosition(0,s.getElement(1).getHeight()/2+20);
 		DeadReckoningGame.instance.enterState(DeadReckoningGame.ERRORSTATE);
 		
 		FileSaveLogSystem.closeWriter();

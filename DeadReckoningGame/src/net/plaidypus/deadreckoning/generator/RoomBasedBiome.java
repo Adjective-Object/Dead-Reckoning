@@ -2,6 +2,8 @@ package net.plaidypus.deadreckoning.generator;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.SlickException;
+
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.LandingPad;
@@ -35,8 +37,9 @@ public abstract class RoomBasedBiome extends Biome {
 	 * @param linkedLevels
 	 *            the linked levels
 	 * @return the game board
+	 * @throws SlickException 
 	 */
-	public GameBoard populateBoard(ArrayList<Room> rooms, ArrayList<Stair> linkedLevels){
+	public GameBoard populateBoard(ArrayList<Room> rooms, ArrayList<Stair> linkedLevels) throws SlickException{
 		
 		GameBoard target = new GameBoard(calcWidth(rooms), calcHeight(rooms), this);
 		
@@ -72,9 +75,9 @@ public abstract class RoomBasedBiome extends Biome {
 		return board;
 	}
 	
-	public abstract GameBoard populateRoom( GameBoard target, Room room);
+	public abstract GameBoard populateRoom( GameBoard target, Room room) throws SlickException;
 
-	public abstract GameBoard populateCooridors(GameBoard target, ArrayList<Room> rooms);
+	public abstract GameBoard populateCooridors(GameBoard target, ArrayList<Room> rooms) throws SlickException;
 
 	/*
 	 * (non-Javadoc)
@@ -82,7 +85,7 @@ public abstract class RoomBasedBiome extends Biome {
 	 * @see net.plaidypus.deadreckoning.generator.Biome#makeBoard(int,
 	 * java.util.ArrayList)
 	 */
-	public GameBoard makeBoard(int depth, ArrayList<Stair> floorLinks) {
+	public GameBoard makeBoard(int depth, ArrayList<Stair> floorLinks) throws SlickException{
 		
 		ArrayList<Room> rooms = makeRooms();
 		

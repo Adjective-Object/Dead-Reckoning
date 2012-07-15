@@ -134,8 +134,10 @@ public class LandingPad extends Entity {
 	@Override
 	public Entity makeFromString(GameBoard target, String[] attributes) {
 		LandingPad l = new LandingPad(attributes[4]);
-		l.placeAt(
-				target.getTileAt(Integer.parseInt(attributes[1]), Integer.parseInt(attributes[2])),
+		l.setLocation(
+				target.getTileAt(
+						Integer.parseInt(attributes[1]),
+						Integer.parseInt(attributes[2])),
 				Integer.parseInt(attributes[3]));
 		return l;
 	}

@@ -411,7 +411,7 @@ public class GameBoard implements ILosBoard {
 	 * @param delta
 	 *            the delta
 	 */
-	public void updateAllTiles(GameContainer gc, int delta) {
+	public void update(GameContainer gc, int delta) {
 
 		for (int i = 0; i < this.ingameEntities.size(); i++) {
 			ingameEntities.get(i).update(gc, delta);
@@ -447,14 +447,8 @@ public class GameBoard implements ILosBoard {
 	 *            the delta
 	 */
 	public void updateBoardEffects(GameContainer gc, int delta) {
-		for (int y = 0; y < this.height; y++) {
-			for (int x = 0; x < this.width; x++) {
-				for (int i = 0; i < Tile.numLayers; i++) {
-					if (!board[x][y].isOpen(i)) {
-						board[x][y].getEntity(i).updateBoardEffects(gc, delta);
-					}
-				}
-			}
+		for (int i=0; i<this.ingameEntities.size(); i++) {
+			ingameEntities.get(i).updateBoardEffects(gc, delta);
 		}
 	}
 

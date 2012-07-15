@@ -128,6 +128,7 @@ public class Tile {
 	 *            the layer
 	 */
 	public void disconnectEntity(int layer) {
+		this.containedEntities[layer].setLocation(null, layer);
 		this.containedEntities[layer] = null;
 	}
 
@@ -135,6 +136,9 @@ public class Tile {
 	 * Disconnect entities.
 	 */
 	public void disconnectEntities() {
+		for(int i=0; i<numLayers; i++){
+			this.containedEntities[i].setLocation(null, i);
+		}
 		this.containedEntities = emptyEntityArray();
 	}
 
@@ -224,24 +228,6 @@ public class Tile {
 	 */
 	public int getHighlighted() {
 		return highlighted;
-	}
-
-	/**
-	 * Update.
-	 * 
-	 * @param gc
-	 *            the gc
-	 * @param sbg
-	 *            the sbg
-	 * @param delta
-	 *            the delta
-	 */
-	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
-		for (int i = 0; i < getEntities().length; i++) {
-			if (!this.isOpen(i)) {
-				this.getEntity(i).update(gc, delta);
-			}
-		}
 	}
 
 	/**

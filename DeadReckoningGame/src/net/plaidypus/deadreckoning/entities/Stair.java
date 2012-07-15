@@ -122,8 +122,10 @@ public class Stair extends StaticImageEntity {
 	@Override
 	public Entity makeFromString(GameBoard target, String[] attributes) {
 		Stair s = new Stair( attributes[4], Integer.parseInt(attributes[5]));
-		s.placeAt(
-				target.getTileAt(Integer.parseInt(attributes[1]), Integer.parseInt(attributes[2])),
+		s.setLocation(
+				target.getTileAt(
+						Integer.parseInt(attributes[1]),
+						Integer.parseInt(attributes[2])),
 				Integer.parseInt(attributes[3]) );
 		return s;
 	}

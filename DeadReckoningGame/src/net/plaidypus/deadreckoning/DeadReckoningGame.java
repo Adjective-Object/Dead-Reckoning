@@ -218,13 +218,16 @@ public class DeadReckoningGame extends StateBasedGame {
 		defineFonts();
 
 		//this is built before everything else because exception handling
-		TextElement t = new TextElement(0, 0, HudElement.CENTER_CENTER, "", menuTextColor,menuSmallFont);
-		t.personalBindMethod=HudElement.CENTER_CENTER;
+		TextElement t1 = new TextElement(0, 0, HudElement.CENTER_CENTER, "", menuTextColor,menuSmallFont);
+		t1.personalBindMethod=HudElement.CENTER_CENTER;
+		TextElement t2 = new TextElement(0, 0, HudElement.CENTER_CENTER, "", menuTextColor,menuSmallFont);
+		t2.personalBindMethod=HudElement.CENTER_CENTER;
 		this.addState(
 			new HudLayersState(ERRORSTATE,
 				new HudElement[] {
 					new ColorFiller(menuBackgroundColor),
-					t
+					t1,
+					t2
 				}
 			)
 		);

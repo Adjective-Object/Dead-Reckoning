@@ -133,9 +133,12 @@ public class Corpse extends InteractiveEntity {
 		for (int i = 4; i < attributes.length; i++) {
 			subatt[i - 4] = attributes[i];
 		}
+		subatt[1]=attributes[1];
+		subatt[2]=attributes[2];
 		Corpse c =  new Corpse(	(LivingEntity) e.makeFromString(target, subatt));
-		c.placeAt(
-				target.getTileAt(Integer.parseInt(attributes[1]),Integer.parseInt(attributes[2])),
+		setLocation(
+				target.getTileAt(Integer.parseInt(attributes[1]),
+				Integer.parseInt(attributes[2])),
 				Integer.parseInt(attributes[3]));
 		return c;
 	}

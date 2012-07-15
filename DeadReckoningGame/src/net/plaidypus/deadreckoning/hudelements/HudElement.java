@@ -246,4 +246,9 @@ public abstract class HudElement {
 	
 	public void onEnter(GameContainer container, StateBasedGame game)throws SlickException{}
 
+	public void setPosition(int x, int y) {
+		this.xoff = x;
+		this.yoff = y;
+	}
+
 }

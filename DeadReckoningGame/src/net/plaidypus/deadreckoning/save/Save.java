@@ -29,6 +29,7 @@ import net.plaidypus.deadreckoning.statmaster.SkillProgression;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.util.Log;
 
 /**
  * The Class Save. This class administers most of the basic file I/O for game
@@ -236,30 +237,23 @@ public class Save {
 	 * @throws IllegalAccessException
 	 *             the illegal access exception
 	 */
-	public static ArrayList<Entity> loadEntities(GameBoard target,
+	public static void loadEntities(GameBoard target,
 			BufferedReader r) throws IOException, ClassNotFoundException,
 			InstantiationException, IllegalAccessException, SlickException{
 		String definition = r.readLine();
-		ArrayList<Entity> entities = new ArrayList<Entity>(0);
 		while (definition != null) {
 			String[] defInfo = definition.split(":");
 			try {
 				Class<? extends Entity> clas;
-				if (defInfo[0].contains("net.plaidypus.deadreckoning")) {
-					clas = ClassLoader.getSystemClassLoader()
-							.loadClass(defInfo[0]).asSubclass(Entity.class);
-				} else {
-					clas = ModLoader.loadClass(defInfo[0]).asSubclass(
-							Entity.class);
-				}
-				entities.add(clas.newInstance().makeFromString(target, defInfo));
+				clas = ModLoader.loadClass(defInfo[0]).asSubclass(Entity.class);
+				Entity e = clas.newInstance().makeFromString(target, defInfo);
+				Log.debug("Saveloading entity<"+e+" "+e.getLocation()+">");
+				target.placeEntity(e.getLocation(),e,e.getLayer());
 			} catch (ClassCastException e) {
 				e.printStackTrace();
 			}
 			definition = r.readLine();
 		}
-		
-		return entities;
 	}
 
 	/**
@@ -330,8 +324,11 @@ public class Save {
 			throws IOException {
 		Iterator<Entity> e = b.getIngameEntities().iterator();
 		while(e.hasNext()){
-			r.write(e.next().saveToString());
-			r.newLine();
+			Entity en =  e.next();
+			if(!Player.class.isAssignableFrom(en.getClass())){
+				r.write(en.saveToString());
+				r.newLine();
+			}
 		}
 	}
 
@@ -438,9 +435,7 @@ public class Save {
 		BufferedWriter r = new BufferedWriter(new FileWriter(saveLocation + "/"
 				+ currentMap.mapID));
 		Save.saveBoard(currentMap, r);
-		currentMap.removeEntity(p);
 		Save.saveEntities(currentMap, r);
-		currentMap.insertEntity(0, p.getLocation(), p, Tile.LAYER_ACTIVE);
 		r.close();
 
 		File director = new File(saveLocation + "/saveInformation.txt");
@@ -513,7 +508,7 @@ public class Save {
 
 		Player player = new Player(p, c.getInput());
 		
-		player.placeAt(b.getTileAt(tileX, tileY),Tile.LAYER_ACTIVE);
+		b.placeEntity(b.getTileAt(tileX, tileY), player, Tile.LAYER_ACTIVE);
 		player.EXP = currentEXP;
 		player.HP=currentHP;
 		player.MP=currentMP;

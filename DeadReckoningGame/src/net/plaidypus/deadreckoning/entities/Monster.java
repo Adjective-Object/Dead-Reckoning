@@ -31,6 +31,11 @@ public class Monster extends LivingEntity {
 	 * Instantiates a new monster.
 	 */
 	public Monster() {
+		super();
+		movement = new Movement(this.getID());
+		attack = new Attack(this.getID());
+		this.skills.add(movement);
+		this.skills.add(attack);
 	}
 
 	/**
@@ -46,9 +51,10 @@ public class Monster extends LivingEntity {
 	 *            the stats
 	 * @param allign
 	 *            the allign
+	 * @throws SlickException 
 	 */
 	public Monster(String parentMod, String entityFile,
-			StatMaster stats, int allign) {
+			StatMaster stats, int allign) throws SlickException {
 		super(parentMod, entityFile, stats, allign);
 		movement = new Movement(this.getID());
 		attack = new Attack(this.getID());
@@ -101,32 +107,14 @@ public class Monster extends LivingEntity {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * net.plaidypus.deadreckoning.entities.InteractiveEntity#updateBoardEffects
-	 * (org.newdawn.slick.GameContainer, int)
-	 */
-	public void updateBoardEffects(GameContainer gc, int delta) {
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
 	 * net.plaidypus.deadreckoning.entities.Entity#makeFromString(net.plaidypus
 	 * .deadreckoning.board.GameBoard, java.lang.String[])
 	 */
 	@Override
 	// TODO loading from jarfile
 	public Entity makeFromString(GameBoard g, String[] toload) throws SlickException {
-		Monster toRet = new Monster(toload[10], toload[11],// parentMod , entityfile
-				super.loadStatMaster(toload[8].split(",")),//statmaster
-				Integer.parseInt(toload[9]));// Alignment
-		toRet.placeAt(
-				g.getTileAt(Integer.parseInt(toload[1]), Integer.parseInt(toload[2])),
-				Integer.parseInt(toload[3]));
-		toRet.inventory.addAll(loadItems(toload[4].split(",")));
-		toRet.loadStatuses(toRet, toload[5].split(","));
-		toRet.HP=Integer.parseInt(toload[6]);
-		toRet.MP=Integer.parseInt(toload[7]);
+		Monster toRet = new Monster();
+		super.loadGenericSave(g, toload, toRet);
 		return toRet;
 	}
 	

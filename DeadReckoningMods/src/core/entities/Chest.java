@@ -119,8 +119,11 @@ public class Chest extends InteractiveEntity {
 	@Override
 	public Entity makeFromString(GameBoard g, String[] toload) throws SlickException{
 		Chest c = new Chest(new ArrayList<Item>(0));
-		c.placeAt(g.getTileAt(Integer.parseInt(toload[1]),
-				Integer.parseInt(toload[2])), Integer.parseInt(toload[3]));
+		c.setLocation(
+				g.getTileAt(
+						Integer.parseInt(toload[1]),
+						Integer.parseInt(toload[2])),
+						Integer.parseInt(toload[3]));
 		this.inventory.addAll(loadItems(toload[4].split(",")));
 		return c;
 	}

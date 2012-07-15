@@ -119,8 +119,10 @@ public class Torch extends Entity {
 	@Override
 	public Entity makeFromString(GameBoard g, String[] toload) {
 		Torch t = new Torch(Integer.parseInt(toload[4]));
-		t.placeAt(
-				g.getTileAt(Integer.parseInt(toload[1]),Integer.parseInt(toload[2])),
+		t.setLocation(
+				g.getTileAt(
+						Integer.parseInt(toload[1]),
+						Integer.parseInt(toload[2])),
 				Integer.parseInt(toload[3]));
 		return t;
 	}

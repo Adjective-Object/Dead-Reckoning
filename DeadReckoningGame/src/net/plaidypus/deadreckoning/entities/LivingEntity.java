@@ -11,9 +11,9 @@ import java.util.HashMap;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.actions.Action;
+import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
-import net.plaidypus.deadreckoning.items.Equip;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.skills.Skill;
 import net.plaidypus.deadreckoning.statmaster.StatMaster;
@@ -38,15 +38,8 @@ public abstract class LivingEntity extends InteractiveEntity {
 	/** The height. */
 	public int HP, MP, width, height;
 
-	/** The death. */
-	public Animation stand, basicAttack, walking, damageFront, damageBack,
-			death;
-
 	/** The entity file. */
 	public String parentMod, entityFile;
-
-	/** The current animation. */
-	public Animation currentAnimation;
 
 	/** The animations. */
 	protected HashMap<String,Animation> animations;
@@ -54,18 +47,18 @@ public abstract class LivingEntity extends InteractiveEntity {
 	protected HashMap<String, Integer> stats;
 
 	/** The statuses. */
-	public ArrayList<Status> statuses;
+	public ArrayList<Status> statuses = new ArrayList<Status>(0);;
 
 	/** The skills. */
 	public ArrayList<Skill> skills = new ArrayList<Skill>(0);
-
-	/** The id of the current animation. */
-	String currentAnimationID;
 
 	/** The Constant ANIMATION_DEATH. */
 	public static final String ANIMATION_STAND = "Stand", ANIMATION_ATTACK = "AttackBasic",
 			ANIMATION_WALK = "Walk", ANIMATION_FLINCH_FRONT = "FlinchFront",
 			ANIMATION_FLINCH_BACK = "FlinchBack", ANIMATION_DEATH = "Death";
+	
+	/** The id of the current animation. */
+	String currentAnimationID = ANIMATION_STAND;
 
 	/** The stat master, used to handle the (somewhat) unchanging stats of the entity */
 	protected StatMaster statMaster;
@@ -76,6 +69,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * Instantiates a new living entity.
 	 */
 	public LivingEntity() {
+		super();
 	}
 
 	/**
@@ -94,7 +88,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 *            the allignment
 	 */
 	public LivingEntity(String parentMod,
-			String entityFile, StatMaster statMaster, int allignment) {
+			String entityFile, StatMaster statMaster, int allignment) throws SlickException {
 		super();
 		try {
 			InputStream entityReader = ModLoader.getModpackLoader(parentMod)
@@ -104,11 +98,11 @@ public abstract class LivingEntity extends InteractiveEntity {
 			this.parentMod = parentMod;
 			loadFromFile(reader);
 			reader.close();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (IOException e) {
+			throw new SlickException("Cannot load Entity "+this.getClass().getSimpleName()+" from livingentityfile");
 		}
 
-		currentAnimation = stand;
+		currentAnimationID = LivingEntity.ANIMATION_STAND;
 		this.statMaster = statMaster;
 
 		this.entityFile = entityFile;
@@ -116,12 +110,32 @@ public abstract class LivingEntity extends InteractiveEntity {
 		setFacing(false);
 
 		this.setAllignment(allignment);
-		this.statuses = new ArrayList<Status>(0);
 
 		this.HP = this.statMaster.getMaxHP();
 		this.MP = this.statMaster.getMaxMP();
 	}
-
+	
+	/**
+	 * used for when entities are initialized with no properties,
+	 * and then their properties are later assigned through outside methods
+	 * (loading from saves)
+	 * @throws SlickException 
+	 */
+	public void finishBaking() throws SlickException{
+		try {
+			InputStream entityReader = ModLoader.getModpackLoader(parentMod)
+					.getResourceAsStream(parentMod + "/" + entityFile);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					entityReader));
+			this.parentMod = parentMod;
+			loadFromFile(reader);
+			reader.close();
+		} catch (IOException e) {
+			throw new SlickException("Cannot load Entity "+this.getClass().getSimpleName()+" from livingentityfile");
+		}
+	}
+	
+	
 	/**
 	 * updates the entity (updates the animation).
 	 * 
@@ -131,20 +145,24 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 *            the delta
 	 */
 	public void update(GameContainer gc, int delta) {
-		currentAnimation.update(delta);
-		if (this.currentAnimation.isStopped()) {
+		getCurrentAntimation().update(delta);
+		if (this.getCurrentAntimation().isStopped()) {
 			this.setCurrentAnimation(ANIMATION_STAND);
 		}
 
 		for (int i = 0; i < this.statuses.size(); i++) {
 			statuses.get(i).update(this, delta);
 		}
+	}
 
+	@Override
+	public void updateBoardEffects(GameContainer gc, int delta){
+		super.updateBoardEffects(gc,delta);
 		if (this.HP <= 0) {
 			this.kill();
 		}
 	}
-
+	
 	/**
 	 * still abstract because different livingEntities will have differing AIs.
 	 * 
@@ -233,7 +251,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 */
 	public void forceRender(Graphics g, float x, float y) {
 		g.drawImage(
-				currentAnimation.getCurrentFrame().getFlippedCopy(getFacing(),
+				getCurrentAntimation().getCurrentFrame().getFlippedCopy(getFacing(),
 						false), (int) x + DeadReckoningGame.tileSize / 2
 						- this.width / 2, (int) y + DeadReckoningGame.tileSize
 						- this.height);
@@ -249,9 +267,8 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 *            the animation id (LivingEntity.ANIMATION_BLAW)
 	 */
 	public void setCurrentAnimation(String id) {
+		this.animations.get(this.currentAnimationID).restart();
 		this.currentAnimationID = id;
-		this.currentAnimation.restart();
-		this.currentAnimation = this.animations.get(id);
 	}
 
 	/**
@@ -493,17 +510,15 @@ public abstract class LivingEntity extends InteractiveEntity {
 		height = stats.get("TILEY");
 	}
 	
+	/**
+	 * defines properties of the animations
+	 * @param animations
+	 */
 	protected void parseAnims(HashMap<String,Animation> animations){
-		stand = animations.get("Stand");
-		basicAttack = animations.get("AttackBasic");
-		basicAttack.setLooping(false);
-		damageBack = animations.get("FlinchFront");
-		damageBack.setLooping(false);
-		damageFront = animations.get("FlinchBack");
-		damageFront.setLooping(false);
-		walking = animations.get("Walking");
-		death = animations.get("Death");
-		death.setLooping(false);
+		animations.get("AttackBasic").setLooping(false);
+		animations.get("FlinchFront").setLooping(false);
+		animations.get("FlinchBack").setLooping(false);
+		animations.get("Death").setLooping(false);
 	}
 	
 	/**
@@ -570,6 +585,19 @@ public abstract class LivingEntity extends InteractiveEntity {
 				+this.statMaster.toString()+":"+this.allignmnet+":"+this.parentMod+":"+this.entityFile;
 		return toRet;
 	}
+	
+	public void loadGenericSave(GameBoard board, String[] args, LivingEntity e) throws SlickException{
+		super.loadGenericSave(board, args, e);
+		e.loadStatuses(e, args[5].split(","));
+		e.statMaster = loadStatMaster(args[8].split(","));
+		e.setAllignment(Integer.parseInt(args[9]));
+		e.HP=Integer.parseInt(args[6]);
+		e.MP=Integer.parseInt(args[7]);
+		e.parentMod = args[10];
+		e.entityFile = args[11];
+		e.finishBaking();
+	}
+
 	
 	protected void loadStatuses(LivingEntity target, String[] statuses) throws SlickException{
 		for(int i=0; i<statuses.length; i++){

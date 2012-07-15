@@ -150,7 +150,6 @@ public class GameplayElement extends HudElement {
 		if (this.gb != null) {
 			lastMap = this.gb.getMapID();
 			try {
-				this.gb.removeEntity(player);
 				Save.updateSave(saveLocation, player, gb);
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -205,10 +204,7 @@ public class GameplayElement extends HudElement {
 	}
 
 	public void updateSave() throws IOException {
-		this.gb.removeEntity(player);
-		System.out.println(this.gb.getIngameEntities());
 		Save.updateSave(saveLocation, player, gb);
-		this.gb.placeEntity(player.getLocation(), player, player.getLayer());
 	}
 
 	/**
@@ -250,7 +246,7 @@ public class GameplayElement extends HudElement {
 		}
 
 		getBoard().updateSelctor(input, -cameraX, -cameraY);
-		getBoard().updateAllTiles(gc, delta);
+		getBoard().update(gc, delta);
 		updateActions(gc, delta);
 	}
 

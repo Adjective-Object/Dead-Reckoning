@@ -13,7 +13,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Entity.
  */
@@ -161,20 +160,6 @@ public abstract class Entity extends DeadReckoningComponent {
 	 */
 	public GameBoard getParent() {
 		return getLocation().getParent();
-	}
-
-	/**
-	 * moves this entity to another tile. use with extreme caution, because it
-	 * does not remove this entity from the tile it is currently on
-	 * 
-	 * if the idea is to move something from tile A to tile B, it would be
-	 * better to use Gameboard.moveEntity()
-	 * 
-	 * @param t
-	 *            the new location
-	 */
-	public void placeAt(Tile t, int layer) {
-		t.getParent().placeEntity(t, this, layer);
 	}
 
 	/**
@@ -392,8 +377,20 @@ public abstract class Entity extends DeadReckoningComponent {
 	 * @return the generic save
 	 */
 	protected String getGenericSave() {
-		return this.getClass().getCanonicalName() + ":" + this.getX() + ":"
-				+ this.getY() + ":" + this.getLayer();
+		if(this.getLocation()!=null){
+			return this.getClass().getCanonicalName() + ":" + this.getX() + ":"
+					+ this.getY() + ":" + this.getLayer();
+		}
+		return this.getClass().getCanonicalName() + ":null:null:" +this.getLayer();
+	}
+	
+	public void loadGenericSave(GameBoard board, String[] args, Entity e) throws SlickException{
+		if(!args[1].equals("null")){
+			e.setLocation(board.getTileAt(Integer.parseInt(args[1]), Integer.parseInt(args[2])), Integer.parseInt(args[3]));
+		}
+		else{
+			e.setLocation(null,Integer.parseInt(args[3]));
+		}
 	}
 
 	/**
@@ -451,7 +448,7 @@ public abstract class Entity extends DeadReckoningComponent {
 	}
 	
 	public String toString(){
-		return getClass().getSimpleName()+"@"+System.identityHashCode(this)+" ("+this.entityID+")";
+		return getClass().getSimpleName()+"@"+System.identityHashCode(this)+" ("+this.entityID+") "+this.getLocation();
 	}
 
 }

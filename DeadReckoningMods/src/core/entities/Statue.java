@@ -121,8 +121,10 @@ public class Statue extends StaticImageEntity {
 	@Override
 	public Entity makeFromString(GameBoard target, String[] attributes) {
 		Statue s = new Statue();
-		s.placeAt(
-				target.getTileAt(Integer.parseInt(attributes[1]),Integer.parseInt(attributes[2])),
+		s.setLocation(
+				target.getTileAt(
+						Integer.parseInt(attributes[1]),
+						Integer.parseInt(attributes[2])),
 				Integer.parseInt(attributes[3]));
 		return s;
 	}

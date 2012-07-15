@@ -3,11 +3,13 @@ package net.plaidypus.deadreckoning.entities;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.actions.Action;
+import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.items.Item;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -151,6 +153,11 @@ public abstract class InteractiveEntity extends Entity {
 
 	protected String getGenericSave(){
 		return super.getGenericSave()+":"+getInventoryAsString(this.inventory, this.inventorySize);
+	}
+	
+	public void loadGenericSave(GameBoard board, String[] args, InteractiveEntity e) throws SlickException{
+		super.loadGenericSave(board, args, e);
+		e.inventory.addAll(loadItems(args[4].split(",")));
 	}
 	
 	public static String getInventoryAsString(ArrayList<? extends Item> inv, int maxLen){
