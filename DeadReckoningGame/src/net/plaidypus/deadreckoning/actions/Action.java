@@ -2,6 +2,7 @@ package net.plaidypus.deadreckoning.actions;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.util.Log;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
@@ -69,8 +70,9 @@ public abstract class Action {
 	 * 
 	 * @param delta
 	 *            the delta
+	 * @throws SlickException 
 	 */
-	public void applyAction(int delta) {
+	public void applyAction(int delta) throws SlickException {
 		if (!completed) {
 			if(!logged){
 				if(this.target!=null){
@@ -78,7 +80,7 @@ public abstract class Action {
 							getSource()+"	to "+this.target+", containing "+
 							this.target.getEntity(Tile.LAYER_ACTIVE));
 				} else{
-					Log.info(this.getClass().getSimpleName()+" applied from "+getSource()+"	to nothing");
+					Log.info(this.getClass().getSimpleName()+" applied from "+getSource()+" to nothing");
 				}
 				logged=true;
 			}
@@ -126,6 +128,7 @@ public abstract class Action {
 	 * @param delta
 	 *            the miliseconds elapsed since the last game update
 	 * @return true, if successful
+	 * @throws SlickException 
 	 */
-	protected abstract boolean apply(int delta);
+	protected abstract boolean apply(int delta) throws SlickException;
 }

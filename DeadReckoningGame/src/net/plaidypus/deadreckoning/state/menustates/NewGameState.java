@@ -155,24 +155,14 @@ public class NewGameState extends HudLayersState {
 	}
 	
 	public void makeNewGame(StateBasedGame game, Profession p) throws SlickException{
-		try {
-			Save s = Save.makeNewSave(
-					"saves/SAVE " + (Save.enumerateSaves()) + "/",
-					text.getContent(), p);
-			s.loadGame(GameplayElement.class.cast(HudLayersState.class
-					.cast(DeadReckoningGame.instance
-							.getState(DeadReckoningGame.GAMEPLAYSTATE))
-					.getElement(0)), game.getContainer());
-			game.enterState(DeadReckoningGame.GAMEPLAYSTATE);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		}
+		Save s = Save.makeNewSave(
+				"saves/SAVE " + (Save.enumerateSaves()) + "/",
+				text.getContent(), p);
+		s.loadGame(GameplayElement.class.cast(HudLayersState.class
+				.cast(DeadReckoningGame.instance
+						.getState(DeadReckoningGame.GAMEPLAYSTATE))
+				.getElement(0)), game.getContainer());
+		game.enterState(DeadReckoningGame.GAMEPLAYSTATE);
 	}
 
 }

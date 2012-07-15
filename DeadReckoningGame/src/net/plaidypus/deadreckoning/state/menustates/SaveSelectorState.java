@@ -70,25 +70,9 @@ public class SaveSelectorState extends PrebakedHudLayersState {
 			TextButton currentPressed = buttonList.get(i);
 			if (currentPressed.isPressed()) {
 				if(i!=0){ //because index 0 is the new game button
-					try {
-						saves[i-1].loadGame(DeadReckoningGame.instance.getGameElement(),container);
-						DeadReckoningGame.instance.enterState(DeadReckoningGame.GAMEPLAYSTATE);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (SlickException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (InstantiationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					saves[i-1].loadGame(DeadReckoningGame.instance.getGameElement(),container);
+					DeadReckoningGame.instance.enterState(DeadReckoningGame.GAMEPLAYSTATE);
+
 				} else if (i==0) {
 					DeadReckoningGame.instance
 							.enterState(DeadReckoningGame.NEWGAMESTATE);

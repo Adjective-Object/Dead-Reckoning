@@ -1,7 +1,8 @@
 package net.plaidypus.deadreckoning.actions;
 
+import org.newdawn.slick.SlickException;
+
 import net.plaidypus.deadreckoning.board.GameBoard;
-import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.save.Save;
 
 // TODO: Auto-generated Javadoc
@@ -42,12 +43,11 @@ public class ChangeBoardAction extends Action {
 	 * @see net.plaidypus.deadreckoning.actions.Action#apply(int)
 	 */
 	@Override
-	protected boolean apply(int delta) {
-		GameBoard.getEntity(this.sourceID).getParent()
-				.getGame()
-				.setBoard(
-						Save.loadGame(GameBoard.getEntity(this.sourceID).getParent().getGame(), GameBoard.getEntity(this.sourceID)
-								.getParent().getSaveID(), targetFloor));
+	protected boolean apply(int delta) throws SlickException {
+		Save.loadGame(
+			GameBoard.getEntity(this.sourceID).getParent().getGame(),
+			GameBoard.getEntity(this.sourceID).getParent().getSaveID(),
+			targetFloor);
 		return true;
 	}
 

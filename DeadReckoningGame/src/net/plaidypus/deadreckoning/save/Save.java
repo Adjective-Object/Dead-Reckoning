@@ -103,11 +103,9 @@ public class Save {
 	 * @throws IllegalAccessException
 	 *             the illegal access exception
 	 */
-	public void loadGame(GameplayElement state, GameContainer c)
-			throws IOException, SlickException, ClassNotFoundException,
-			InstantiationException, IllegalAccessException {
-		BufferedReader r = new BufferedReader(new FileReader(saveLocation + "/"
-				+ currentMap));
+	public void loadGame(GameplayElement state, GameContainer c) throws SlickException {
+		try {
+			BufferedReader r = new BufferedReader(new FileReader(saveLocation + "/" + currentMap));
 		GameBoard g = loadBoard(state, saveLocation, currentMap, r);
 
 		BufferedReader playerReader = new BufferedReader(new FileReader(
@@ -119,7 +117,12 @@ public class Save {
 
 		loadEntities(g, r);
 		state.setBoard(g);
-
+		
+		} catch (FileNotFoundException e) {
+			throw new SlickException("fuck",e);
+		} catch (IOException e) {
+			throw new SlickException("fuck",e);
+		}
 	}
 
 	/**
@@ -136,18 +139,19 @@ public class Save {
 	 *            the target floor
 	 * @return the game board
 	 */
-	public static GameBoard loadGame(GameplayElement game, String saveLocation,
-			String targetFloor) {
-		try {
-			BufferedReader r = new BufferedReader(new FileReader(saveLocation
-					+ "/" + targetFloor));
+	public static void loadGame(GameplayElement game, String saveLocation,
+			String targetFloor) throws SlickException{
+		
+			try {
+				BufferedReader r;
+				r = new BufferedReader(new FileReader(saveLocation
+						+ "/" + targetFloor));
 			GameBoard b = loadBoard(game, saveLocation, targetFloor, r);
 			loadEntities(b, r);
-			return b;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+			game.setBoard(b);
+			} catch (FileNotFoundException e) {
+				throw new SlickException("fuck",e);
+			}
 	}
 
 	/**
@@ -174,43 +178,46 @@ public class Save {
 	 *             the class not found exception
 	 */
 	public static GameBoard loadBoard(GameplayElement g, String saveLocation,
-			String mapID, BufferedReader r) throws IOException, SlickException,
-			ClassNotFoundException {
-		GameBoard b = new GameBoard(g, saveLocation, mapID);
-		b.depth = r.read();
-		r.readLine();
-		b.width = r.read();
-		r.readLine();
-		b.height = r.read();
-		r.readLine();
-		b.biome = Biome.getBiome(r.readLine());
-		b.board = new Tile[b.width][b.height];
-
-		for (int y = 0; y < b.height; y++) {
-			for (int x = 0; x < b.width; x++) {
-				int q = r.read();
-				b.board[x][y] = new Tile(b, x, y, q);
-			}
+			String mapID, BufferedReader r) throws SlickException{
+		try{
+			GameBoard b = new GameBoard(g, saveLocation, mapID);
+			b.depth = r.read();
 			r.readLine();
-		}
-
-		for (int y = 0; y < b.height; y++) {
-			for (int x = 0; x < b.width; x++) {
-				int q = r.read();
-				b.board[x][y].blocking = (q == 1);
-			}
+			b.width = r.read();
 			r.readLine();
-		}
-
-		for (int y = 0; y < b.height; y++) {
-			for (int x = 0; x < b.width; x++) {
-				int q = r.read();
-				b.board[x][y].explored = (q == 1);
-			}
+			b.height = r.read();
 			r.readLine();
+			b.biome = Biome.getBiome(r.readLine());
+			b.board = new Tile[b.width][b.height];
+	
+			for (int y = 0; y < b.height; y++) {
+				for (int x = 0; x < b.width; x++) {
+					int q = r.read();
+					b.board[x][y] = new Tile(b, x, y, q);
+				}
+				r.readLine();
+			}
+	
+			for (int y = 0; y < b.height; y++) {
+				for (int x = 0; x < b.width; x++) {
+					int q = r.read();
+					b.board[x][y].blocking = (q == 1);
+				}
+				r.readLine();
+			}
+	
+			for (int y = 0; y < b.height; y++) {
+				for (int x = 0; x < b.width; x++) {
+					int q = r.read();
+					b.board[x][y].explored = (q == 1);
+				}
+				r.readLine();
+			}
+	
+			return b;
+		} catch (IOException e){
+			throw new SlickException("Fuck",e);
 		}
-
-		return b;
 	}
 
 	/**
@@ -238,21 +245,24 @@ public class Save {
 	 *             the illegal access exception
 	 */
 	public static void loadEntities(GameBoard target,
-			BufferedReader r) throws IOException, ClassNotFoundException,
-			InstantiationException, IllegalAccessException, SlickException{
-		String definition = r.readLine();
+			BufferedReader r) throws SlickException{
+		String definition;
+		try {
+			definition = r.readLine();
 		while (definition != null) {
 			String[] defInfo = definition.split(":");
-			try {
-				Class<? extends Entity> clas;
-				clas = ModLoader.loadClass(defInfo[0]).asSubclass(Entity.class);
-				Entity e = clas.newInstance().makeFromString(target, defInfo);
-				Log.debug("Saveloading entity<"+e+" "+e.getLocation()+">");
-				target.placeEntity(e.getLocation(),e,e.getLayer());
-			} catch (ClassCastException e) {
-				e.printStackTrace();
-			}
+			Class<? extends Entity> clas;
+			clas = ModLoader.loadClass(defInfo[0]).asSubclass(Entity.class);
+			Entity e = clas.newInstance().makeFromString(target, defInfo);
+			target.placeEntity(e.getLocation(),e,e.getLayer());
 			definition = r.readLine();
+		}
+		} catch (IOException e) {
+			throw new SlickException("unable to load files for save", e);
+		} catch (InstantiationException e) {
+			throw new SlickException("unable to Instanciate class", e);
+		} catch (IllegalAccessException e) {
+			throw new SlickException("Dafuq is you doing?", e);
 		}
 	}
 
@@ -381,46 +391,50 @@ public class Save {
 	 *             the slick exception
 	 */
 	public static Save makeNewSave(String fileLocation, String nameofSave,
-			Profession p) throws IOException, SlickException {
-		new File(fileLocation).mkdir();
-		File director = new File(fileLocation + "/saveInformation.txt");
-		BufferedWriter r = new BufferedWriter(new FileWriter(director));
-		r.write(nameofSave);
-		r.newLine();
-		r.write("floor0.map");
-		r.close();
-
-		DungeonMap map = new DungeonMap(16);
-
-		Tile spawnTile = null;
-
-		for (int i = 0; i < map.getDepth(); i++) {
-			File floorFile = new File(fileLocation + map.getFloorName(i));
-			floorFile.createNewFile();
-			r = new BufferedWriter(new FileWriter(floorFile));
-
-			GameBoard gameBoard = map.makeBoard(i);
-
-			if (i == 0) {
-				spawnTile = gameBoard.getValidSpawnTile();
-			}
-
-			Save.saveBoard(gameBoard, r);
-			Save.saveEntities(gameBoard, r);
+			Profession p) throws SlickException {
+		try{
+			new File(fileLocation).mkdir();
+			File director = new File(fileLocation + "/saveInformation.txt");
+			BufferedWriter r = new BufferedWriter(new FileWriter(director));
+			r.write(nameofSave);
+			r.newLine();
+			r.write("floor0.map");
 			r.close();
+	
+			DungeonMap map = new DungeonMap(16);
+	
+			Tile spawnTile = null;
+	
+			for (int i = 0; i < map.getDepth(); i++) {
+				File floorFile = new File(fileLocation + map.getFloorName(i));
+				floorFile.createNewFile();
+				r = new BufferedWriter(new FileWriter(floorFile));
+	
+				GameBoard gameBoard = map.makeBoard(i);
+	
+				if (i == 0) {
+					spawnTile = gameBoard.getValidSpawnTile();
+				}
+	
+				Save.saveBoard(gameBoard, r);
+				Save.saveEntities(gameBoard, r);
+				r.close();
+			}
+	
+			File playerFile = new File(fileLocation + "/player.txt");
+			playerFile.createNewFile();
+			BufferedWriter w = new BufferedWriter(new FileWriter(playerFile));
+			savePlayerProfession(w, p);
+			Player pl = new Player(p,null);
+			pl.setLocation(spawnTile, Tile.LAYER_ACTIVE);
+			savePlayerStatus(w, pl);
+			w.close();
+	
+			Save s = new Save(fileLocation);
+			return s;
+		} catch (IOException e){
+			throw new SlickException("unable to create save "+nameofSave,e);
 		}
-
-		File playerFile = new File(fileLocation + "/player.txt");
-		playerFile.createNewFile();
-		BufferedWriter w = new BufferedWriter(new FileWriter(playerFile));
-		savePlayerProfession(w, p);
-		Player pl = new Player(p,null);
-		pl.setLocation(spawnTile, Tile.LAYER_ACTIVE);
-		savePlayerStatus(w, pl);
-		w.close();
-
-		Save s = new Save(fileLocation);
-		return s;
 	}
 
 	public static void updateSave(String saveLocation, Player p,

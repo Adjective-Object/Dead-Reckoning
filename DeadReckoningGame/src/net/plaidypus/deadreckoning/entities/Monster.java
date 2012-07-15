@@ -90,7 +90,6 @@ public class Monster extends LivingEntity {
 				}
 			}
 		}
-
 		Tile dest = this.getParent().getTileAt(
 				Utilities.limitTo(this.getX() + Utilities.randInt(-1, 2), 0,
 						getParent().getWidth()),

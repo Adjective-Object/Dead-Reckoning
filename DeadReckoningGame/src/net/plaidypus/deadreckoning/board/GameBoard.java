@@ -168,7 +168,7 @@ public class GameBoard implements ILosBoard {
 			this.entityReferenceMap.put(index,e);
 			e.setID(index);
 		}
-		Log.info(e.toString()+"	spawned into GameBoard@"+System.identityHashCode(this));
+		Log.info(e.toString()+" spawned into "+this);
 	}
 	
 	public Integer iterateCounter(){
@@ -252,7 +252,7 @@ public class GameBoard implements ILosBoard {
 		entityReferenceMap.remove(e.getID());
 		ingameEntities.remove(e);
 		e.getLocation().disconnectEntity(e.getLayer());
-		Log.info(e+"	removed from GameBoard@"+System.identityHashCode(this));
+		Log.info(e+" removed from  "+this);
 	}
 
 	/**
@@ -885,7 +885,7 @@ public class GameBoard implements ILosBoard {
 			return this.entityReferenceMap.get(id);
 		}
 		else{
-			System.err.println("Entity of ID "+id+" does not exist!");
+			Log.warn("Entity of ID "+id+" does not exist, returning null");
 			return null;
 		}
 	}
@@ -898,4 +898,8 @@ public class GameBoard implements ILosBoard {
 		return ingameEntities;
 	}
 
+	public String toString(){
+		return "GameBoard "+this.getMapID();
+	}
+	
 }

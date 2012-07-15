@@ -20,6 +20,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.Log;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -105,7 +106,7 @@ public class GameplayElement extends HudElement {
 		this.width = gc.getWidth();
 		this.height = gc.getHeight();
 
-		System.out.println("Initializing GameplayState");
+		Log.debug("Initializing GameplayState");
 
 		input = gc.getInput();
 
@@ -119,7 +120,6 @@ public class GameplayElement extends HudElement {
 		gc.setVSync(true);
 
 		this.gc = gc;
-		System.out.println(gc);
 
 	}
 
@@ -156,7 +156,7 @@ public class GameplayElement extends HudElement {
 			}
 		}
 
-		System.out.println(lastMap + " -> " + b.getMapID());
+		System.out.println(lastMap + " -> " + b);
 
 		b.setGame(this);
 		b.renderDistX = this.getWidth() / DeadReckoningGame.tileSize + 2;
@@ -276,8 +276,9 @@ public class GameplayElement extends HudElement {
 	 *            the gc
 	 * @param delta
 	 *            the delta
+	 * @throws SlickException 
 	 */
-	private void updateActions(GameContainer gc, int delta) {
+	private void updateActions(GameContainer gc, int delta) throws SlickException {
 		if (actions.size() == 0) {// if the current entity is in the middle of
 									// being parsed..
 			while (!getBoard().getIngameEntities().get(this.currentEntity)
@@ -331,8 +332,9 @@ public class GameplayElement extends HudElement {
 	 * 
 	 * @param delta
 	 *            the delta
+	 * @throws SlickException 
 	 */
-	private void applyAllActions(int delta) {
+	private void applyAllActions(int delta) throws SlickException {
 		actions.get(currentAction).applyAction(delta);
 		if (actions.size() > 0 && actions.get(currentAction).completed) {
 			currentAction++;
