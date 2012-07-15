@@ -173,11 +173,11 @@ public class DeadReckoningGame extends StateBasedGame {
 	 */
 	public static void main(String[] args) throws SlickException, LWJGLException, FileNotFoundException {
 		//for saving things to Log
-		Log.setLogSystem(new FileSaveLogSystem("log.txt"));
+		Log.setLogSystem(new FileSaveLogSystem("log.rtf"));
 		// for options
 		OptionsHandler.bakeResolutions();
 		OptionsHandler.loadSettings();
-		//making thr actual game
+		//making the actual game
 		AppGameContainer app = new DeadReckoningContainer(new DeadReckoningGame());
 		app.setDisplayMode(OptionsHandler.getResolutionX(), OptionsHandler.getResolutionY(), OptionsHandler.fullScreen);
 		app.setVSync(OptionsHandler.verticalSynch);

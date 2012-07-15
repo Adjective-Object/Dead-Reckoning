@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Date;
 
 import org.newdawn.slick.util.LogSystem;
 
@@ -17,6 +16,14 @@ public class FileSaveLogSystem implements LogSystem {
 	public static PrintWriter fileWriter;
 	public static String fileName;
 	
+	String currentColor = "";
+	
+	static int 
+		COLOR_STD = 0,
+		COLOR_RED = 1,
+		COLOR_BLUE = 2,
+		COLOR_ORANGE = 3;
+	
 	public FileSaveLogSystem(String outDest){
 		try {
 			fileWriter = new PrintWriter( new FileWriter(new File(outDest)));
@@ -24,7 +31,14 @@ public class FileSaveLogSystem implements LogSystem {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
+		fileWriter.println("{\\rtf1\\ansi\\ansicpg1252\\cocoartf1038\\cocoasubrtf360");// header of RTF files
+		
+		fileWriter.print("{\\colortbl;"); 			//begin color table
+		fileWriter.print("\\red255\\green0\\blue0;");		//Color 1 - red
+		fileWriter.print("\\red0\\green0\\blue160;");		//Color 2 - blue
+		fileWriter.print("\\red255\\green150\\blue0;");		//Color 3 - orange
+		fileWriter.print("}");						//end color table
+		}
 	
 	/**
 	 * Log an error
@@ -43,10 +57,11 @@ public class FileSaveLogSystem implements LogSystem {
 	 * @param e The exception causing the error
 	 */
 	public void error(Throwable e) {
+		error(e.getMessage());
 		StringWriter s = new StringWriter();
 		PrintWriter r = new PrintWriter(s);
 		e.printStackTrace(r);
-		sendMessage(s.toString());
+		sendMessage(COLOR_RED,s.toString());
 	}
 
 	/**
@@ -55,7 +70,7 @@ public class FileSaveLogSystem implements LogSystem {
 	 * @param message The message describing the error
 	 */
 	public void error(String message) {
-		sendMessage(new Date()+" ERROR: " +message);
+		sendMessage(COLOR_RED,message);
 	}
 
 	/**
@@ -64,7 +79,7 @@ public class FileSaveLogSystem implements LogSystem {
 	 * @param message The message describing the warning
 	 */
 	public void warn(String message) {
-		sendMessage(new Date()+" WARN: " +message);
+		sendMessage(COLOR_ORANGE,message);
 	}
 
 	/**
@@ -73,7 +88,7 @@ public class FileSaveLogSystem implements LogSystem {
 	 * @param message The message describing the infomation
 	 */
 	public  void info(String message) {
-		sendMessage(new Date()+" INFO: " +message);
+		sendMessage(COLOR_STD,message);
 	}
 
 	/**
@@ -82,7 +97,7 @@ public class FileSaveLogSystem implements LogSystem {
 	 * @param message The message describing the debug
 	 */
 	public void debug(String message) {
-		sendMessage(new Date()+" DEBUG: " +message);
+		sendMessage(COLOR_BLUE,message);
 	}
 
 	/**
@@ -96,12 +111,15 @@ public class FileSaveLogSystem implements LogSystem {
 		error(e);
 	}
 	
-	private void sendMessage(String message){
-		out.println(message);
+	private void sendMessage(int colorCode,String message){
+		out.println(message);//TODO ANSI colors in console - not supported by eclipse, so...
+		fileWriter.print("\\cf"+colorCode+" ");
 		fileWriter.println(message);
+		fileWriter.println("\\");
 	}
 	
 	public static void closeWriter(){
+		fileWriter.println("}");
 		fileWriter.close();
 	}
 

@@ -75,7 +75,10 @@ public abstract class Action {
 			completed = apply(delta);
 			if(completed){
 				if(this.target!=null){
-					Log.info(this.getClass().getSimpleName()+" applied from entity "+this.sourceID+" ("+getSource()+") to "+this.target+" containing "+this.target.getEntity(Tile.LAYER_ACTIVE)+" over "+millisTaken+" milliseconds.");
+					Log.info(this.getClass().getSimpleName()+" applied from entity "+this.sourceID+
+							" ("+getSource()+") to "+this.target+" containing entity "
+							+this.target.getEntity(Tile.LAYER_ACTIVE).entityID+
+							" ("+this.target.getEntity(Tile.LAYER_ACTIVE)+") over "+millisTaken+" milliseconds.");
 				} else{
 					Log.info(this.getClass().getSimpleName()+" applied from entity "+this.sourceID+" ("+getSource()+") to nothing, over "+millisTaken+" milliseconds.");
 				}

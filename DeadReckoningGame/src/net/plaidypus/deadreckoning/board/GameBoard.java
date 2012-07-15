@@ -167,7 +167,7 @@ public class GameBoard implements ILosBoard {
 			this.entityReferenceMap.put(index,e);
 			e.setID(index);
 		}
-		Log.info("Entity "+e+" added to Game Board "+super.toString()+" with Entity ID "+e.getID());
+		Log.info("Entity "+e.getClass().getSimpleName()+"@"+System.identityHashCode(e)+" spawned on GameBoard@"+System.identityHashCode(this)+" with Entity ID "+e.getID());
 	}
 	
 	public Integer iterateCounter(){
@@ -251,7 +251,7 @@ public class GameBoard implements ILosBoard {
 		entityReferenceMap.remove(e.getID());
 		ingameEntities.remove(e.getID());
 		e.getLocation().disconnectEntity(e.getLayer());
-		Log.info("Entity "+e+" removed from Game Board "+super.toString());
+		Log.info("Entity "+e+" removed from Game Board@"+System.identityHashCode(this));
 	}
 
 	/**

@@ -146,7 +146,7 @@ public class ModLoader {
 			// handles special cases of biomes
 			for (int i = 0; i < classes.size(); i++) {
 				for (int c = 0; c < classes.get(i).size(); c++) {
-					Log.info("Initializing "
+					Log.debug("Initializing "
 							+ classes.get(i).get(c).getCanonicalName());
 					@SuppressWarnings("unchecked")
 					DeadReckoningComponent e = (DeadReckoningComponent) classes

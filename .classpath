@@ -12,5 +12,6 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="slick/lib/lwjgl.jar"/>
 	<classpathentry exported="true" kind="lib" path="rlforj.0.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="jansi-1.9.jar"/>
 	<classpathentry kind="output" path="DeadReckoningMods/bin"/>
 </classpath>
