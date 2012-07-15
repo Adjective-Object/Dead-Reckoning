@@ -449,5 +449,9 @@ public abstract class Entity extends DeadReckoningComponent {
 	public void setStealthed(boolean stealthed) {
 		this.stealthed = stealthed;
 	}
+	
+	public String toString(){
+		return getClass().getSimpleName()+"@"+System.identityHashCode(this)+" ("+this.entityID+")";
+	}
 
 }

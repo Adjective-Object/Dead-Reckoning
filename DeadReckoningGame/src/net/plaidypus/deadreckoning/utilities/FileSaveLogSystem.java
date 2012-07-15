@@ -32,12 +32,15 @@ public class FileSaveLogSystem implements LogSystem {
 			e.printStackTrace();
 		}
 		fileWriter.println("{\\rtf1\\ansi\\ansicpg1252\\cocoartf1038\\cocoasubrtf360");// header of RTF files
+		fileWriter.println("{\\fonttbl\\f0\\fnil\\fcharset0 AndaleMono;}");
 		
 		fileWriter.print("{\\colortbl;"); 			//begin color table
 		fileWriter.print("\\red255\\green0\\blue0;");		//Color 1 - red
 		fileWriter.print("\\red0\\green0\\blue160;");		//Color 2 - blue
 		fileWriter.print("\\red255\\green150\\blue0;");		//Color 3 - orange
-		fileWriter.print("}");						//end color table
+		fileWriter.println("}");						//end color table
+		
+		fileWriter.println("\\f0");
 		}
 	
 	/**

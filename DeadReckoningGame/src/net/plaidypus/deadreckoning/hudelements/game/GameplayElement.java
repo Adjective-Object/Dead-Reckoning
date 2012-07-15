@@ -172,11 +172,8 @@ public class GameplayElement extends HudElement {
 				for (int y = 0; y < b.getHeight(); y++) {
 					if (!b.getTileAt(x, y).isOpen(Tile.LAYER_PASSIVE_MAP)) {
 						try {
-							System.out.println(b.getTileAt(x, y).getEntity(
-									Tile.LAYER_PASSIVE_MAP));
 							LandingPad pad = LandingPad.class.cast(b.getTileAt(
 									x, y).getEntity(Tile.LAYER_PASSIVE_MAP));
-							System.out.println("HNNG "+pad);
 							if (pad.fromFloor.equals(lastMap)) {
 								target = this.gb.getTileAt(x, y);
 							}

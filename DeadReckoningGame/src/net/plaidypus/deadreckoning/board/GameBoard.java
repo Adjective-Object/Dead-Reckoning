@@ -152,7 +152,8 @@ public class GameBoard implements ILosBoard {
 	}
 
 	/**
-	 * potential for bugs later if the same entity is removed and replaced on the board. may be assigned multiple EntityIDs.
+	 * potential for bugs later if the same entity is removed and replaced on the board.
+	 * (it may be assigned multiple EntityIDs, not THAT HUGE of a problem)
 	 * @return
 	 */
 	public void addEntity(Entity e, int index) {
@@ -167,7 +168,7 @@ public class GameBoard implements ILosBoard {
 			this.entityReferenceMap.put(index,e);
 			e.setID(index);
 		}
-		Log.info("Entity "+e.getClass().getSimpleName()+"@"+System.identityHashCode(e)+" spawned on GameBoard@"+System.identityHashCode(this)+" with Entity ID "+e.getID());
+		Log.info(e.toString()+"	spawned into GameBoard@"+System.identityHashCode(this));
 	}
 	
 	public Integer iterateCounter(){
@@ -249,9 +250,9 @@ public class GameBoard implements ILosBoard {
 	 */
 	public void removeEntity(Entity e) {
 		entityReferenceMap.remove(e.getID());
-		ingameEntities.remove(e.getID());
+		ingameEntities.remove(e);
 		e.getLocation().disconnectEntity(e.getLayer());
-		Log.info("Entity "+e+" removed from Game Board@"+System.identityHashCode(this));
+		Log.info(e+"	removed from GameBoard@"+System.identityHashCode(this));
 	}
 
 	/**
@@ -412,18 +413,11 @@ public class GameBoard implements ILosBoard {
 	 */
 	public void updateAllTiles(GameContainer gc, int delta) {
 
-		for (int y = 0; y < this.height; y++) {
-			for (int x = 0; x < this.width; x++) {
-				for (int i = 0; i < Tile.numLayers; i++) {
-					if (!board[x][y].isOpen(i)) {
-						board[x][y].getEntity(i).update(gc, delta);
-						Entity e = board[x][y].getEntity(i);
-						if (e.toKill) {
-							this.removeEntity(e);
-							e.onDeath();
-						}
-					}
-				}
+		for (int i = 0; i < this.ingameEntities.size(); i++) {
+			ingameEntities.get(i).update(gc, delta);
+			if(ingameEntities.get(i).toKill){
+				ingameEntities.get(i).onDeath();
+				this.removeEntity(ingameEntities.get(i));
 			}
 		}
 

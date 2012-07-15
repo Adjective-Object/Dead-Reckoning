@@ -133,20 +133,11 @@ public class Monster extends LivingEntity {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see net.plaidypus.deadreckoning.entities.Entity#saveToString()
+	 * @see net.plaidypus.deadreckoning.entities.Entity#saveingameEntities.get(i)tring()
 	 */
 	@Override
 	public String saveToString() {
 		return this.getGenericSave();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString() {
-		return "Monster[" + this.getX() + "," + this.getY() + "]";
 	}
 
 	/*

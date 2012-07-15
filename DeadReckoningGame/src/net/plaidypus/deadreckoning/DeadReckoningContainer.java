@@ -46,6 +46,7 @@ public class DeadReckoningContainer extends AppGameContainer{
 		
 		if (Display.isCloseRequested()) {
 			if (game.closeRequested()) {
+				exit();
 				running = false;
 			}
 		}
@@ -133,6 +134,13 @@ public class DeadReckoningContainer extends AppGameContainer{
 		if (targetFPS != -1) {
 			Display.sync(targetFPS);
 		}
+	}
+
+	@Override
+	public void exit(){
+		Log.info("Container.exit called, shutting down");
+		FileSaveLogSystem.closeWriter();
+		super.exit();
 	}
 	
 

@@ -25,7 +25,7 @@ public abstract class Action {
 	public Tile target;
 
 	/** Indicates if the action has been completed (set to true when done)*/
-	public boolean completed;
+	public boolean completed, logged;
 	
 	/** Indicates if carrying out this action should advance the turn (no for invenory management, etc.)*/
 	public boolean takesTurn = true;
@@ -72,16 +72,18 @@ public abstract class Action {
 	 */
 	public void applyAction(int delta) {
 		if (!completed) {
+			if(!logged){
+				if(this.target!=null){
+					Log.info(this.getClass().getSimpleName()+" applied from "+
+							getSource()+"	to "+this.target+", containing "+
+							this.target.getEntity(Tile.LAYER_ACTIVE));
+				} else{
+					Log.info(this.getClass().getSimpleName()+" applied from "+getSource()+"	to nothing");
+				}
+				logged=true;
+			}
 			completed = apply(delta);
 			if(completed){
-				if(this.target!=null){
-					Log.info(this.getClass().getSimpleName()+" applied from entity "+this.sourceID+
-							" ("+getSource()+") to "+this.target+" containing entity "
-							+this.target.getEntity(Tile.LAYER_ACTIVE).entityID+
-							" ("+this.target.getEntity(Tile.LAYER_ACTIVE)+") over "+millisTaken+" milliseconds.");
-				} else{
-					Log.info(this.getClass().getSimpleName()+" applied from entity "+this.sourceID+" ("+getSource()+") to nothing, over "+millisTaken+" milliseconds.");
-				}
 				LivingEntity e = (LivingEntity) GameBoard.getEntity(this.sourceID);
 				ArrayList<Status> stats = e.getConditions();
 				for(int i=0; i<stats.size(); i++){

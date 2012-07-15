@@ -22,6 +22,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.util.Log;
 
 // TODO: Auto-generated Javadoc
 /*
@@ -385,7 +386,7 @@ public class Player extends LivingEntity {
 	 */
 	@Override
 	public String saveToString() {
-		System.err.println("PLAYER.SAVETOSTRING() METHOD NOT MEANT TO BE CALLED");
+		Log.error("PLAYER.SAVETOSTRING() METHOD NOT MEANT TO BE CALLED");
 		return null;
 	}
 
@@ -420,15 +421,6 @@ public class Player extends LivingEntity {
 	public Action onInteract(Entity e) {
 		// TODO this should never be called
 		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString() {
-		return "Player[" + this.getX() + "," + this.getY() + "]";
 	}
 
 	public ArrayList<Equip> getEquips() {

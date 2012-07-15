@@ -45,6 +45,8 @@ public class ModLoader {
 	 */
 	public static ArrayList<File> resolveMods(boolean vocal) throws SlickException {
 		
+		Log.debug("Resolving mods.");
+		
 		HiddenFileFilter filter = new HiddenFileFilter();
 		File[] mods = new File("modpacks/").listFiles(filter);
 		if(mods.length == 0)
@@ -83,9 +85,27 @@ public class ModLoader {
 			throw new SlickException ("IOException. You're probably missing requirements.txt.",e);
 		}
 
+		//logging
 		ArrayList<File> returnMods = new ArrayList<File>(uncountedMods.size());
-
-		returnMods.addAll(uncountedMods.values());
+		
+		String dbg="";
+		for(int i=0; i<returnMods.size(); i++){
+			dbg += " "+returnMods.get(i).getName();
+		}
+		if(!dbg.equals("")){
+			Log.debug("Resolved to load mods"+dbg);
+		}
+		
+		String warn="";
+		Iterator<File> i = uncountedMods.values().iterator();
+		while(i.hasNext()){
+			warn += " "+i.next().getName();
+		}
+		if(!warn.equals("")){
+			Log.warn("Could not resolve dependencies for "+warn);
+		}
+		
+		returnMods.addAll(uncountedMods.values());//TODO actual mod resolution instead of failing and dumping
 
 		return returnMods;
 	}
@@ -196,7 +216,9 @@ public class ModLoader {
 			if (l != null) {
 				return l.loadClass(line).asSubclass(DeadReckoningComponent.class);
 			} else {
-				Log.error("the appropriate loader is not present. attempting to use System class loader.");
+				if(!line.startsWith("net.plaidypus.deadreckoning")){
+					Log.warn("the special modLoader for "+line+" is not present. attempting to use System class loader.");
+				}
 				return ClassLoader.getSystemClassLoader().loadClass(line).asSubclass(DeadReckoningComponent.class);
 			}
 		} catch (ClassNotFoundException e) {

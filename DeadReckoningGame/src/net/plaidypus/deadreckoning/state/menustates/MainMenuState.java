@@ -45,7 +45,6 @@ public class MainMenuState extends PrebakedHudLayersState {
 	public MainMenuState(int stateID, ArrayList<HudElement> background)
 			throws SlickException {
 		super(stateID, (ArrayList<HudElement>) background.clone());
-		int x = background.size() + 1;
 	}
 
 	/**
