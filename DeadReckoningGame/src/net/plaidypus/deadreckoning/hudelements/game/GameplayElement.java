@@ -160,13 +160,11 @@ public class GameplayElement extends HudElement {
 		b.renderDistY = this.getHeight() / DeadReckoningGame.tileSize + 2;
 
 		this.gb = b;
-
+		
 		cameraDestX = player.getAbsoluteX() - gc.getWidth() / 2
 				+ DeadReckoningGame.tileSize / 2;
 		cameraDestY = player.getAbsoluteY() - gc.getHeight() / 2
 				+ DeadReckoningGame.tileSize / 2;
-		cameraX = cameraDestX;
-		cameraY = cameraDestY;
 
 		timeOn = 0;
 		actions.clear();

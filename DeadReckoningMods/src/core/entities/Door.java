@@ -20,7 +20,7 @@ import org.newdawn.slick.SlickException;
 public class Door extends Entity {
 
 	/** The open. */
-	boolean open;
+	boolean open, ticked;
 
 	/** The close img. */
 	static Image openImg, closeImg;
@@ -127,6 +127,7 @@ public class Door extends Entity {
 	 */
 	@Override
 	public ArrayList<Action> advanceTurn() {
+		ticked=false;
 		return null;
 	}
 
@@ -178,14 +179,17 @@ public class Door extends Entity {
 	 */
 	@Override
 	public Action onInteract(Entity e) {
-		this.open = !open;
-		Tile t = this.getLocation();
-		if (open && t.isOpen(Tile.LAYER_PASSIVE_MAP)) {
-			t.getParent().removeEntity(this);
-			t.getParent().insertEntity(this.getID(),t, this, Tile.LAYER_PASSIVE_MAP);
-		} else if (t.isOpen(Tile.LAYER_ACTIVE)){
-			t.getParent().removeEntity(this);
-			t.getParent().insertEntity(this.getID(),t, this, Tile.LAYER_ACTIVE);
+		if(!ticked){
+			this.open = !open;
+			Tile t = this.getLocation();
+			if (open && t.isOpen(Tile.LAYER_PASSIVE_MAP)) {
+				t.getParent().removeEntity(this);
+				t.getParent().insertEntity(this.getID(),t, this, Tile.LAYER_PASSIVE_MAP);
+			} else if (t.isOpen(Tile.LAYER_ACTIVE)){
+				t.getParent().removeEntity(this);
+				t.getParent().insertEntity(this.getID(),t, this, Tile.LAYER_ACTIVE);
+			}
+			ticked=true;
 		}
 		return null;
 	}

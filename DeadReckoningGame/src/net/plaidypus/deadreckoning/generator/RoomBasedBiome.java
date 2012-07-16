@@ -85,6 +85,7 @@ public abstract class RoomBasedBiome extends Biome {
 	 * @see net.plaidypus.deadreckoning.generator.Biome#makeBoard(int,
 	 * java.util.ArrayList)
 	 */
+	@Override
 	public GameBoard makeBoard(int depth, ArrayList<Stair> floorLinks) throws SlickException{
 		
 		ArrayList<Room> rooms = makeRooms();

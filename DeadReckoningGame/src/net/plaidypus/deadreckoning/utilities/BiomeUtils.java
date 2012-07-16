@@ -1,6 +1,9 @@
 package net.plaidypus.deadreckoning.utilities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+
 
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
@@ -84,6 +87,28 @@ public class BiomeUtils {
 	
 	public static ArrayList<Tile> getHalfSteppedPath(Tile tileA, Tile tileB, GameBoard target){
 		return getHalfSteppedPath(tileA.getX(), tileA.getY(), tileB.getX(), tileB.getY(), target);
+	}
+	
+	
+	
+	
+	public static void exchangeCompatableTiles(GameBoard b, HashMap<Integer, int[]> tileKey){
+		Iterator<Integer> startVals = tileKey.keySet().iterator();
+		
+		while(startVals.hasNext()){
+			int tileVal = startVals.next();
+			for(int x=0; x<b.getWidth(); x++){
+				for(int y=0; y<b.getHeight(); y++){
+					Tile t = b.getTileAt(x,y);
+					if(t.getTileFace()==tileVal){
+						int[] till = tileKey.get(tileVal);
+						if(Utilities.randFloat()>=1F/(1+till.length)){
+							t.setTileFace(till[Utilities.randInt(0,till.length)]);
+						}
+					}
+				}
+			}
+		}
 	}
 	
 }

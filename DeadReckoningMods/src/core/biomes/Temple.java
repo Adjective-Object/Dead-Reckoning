@@ -21,8 +21,6 @@ import org.newdawn.slick.SpriteSheet;
 import core.entities.Door;
 import core.entities.Torch;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class Hemple.
  */

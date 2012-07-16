@@ -41,10 +41,9 @@ public class Interact extends Action {
 	protected boolean apply(int delta) {
 		for (int i = Tile.numLayers - 1; i >= 0; i--) {
 			if (!target.isOpen(i)) {
-				Action a = target.getEntity(i).onInteract(GameBoard.getEntity(this.sourceID));
-				if(a!=null){
-					GameBoard.getEntity(this.sourceID).getParent().getGame().addAction(a);
-				}
+					GameBoard.getEntity(this.sourceID).getParent().getGame().addAction(
+							target.getEntity(i).onInteract(GameBoard.getEntity(this.sourceID))
+							);
 			}
 		}
 		return true;
