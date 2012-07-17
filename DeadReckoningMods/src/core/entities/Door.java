@@ -70,6 +70,7 @@ public class Door extends Entity {
 	 */
 	@Override
 	public void updateBoardEffects(GameContainer gc, int delta) {
+		ticked=false;
 	}
 
 	/*
@@ -127,7 +128,6 @@ public class Door extends Entity {
 	 */
 	@Override
 	public ArrayList<Action> advanceTurn() {
-		ticked=false;
 		return null;
 	}
 
