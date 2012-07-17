@@ -17,6 +17,7 @@ import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
+import net.plaidypus.deadreckoning.entities.LandingPad;
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.generator.Biome;
 import net.plaidypus.deadreckoning.generator.DungeonMap;
@@ -43,7 +44,7 @@ public class Save {
 	/** The name of the save. */
 	String name;
 
-	/** The current map, I.E. the level where the player last left off. */
+	/** The current setPlayerPosition, I.E. the level where the player last left off. */
 	String currentMap;
 
 	/**
@@ -88,7 +89,9 @@ public class Save {
 	 * Loads the game. self explanatory. loads player from player file loads
 	 * board, entities from current map file (loadBoard and LoadEntities are
 	 * passed the same BufferedReader, because the required data is stored on
-	 * different lines of the same file)
+	 * different lines of the same file)'
+	 * 
+	 * for initial startup
 	 * 
 	 * @param state
 	 *            the GameplayElement into which the game will be loaded
@@ -112,6 +115,7 @@ public class Save {
 				saveLocation + "/player.txt"));
 		Player play = loadPlayerStatus(playerReader, c, g,
 				loadPlayerProfession(playerReader));
+		setPlayerPosition(play, g, state.lastMap);
 		state.setPlayer(play);
 		state.saveLocation = this.saveLocation;
 
@@ -129,7 +133,9 @@ public class Save {
 	 * Load game.
 	 * 
 	 * static, meant to provide an easy way to get a GameBoard object without
-	 * needing to deal with instanciation of saves Untested and unimplemented
+	 * needing to deal with instanciation of saves.
+	 * 
+	 * requires that the player already be placed on the GameplayElement's GameBoard
 	 * 
 	 * @param game
 	 *            the GameplayElement into which the game will be loaded
@@ -139,19 +145,48 @@ public class Save {
 	 *            the target floor
 	 * @return the game board
 	 */
-	public static void loadGame(GameplayElement game, String saveLocation,
-			String targetFloor) throws SlickException{
-		
-			try {
-				BufferedReader r;
-				r = new BufferedReader(new FileReader(saveLocation
-						+ "/" + targetFloor));
+	public static void enterNewMap(GameplayElement game, String saveLocation,
+		String targetFloor) throws SlickException{
+		try {
+			BufferedReader r;
+			r = new BufferedReader(new FileReader(saveLocation
+					+ "/" + targetFloor));
+			
 			GameBoard b = loadBoard(game, saveLocation, targetFloor, r);
-			loadEntities(b, r);
 			game.setBoard(b);
-			} catch (FileNotFoundException e) {
-				throw new SlickException("fuck",e);
+			loadEntities(b, r);
+			setPlayerPosition(game.player, b, game.lastMap);
+			
+		} catch (FileNotFoundException e) {
+			throw new SlickException("fuck",e);
+		}
+	}
+
+	private static void setPlayerPosition(Player player, GameBoard b, String lastMap) {
+		//find the landing pad if it's coming from the old map. Otherwise, use the player's coords
+		if (!lastMap.equals("")) {
+			Tile target = null;
+			for (int x = 0; x < b.getWidth(); x++) {
+				for (int y = 0; y < b.getHeight(); y++) {
+					if (!b.getTileAt(x, y).isOpen(Tile.LAYER_PASSIVE_MAP) ){
+						if( LandingPad.class.isAssignableFrom(
+								b.getTileAt(x, y).
+								getEntity(Tile.LAYER_PASSIVE_MAP).getClass()
+								)){
+							LandingPad pad = LandingPad.class.cast(b.getTileAt(x, y)
+									.getEntity(Tile.LAYER_PASSIVE_MAP));
+							if (pad.fromFloor.equals(lastMap)) {
+								target = b.getTileAt(x, y);
+								break;
+							}
+						}
+					}
+				}
 			}
+			b.insertEntity(0,target, player, Tile.LAYER_ACTIVE);
+		} else {
+			b.insertEntity(0,b.getTileAt(player.getX(), player.getY()), player, Tile.LAYER_ACTIVE);
+		}
 	}
 
 	/**
@@ -522,7 +557,7 @@ public class Save {
 
 		Player player = new Player(p, c.getInput());
 		
-		b.placeEntity(b.getTileAt(tileX, tileY), player, Tile.LAYER_ACTIVE);
+		player.setLocation(b.getTileAt(tileX, tileY), Tile.LAYER_ACTIVE);
 		player.EXP = currentEXP;
 		player.HP=currentHP;
 		player.MP=currentMP;

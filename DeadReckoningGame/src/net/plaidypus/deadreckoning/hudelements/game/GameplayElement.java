@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
-import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
-import net.plaidypus.deadreckoning.entities.LandingPad;
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.grideffects.DamageEffect;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
@@ -137,7 +135,6 @@ public class GameplayElement extends HudElement {
 	public void resetBoard(){
 		this.gb=null;
 		this.lastMap="";
-		this.player=null;
 	}
 	
 	/**
@@ -163,30 +160,6 @@ public class GameplayElement extends HudElement {
 		b.renderDistY = this.getHeight() / DeadReckoningGame.tileSize + 2;
 
 		this.gb = b;
-
-		//find the landing pad if it's coming from the old map. Otherwise, use the player's coords
-		Tile target = null;
-		if (!lastMap.equals("")) {
-			for (int x = 0; x < b.getWidth(); x++) {
-				for (int y = 0; y < b.getHeight(); y++) {
-					if (!b.getTileAt(x, y).isOpen(Tile.LAYER_PASSIVE_MAP)) {
-						try {
-							LandingPad pad = LandingPad.class.cast(b.getTileAt(
-									x, y).getEntity(Tile.LAYER_PASSIVE_MAP));
-							if (pad.fromFloor.equals(lastMap)) {
-								target = this.gb.getTileAt(x, y);
-							}
-						} catch (ClassCastException e) {
-						}
-					}
-				}
-			}
-		} else {
-			target = b.getTileAt(player.getX(), player.getY());
-		}
-
-		System.out.println(gb+"  "+player.getLocation());
-		gb.insertEntity(0, target, player, player.getLayer());
 
 		cameraDestX = player.getAbsoluteX() - gc.getWidth() / 2
 				+ DeadReckoningGame.tileSize / 2;

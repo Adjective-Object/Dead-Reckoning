@@ -139,7 +139,7 @@ public class DeadReckoningContainer extends AppGameContainer{
 
 	@Override
 	public void exit(){
-		Log.info("Container.exit called, shutting down");
+		Log.info("Container.exit() called, shutting down");
 		FileSaveLogSystem.closeWriter();
 		super.exit();
 	}

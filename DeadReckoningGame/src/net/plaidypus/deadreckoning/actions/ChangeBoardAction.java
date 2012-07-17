@@ -44,7 +44,7 @@ public class ChangeBoardAction extends Action {
 	 */
 	@Override
 	protected boolean apply(int delta) throws SlickException {
-		Save.loadGame(
+		Save.enterNewMap(
 			GameBoard.getEntity(this.sourceID).getParent().getGame(),
 			GameBoard.getEntity(this.sourceID).getParent().getSaveID(),
 			targetFloor);

@@ -157,23 +157,31 @@ public class GameBoard implements ILosBoard {
 	 * @return
 	 */
 	public void addEntity(Entity e, int index) {
-		if(index==-1){//if it is not already given an ID on the board
-			this.ingameEntities.add(e);
-			this.entityReferenceMap.put(entityCounter,e);
-			e.setID(entityCounter);
-			this.entityCounter++;
+		if(!ingameEntities.contains(e)){
+			if(index==-1){//if it doesn't matter where it goes
+				this.ingameEntities.add(e);
+				this.entityReferenceMap.put(entityCounter,e);
+				e.setID(entityCounter);
+				this.entityCounter++;
+			}
+			else{
+				if(entityReferenceMap.keySet().contains(index)){//if something else is there
+					this.ingameEntities.remove(entityReferenceMap.get(index));
+					addEntity(entityReferenceMap.get(index), -1);
+					entityReferenceMap.remove(index);
+				}
+				this.ingameEntities.add(e);
+				this.entityReferenceMap.put(index,e);
+				e.setID(index);
+				if(this.entityCounter<=index){
+					this.entityCounter=index+1;
+				}
+			}
+			Log.info(e.toString()+" spawned into "+this+" with entity ID "+index);
 		}
 		else{
-			this.ingameEntities.add(e);
-			this.entityReferenceMap.put(index,e);
-			e.setID(index);
+			Log.warn(e+" is already on this Game Board!");
 		}
-		Log.info(e.toString()+" spawned into "+this);
-	}
-	
-	public Integer iterateCounter(){
-		this.entityCounter++;
-		return this.entityCounter--;
 	}
 
 	/**
@@ -191,8 +199,8 @@ public class GameBoard implements ILosBoard {
 	 *            the layer
 	 */
 	public void insertEntity(int index, int x, int y, Entity e, int layer) {//TODO this is bugged because no actual insertion ()
-		this.addEntity(e,index);
 		board[x][y].setEntity(e, layer);
+		this.addEntity(e,index);
 	}
 
 	/**
@@ -412,7 +420,6 @@ public class GameBoard implements ILosBoard {
 	 *            the delta
 	 */
 	public void update(GameContainer gc, int delta) {
-
 		for (int i = 0; i < this.ingameEntities.size(); i++) {
 			ingameEntities.get(i).update(gc, delta);
 			if(ingameEntities.get(i).toKill){

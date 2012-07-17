@@ -187,6 +187,12 @@ public class DeadReckoningGame extends StateBasedGame {
 
 	}
 
+	@Override
+	public void enterState(int id){
+		super.enterState(id);
+		Log.info("Entering State "+id+", "+getState(id).getClass().getSimpleName()+"@"+System.identityHashCode(getState(id)));
+	}
+	
 	/**
 	 * Gets a state stored at a certain index, cast to the HudState type Useful
 	 * because the BasicGameState does not specify that the contents must extend
@@ -197,8 +203,9 @@ public class DeadReckoningGame extends StateBasedGame {
 	 *            one of the gamestate constants defined in DeadReckoningGame
 	 * @return the hud state
 	 */
-	public HudLayersState getHudState(int id) {
-		return (HudLayersState) (getState(id));
+	@Override
+	public HudLayersState getState(int id) {
+		return (HudLayersState) (super.getState(id));
 	}
 
 	/**
