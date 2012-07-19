@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -23,8 +22,6 @@ import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.Log;
 
 import net.plaidypus.deadreckoning.DeadReckoningComponent;
-import net.plaidypus.deadreckoning.exceptions.ErrorType;
-import net.plaidypus.deadreckoning.exceptions.ModLoadException;
 import net.plaidypus.deadreckoning.filters.HiddenFileFilter;
 import net.plaidypus.deadreckoning.generator.Biome;
 import net.plaidypus.deadreckoning.statmaster.Profession;
@@ -123,6 +120,7 @@ public class ModLoader {
 	 * @throws SecurityException
 	 * @throws IllegalArgumentException
 	 */
+	@SuppressWarnings("rawtypes")
 	public static void loadModpack(File f) throws SlickException {
 		String modname = f.getName().replace(".jar", "");
 
@@ -135,7 +133,6 @@ public class ModLoader {
 			JarFile jarFile = new JarFile(f);
 			Enumeration<JarEntry> contents = jarFile.entries();
 
-			@SuppressWarnings("rawtypes")
 			ArrayList<ArrayList<Class>> classes = new ArrayList<ArrayList<Class>>(0);
 
 			int numProfessions = 0;

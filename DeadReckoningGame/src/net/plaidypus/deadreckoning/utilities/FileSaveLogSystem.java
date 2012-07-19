@@ -16,6 +16,8 @@ public class FileSaveLogSystem implements LogSystem {
 	public static PrintWriter fileWriter;
 	public static String fileName;
 	
+	public static boolean printLog;
+	
 	String currentColor = "";
 	
 	static int 
@@ -115,7 +117,9 @@ public class FileSaveLogSystem implements LogSystem {
 	}
 	
 	private void sendMessage(int colorCode,String message){
-		out.println(message);//TODO ANSI colors in console - not supported by eclipse, so...
+		if(printLog){
+			out.println(message);//TODO ANSI colors in console - not supported by eclipse, so...
+		}
 		fileWriter.print("\\cf"+colorCode+" ");
 		fileWriter.println(message);
 		fileWriter.println("\\");

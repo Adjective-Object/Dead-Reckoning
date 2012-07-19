@@ -5,16 +5,10 @@ package net.plaidypus.deadreckoning;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.entities.Stair;
-import net.plaidypus.deadreckoning.exceptions.ModLoadException;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
 import net.plaidypus.deadreckoning.hudelements.game.MiniMap;
@@ -22,7 +16,6 @@ import net.plaidypus.deadreckoning.hudelements.game.PlayerHudElement;
 import net.plaidypus.deadreckoning.hudelements.game.SkillMonitorElement;
 import net.plaidypus.deadreckoning.hudelements.game.StatusTrackerElement;
 import net.plaidypus.deadreckoning.hudelements.game.substates.BigMap;
-import net.plaidypus.deadreckoning.hudelements.game.substates.ItemGridElement;
 import net.plaidypus.deadreckoning.hudelements.game.substates.ReturnToGameElement;
 import net.plaidypus.deadreckoning.hudelements.game.substates.VicariousRenderer;
 import net.plaidypus.deadreckoning.hudelements.menuItems.FairyLights;
@@ -217,7 +210,6 @@ public class DeadReckoningGame extends StateBasedGame {
 	 *            takes place in
 	 * @see org.newdawn.slick.state.StateBasedGame#initStatesList(org.newdawn.slick.GameContainer)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
 		
@@ -321,6 +313,7 @@ public class DeadReckoningGame extends StateBasedGame {
 		return menuBackground;
 	}
 
+	@SuppressWarnings("unchecked")
 	private static void defineFonts() throws SlickException {
 		menuFont = new UnicodeFont("/res/visitor.ttf", 20, true, false);
 		menuFont.addNeheGlyphs();

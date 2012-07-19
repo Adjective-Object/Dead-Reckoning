@@ -24,7 +24,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class ClassCreationState extends PrebakedHudLayersState{
 
-	static final int outDistance = 150;
 	int currentProfession = 0;
 	
 	StillImageElement bigImage;
@@ -54,8 +53,8 @@ public class ClassCreationState extends PrebakedHudLayersState{
 		if(rightButton.isPressed() || leftButton.isPressed()){
 			this.updateToProfession(Profession.getProfession(this.currentProfession));
 		}
-		this.bigImage.xoff+=(outDistance-this.bigImage.xoff)*0.1;
-		if(this.bigImage.xoff<this.outDistance){
+		this.bigImage.xoff+=(container.getWidth()/2-this.bigImage.getWidth()-this.bigImage.xoff)*0.1;
+		if(this.bigImage.xoff<container.getWidth()/2-this.bigImage.getWidth()){
 			this.bigImage.xoff+=1;
 		}
 		

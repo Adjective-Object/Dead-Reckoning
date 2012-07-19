@@ -111,7 +111,11 @@ public class WaterTemple extends RoomBasedBiome {
 			}
 		}
 		
-		target.placeEntity(room.getCenter(target),new Torch(5), Tile.LAYER_PASSIVE_MAP);
+		target.placeEntity(room.getTileAt(target,0,0),new Torch(5), Tile.LAYER_PASSIVE_MAP);
+		target.placeEntity(room.getTileAt(target,room.width-1,0),new Torch(5), Tile.LAYER_PASSIVE_MAP);
+		target.placeEntity(room.getTileAt(target,0,room.height-1),new Torch(5), Tile.LAYER_PASSIVE_MAP);		
+		target.placeEntity(room.getTileAt(target,room.width-1,room.height-1),new Torch(5), Tile.LAYER_PASSIVE_MAP);
+
 		
 		for(int i=0; i<Utilities.randInt(0,4); i++){
 			Tile t = room.getTileIn(target);

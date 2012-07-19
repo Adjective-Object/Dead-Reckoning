@@ -43,5 +43,10 @@ public class Room {
 	public boolean isInside(Tile t){
 		return t.getX()>=this.x && t.getX()<this.x+this.width && t.getY()>=this.y && t.getY()<this.y+this.height;
 	}
+
+
+	public Tile getTileAt(GameBoard source, int i, int j) {
+		return source.getTileAt(x+i, y+j);
+	}
 	
 }
