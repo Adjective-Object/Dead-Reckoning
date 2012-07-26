@@ -177,7 +177,7 @@ public class GameBoard implements ILosBoard {
 					this.entityCounter=index+1;
 				}
 			}
-			Log.info(e.toString()+" spawned into "+this+" with entity ID "+index);
+			Log.debug(e.toString()+" spawned into "+this+" with entity ID "+index);
 		}
 		else{
 			Log.warn(e+" is already on this Game Board!");
@@ -260,7 +260,7 @@ public class GameBoard implements ILosBoard {
 		entityReferenceMap.remove(e.getID());
 		ingameEntities.remove(e);
 		e.getLocation().disconnectEntity(e.getLayer());
-		Log.info(e+" removed from  "+this);
+		Log.debug(e+" removed from  "+this);
 	}
 
 	/**

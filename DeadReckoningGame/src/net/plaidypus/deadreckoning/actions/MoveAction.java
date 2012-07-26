@@ -42,12 +42,12 @@ public class MoveAction extends Action {
 	 */
 	public boolean apply(int delta) {
 		Entity source = GameBoard.getEntity(this.sourceID);
-		if (target.getX() < source.getX()) {
+		if (getTargetTile().getX() < source.getX()) {
 			source.setFacing(false);
-		} else if (target.getX() > source.getX()) {
+		} else if (getTargetTile().getX() > source.getX()) {
 			source.setFacing(true);
 		}
-		source.getParent().moveEntity(source, target, destLayer);
+		source.getParent().moveEntity(source, getTargetTile(), destLayer);
 		return true;
 	}
 

@@ -27,8 +27,8 @@ public class LootAction extends EntityTypeAction { // TODO make it so you can
 	 * @param targetLayer
 	 *            the target layer
 	 */
-	public LootAction(int sourceID, Tile target, int targetLayer) {
-		super(sourceID, target, targetLayer);
+	public LootAction(int sourceID, InteractiveEntity target) {
+		super(sourceID, target);
 	}
 
 	/*
@@ -55,7 +55,7 @@ public class LootAction extends EntityTypeAction { // TODO make it so you can
 	protected boolean applyToEntity(InteractiveEntity e, int delta) {
 		DeadReckoningGame.instance.getMessageElement().addMessage(
 				GameBoard.getEntity(this.sourceID).getName() + " looted "
-						+ target.getEntity(this.layer).getName());
+						+ getTargetEntity().getName());
 		return gotoLootScreen(((InteractiveEntity) GameBoard.getEntity(this.sourceID)), e);
 	}
 
@@ -75,7 +75,7 @@ public class LootAction extends EntityTypeAction { // TODO make it so you can
 		} else {
 			DeadReckoningGame.instance.getMessageElement().addMessage(
 					GameBoard.getEntity(this.sourceID).getName() + " looted "
-							+ target.getEntity(this.layer).getName());
+							+ getTargetEntity().getName());
 			return gotoLootScreen(((InteractiveEntity) GameBoard.getEntity(this.sourceID)), e);
 		}
 	}

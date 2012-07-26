@@ -7,6 +7,7 @@ import net.plaidypus.deadreckoning.actions.LootAction;
 import net.plaidypus.deadreckoning.actions.WaitAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
+import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 
 // TODO: Auto-generated Javadoc
@@ -34,11 +35,8 @@ public class Loot extends Skill {
 	@Override
 	public Action makeAction(Tile target) {
 		for (int i = 0; i < Tile.numLayers; i++) {
-			if (!target.isOpen(i)) {
-				return new LootAction(this.sourceID, target, i);// TODO fix that shit.
-															// make it so I can
-															// loot corpses on
-															// the ground;
+			if (!target.isOpen(i) && InteractiveEntity.class.isAssignableFrom(target.getEntity(i).getClass())) {
+				return new LootAction(this.sourceID, (InteractiveEntity)target.getEntity(i));
 			}
 		}
 		return new WaitAction(sourceID);

@@ -65,9 +65,9 @@ public class Fireball extends OffensiveSkill {
 		ArrayList<Action> toRet = new ArrayList<Action>(0);
 		Animation an = new Animation(fireball, 40);
 		an.setLooping(false);
-		toRet.add(new ApplyStatusAction(sourceID, target, Tile.LAYER_ACTIVE,
+		toRet.add(new ApplyStatusAction(sourceID, target.getEntity(Tile.LAYER_ACTIVE),
 				new OnFire(this.sourceID, 2, 2 * this.level)));
-		AttackAction attack = new AttackAction(sourceID, target, 2, true, true, 300);
+		AttackAction attack = new AttackAction(sourceID, (LivingEntity)target.getEntity(Tile.LAYER_ACTIVE), 2, true, true, 300);
 		attack.setGridEffects( null, null, new AnimationEffect(target, an), null);
 		toRet.add(attack);
 		

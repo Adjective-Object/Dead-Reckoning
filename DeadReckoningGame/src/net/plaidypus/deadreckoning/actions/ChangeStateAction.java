@@ -28,7 +28,7 @@ public class ChangeStateAction extends Action {
 	 *            the args
 	 */
 	public ChangeStateAction(int sourceID, int state) {
-		super(sourceID, null);
+		super(sourceID);
 		takesTurn = false;
 		this.state = state;
 	}

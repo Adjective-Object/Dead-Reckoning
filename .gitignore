@@ -1,8 +1,10 @@
 .DS_Store
 DeadReckoningGame/saves
 DeadReckoningGame/classes
+
 DeadReckoningGame/config.txt
+
 DeadReckoningGame/log.txt
 DeadReckoningGame/log.rtf
-DeadReckoningGame/modpacks
+
 bin

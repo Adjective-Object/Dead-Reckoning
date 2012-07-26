@@ -35,8 +35,7 @@ public class PoisonBladesSkill extends Skill{
 		this.cooldown=2;
 		return new ApplyStatusAction(//TODO the status for Poison Blades
 				sourceID,
-				getSource().getLocation(),
-				getSource().getLayer(),
+				getSource(),
 				new FocusedMindStatus(
 						this.sourceID,
 						calculatePoisonDamage(level),

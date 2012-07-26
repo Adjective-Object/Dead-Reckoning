@@ -36,8 +36,7 @@ public class KillerInstinctSkill extends Skill{
 		this.cooldown=2;
 		return new ApplyStatusAction(
 				sourceID,//TODO the status for killer instinct
-				getSource().getLocation(),
-				getSource().getLayer(),
+				getSource(),
 				new KillerInstinctStatus(
 						this.sourceID,
 						calculateDuration(level)

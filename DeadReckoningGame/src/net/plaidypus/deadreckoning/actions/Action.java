@@ -8,6 +8,7 @@ import org.newdawn.slick.util.Log;
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
+import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.status.Status;
@@ -22,11 +23,12 @@ public abstract class Action {
 	/** The ID of the entity that produced the action*/
 	public int sourceID, millisTaken;
 
-	/** The tile on which the action is focused */
-	public Tile target;
+	/** The focus of the action */
+	private Tile targetTile;
+	private Entity targetEntity;
 
 	/** Indicates if the action has been completed (set to true when done)*/
-	public boolean completed, logged;
+	public boolean completed, logged, is;
 	
 	/** Indicates if carrying out this action should advance the turn (no for invenory management, etc.)*/
 	public boolean takesTurn = true;
@@ -39,19 +41,18 @@ public abstract class Action {
 	 * @param target
 	 * 			the tile the action is going to target
 	 */
-	public Action(int sourceID, Tile target) {
+	public Action(int sourceID, Tile targetTile) {
 		this.sourceID = sourceID;
-		this.target = target;
-		completed = false;
+		this.targetTile = targetTile;
 	}
-
-	/**
-	 * Sends a message to the stringputter. A Convenience method.
-	 * 
-	 * @param message the message to be displayed
-	 */
-	public static void sendMessage(String message) {
-		DeadReckoningGame.instance.getMessageElement().addMessage(message);
+	
+	public Action(int sourceID, Entity targetEntity){
+		this.sourceID = sourceID;
+		this.targetEntity = targetEntity;
+	}
+	
+	public Action(int sourceID){
+		this.sourceID=sourceID;
 	}
 
 	/**
@@ -75,26 +76,31 @@ public abstract class Action {
 	public void applyAction(int delta) throws SlickException {
 		if (!completed) {
 			if(!logged){
-				if(this.target!=null){
-					Log.info(this.getClass().getSimpleName()+" applied from "+
-							getSource()+"	to "+this.target+", containing "+
-							this.target.getEntity(Tile.LAYER_ACTIVE));
+				//logging
+				if(this.targetTile!=null){
+					Log.debug(this.getClass().getSimpleName()+" applied from "+getSource()
+							+"	to "+this.targetTile+", containing "
+							+this.targetTile.getEntity(Tile.LAYER_ACTIVE));
+				} else if (this.targetEntity!=null){
+					Log.debug(this.getClass().getSimpleName()+" applied from "+getSource()
+							+" to "+this.targetEntity + " at "+this.targetEntity.getLocation());
 				} else{
-					Log.info(this.getClass().getSimpleName()+" applied from "+getSource()+" to nothing");
+					Log.debug(this.getClass().getSimpleName()+" applied from "+getSource());
 				}
 				logged=true;
 			}
 			completed = apply(delta);
 			if(completed){
+				// on action completion, call entities' status' action triggers
 				LivingEntity e = (LivingEntity) GameBoard.getEntity(this.sourceID);
 				ArrayList<Status> stats = e.getConditions();
 				for(int i=0; i<stats.size(); i++){
 					stats.get(i).onActionProduce(this);
 				}
 				
-				if(this.target!=null && !this.target.isOpen(Tile.LAYER_ACTIVE) &&
-						LivingEntity.class.isAssignableFrom(this.target.getEntity(Tile.LAYER_ACTIVE).getClass())){
-					e = (LivingEntity) this.target.getEntity(Tile.LAYER_ACTIVE);
+				if(this.targetTile!=null && !this.targetTile.isOpen(Tile.LAYER_ACTIVE) &&
+						LivingEntity.class.isAssignableFrom(this.targetTile.getEntity(Tile.LAYER_ACTIVE).getClass())){
+					e = (LivingEntity) this.targetTile.getEntity(Tile.LAYER_ACTIVE);
 					stats = e.getConditions();
 					for(int i=0; i<stats.size(); i++){
 						stats.get(i).onActionReceive(this);
@@ -105,8 +111,26 @@ public abstract class Action {
 		}
 	}
 
-	private InteractiveEntity getSource() {
+	protected InteractiveEntity getSource() {
 		return (InteractiveEntity)GameBoard.getEntity(sourceID);
+	}
+	
+	protected Entity getTargetEntity(){
+		if(this.targetEntity!= null){
+			return this.targetEntity;
+		}
+		else{
+			return this.targetTile.getEntity(Tile.LAYER_ACTIVE);
+		}
+	}
+	
+	public Tile getTargetTile(){
+		if(this.targetTile!=null){
+			return this.targetTile;
+		}
+		else{
+			return this.targetEntity.getLocation();
+		}
 	}
 
 	/*
@@ -117,7 +141,7 @@ public abstract class Action {
 	public String toString() {
 		String[] p = this.getClass().toString().split("actions.");
 
-		return p[p.length - 1] + " " + GameBoard.getEntity(this.sourceID) + " -> " + this.target;
+		return p[p.length - 1] + " " + GameBoard.getEntity(this.sourceID) + " -> " + this.targetTile;
 	}
 
 	/**

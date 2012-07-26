@@ -43,6 +43,8 @@ public class StringPutter extends HudElement {
 	public StringPutter(int x, int y, int bindMethod, int fadeoutRate) {
 		super(x, y, bindMethod, false);
 		this.fadeoutRate = fadeoutRate;
+		alphas = new ArrayList<Double>(0);
+		messages = new ArrayList<String>(0);
 	}
 
 	/*
@@ -53,10 +55,7 @@ public class StringPutter extends HudElement {
 	 * .GameContainer, org.newdawn.slick.state.StateBasedGame)
 	 */
 	public void init(GameContainer gc, StateBasedGame sbg)
-			throws SlickException {
-		alphas = new ArrayList<Double>(0);
-		messages = new ArrayList<String>(0);
-	}
+			throws SlickException {}
 
 	/*
 	 * (non-Javadoc)

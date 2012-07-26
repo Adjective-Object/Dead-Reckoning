@@ -35,8 +35,7 @@ public class FocusedMindSkill extends Skill{
 		this.cooldown=2;
 		return new ApplyStatusAction(
 				sourceID,
-				getSource().getLocation(),
-				getSource().getLayer(),
+				getSource(),
 				new FocusedMindStatus(
 						this.sourceID,
 						calculateCritChance(level),

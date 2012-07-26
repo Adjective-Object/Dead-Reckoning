@@ -180,7 +180,7 @@ public class Corpse extends InteractiveEntity {
 	 */
 	@Override
 	public Action onInteract(Entity e) {
-		return new LootAction(e.getID(), this.getLocation(), this.getLayer());
+		return new LootAction(e.getID(), this);
 	}
 
 }

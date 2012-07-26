@@ -11,10 +11,6 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
  * The Class EntityTypeAction.
  */
 public abstract class EntityTypeAction extends Action {
-
-	/** The layer. */
-	int layer;
-
 	/**
 	 * Instantiates a new entity type action.
 	 * 
@@ -25,9 +21,12 @@ public abstract class EntityTypeAction extends Action {
 	 * @param targetLayer
 	 *            the target layer
 	 */
-	public EntityTypeAction(int sourceID, Tile target, int targetLayer) {
+	public EntityTypeAction(int sourceID, Tile target) {
 		super(sourceID, target);
-		layer = targetLayer;
+	}
+	
+	public EntityTypeAction(int sourceID, Entity target) {
+		super(sourceID, target);
 	}
 
 	/*
@@ -36,19 +35,19 @@ public abstract class EntityTypeAction extends Action {
 	 * @see net.plaidypus.deadreckoning.actions.Action#apply(int)
 	 */
 	protected boolean apply(int delta) {
-		if (target.getX() > GameBoard.getEntity(this.sourceID).getX()) {
+		if (getTargetTile().getX() > GameBoard.getEntity(this.sourceID).getX()) {
 			GameBoard.getEntity(this.sourceID).setFacing(true);
-		} else if (target.getX() < GameBoard.getEntity(this.sourceID).getX()) {
+		} else if (getTargetTile().getX() < GameBoard.getEntity(this.sourceID).getX()) {
 			GameBoard.getEntity(this.sourceID).setFacing(false);
 		}
 		
-		if(!target.isOpen(layer)){
-			if (LivingEntity.class.isAssignableFrom(target.getEntity(layer).getClass())) {
-				return applyToEntity((LivingEntity) (target.getEntity(layer)),delta);
-			} else if (InteractiveEntity.class.isAssignableFrom(target.getEntity(layer).getClass())) {
-				return applyToEntity((InteractiveEntity) (target.getEntity(layer)),delta);
+		if(getTargetEntity()!=null){
+			if (LivingEntity.class.isAssignableFrom(getTargetEntity().getClass())) {
+				return applyToEntity((LivingEntity) (getTargetEntity()),delta);
+			} else if (InteractiveEntity.class.isAssignableFrom(getTargetEntity().getClass())) {
+				return applyToEntity((InteractiveEntity) (getTargetEntity()),delta);
 			} else {
-				return applyToEntity((Entity) (target.getEntity(layer)),delta);
+				return applyToEntity((Entity) (getTargetEntity()),delta);
 			} 
 		}
 		return true;

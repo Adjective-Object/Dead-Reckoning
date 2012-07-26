@@ -206,7 +206,7 @@ public class Player extends LivingEntity {
 		if (this.EXP >= this.getEXPforLevel()) {
 			this.EXP -= this.getEXPforLevel();
 			this.profession.levelUp();
-			Action.sendMessage(this.getName() + " leveled up!");
+			Log.info(this.getName() + " leveled up!");
 			this.MP = this.profession.getMaxMP();
 			this.HP = this.profession.getMaxHP();
 			Animation levelUp = new Animation(this.levelUp, 100);// TODO

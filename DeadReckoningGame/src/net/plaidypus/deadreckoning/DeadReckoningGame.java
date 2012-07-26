@@ -35,7 +35,8 @@ import net.plaidypus.deadreckoning.state.substates.InGameMenuState;
 import net.plaidypus.deadreckoning.state.substates.InventoryState;
 import net.plaidypus.deadreckoning.state.substates.LootState;
 import net.plaidypus.deadreckoning.state.substates.PlayerViewerState;
-import net.plaidypus.deadreckoning.utilities.FileSaveLogSystem;
+import net.plaidypus.deadreckoning.utilities.DeadReckoningLogSystem;
+import net.plaidypus.deadreckoning.utilities.RichTextLogSystem;
 import net.plaidypus.deadreckoning.utilities.KeyConfig;
 import net.plaidypus.deadreckoning.utilities.OptionsHandler;
 
@@ -165,8 +166,9 @@ public class DeadReckoningGame extends StateBasedGame {
 	 * @throws FileNotFoundException 
 	 */
 	public static void main(String[] args) throws SlickException, LWJGLException, FileNotFoundException {
+		System.out.println(new File(".").getAbsolutePath());
 		//for saving things to Log
-		Log.setLogSystem(new FileSaveLogSystem("log.rtf"));
+		Log.setLogSystem(new DeadReckoningLogSystem("log.rtf"));
 		// for options
 		OptionsHandler.bakeResolutions();
 		OptionsHandler.loadSettings();
@@ -183,7 +185,7 @@ public class DeadReckoningGame extends StateBasedGame {
 	@Override
 	public void enterState(int id){
 		super.enterState(id);
-		Log.info("Entering State "+id+", "+getState(id).getClass().getSimpleName()+"@"+System.identityHashCode(getState(id)));
+		Log.debug("Entering State "+id+", "+getState(id).getClass().getSimpleName()+"@"+System.identityHashCode(getState(id)));
 	}
 	
 	/**

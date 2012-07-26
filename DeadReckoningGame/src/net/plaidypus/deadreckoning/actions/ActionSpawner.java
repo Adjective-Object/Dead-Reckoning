@@ -23,7 +23,7 @@ public class ActionSpawner extends Action {
 	 *            the actions
 	 */
 	public ActionSpawner(int source, ArrayList<Action> actions) {
-		super(source, null);
+		super(source);
 		this.actions = actions;
 	}
 

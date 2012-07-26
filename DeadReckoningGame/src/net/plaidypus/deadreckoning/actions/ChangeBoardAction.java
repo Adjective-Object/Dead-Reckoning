@@ -23,7 +23,7 @@ public class ChangeBoardAction extends Action {
 	 *            the target floor
 	 */
 	public ChangeBoardAction(int sourceID, String targetFloor) {
-		super(sourceID, null);
+		super(sourceID);
 		this.targetFloor = targetFloor;
 	}
 

@@ -8,7 +8,7 @@ import net.plaidypus.deadreckoning.entities.Entity;
 /**
  * The Class ChangeMapAction.
  */
-public class ChangeMapAction extends Action {
+public class SpawnEntityAction extends Action {
 
 	/** The to write. */
 	Entity toWrite;
@@ -28,7 +28,7 @@ public class ChangeMapAction extends Action {
 	 * @param toOverWrite
 	 *            the to over write
 	 */
-	public ChangeMapAction(int sourceID, Tile target, int layer,
+	public SpawnEntityAction(int sourceID, Tile target, int layer,
 			Entity toOverWrite) {
 		super(sourceID, target);
 		toWrite = toOverWrite;
@@ -42,7 +42,7 @@ public class ChangeMapAction extends Action {
 	 * @see net.plaidypus.deadreckoning.actions.Action#apply(int)
 	 */
 	protected boolean apply(int delta) {
-		GameBoard.getEntity(this.sourceID).getParent().placeEntity(target, toWrite, layer);
+		GameBoard.getEntity(this.sourceID).getParent().placeEntity(getTargetTile(), toWrite, layer);
 		return true;
 	}
 

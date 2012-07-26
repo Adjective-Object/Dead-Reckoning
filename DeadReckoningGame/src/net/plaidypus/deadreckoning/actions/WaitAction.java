@@ -16,7 +16,7 @@ public class WaitAction extends Action {
 	 *            the source
 	 */
 	public WaitAction(int sourceID) {
-		super(sourceID, null);
+		super(sourceID);
 	}
 
 	/*

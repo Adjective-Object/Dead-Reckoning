@@ -36,8 +36,7 @@ public class DesperationSkill extends Skill{
 		this.cooldown=2;
 		return new ApplyStatusAction(
 				sourceID,
-				getSource().getLocation(),
-				getSource().getLayer(),
+				getSource(),
 				new DesperationStatus(
 						this.sourceID,
 						calculateWepAtk(level),

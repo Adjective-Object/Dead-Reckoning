@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import net.plaidypus.deadreckoning.state.HudLayersState;
-import net.plaidypus.deadreckoning.utilities.FileSaveLogSystem;
+import net.plaidypus.deadreckoning.utilities.RichTextLogSystem;
 
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.AppGameContainer;
@@ -55,15 +55,17 @@ public class DeadReckoningContainer extends AppGameContainer{
 	protected void handleError(SlickException e) {
 		Log.error(e);
 		
+		e.printStackTrace();
+		
 		StringWriter errors = new StringWriter();
 		e.printStackTrace(new PrintWriter(errors));
 		HudLayersState s = (HudLayersState)(DeadReckoningGame.instance.getState(DeadReckoningGame.ERRORSTATE));
 		s.getElement(1).makeFrom(e.getMessage()+"\r\n" + errors.toString().replaceAll("	",""));
-		s.getElement(2).makeFrom("A logfile has been dumped at "+FileSaveLogSystem.fileName+".\r\nPlease report this error");
+		s.getElement(2).makeFrom("A logfile has been dumped at "+RichTextLogSystem.fileName+".\r\nPlease report this error");
 		s.getElement(2).setPosition(0,s.getElement(1).getHeight()/2+20);
 		DeadReckoningGame.instance.enterState(DeadReckoningGame.ERRORSTATE);
 		
-		FileSaveLogSystem.closeWriter();
+		RichTextLogSystem.closeWriter();
 		
 	}
 
@@ -139,8 +141,8 @@ public class DeadReckoningContainer extends AppGameContainer{
 
 	@Override
 	public void exit(){
-		Log.info("Container.exit() called, shutting down");
-		FileSaveLogSystem.closeWriter();
+		Log.warn("Container.exit() called, shutting down");
+		RichTextLogSystem.closeWriter();
 		super.exit();
 	}
 	

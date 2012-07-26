@@ -178,7 +178,7 @@ public class Chest extends InteractiveEntity {
 	 */
 	@Override
 	public Action onInteract(Entity observer) {
-		return new LootAction(observer.getID(), this.getLocation(), this.getLayer());
+		return new LootAction(observer.getID(), this);
 	}
 
 }

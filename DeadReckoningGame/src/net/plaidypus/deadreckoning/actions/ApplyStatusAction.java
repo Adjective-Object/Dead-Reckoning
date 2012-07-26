@@ -1,5 +1,7 @@
 package net.plaidypus.deadreckoning.actions;
 
+import org.newdawn.slick.util.Log;
+
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
@@ -28,9 +30,8 @@ public class ApplyStatusAction extends EntityTypeAction {
 	 * @param toApply
 	 *            the to apply
 	 */
-	public ApplyStatusAction(int sourceID, Tile target, int targetTile,
-			Status toApply) {
-		super(sourceID, target, targetTile);
+	public ApplyStatusAction(int sourceID, Entity target, Status toApply) {
+		super(sourceID, target);
 		this.s = toApply;
 	}
 
@@ -54,7 +55,7 @@ public class ApplyStatusAction extends EntityTypeAction {
 	 */
 	protected boolean applyToEntity(LivingEntity e, int delta) {
 		e.addCondition(s);
-		sendMessage(target.getEntity(Tile.LAYER_ACTIVE).getName() + " become "
+		Log.info(getTargetEntity().getName() + " now has the status "
 				+ s.getName());
 		return true;
 	}
@@ -76,7 +77,7 @@ public class ApplyStatusAction extends EntityTypeAction {
 	 * @see net.plaidypus.deadreckoning.actions.Action#isNoticed()
 	 */
 	protected boolean isNoticed() {
-		return target.canBeSeen() || GameBoard.getEntity(this.sourceID).getLocation().canBeSeen();
+		return getTargetTile().canBeSeen() || GameBoard.getEntity(this.sourceID).getLocation().canBeSeen();
 	}
 
 }

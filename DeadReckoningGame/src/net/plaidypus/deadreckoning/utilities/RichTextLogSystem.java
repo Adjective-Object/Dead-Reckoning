@@ -7,9 +7,11 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import net.plaidypus.deadreckoning.DeadReckoningGame;
+
 import org.newdawn.slick.util.LogSystem;
 
-public class FileSaveLogSystem implements LogSystem {
+public class RichTextLogSystem implements LogSystem {
 	/** The output stream for dumping the log out on */
 	public static PrintStream out = System.out;
 	
@@ -26,7 +28,7 @@ public class FileSaveLogSystem implements LogSystem {
 		COLOR_BLUE = 2,
 		COLOR_ORANGE = 3;
 	
-	public FileSaveLogSystem(String outDest){
+	public RichTextLogSystem(String outDest){
 		try {
 			fileWriter = new PrintWriter( new FileWriter(new File(outDest)));
 			fileName = outDest;
@@ -92,7 +94,7 @@ public class FileSaveLogSystem implements LogSystem {
 	 * 
 	 * @param message The message describing the infomation
 	 */
-	public  void info(String message) {
+	public void info(String message) {
 		sendMessage(COLOR_STD,message);
 	}
 

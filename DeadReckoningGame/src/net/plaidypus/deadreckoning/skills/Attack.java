@@ -33,7 +33,7 @@ public class Attack extends OffensiveSkill {
 	 */
 	@Override
 	public Action makeAction(Tile target) {
-		return new AttackAction(sourceID, target,
+		return new AttackAction(sourceID, (LivingEntity)target.getEntity(Tile.LAYER_ACTIVE),
 				getSource().getStatMaster().getPhysicalDamageFrom(), false);
 	}
 	

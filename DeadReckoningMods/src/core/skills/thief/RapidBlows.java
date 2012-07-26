@@ -10,6 +10,7 @@ import net.plaidypus.deadreckoning.actions.ActionSpawner;
 import net.plaidypus.deadreckoning.actions.AttackAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
+import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.skills.OffensiveSkill;
 import net.plaidypus.deadreckoning.utilities.Utilities;
@@ -39,7 +40,7 @@ public class RapidBlows extends OffensiveSkill{
 		for(int i=0; i<a;i++){
 			spawnableActions.add(
 					new AttackAction(
-							this.sourceID,target,
+							this.sourceID,(LivingEntity)target.getEntity(Tile.LAYER_ACTIVE),
 							(int)(this.getSource().getStatMaster().getPhysicalDamageFrom()*.8),
 							true,true,i*200)
 				);

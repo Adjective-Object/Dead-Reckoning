@@ -36,7 +36,7 @@ public class KillerInstinctStatus extends Status{
 	public ArrayList<Action> advanceTurnEffects(LivingEntity target){
 		ArrayList<Action> e = super.advanceTurnEffects(target);
 		if(this.getDuration()<=0){
-			e.add(new AttackAction(sourceID, this.getSource().getLocation(),this.getSource().HP/2, false, false));//TODO raw damage, not magical damage
+			e.add(new AttackAction(sourceID, this.getSource(),this.getSource().HP/2, false, false));//TODO raw damage, not magical damage
 		}
 		return e;
 	}

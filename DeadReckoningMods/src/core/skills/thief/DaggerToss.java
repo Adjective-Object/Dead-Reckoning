@@ -9,6 +9,7 @@ import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.AttackAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
+import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.grideffects.AnimatedProjectileEffect;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.skills.OffensiveSkill;
@@ -36,7 +37,8 @@ public class DaggerToss extends OffensiveSkill{
 		target.getParent().addEffectOver(
 				new AnimatedProjectileEffect(new Animation(spinningDagger,20),this.getSource().getLocation(),target,200)
 				);
-		return new AttackAction(this.sourceID,target,this.getSource().getStatMaster().getPhysicalDamageFrom(),true,false,200);
+		return new AttackAction(this.sourceID,(LivingEntity)target.getEntity(Tile.LAYER_ACTIVE),
+				this.getSource().getStatMaster().getPhysicalDamageFrom(),true,false,200);
 	}
 
 	@Override

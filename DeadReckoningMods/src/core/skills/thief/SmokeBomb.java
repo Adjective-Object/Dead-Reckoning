@@ -15,6 +15,7 @@ import net.plaidypus.deadreckoning.actions.ApplyStatusAction;
 import net.plaidypus.deadreckoning.actions.AttackAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
+import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.grideffects.AnimationEffect;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.skills.Skill;
@@ -46,8 +47,7 @@ public class SmokeBomb extends Skill{
 		
 		toRet.add( new ApplyStatusAction(
 				sourceID,
-				getSource().getLocation(),
-				getSource().getLayer(),
+				getSource(),
 				new Stealthed(
 						this.sourceID,
 						calculateDuration(level)
@@ -63,7 +63,7 @@ public class SmokeBomb extends Skill{
 		
 		for(int i=0; i<targetTiles.length; i++){
 			if(targetTiles[i].isOpen(Tile.LAYER_ACTIVE)){
-				AttackAction a = new AttackAction(sourceID, targetTiles[i], calculateDamage(this.level), false);
+				AttackAction a = new AttackAction(sourceID, (LivingEntity)targetTiles[i].getEntity(Tile.LAYER_ACTIVE), calculateDamage(this.level), false);
 				a.setGridEffects(null, null, new AnimationEffect(targetTiles[i],new Animation(smokeBomb,60)), null);
 				toRet.add(a);
 			}

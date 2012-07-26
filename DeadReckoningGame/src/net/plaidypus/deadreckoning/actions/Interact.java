@@ -2,6 +2,7 @@ package net.plaidypus.deadreckoning.actions;
 
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
+import net.plaidypus.deadreckoning.entities.Entity;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -39,9 +40,9 @@ public class Interact extends Action {
 	@Override
 	protected boolean apply(int delta) {
 		for (int i = Tile.numLayers - 1; i >= 0; i--) {
-			if (!target.isOpen(i)) {
+			if (!getTargetTile().isOpen(i)) {
 					GameBoard.getEntity(this.sourceID).getParent().getGame().addAction(
-							target.getEntity(i).onInteract(GameBoard.getEntity(this.sourceID))
+							getTargetTile().getEntity(i).onInteract(GameBoard.getEntity(this.sourceID))
 							);
 			}
 		}

@@ -36,7 +36,7 @@ public class DesperationStatus extends Status{
 	@Override
 	public ArrayList<Action> advanceTurnEffects(LivingEntity target) {
 		ArrayList<Action> actions = super.advanceTurnEffects(target);
-		actions.add(new AttackAction(sourceID, getSource().getLocation(), selfDamage, false, false));
+		actions.add(new AttackAction(sourceID, getSource(), selfDamage, false, false));
 		return actions;
 	}
 	

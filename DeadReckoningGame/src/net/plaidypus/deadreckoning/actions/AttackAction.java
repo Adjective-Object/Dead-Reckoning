@@ -1,5 +1,7 @@
 package net.plaidypus.deadreckoning.actions;
 
+import org.newdawn.slick.util.Log;
+
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
@@ -42,7 +44,7 @@ public class AttackAction extends EntityTypeAction {
 	 * @param physical
 	 *            the physical
 	 */
-	public AttackAction(int sourceID, Tile target, int damage, boolean physical) {
+	public AttackAction(int sourceID, LivingEntity target, int damage, boolean physical) {
 		this(sourceID, target, damage, physical, true, 0);
 	}
 
@@ -60,7 +62,7 @@ public class AttackAction extends EntityTypeAction {
 	 * @param animateSource
 	 *            the animate source
 	 */
-	public AttackAction(int sourceID, Tile target, int damage,
+	public AttackAction(int sourceID, LivingEntity target, int damage,
 			boolean physical, boolean animate) {
 		this(sourceID, target, damage, physical, animate, 0);
 	}
@@ -87,9 +89,9 @@ public class AttackAction extends EntityTypeAction {
 	 * @param targetBottomEffect
 	 *            the target bottom effect
 	 */
-	public AttackAction(int sourceID, Tile target, int damage,
+	public AttackAction(int sourceID, LivingEntity target, int damage,
 			boolean physical, boolean animate, int damageFrame) {
-		super(sourceID, target, Tile.LAYER_ACTIVE);
+		super(sourceID, target);
 		this.damage = damage;
 		this.animate = animate;
 		this.physical = physical;
@@ -156,8 +158,8 @@ public class AttackAction extends EntityTypeAction {
 		
 				}
 		
-				int xdiff = s.getX() - target.getX();
-				int ydiff = s.getY() - target.getY();
+				int xdiff = s.getX() - getTargetEntity().getX();
+				int ydiff = s.getY() - getTargetEntity().getY();
 		
 				if (e.getLocation().canBeSeen() && animate) {
 					if ((xdiff < 0 ^ e.getFacing()) || (xdiff == 0 && ydiff > 0)) {
@@ -170,22 +172,22 @@ public class AttackAction extends EntityTypeAction {
 							this.sourceEffectTop);
 					e.getParent().addEffectUnder(s.getLocation(),
 							this.sourceEffectBottom);
-					e.getParent().addEffectOver(target, this.targetEffectTop);
-					e.getParent().addEffectUnder(target, this.targetEffectBottom);
+					e.getParent().addEffectOver(getTargetTile(), this.targetEffectTop);
+					e.getParent().addEffectUnder(getTargetTile(), this.targetEffectBottom);
 		
 					
 					if (damage > 0) {
-						sendMessage(s.getName() + " attacked "
-								+ target.getEntity(Tile.LAYER_ACTIVE).getName() + " for "
+						Log.info(s.getName() + " attacked "
+								+ getTargetEntity().getName() + " for "
 								+ damage + " damage");
 						e.getParent().addEffectOver(
-								new DamageEffect(target, Integer.toString(damage)));
+								new DamageEffect(getTargetTile(), Integer.toString(damage)));
 					}
 					else{
-						sendMessage(target.getEntity(Tile.LAYER_ACTIVE).getName() +
+						Log.info(getTargetEntity().getName() +
 								" dodged " + s.getName() +  "'s attack ");
 						e.getParent().addEffectOver(
-								new DamageEffect(target,"dodged"));
+								new DamageEffect(getTargetTile(),"dodged"));
 					}
 				}
 		
@@ -209,6 +211,6 @@ public class AttackAction extends EntityTypeAction {
 	 */
 	@Override
 	protected boolean isNoticed() {
-		return GameBoard.getEntity(this.sourceID).getLocation().canBeSeen() || target.canBeSeen();
+		return GameBoard.getEntity(this.sourceID).getLocation().canBeSeen() || getTargetTile().canBeSeen();
 	}
 }
