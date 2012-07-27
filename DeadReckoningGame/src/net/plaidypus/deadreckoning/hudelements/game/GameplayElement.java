@@ -14,7 +14,6 @@ import net.plaidypus.deadreckoning.save.Save;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
@@ -30,36 +29,33 @@ public class GameplayElement extends HudElement {
 	int stateID;
 
 	/** The current Entity (for deciding). */
-	int currentEntity;
+	public int currentEntity;
 	
-	/** The save number. */
-	public String saveLocation;
-
 	/** The width. */
 	private int width, height;
 
 	private boolean entitiesLooped;
 
 	/** The camera positioning. */
-	public static float cameraX, cameraY;
+	private float cameraX, cameraY;
 
 	/** The camera dest y. */
-	public static float cameraDestX, cameraDestY;
+	private float cameraDestX, cameraDestY;
 
 	/** The Constant cameraRate. */
-	static final float cameraRate = 1000F, cameraSensitivityFrac = 1.0F;
+	private static final float cameraRate = 1000F;
+	private float cameraSpeed=0;
 
 	/** The last map. */
 	public String lastMap;
-
+	
+	public String saveLocation;
+	
 	/** The input. */
 	Input input;
 
 	/** The player. */
 	public Player player;
-
-	/** The background screen. */
-	static Image backgroundScreen;
 
 	/** The gb. */
 	private GameBoard gb;
@@ -109,9 +105,7 @@ public class GameplayElement extends HudElement {
 		lastMap = "";
 
 		DamageEffect.init();
-
-		backgroundScreen = new Image(gc.getWidth(), gc.getHeight());
-
+		
 		gc.setTargetFrameRate(60);
 		gc.setVSync(true);
 
@@ -152,7 +146,7 @@ public class GameplayElement extends HudElement {
 			}
 		}
 
-		System.out.println(lastMap + " -> " + b);
+		Log.info("Changing map from "+lastMap + " to " + b);
 
 		b.setGame(this);
 		b.renderDistX = this.getWidth() / DeadReckoningGame.tileSize + 2;
@@ -164,11 +158,18 @@ public class GameplayElement extends HudElement {
 				+ DeadReckoningGame.tileSize / 2;
 		cameraDestY = player.getAbsoluteY() - gc.getHeight() / 2
 				+ DeadReckoningGame.tileSize / 2;
-
+		
+		cameraX=cameraDestX;
+		cameraY=cameraDestY;
+		
 		actions.clear();
+		entitiesLooped=false;
+		instantAction=null;
+		cameraSpeed=0;
+		currentEntity = 0;
+		
 
 		updateBoardEffects(gc);
-		this.currentEntity = 0;
 	}
 
 	public void updateSave() throws IOException {
@@ -191,8 +192,10 @@ public class GameplayElement extends HudElement {
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 		
-		cameraX = cameraX + (cameraDestX - cameraX) * (delta/cameraRate);
-		cameraY = cameraY + (cameraDestY - cameraY) * (delta/cameraRate);
+		cameraSpeed = (cameraSpeed+(delta/cameraRate))/2;
+		
+		cameraX += (cameraDestX - cameraX) * cameraSpeed;
+		cameraY += (cameraDestY - cameraY) * cameraSpeed;
 
 		if (gc.getInput().isKeyPressed(Input.KEY_Y)) {
 			cameraDestX = getBoard().getIngameEntities().get(currentEntity)
@@ -321,10 +324,10 @@ public class GameplayElement extends HudElement {
 	 * Advance entity.
 	 */
 	private void advanceEntity() {
-		boolean f = true;
-		while(!gb.getIngameEntities().get(currentEntity).makesActions() || f){
-			f=false;
-			currentEntity = (currentEntity+1);
+		boolean notAdvanced = true;
+		while(!gb.getIngameEntities().get(currentEntity).makesActions() || notAdvanced){
+			notAdvanced=false;
+			currentEntity ++;
 			if(currentEntity>=gb.getIngameEntities().size()){
 				currentEntity -= gb.getIngameEntities().size();
 				entitiesLooped=true;
@@ -363,8 +366,6 @@ public class GameplayElement extends HudElement {
 			throws SlickException {
 		getBoard().render(g, (int)-cameraX, (int)-cameraY);
 
-		g.copyArea(backgroundScreen, 0, 0);
-
 	}
 
 	/**
@@ -374,16 +375,6 @@ public class GameplayElement extends HudElement {
 	 */
 	public int getID() {
 		return stateID;
-	}
-
-	/**
-	 * adds a particle to the particle list in game.
-	 * 
-	 * @return the image
-	 */
-
-	public static Image getImage() {
-		return backgroundScreen;
 	}
 
 	/**

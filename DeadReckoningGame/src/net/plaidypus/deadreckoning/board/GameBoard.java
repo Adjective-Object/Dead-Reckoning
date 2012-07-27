@@ -166,10 +166,12 @@ public class GameBoard implements ILosBoard {
 			else{
 				if(entityReferenceMap.keySet().contains(index)){//if something else is there
 					this.ingameEntities.remove(entityReferenceMap.get(index));
-					addEntity(entityReferenceMap.get(index), -1);
+					Entity ent = entityReferenceMap.get(index);
 					entityReferenceMap.remove(index);
+					addEntity(ent,-1);
+					Log.debug("displacing "+ent);
 				}
-				this.ingameEntities.add(e);
+				this.ingameEntities.add(index, e);
 				this.entityReferenceMap.put(index,e);
 				e.setID(index);
 				if(this.entityCounter<=index){

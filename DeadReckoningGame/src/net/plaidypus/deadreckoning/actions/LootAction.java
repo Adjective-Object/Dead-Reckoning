@@ -11,10 +11,7 @@ import net.plaidypus.deadreckoning.state.substates.LootState;
 /**
  * The Class LootAction.
  */
-public class LootAction extends EntityTypeAction { // TODO make it so you can
-													// loot entities on other
-													// layers?
-
+public class LootAction extends EntityTypeAction {
 	/**
 	 * Instantiates a new loot action.
 	 * 

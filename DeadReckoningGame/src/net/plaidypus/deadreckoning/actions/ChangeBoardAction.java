@@ -25,6 +25,7 @@ public class ChangeBoardAction extends Action {
 	public ChangeBoardAction(int sourceID, String targetFloor) {
 		super(sourceID);
 		this.targetFloor = targetFloor;
+		this.takesTurn = false;
 	}
 
 	/*
