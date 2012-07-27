@@ -1,13 +1,12 @@
 package net.plaidypus.deadreckoning.hudelements.simple;
 
+import net.plaidypus.deadreckoning.hudelements.button.Button;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
-
-import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.hudelements.button.Button;
 
 public class TickerBox extends Button{
 
@@ -25,6 +24,7 @@ public class TickerBox extends Button{
 		this.height=height;
 	}
 
+	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException{
 		super.update(gc, sbg, delta);

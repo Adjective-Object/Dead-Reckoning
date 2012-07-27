@@ -1,6 +1,5 @@
 package net.plaidypus.deadreckoning.status;
 
-import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 
 import org.newdawn.slick.Animation;

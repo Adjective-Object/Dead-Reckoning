@@ -61,6 +61,7 @@ public class MoveEntityEffect extends GridEffect {
 	 * 
 	 * @see net.plaidypus.deadreckoning.grideffects.GridEffect#update(int)
 	 */
+	@Override
 	public void update(int delta) {
 		if( !destination.canBeSeen() || distravelled>=hypotenuse ){
 			this.setComplete(true);
@@ -80,6 +81,7 @@ public class MoveEntityEffect extends GridEffect {
 	 * net.plaidypus.deadreckoning.grideffects.GridEffect#render(org.newdawn
 	 * .slick.Graphics, float, float)
 	 */
+	@Override
 	public void render(Graphics g, float xoff, float yoff) {
 		if (destination.canBeSeen()) {
 			GameBoard.getEntity(entityID).forceRender(

@@ -48,6 +48,7 @@ public class ReturnToGameElement extends HudElement {
 			throws SlickException {
 	}
 
+	@Override
 	public void makeFrom(Object o) {
 	}
 

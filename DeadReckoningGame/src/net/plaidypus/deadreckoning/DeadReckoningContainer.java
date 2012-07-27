@@ -27,6 +27,7 @@ public class DeadReckoningContainer extends AppGameContainer{
 	
 	//slightly modified version of the org.newdawn.slick.AppGameContainer's gameLoop() method
 	//it allows for somewhat more "graceful" error handling.
+	@Override
 	protected void gameLoop() throws SlickException {
 		int delta = getDelta();
 		if (!Display.isVisible() && updateOnlyOnVisible) {
@@ -57,7 +58,7 @@ public class DeadReckoningContainer extends AppGameContainer{
 		
 		StringWriter errors = new StringWriter();
 		e.printStackTrace(new PrintWriter(errors));
-		HudLayersState s = (HudLayersState)(DeadReckoningGame.instance.getState(DeadReckoningGame.ERRORSTATE));
+		HudLayersState s = (DeadReckoningGame.instance.getState(DeadReckoningGame.ERRORSTATE));
 		s.getElement(1).makeFrom(e.getMessage()+"\r\n" + errors.toString().replaceAll("	",""));
 		s.getElement(2).makeFrom("A logfile has been dumped at "+RichTextLogSystem.fileName+".\r\nPlease report this error");
 		s.getElement(2).setPosition(0,s.getElement(1).getHeight()/2+20);
@@ -67,6 +68,7 @@ public class DeadReckoningContainer extends AppGameContainer{
 		
 	}
 
+	@Override
 	protected void updateAndRender(int delta) throws SlickException {
 		if (smoothDeltas) {
 			if (getFPS() != 0) {

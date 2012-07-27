@@ -31,14 +31,14 @@ package net.plaidypus.deadreckoning.modloader;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.net.JarURLConnection;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.lang.reflect.InvocationTargetException;
+import java.net.JarURLConnection;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.jar.Attributes;
-import java.io.IOException;
 
 /**
  * A class loader for loading jar files, both local and remote.

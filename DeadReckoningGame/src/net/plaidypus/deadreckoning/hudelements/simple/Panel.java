@@ -111,6 +111,7 @@ public class Panel extends SimplePanel implements HudElementContainer{
 	 * 
 	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getWidth()
 	 */
+	@Override
 	public int getWidth() {
 		return width;
 	}
@@ -120,6 +121,7 @@ public class Panel extends SimplePanel implements HudElementContainer{
 	 * 
 	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getHeight()
 	 */
+	@Override
 	public int getHeight() {
 		return height;
 	}
@@ -132,6 +134,7 @@ public class Panel extends SimplePanel implements HudElementContainer{
 	 * .slick.GameContainer, org.newdawn.slick.state.StateBasedGame,
 	 * org.newdawn.slick.Graphics)
 	 */
+	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		super.render(gc, sbg, g);
@@ -150,6 +153,7 @@ public class Panel extends SimplePanel implements HudElementContainer{
 	 * .newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame,
 	 * org.newdawn.slick.Graphics)
 	 */
+	@Override
 	public void renderMouseOver(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		for (int i = 0; i < contents.size(); i++) {

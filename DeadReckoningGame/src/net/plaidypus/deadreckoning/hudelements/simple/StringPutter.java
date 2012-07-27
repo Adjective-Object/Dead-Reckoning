@@ -54,6 +54,7 @@ public class StringPutter extends HudElement {
 	 * net.plaidypus.deadreckoning.hudelements.HudElement#init(org.newdawn.slick
 	 * .GameContainer, org.newdawn.slick.state.StateBasedGame)
 	 */
+	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {}
 

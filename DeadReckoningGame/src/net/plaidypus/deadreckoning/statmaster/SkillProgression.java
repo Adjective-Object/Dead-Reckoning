@@ -124,6 +124,7 @@ public class SkillProgression {
 		return Profession.loadProfession(modName, profNum).getTrees()[treeNum];
 	}
 
+	@Override
 	public String toString() {
 		return "[" + skillList[0] + "," + skillList[1] + "," + skillList[2]
 				+ "," + skillList[3] + "]";

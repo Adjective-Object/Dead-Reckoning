@@ -2,16 +2,16 @@ package net.plaidypus.deadreckoning.state.substates;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.StateBasedGame;
-
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.button.TextButton;
 import net.plaidypus.deadreckoning.hudelements.simple.StillImageElement;
 import net.plaidypus.deadreckoning.hudelements.simple.TextElement;
 import net.plaidypus.deadreckoning.state.PrebakedHudLayersState;
+
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class DeathScreenState extends PrebakedHudLayersState{
 	
@@ -24,6 +24,7 @@ public class DeathScreenState extends PrebakedHudLayersState{
 		super(stateID, background );
 	}
 	
+	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		super.update(container, game, delta);
@@ -35,6 +36,7 @@ public class DeathScreenState extends PrebakedHudLayersState{
 		}
 	}
 	
+	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
 		super.enter(container, game);
 		this.imagePanel.makeFrom(DeadReckoningGame.instance.getGameElement().player.getProfession().getPortriat());

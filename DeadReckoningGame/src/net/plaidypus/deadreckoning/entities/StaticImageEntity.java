@@ -1,7 +1,5 @@
 package net.plaidypus.deadreckoning.entities;
 
-import net.plaidypus.deadreckoning.board.Tile;
-
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 

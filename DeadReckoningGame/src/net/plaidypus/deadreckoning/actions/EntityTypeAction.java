@@ -34,6 +34,7 @@ public abstract class EntityTypeAction extends Action {
 	 * 
 	 * @see net.plaidypus.deadreckoning.actions.Action#apply(int)
 	 */
+	@Override
 	protected boolean apply(int delta) {
 		if (getTargetTile().getX() > GameBoard.getEntity(this.sourceID).getX()) {
 			GameBoard.getEntity(this.sourceID).setFacing(true);
@@ -47,7 +48,7 @@ public abstract class EntityTypeAction extends Action {
 			} else if (InteractiveEntity.class.isAssignableFrom(getTargetEntity().getClass())) {
 				return applyToEntity((InteractiveEntity) (getTargetEntity()),delta);
 			} else {
-				return applyToEntity((Entity) (getTargetEntity()),delta);
+				return applyToEntity((getTargetEntity()),delta);
 			} 
 		}
 		return true;

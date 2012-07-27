@@ -1,8 +1,6 @@
 package net.plaidypus.deadreckoning.entities;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -21,7 +19,6 @@ import net.plaidypus.deadreckoning.status.Status;
 import net.plaidypus.deadreckoning.utilities.Utilities;
 
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -144,6 +141,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * @param delta
 	 *            the delta
 	 */
+	@Override
 	public void update(GameContainer gc, int delta) {
 		getCurrentAntimation().update(delta);
 		if (this.getCurrentAntimation().isStopped()) {
@@ -172,6 +170,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 *            the delta
 	 * @return the action
 	 */
+	@Override
 	public Action chooseAction(GameContainer gc, int delta) {
 		return parseFinishedAction(decideNextAction(gc, delta));
 	}
@@ -249,6 +248,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * @param y
 	 *            the y
 	 */
+	@Override
 	public void forceRender(Graphics g, float x, float y) {
 		g.drawImage(
 				getCurrentAntimation().getCurrentFrame().getFlippedCopy(getFacing(),
@@ -349,6 +349,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#onDeath()
 	 */
+	@Override
 	public void onDeath() {
 		this.getParent().placeEntityNear(this.getX(), this.getY(),
 				new Corpse(this),
@@ -360,6 +361,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#isInteractive()
 	 */
+	@Override
 	public boolean makesActions() {
 		return true;
 	}
@@ -406,6 +408,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#isIdle()
 	 */
+	@Override
 	public boolean isIdle() {
 		return this.getCurrentAnimationID() == LivingEntity.ANIMATION_STAND
 				|| this.HP <= 0;
@@ -535,6 +538,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#advanceTurn()
 	 */
+	@Override
 	public ArrayList<Action> advanceTurn() {
 		this.setStealthed(false);
 		ArrayList<Action> actions = new ArrayList<Action>(0);
@@ -572,6 +576,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#getName()
 	 */
+	@Override
 	public String getName() {
 		String p = super.getName();
 		if (!this.isAlive()) {
@@ -580,8 +585,9 @@ public abstract class LivingEntity extends InteractiveEntity {
 		return p;
 	}
 	
+	@Override
 	protected String getGenericSave() {
-		String toRet = super.getGenericSave()+":"+this.getStatusesAsString(this.statuses)+":"+this.HP+":"+this.MP+":"
+		String toRet = super.getGenericSave()+":"+LivingEntity.getStatusesAsString(this.statuses)+":"+this.HP+":"+this.MP+":"
 				+this.statMaster.toString()+":"+this.allignmnet+":"+this.parentMod+":"+this.entityFile;
 		return toRet;
 	}
@@ -638,6 +644,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 		return this.statMaster.calculateEXPValue();
 	}
 	
+	@Override
 	public void setID(int newID){
 		super.setID(newID);
 		for(int i=0; i<this.skills.size(); i++){

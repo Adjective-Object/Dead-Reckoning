@@ -1,12 +1,12 @@
 package net.plaidypus.deadreckoning.hudelements.game.substates;
 
+import net.plaidypus.deadreckoning.hudelements.HudElement;
+import net.plaidypus.deadreckoning.state.HudLayersState;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
-
-import net.plaidypus.deadreckoning.hudelements.HudElement;
-import net.plaidypus.deadreckoning.state.HudLayersState;
 
 public class VicariousRenderer extends HudElement{
 

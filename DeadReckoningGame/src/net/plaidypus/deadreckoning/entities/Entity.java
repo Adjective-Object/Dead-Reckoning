@@ -187,7 +187,7 @@ public abstract class Entity extends DeadReckoningComponent {
 	 * @return the Absolute X position
 	 */
 	public int getAbsoluteX() {
-		return (int) (getLocation().getX() * DeadReckoningGame.tileSize);
+		return (getLocation().getX() * DeadReckoningGame.tileSize);
 	}
 
 	/**
@@ -197,7 +197,7 @@ public abstract class Entity extends DeadReckoningComponent {
 	 * @return the Absolute Y position
 	 */
 	public int getAbsoluteY() {
-		return (int) (getLocation().getY() * DeadReckoningGame.tileSize);
+		return (getLocation().getY() * DeadReckoningGame.tileSize);
 	}
 
 	/**
@@ -445,6 +445,7 @@ public abstract class Entity extends DeadReckoningComponent {
 		this.stealthed = stealthed;
 	}
 	
+	@Override
 	public String toString(){
 		return getClass().getSimpleName()+"@"+System.identityHashCode(this)+" ("+this.entityID+") "+this.getLocation();
 	}

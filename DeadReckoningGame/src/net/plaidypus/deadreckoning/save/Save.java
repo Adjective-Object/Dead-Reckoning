@@ -30,7 +30,6 @@ import net.plaidypus.deadreckoning.statmaster.SkillProgression;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.util.Log;
 
 /**
  * The Class Save. This class administers most of the basic file I/O for game

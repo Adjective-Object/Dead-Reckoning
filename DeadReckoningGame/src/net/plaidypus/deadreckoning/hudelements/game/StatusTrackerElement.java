@@ -2,10 +2,8 @@ package net.plaidypus.deadreckoning.hudelements.game;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
-import net.plaidypus.deadreckoning.skills.Skill;
 import net.plaidypus.deadreckoning.status.Status;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;

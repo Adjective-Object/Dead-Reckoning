@@ -43,6 +43,7 @@ public class MoveAction extends Action {
 	 * 
 	 * @see net.plaidypus.deadreckoning.actions.Action#apply(int)
 	 */
+	@Override
 	public boolean apply(int delta) {
 		if(displayedAnim==null){
 			displayedAnim = new MoveEntityEffect(this.getSourceTile(), this.sourceID, this.getTargetTile());

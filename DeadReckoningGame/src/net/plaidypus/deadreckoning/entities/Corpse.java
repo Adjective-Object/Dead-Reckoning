@@ -52,6 +52,7 @@ public class Corpse extends InteractiveEntity {
 	 * net.plaidypus.deadreckoning.entities.InteractiveEntity#update(org.newdawn
 	 * .slick.GameContainer, int)
 	 */
+	@Override
 	public void update(GameContainer gc, int delta) {
 	}
 
@@ -62,6 +63,7 @@ public class Corpse extends InteractiveEntity {
 	 * net.plaidypus.deadreckoning.entities.InteractiveEntity#updateBoardEffects
 	 * (org.newdawn.slick.GameContainer, int)
 	 */
+	@Override
 	public void updateBoardEffects(GameContainer gc) {
 	}
 

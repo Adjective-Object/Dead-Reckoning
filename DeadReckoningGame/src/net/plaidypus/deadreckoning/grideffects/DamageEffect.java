@@ -71,6 +71,7 @@ public class DamageEffect extends GridEffect {
 	 * @param delta
 	 *            the delta
 	 */
+	@Override
 	public void update(int delta) {
 		visibility = visibility * fadeout;
 		yMove += gravity;
@@ -96,6 +97,7 @@ public class DamageEffect extends GridEffect {
 	 * @param yOff
 	 *            the y off
 	 */
+	@Override
 	public void render(Graphics g, float xOff, float yOff) {
 		g.setColor(new Color(200, 0, 0, 255 * visibility));
 		g.drawString(damage,

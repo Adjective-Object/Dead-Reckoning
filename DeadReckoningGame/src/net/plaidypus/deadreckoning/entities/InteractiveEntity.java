@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
-import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.items.Item;
 
 import org.newdawn.slick.GameContainer;
@@ -66,6 +65,7 @@ public abstract class InteractiveEntity extends Entity {
 	 * net.plaidypus.deadreckoning.entities.Entity#updateBoardEffects(org.newdawn
 	 * .slick.GameContainer, int)
 	 */
+	@Override
 	public void updateBoardEffects(GameContainer gc) {
 		this.collapseInventory();
 	}
@@ -151,6 +151,7 @@ public abstract class InteractiveEntity extends Entity {
 		return e;
 	}
 
+	@Override
 	protected String getGenericSave(){
 		return super.getGenericSave()+":"+getInventoryAsString(this.inventory, this.inventorySize);
 	}

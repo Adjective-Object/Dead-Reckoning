@@ -8,7 +8,6 @@ import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.grideffects.AnimationEffect;
 import net.plaidypus.deadreckoning.items.Equip;
-import net.plaidypus.deadreckoning.statmaster.Profession;
 import net.plaidypus.deadreckoning.skills.Attack;
 import net.plaidypus.deadreckoning.skills.ChangeState;
 import net.plaidypus.deadreckoning.skills.Interacter;
@@ -16,6 +15,8 @@ import net.plaidypus.deadreckoning.skills.Loot;
 import net.plaidypus.deadreckoning.skills.PreBakedMove;
 import net.plaidypus.deadreckoning.skills.ViewSkills;
 import net.plaidypus.deadreckoning.skills.Wait;
+import net.plaidypus.deadreckoning.statmaster.Profession;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
@@ -138,6 +139,7 @@ public class Player extends LivingEntity {
 	 * net.plaidypus.deadreckoning.entities.LivingEntity#canSee(net.plaidypus
 	 * .deadreckoning.board.Tile)
 	 */
+	@Override
 	public boolean canSee(Tile t) {
 		return this.getLocation().isVisible();
 	}
@@ -149,6 +151,7 @@ public class Player extends LivingEntity {
 	 * net.plaidypus.deadreckoning.entities.LivingEntity#update(org.newdawn.
 	 * slick.GameContainer, int)
 	 */
+	@Override
 	public void update(GameContainer gc, int delta) {
 		super.update(gc, delta);
 		if (gc.getInput().isKeyDown(Input.KEY_RBRACKET)) {
@@ -159,11 +162,13 @@ public class Player extends LivingEntity {
 		}
 	}
 
+	@Override
 	public ArrayList<Action> advanceTurn() {
 		ArrayList<Action> c = super.advanceTurn();
 		return c;
 	}
 	
+	@Override
 	public void recalculateStatBonuses(){
 		super.recalculateStatBonuses();
 		for (int i = 0; i < 8; i++) {// updating the stat alterations based on
@@ -198,6 +203,7 @@ public class Player extends LivingEntity {
 	 * net.plaidypus.deadreckoning.entities.InteractiveEntity#updateBoardEffects
 	 * (org.newdawn.slick.GameContainer, int)
 	 */
+	@Override
 	public void updateBoardEffects(GameContainer gc) {
 		super.updateBoardEffects(gc);
 		this.getParent().lightInRadius(getLocation(), 2);// TODO visibility
@@ -209,7 +215,7 @@ public class Player extends LivingEntity {
 			Log.info(this.getName() + " leveled up!");
 			this.MP = this.profession.getMaxMP();
 			this.HP = this.profession.getMaxHP();
-			Animation levelUp = new Animation(this.levelUp, 100);// TODO
+			Animation levelUp = new Animation(Player.levelUp, 100);// TODO
 																	// actual
 																	// level
 																	// up
@@ -237,6 +243,7 @@ public class Player extends LivingEntity {
 	 *            the delta
 	 * @return the action
 	 */
+	@Override
 	public Action decideNextAction(GameContainer gc, int delta) {
 		for (int i = 0; i < keyBinds.length; i++) {
 			if (input.isKeyPressed(keyBinds[i])) {
@@ -300,7 +307,7 @@ public class Player extends LivingEntity {
 	 * @return the max hp
 	 */
 	public int getMaxHP() {
-		return (int) this.profession.getMaxHP();
+		return this.profession.getMaxHP();
 	}
 
 	/**
@@ -309,7 +316,7 @@ public class Player extends LivingEntity {
 	 * @return the max mp
 	 */
 	public int getMaxMP() {
-		return (int) this.profession.getMaxMP();
+		return this.profession.getMaxMP();
 	}
 
 	/**
@@ -318,7 +325,7 @@ public class Player extends LivingEntity {
 	 * @return the iNT
 	 */
 	public int getINT() {
-		return (int) this.profession.getINT();
+		return this.profession.getINT();
 	}
 
 	/**
@@ -327,7 +334,7 @@ public class Player extends LivingEntity {
 	 * @return the lUK
 	 */
 	public int getLUK() {
-		return (int) this.profession.getLUK();
+		return this.profession.getLUK();
 	}
 
 	/**
@@ -336,7 +343,7 @@ public class Player extends LivingEntity {
 	 * @return the sTR
 	 */
 	public int getSTR() {
-		return (int) this.profession.getSTR();
+		return this.profession.getSTR();
 	}
 
 	/**
@@ -345,7 +352,7 @@ public class Player extends LivingEntity {
 	 * @return the dEX
 	 */
 	public int getDEX() {
-		return (int) this.profession.getDEX();
+		return this.profession.getDEX();
 	}
 
 	/**

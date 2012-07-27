@@ -2,7 +2,6 @@ package net.plaidypus.deadreckoning.board;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.ConcurrentSkipListMap;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.entities.Entity;
@@ -319,40 +318,40 @@ public class GameBoard implements ILosBoard {
 	public void render(Graphics g, int xoff, int yoff) {
 
 		int 
-			lowX = (int) Utilities.limitTo(
+			lowX = Utilities.limitTo(
 				-xoff / DeadReckoningGame.tileSize,
 				0, this.getWidth()),
 				
-			highX = (int) Utilities.limitTo(
+			highX = Utilities.limitTo(
 					-xoff/ DeadReckoningGame.tileSize + renderDistX,
 					0, this.getWidth()),
 			
-			lowY = (int) Utilities.limitTo(
+			lowY = Utilities.limitTo(
 					-yoff / DeadReckoningGame.tileSize,
 					0, this.getHeight()),
 					
-			highY = (int) Utilities.limitTo(
+			highY = Utilities.limitTo(
 				-yoff / DeadReckoningGame.tileSize + renderDistY,
 				0,this.getHeight()) ;
 
 		for (int x = lowX; x < highX; x++) {
 			for (int y = lowY; y < highY; y++) {
 				board[x][y].render(g,
-						(int)(x * DeadReckoningGame.tileSize + xoff),
-						(int)(y * DeadReckoningGame.tileSize + yoff) );
+						(x * DeadReckoningGame.tileSize + xoff),
+						(y * DeadReckoningGame.tileSize + yoff) );
 			}
 		}
 
 		if (primaryHighlight != null) {
 			g.setColor(primaryHighlightColor);
 			g.drawRect(primaryHighlight.getX() * DeadReckoningGame.tileSize
-					+ (int) xoff, primaryHighlight.getY()
-					* DeadReckoningGame.tileSize + (int) yoff,
+					+ xoff, primaryHighlight.getY()
+					* DeadReckoningGame.tileSize + yoff,
 					DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
 		}
 
 		for (int i = 0; i < underEffects.size(); i++) {
-			underEffects.get(i).render(g, (int)xoff, (int)yoff);
+			underEffects.get(i).render(g, xoff, yoff);
 		}
 
 		for (int x = lowX; x < highX; x++) {
@@ -363,8 +362,8 @@ public class GameBoard implements ILosBoard {
 									.isVisible()) || (board[x][y].getEntity(i)
 									.isTerrain() && board[x][y].explored) || DeadReckoningGame.debugMode )) {
 						board[x][y].getEntity(i).render(g,
-								(int)(x * DeadReckoningGame.tileSize + xoff),
-								(int)(y * DeadReckoningGame.tileSize + yoff) );
+								(x * DeadReckoningGame.tileSize + xoff),
+								(y * DeadReckoningGame.tileSize + yoff) );
 					}
 				}
 			}
@@ -840,6 +839,7 @@ public class GameBoard implements ILosBoard {
 	 * 
 	 * @see rlforj.los.ILosBoard#contains(int, int)
 	 */
+	@Override
 	public boolean contains(int x, int y) {
 		return x < this.getWidth() && x >= 0 && y < this.getHeight() && y >= 0
 				&& this.getTileAt(x, y).isOpen(Tile.LAYER_ACTIVE);
@@ -850,6 +850,7 @@ public class GameBoard implements ILosBoard {
 	 * 
 	 * @see rlforj.los.ILosBoard#isObstacle(int, int)
 	 */
+	@Override
 	public boolean isObstacle(int x, int y) {
 		return x < this.getWidth() && x >= 0 && y < this.getHeight() && y >= 0
 				&& !board[x][y].isTransparent();
@@ -860,6 +861,7 @@ public class GameBoard implements ILosBoard {
 	 * 
 	 * @see rlforj.los.ILosBoard#visit(int, int)
 	 */
+	@Override
 	public void visit(int x, int y) {
 		if (x < this.getWidth() && x >= 0 && y < this.getHeight() && y >= 0) {
 			this.getTileAt(x, y).visible = true;
@@ -905,6 +907,7 @@ public class GameBoard implements ILosBoard {
 		return ingameEntities;
 	}
 
+	@Override
 	public String toString(){
 		return "GameBoard "+this.getMapID();
 	}

@@ -8,6 +8,7 @@ public class DeadReckoningLogSystem extends RichTextLogSystem{
 		super(outDest);
 	}
 	
+	@Override
 	public void info(String message){
 		super.info(message);
 		if(DeadReckoningGame.instance.getMessageElement()!=null){

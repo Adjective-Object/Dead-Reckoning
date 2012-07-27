@@ -6,7 +6,6 @@ import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
-import net.plaidypus.deadreckoning.utilities.Utilities;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -34,6 +33,7 @@ public class MiniMap extends HudElement {
 	}
 
 	
+	@Override
 	public void makeFrom(Object o){
 		this.hookState=(GameplayElement)o;
 	}

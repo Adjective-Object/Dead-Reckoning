@@ -1,9 +1,9 @@
 package net.plaidypus.deadreckoning.actions;
 
-import org.newdawn.slick.SlickException;
-
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.save.Save;
+
+import org.newdawn.slick.SlickException;
 
 // TODO: Auto-generated Javadoc
 /**

@@ -4,7 +4,6 @@ import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.MoveAction;
 import net.plaidypus.deadreckoning.board.Tile;
-import net.plaidypus.deadreckoning.entities.LivingEntity;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -41,6 +40,7 @@ public class PreBakedMove extends Movement {
 	 * net.plaidypus.deadreckoning.skills.Movement#makeAction(net.plaidypus.
 	 * deadreckoning.board.Tile)
 	 */
+	@Override
 	public Action makeAction(Tile target) {
 		this.getSource().getParent().clearPrimaryHighlight();
 		if (getSource().getLocation().getRelativeTo(xoff, yoff) .isEmpty(getSource().getLayer()) ||

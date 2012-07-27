@@ -71,21 +71,22 @@ public class Monster extends LivingEntity {
 	 *            the delta
 	 * @return the action
 	 */
+	@Override
 	public Action decideNextAction(GameContainer gc, int delta) {
-		for (int i = -1; i < 2; i++) {
-			for (int q = -1; q < 2; q++) {
-				for (int k = 0; k < Tile.numLayers; k++) {
-					if (!this.getLocation().getRelativeTo(i, q).isOpen(k)) {
-						Entity n = this.getLocation().getRelativeTo(i, q)
-								.getEntity(k);
-						if (n.getAllignment() != this.getAllignment()
-								&& n.getAllignment() != Entity.ALLIGN_NEUTRAL
-								&& n.makesActions()
-								&& !n.isStealthed()
-								&& Utilities.randFloat() <= 0.8) {
-							return attack.makeAction(this.getLocation()
-									.getRelativeTo(i, q));
-						}
+		for (int i = 1; i < 8; i+=2) {
+			int x = i%3 -1;
+			int y = i/3 -1;
+			for (int k = 0; k < Tile.numLayers; k++) {
+				if (!this.getLocation().getRelativeTo(x, y).isOpen(k)) {
+					Entity n = this.getLocation().getRelativeTo(x, y)
+							.getEntity(k);
+					if (n.getAllignment() != this.getAllignment()
+							&& n.getAllignment() != Entity.ALLIGN_NEUTRAL
+							&& n.makesActions()
+							&& !n.isStealthed()
+							&& Utilities.randFloat() <= 0.8) {
+						return attack.makeAction(this.getLocation()
+								.getRelativeTo(x, y));
 					}
 				}
 			}

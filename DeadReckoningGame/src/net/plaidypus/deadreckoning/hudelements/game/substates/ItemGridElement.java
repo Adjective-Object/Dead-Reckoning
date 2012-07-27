@@ -42,17 +42,20 @@ public class ItemGridElement extends SimplePanel {
 		this.gridHeight=gridHeight;
 	}
 
+	@Override
 	public void makeFrom(Object o) {
 		this.selector = -1;
 		InteractiveEntity e = (InteractiveEntity) (o);// TODO making
 		this.setContents(e.getInventory());
 	}
 
+	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 		tileimage = new Image("res/lootscreen/ItemSlot.png");
 	}
 
+	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
 		Input i = gc.getInput();
 		if (i.isKeyPressed(Input.KEY_LEFT)) {
@@ -115,6 +118,7 @@ public class ItemGridElement extends SimplePanel {
 		this.selector=-1;
 	}
 
+	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		super.render(gc, sbg, g);

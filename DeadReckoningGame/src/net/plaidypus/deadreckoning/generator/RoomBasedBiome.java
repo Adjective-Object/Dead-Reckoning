@@ -2,13 +2,13 @@ package net.plaidypus.deadreckoning.generator;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.SlickException;
-
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.LandingPad;
 import net.plaidypus.deadreckoning.entities.Stair;
 import net.plaidypus.deadreckoning.utilities.Utilities;
+
+import org.newdawn.slick.SlickException;
 
 // TODO: Auto-generated Javadoc
 /**

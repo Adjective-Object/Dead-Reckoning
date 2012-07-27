@@ -62,6 +62,7 @@ public class ImageButton extends Button {
 	 * net.plaidypus.deadreckoning.hudelements.button.Button#update(org.newdawn
 	 * .slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
 	 */
+	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 		super.update(gc, sbg, delta);
@@ -96,6 +97,7 @@ public class ImageButton extends Button {
 	 * 
 	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getWidth()
 	 */
+	@Override
 	public int getWidth() {
 		if (image != null) {
 			return image.getWidth();

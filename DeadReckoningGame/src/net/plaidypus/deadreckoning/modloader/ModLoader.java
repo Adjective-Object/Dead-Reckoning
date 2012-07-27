@@ -16,15 +16,15 @@ import java.util.Iterator;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.Log;
-
 import net.plaidypus.deadreckoning.DeadReckoningComponent;
 import net.plaidypus.deadreckoning.filters.HiddenFileFilter;
 import net.plaidypus.deadreckoning.generator.Biome;
 import net.plaidypus.deadreckoning.statmaster.Profession;
+
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.opengl.TextureLoader;
+import org.newdawn.slick.util.Log;
 
 public class ModLoader {
 

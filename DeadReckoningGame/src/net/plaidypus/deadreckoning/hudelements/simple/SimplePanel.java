@@ -1,13 +1,13 @@
 package net.plaidypus.deadreckoning.hudelements.simple;
 
+import net.plaidypus.deadreckoning.DeadReckoningGame;
+import net.plaidypus.deadreckoning.hudelements.HudElement;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
-
-import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.hudelements.HudElement;
 
 public class SimplePanel extends HudElement{
 	

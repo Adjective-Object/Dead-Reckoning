@@ -8,7 +8,6 @@ import net.plaidypus.deadreckoning.hudelements.button.Button;
 import net.plaidypus.deadreckoning.hudelements.button.ImageButton;
 import net.plaidypus.deadreckoning.hudelements.menuItems.FairyLights;
 import net.plaidypus.deadreckoning.hudelements.simple.StillImageElement;
-import net.plaidypus.deadreckoning.state.HudLayersState;
 import net.plaidypus.deadreckoning.state.PrebakedHudLayersState;
 
 import org.newdawn.slick.GameContainer;
@@ -55,6 +54,7 @@ public class MainMenuState extends PrebakedHudLayersState {
 	 * @throws SlickException
 	 *             the slick exception
 	 */
+	@Override
 	public ArrayList<HudElement> makeContents() throws SlickException {
 		System.out.println("Building MainMenuState");
 		ArrayList<HudElement> elements = new ArrayList<HudElement>(0);
@@ -88,6 +88,7 @@ public class MainMenuState extends PrebakedHudLayersState {
 	 * @see net.plaidypus.deadreckoning.state.HudLayersState#update(org.newdawn.slick.GameContainer,
 	 *      org.newdawn.slick.state.StateBasedGame, int)
 	 */
+	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		super.update(container, game, delta);
@@ -103,6 +104,7 @@ public class MainMenuState extends PrebakedHudLayersState {
 		}
 	}
 	
+	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
 		super.enter(container, game);
 		DeadReckoningGame.instance.getGameElement().resetBoard();

@@ -39,6 +39,7 @@ public class OptionsState extends PrebakedHudLayersState{
 		stretch.makeFrom(OptionsHandler.stretchScreen);
 		fullscreen.makeFrom(OptionsHandler.fullScreen);	}
 
+	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		super.update(container, game, delta);

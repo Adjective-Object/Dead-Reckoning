@@ -1,12 +1,11 @@
 package net.plaidypus.deadreckoning.skills;
 
-import org.newdawn.slick.SlickException;
-
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.WaitAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
-import net.plaidypus.deadreckoning.entities.LivingEntity;
+
+import org.newdawn.slick.SlickException;
 
 // TODO: Auto-generated Javadoc
 /**

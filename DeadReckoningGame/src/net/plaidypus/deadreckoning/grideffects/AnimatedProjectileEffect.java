@@ -1,11 +1,10 @@
 package net.plaidypus.deadreckoning.grideffects;
 
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.Graphics;
-
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.board.Tile;
-import net.plaidypus.deadreckoning.actions.Action;
+
+import org.newdawn.slick.Animation;
+import org.newdawn.slick.Graphics;
 
 public class AnimatedProjectileEffect extends GridEffect {
 

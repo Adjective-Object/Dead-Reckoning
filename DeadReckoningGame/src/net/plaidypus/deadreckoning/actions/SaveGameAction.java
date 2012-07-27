@@ -2,14 +2,12 @@ package net.plaidypus.deadreckoning.actions;
 
 import java.io.IOException;
 
-import org.newdawn.slick.util.Log;
-
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.board.GameBoard;
-import net.plaidypus.deadreckoning.board.Tile;
-import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.Player;
 import net.plaidypus.deadreckoning.save.Save;
+
+import org.newdawn.slick.util.Log;
 
 public class SaveGameAction extends Action{
 

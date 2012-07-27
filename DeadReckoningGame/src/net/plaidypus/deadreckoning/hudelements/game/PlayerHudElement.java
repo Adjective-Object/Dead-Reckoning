@@ -52,6 +52,7 @@ public class PlayerHudElement extends HudElement {
 	 * net.plaidypus.deadreckoning.hudelements.HudElement#update(org.newdawn
 	 * .slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
 	 */
+	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 		
@@ -89,6 +90,7 @@ public class PlayerHudElement extends HudElement {
 	 * 
 	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getWidth()
 	 */
+	@Override
 	public int getWidth() {
 		return img.getWidth();
 	}
@@ -98,6 +100,7 @@ public class PlayerHudElement extends HudElement {
 	 * 
 	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getHeight()
 	 */
+	@Override
 	public int getHeight() {
 		return img.getHeight();
 	}

@@ -55,6 +55,7 @@ public class StillImageElement extends HudElement {
 	 * net.plaidypus.deadreckoning.hudelements.HudElement#makeFrom(java.lang
 	 * .Object)
 	 */
+	@Override
 	public void makeFrom(Object o) {
 		this.img = (Image) (o);
 	}

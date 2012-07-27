@@ -1,7 +1,6 @@
 package net.plaidypus.deadreckoning.skills;
 
 import net.plaidypus.deadreckoning.DeadReckoningComponent;
-import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
@@ -281,6 +280,7 @@ public abstract class Skill extends DeadReckoningComponent {
 	 * 
 	 * @throws SlickException
 	 */
+	@Override
 	public abstract void init() throws SlickException;
 
 	public void setSource(int entityID) {

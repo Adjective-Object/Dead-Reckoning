@@ -2,17 +2,17 @@ package net.plaidypus.deadreckoning.hudelements.menuItems;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.StateBasedGame;
-
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.button.Button;
 import net.plaidypus.deadreckoning.hudelements.button.ImageButton;
 import net.plaidypus.deadreckoning.hudelements.simple.Panel;
 import net.plaidypus.deadreckoning.statmaster.Profession;
 import net.plaidypus.deadreckoning.statmaster.SkillProgression;
+
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class SkillTreeSelectionElement extends Panel{
 

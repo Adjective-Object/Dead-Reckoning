@@ -18,12 +18,14 @@ public class StreamSplitter extends PrintStream{
 		}
 	}
 
+	@Override
 	public void print(String s) {
 		for(int i=0; i<outs.length; i++){
 			outs[i].print(s);
 		}
 	}
 	
+	@Override
 	public void close(){
 		super.close();
 		for(int i=0; i<outs.length; i++){
@@ -37,6 +39,7 @@ public class StreamSplitter extends PrintStream{
 		}
 	}
 	
+	@Override
 	public void println(){
 		newLine();
 	}

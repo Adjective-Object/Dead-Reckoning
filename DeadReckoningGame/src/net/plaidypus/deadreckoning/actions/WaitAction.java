@@ -1,7 +1,6 @@
 package net.plaidypus.deadreckoning.actions;
 
 import net.plaidypus.deadreckoning.board.GameBoard;
-import net.plaidypus.deadreckoning.entities.Entity;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -24,6 +23,7 @@ public class WaitAction extends Action {
 	 * 
 	 * @see net.plaidypus.deadreckoning.actions.Action#apply(int)
 	 */
+	@Override
 	protected boolean apply(int delta) {
 		return true;
 	}

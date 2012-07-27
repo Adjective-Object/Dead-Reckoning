@@ -1,13 +1,12 @@
 package net.plaidypus.deadreckoning.actions;
 
-import org.newdawn.slick.util.Log;
-
 import net.plaidypus.deadreckoning.board.GameBoard;
-import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.status.Status;
+
+import org.newdawn.slick.util.Log;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -42,6 +41,7 @@ public class ApplyStatusAction extends EntityTypeAction {
 	 * net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net
 	 * .plaidypus.deadreckoning.entities.Entity)
 	 */
+	@Override
 	protected boolean applyToEntity(Entity entity, int delta) {
 		return true;
 	}
@@ -53,6 +53,7 @@ public class ApplyStatusAction extends EntityTypeAction {
 	 * net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net
 	 * .plaidypus.deadreckoning.entities.LivingEntity)
 	 */
+	@Override
 	protected boolean applyToEntity(LivingEntity e, int delta) {
 		e.addCondition(s);
 		Log.info(getTargetEntity().getName() + " now has the status "
@@ -67,6 +68,7 @@ public class ApplyStatusAction extends EntityTypeAction {
 	 * net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net
 	 * .plaidypus.deadreckoning.entities.InteractiveEntity)
 	 */
+	@Override
 	protected boolean applyToEntity(InteractiveEntity e, int delta) {
 		return true;
 	}
@@ -76,6 +78,7 @@ public class ApplyStatusAction extends EntityTypeAction {
 	 * 
 	 * @see net.plaidypus.deadreckoning.actions.Action#isNoticed()
 	 */
+	@Override
 	protected boolean isNoticed() {
 		return getTargetTile().canBeSeen() || GameBoard.getEntity(this.sourceID).getLocation().canBeSeen();
 	}

@@ -2,11 +2,9 @@ package net.plaidypus.deadreckoning.actions;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.board.GameBoard;
-import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
-import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
 import net.plaidypus.deadreckoning.state.substates.LootState;
 
 // TODO: Auto-generated Javadoc
@@ -38,6 +36,7 @@ public class LootAction extends EntityTypeAction { // TODO make it so you can
 	 * net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net
 	 * .plaidypus.deadreckoning.entities.Entity)
 	 */
+	@Override
 	protected boolean applyToEntity(Entity entity, int delta) {
 		DeadReckoningGame.instance.getMessageElement().addMessage(
 				"That has nothing to loot.");
@@ -52,6 +51,7 @@ public class LootAction extends EntityTypeAction { // TODO make it so you can
 	 * net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net
 	 * .plaidypus.deadreckoning.entities.InteractiveEntity)
 	 */
+	@Override
 	protected boolean applyToEntity(InteractiveEntity e, int delta) {
 		DeadReckoningGame.instance.getMessageElement().addMessage(
 				GameBoard.getEntity(this.sourceID).getName() + " looted "
@@ -66,6 +66,7 @@ public class LootAction extends EntityTypeAction { // TODO make it so you can
 	 * net.plaidypus.deadreckoning.actions.EntityTypeAction#applyToEntity(net
 	 * .plaidypus.deadreckoning.entities.LivingEntity)
 	 */
+	@Override
 	protected boolean applyToEntity(LivingEntity e, int delta) {
 		if (e.isAlive()) {
 			DeadReckoningGame.instance.getMessageElement().addMessage(

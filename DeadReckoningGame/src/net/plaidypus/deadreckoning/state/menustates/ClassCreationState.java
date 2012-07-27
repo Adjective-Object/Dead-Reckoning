@@ -41,6 +41,7 @@ public class ClassCreationState extends PrebakedHudLayersState{
 	}
 
 
+	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		super.update(container, game, delta);
@@ -173,6 +174,7 @@ public class ClassCreationState extends PrebakedHudLayersState{
 		}
 	}
 	
+	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException{
 		this.updateToProfession(Profession.getProfession(0));
 	}

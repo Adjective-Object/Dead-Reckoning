@@ -1,10 +1,6 @@
 package net.plaidypus.deadreckoning.actions;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.board.Tile;
-import net.plaidypus.deadreckoning.entities.Entity;
-import net.plaidypus.deadreckoning.entities.InteractiveEntity;
-import net.plaidypus.deadreckoning.hudelements.game.GameplayElement;
 
 // TODO: Auto-generated Javadoc
 /**

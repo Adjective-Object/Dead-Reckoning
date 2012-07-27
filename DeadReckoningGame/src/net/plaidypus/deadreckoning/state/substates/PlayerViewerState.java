@@ -13,7 +13,6 @@ import net.plaidypus.deadreckoning.hudelements.simple.Panel;
 import net.plaidypus.deadreckoning.hudelements.simple.StillImageElement;
 import net.plaidypus.deadreckoning.hudelements.simple.TextElement;
 import net.plaidypus.deadreckoning.skills.Skill;
-import net.plaidypus.deadreckoning.state.HudLayersState;
 import net.plaidypus.deadreckoning.state.PrebakedHudLayersState;
 import net.plaidypus.deadreckoning.statmaster.Profession;
 import net.plaidypus.deadreckoning.statmaster.SkillProgression;
@@ -65,6 +64,7 @@ public class PlayerViewerState extends PrebakedHudLayersState {
 	 * net.plaidypus.deadreckoning.state.HudLayersState#update(org.newdawn.slick
 	 * .GameContainer, org.newdawn.slick.state.StateBasedGame, int)
 	 */
+	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		super.update(container, game, delta);
@@ -85,6 +85,7 @@ public class PlayerViewerState extends PrebakedHudLayersState {
 		}
 	}
 
+	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
 		super.enter(container, game);
 		
@@ -195,6 +196,7 @@ public class PlayerViewerState extends PrebakedHudLayersState {
 	 * 
 	 * @return the array list
 	 */
+	@Override
 	public ArrayList<HudElement> makeContents() {
 		ArrayList<HudElement> elements = new ArrayList<HudElement>(0);
 		// building skill buttons

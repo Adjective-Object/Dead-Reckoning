@@ -93,6 +93,7 @@ public class GameplayElement extends HudElement {
 	 * @throws SlickException
 	 *             the slick exception
 	 */
+	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 
@@ -184,6 +185,7 @@ public class GameplayElement extends HudElement {
 	 * @throws SlickException
 	 *             the slick exception
 	 */
+	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 
@@ -345,6 +347,7 @@ public class GameplayElement extends HudElement {
 	 * @throws SlickException
 	 *             the slick exception
 	 */
+	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		getBoard().render(g, (int)-cameraX, (int)-cameraY);

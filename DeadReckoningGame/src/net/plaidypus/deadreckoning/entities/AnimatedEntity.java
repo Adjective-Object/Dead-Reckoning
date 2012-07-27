@@ -1,7 +1,6 @@
 package net.plaidypus.deadreckoning.entities;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
-import net.plaidypus.deadreckoning.board.Tile;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
@@ -60,6 +59,7 @@ public abstract class AnimatedEntity extends Entity {
 	 * net.plaidypus.deadreckoning.entities.Entity#update(org.newdawn.slick.
 	 * GameContainer, int)
 	 */
+	@Override
 	public void update(GameContainer gc, int delta) {
 		sprite.update(delta);
 	}

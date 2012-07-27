@@ -1,7 +1,6 @@
 package net.plaidypus.deadreckoning.items;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -10,7 +9,6 @@ import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.utilities.Utilities;
 
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 // TODO: Auto-generated Javadoc
@@ -40,6 +38,7 @@ public class EtcDrop extends Item {
 	 * 
 	 * @see net.plaidypus.deadreckoning.items.Item#parseItem(java.lang.String)
 	 */
+	@Override
 	protected void parseItem(InputStream in) throws IOException, SlickException {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		name = reader.readLine();
@@ -69,6 +68,7 @@ public class EtcDrop extends Item {
 	 * net.plaidypus.deadreckoning.items.Item#render(org.newdawn.slick.Graphics,
 	 * int, int)
 	 */
+	@Override
 	public void render(Graphics g, int x, int y) {
 		super.render(g, x, y);
 		g.drawString(Integer.toString(this.number), x, y);

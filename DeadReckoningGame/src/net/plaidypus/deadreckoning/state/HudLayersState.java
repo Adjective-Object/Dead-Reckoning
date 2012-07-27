@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
-import net.plaidypus.deadreckoning.hudelements.HudElementContainer;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -77,6 +76,7 @@ public class HudLayersState extends BasicGameState{
 	 *      resources that are used across the board by all members of a given
 	 *      class, although that need not be the case
 	 */
+	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
 		for (int i = 0; i < this.contents.size(); i++) {
@@ -90,6 +90,7 @@ public class HudLayersState extends BasicGameState{
 	 * 
 	 *      updates the elements of the state
 	 */
+	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		for (int i = 0; i < contents.size(); i++) {
@@ -114,6 +115,7 @@ public class HudLayersState extends BasicGameState{
 	 * @see org.newdawn.slick.state.GameState#render(org.newdawn.slick.GameContainer,
 	 *      org.newdawn.slick.state.StateBasedGame, org.newdawn.slick.Graphics)
 	 */
+	@Override
 	public void render(GameContainer gc, StateBasedGame game, Graphics g)
 			throws SlickException {
 		g.setColor(Color.black);
@@ -150,6 +152,7 @@ public class HudLayersState extends BasicGameState{
 	 * 
 	 * @see org.newdawn.slick.state.BasicGameState#getID()
 	 */
+	@Override
 	public int getID() {
 		return this.stateID;
 	}

@@ -213,6 +213,7 @@ public class Profession extends StatMaster {
 	 * 
 	 * @see net.plaidypus.deadreckoning.professions.StatMaster#getMaxHP()
 	 */
+	@Override
 	public int getRawMaxHP() {
 		return (int) (baseHP + statDist[0] * level * spPerLevel);
 	}
@@ -222,6 +223,7 @@ public class Profession extends StatMaster {
 	 * 
 	 * @see net.plaidypus.deadreckoning.professions.StatMaster#getMaxMP()
 	 */
+	@Override
 	public int getRawMaxMP() {
 		return (int) (baseMP + statDist[1] * level * spPerLevel);
 	}
@@ -231,6 +233,7 @@ public class Profession extends StatMaster {
 	 * 
 	 * @see net.plaidypus.deadreckoning.professions.StatMaster#getSTR()
 	 */
+	@Override
 	public int getRawSTR() {
 		return (int) (baseStat + statDist[2] * level * spPerLevel);
 	}
@@ -240,6 +243,7 @@ public class Profession extends StatMaster {
 	 * 
 	 * @see net.plaidypus.deadreckoning.professions.StatMaster#getDEX()
 	 */
+	@Override
 	public int getRawDEX() {
 		return (int) (baseStat + statDist[3] * level * spPerLevel);
 	}
@@ -249,6 +253,7 @@ public class Profession extends StatMaster {
 	 * 
 	 * @see net.plaidypus.deadreckoning.professions.StatMaster#getINT()
 	 */
+	@Override
 	public int getRawINT() {
 		return (int) (baseStat + statDist[4] * level * spPerLevel);
 	}
@@ -258,6 +263,7 @@ public class Profession extends StatMaster {
 	 * 
 	 * @see net.plaidypus.deadreckoning.professions.StatMaster#getLUK()
 	 */
+	@Override
 	public int getRawLUK() {
 		return (int) (baseStat + statDist[5] * level * spPerLevel);
 	}
@@ -330,6 +336,7 @@ public class Profession extends StatMaster {
 	 * 
 	 * @see net.plaidypus.deadreckoning.professions.StatMaster#getLevel()
 	 */
+	@Override
 	public int getLevel() {
 		return this.level;
 	}
@@ -458,6 +465,7 @@ public class Profession extends StatMaster {
 		this.level = level;
 	}
 	
+	@Override
 	public String toString(){
 		return "<Profession "+this.name+">";
 	}

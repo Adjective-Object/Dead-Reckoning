@@ -7,8 +7,6 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import net.plaidypus.deadreckoning.DeadReckoningGame;
-
 import org.newdawn.slick.util.Log;
 import org.newdawn.slick.util.LogSystem;
 
@@ -54,6 +52,7 @@ public class RichTextLogSystem implements LogSystem {
 	 * @param message The message describing the error
 	 * @param e The exception causing the error
 	 */
+	@Override
 	public void error(String message, Throwable e) {
 		error(message);
 		error(e);
@@ -64,6 +63,7 @@ public class RichTextLogSystem implements LogSystem {
 	 * 
 	 * @param e The exception causing the error
 	 */
+	@Override
 	public void error(Throwable e) {
 		error(e.getMessage());
 		StringWriter s = new StringWriter();
@@ -77,6 +77,7 @@ public class RichTextLogSystem implements LogSystem {
 	 * 
 	 * @param message The message describing the error
 	 */
+	@Override
 	public void error(String message) {
 		sendMessage(COLOR_RED,message);
 	}
@@ -86,6 +87,7 @@ public class RichTextLogSystem implements LogSystem {
 	 * 
 	 * @param message The message describing the warning
 	 */
+	@Override
 	public void warn(String message) {
 		sendMessage(COLOR_ORANGE,message);
 	}
@@ -95,6 +97,7 @@ public class RichTextLogSystem implements LogSystem {
 	 * 
 	 * @param message The message describing the infomation
 	 */
+	@Override
 	public void info(String message) {
 		sendMessage(COLOR_STD,message);
 	}
@@ -104,6 +107,7 @@ public class RichTextLogSystem implements LogSystem {
 	 * 
 	 * @param message The message describing the debug
 	 */
+	@Override
 	public void debug(String message) {
 		sendMessage(COLOR_BLUE,message);
 	}
@@ -114,6 +118,7 @@ public class RichTextLogSystem implements LogSystem {
 	 * @param message The message describing the warning
 	 * @param e The cause of the warning
 	 */
+	@Override
 	public void warn(String message, Throwable e) {
 		warn(message);
 		error(e);

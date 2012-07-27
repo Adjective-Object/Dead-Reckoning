@@ -37,6 +37,7 @@ public class AnimationEffect extends GridEffect {
 	 * @see org.newdawn.slick.Animation#update(long)
 	 * @see net.plaidypus.deadreckoning.grideffects.GridEffect#update(int)
 	 */
+	@Override
 	public void update(int delta) {
 		this.animation.update(delta);
 		if (animation.isStopped()) {
@@ -51,6 +52,7 @@ public class AnimationEffect extends GridEffect {
 	 * @see net.plaidypus.deadreckoning.grideffects.GridEffect#render(org.newdawn.slick.Graphics,
 	 *      float, float)
 	 */
+	@Override
 	public void render(Graphics g, float xoff, float yoff) {
 		g.drawImage(this.animation.getCurrentFrame(), location.getX()
 				* DeadReckoningGame.tileSize + xoff, location.getY()

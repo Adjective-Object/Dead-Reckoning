@@ -2,7 +2,6 @@ package net.plaidypus.deadreckoning.actions;
 
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
-import net.plaidypus.deadreckoning.entities.Entity;
 
 // TODO: Auto-generated Javadoc
 /**

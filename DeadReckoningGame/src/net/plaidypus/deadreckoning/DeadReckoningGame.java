@@ -36,7 +36,6 @@ import net.plaidypus.deadreckoning.state.substates.InventoryState;
 import net.plaidypus.deadreckoning.state.substates.LootState;
 import net.plaidypus.deadreckoning.state.substates.PlayerViewerState;
 import net.plaidypus.deadreckoning.utilities.DeadReckoningLogSystem;
-import net.plaidypus.deadreckoning.utilities.RichTextLogSystem;
 import net.plaidypus.deadreckoning.utilities.KeyConfig;
 import net.plaidypus.deadreckoning.utilities.OptionsHandler;
 

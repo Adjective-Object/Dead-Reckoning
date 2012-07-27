@@ -2,16 +2,15 @@ package net.plaidypus.deadreckoning.actions;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.util.Log;
-
-import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.status.Status;
+
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.util.Log;
 
 /**
  * The Class Action.
@@ -142,6 +141,7 @@ public abstract class Action {
 	 * 
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString() {
 		String[] p = this.getClass().toString().split("actions.");
 

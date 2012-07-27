@@ -113,6 +113,7 @@ public class BaseClassSelectionElement extends HudElement {
 	 * 
 	 * @see net.plaidypus.deadreckoning.hudelements.HudElement#getWidth()
 	 */
+	@Override
 	public int getWidth() {
 		return iconImage.getWidth();
 	}
