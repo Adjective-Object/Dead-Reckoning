@@ -83,7 +83,7 @@ public class Torch extends Entity {
 	 * net.plaidypus.deadreckoning.entities.Entity#updateBoardEffects(org.newdawn
 	 * .slick.GameContainer, int)
 	 */
-	public void updateBoardEffects(GameContainer gc, int delta) {
+	public void updateBoardEffects(GameContainer gc) {
 		this.getParent().lightInRadius(getLocation(), this.light);
 	}
 

@@ -198,8 +198,8 @@ public class Player extends LivingEntity {
 	 * net.plaidypus.deadreckoning.entities.InteractiveEntity#updateBoardEffects
 	 * (org.newdawn.slick.GameContainer, int)
 	 */
-	public void updateBoardEffects(GameContainer gc, int delta) {
-		super.updateBoardEffects(gc, delta);
+	public void updateBoardEffects(GameContainer gc) {
+		super.updateBoardEffects(gc);
 		this.getParent().lightInRadius(getLocation(), 2);// TODO visibility
 															// light radius
 															// thing?

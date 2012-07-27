@@ -1,6 +1,7 @@
 package net.plaidypus.deadreckoning.grideffects;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
+import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 
 import org.newdawn.slick.Graphics;
@@ -19,10 +20,13 @@ public class MoveEntityEffect extends GridEffect {
 	Tile destination;
 
 	/** The currentdown. */
-	double currentdown;
+
+	int xoff, yoff;
+	
+	double hypotenuse, a, b, speed = 100, distravelled;
 
 	/** The layer. */
-	int layer;
+	int entityID;
 
 	/**
 	 * Instantiates a new move entity effect.
@@ -34,19 +38,22 @@ public class MoveEntityEffect extends GridEffect {
 	 * @param targetLocation
 	 *            the target location
 	 */
-	public MoveEntityEffect(Tile location, int layer, Tile targetLocation) {
+	public MoveEntityEffect(Tile location, int entityID, Tile targetLocation) {
 		super(location);
-		this.layer = layer;
+		this.entityID = entityID;
 		this.destination = targetLocation;
-		location.getEntity(layer).setVisible(false);
+		GameBoard.getEntity(entityID).setVisible(false);
+		
+		a = location.getX()-destination.getX();
+		b = location.getY()-destination.getY();
+		hypotenuse = Math.sqrt(Math.pow(a,2)+Math.pow(b,2));
 
+		
 		if (destination.getX() > location.getX()) {
-			location.getEntity(layer).setFacing(true);
+			GameBoard.getEntity(entityID).setFacing(true);
 		} else if (destination.getX() < location.getX()) {
-			location.getEntity(layer).setFacing(false);
+			GameBoard.getEntity(entityID).setFacing(false);
 		}
-
-		currentdown = 5.0;
 	}
 
 	/*
@@ -55,16 +62,14 @@ public class MoveEntityEffect extends GridEffect {
 	 * @see net.plaidypus.deadreckoning.grideffects.GridEffect#update(int)
 	 */
 	public void update(int delta) {
-		if (destination.canBeSeen()) {
-			currentdown = 0;
-		}
-		currentdown = currentdown / 2;
-		if (currentdown < 0.5
-				|| (!destination.canBeSeen() && !location.canBeSeen())) {
+		if( !destination.canBeSeen() || distravelled>=hypotenuse ){
 			this.setComplete(true);
-			location.getEntity(layer).setVisible(true);
-			location.getParent().moveEntity(location.getEntity(layer),
-					destination, layer);
+			GameBoard.getEntity(entityID).setVisible(true);
+		}
+		else{
+			this.xoff-=a*(speed/delta)/hypotenuse;
+			this.yoff-=b*(speed/delta)/hypotenuse;
+			distravelled+=(speed/delta)/DeadReckoningGame.tileSize;
 		}
 	}
 
@@ -77,11 +82,10 @@ public class MoveEntityEffect extends GridEffect {
 	 */
 	public void render(Graphics g, float xoff, float yoff) {
 		if (destination.canBeSeen()) {
-			location.getEntity(layer).forceRender(
+			GameBoard.getEntity(entityID).forceRender(
 					g,
-					destination.getX() * DeadReckoningGame.tileSize + xoff,
-					destination.getY() * DeadReckoningGame.tileSize
-							- (int) currentdown + yoff);
+					xoff+location.getX()*DeadReckoningGame.tileSize+this.xoff,
+					yoff+location.getY()*DeadReckoningGame.tileSize+this.yoff);
 		}
 	}
 	/*

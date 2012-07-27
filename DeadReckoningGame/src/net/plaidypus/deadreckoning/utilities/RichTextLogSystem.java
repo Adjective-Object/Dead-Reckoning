@@ -9,6 +9,7 @@ import java.io.StringWriter;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 
+import org.newdawn.slick.util.Log;
 import org.newdawn.slick.util.LogSystem;
 
 public class RichTextLogSystem implements LogSystem {
@@ -18,7 +19,7 @@ public class RichTextLogSystem implements LogSystem {
 	public static PrintWriter fileWriter;
 	public static String fileName;
 	
-	public static boolean printLog;
+	public static boolean printLog = true;
 	
 	String currentColor = "";
 	
@@ -128,6 +129,7 @@ public class RichTextLogSystem implements LogSystem {
 	}
 	
 	public static void closeWriter(){
+		Log.debug("closing log...");
 		fileWriter.println("}");
 		fileWriter.close();
 	}

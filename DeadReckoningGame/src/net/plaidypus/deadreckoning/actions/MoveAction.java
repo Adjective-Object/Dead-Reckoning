@@ -3,6 +3,7 @@ package net.plaidypus.deadreckoning.actions;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
+import net.plaidypus.deadreckoning.grideffects.MoveEntityEffect;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -15,6 +16,8 @@ public class MoveAction extends Action {
 
 	/** The dest layer. */
 	int destLayer;
+	
+	MoveEntityEffect displayedAnim = null;
 
 	/**
 	 * Instantiates a new move action.
@@ -41,14 +44,20 @@ public class MoveAction extends Action {
 	 * @see net.plaidypus.deadreckoning.actions.Action#apply(int)
 	 */
 	public boolean apply(int delta) {
-		Entity source = GameBoard.getEntity(this.sourceID);
-		if (getTargetTile().getX() < source.getX()) {
-			source.setFacing(false);
-		} else if (getTargetTile().getX() > source.getX()) {
-			source.setFacing(true);
+		if(displayedAnim==null){
+			displayedAnim = new MoveEntityEffect(this.getSourceTile(), this.sourceID, this.getTargetTile());
+			getTargetTile().getParent().addEffectOver(displayedAnim);
+			Entity source = GameBoard.getEntity(this.sourceID);
+			if (getTargetTile().getX() < source.getX()) {
+				source.setFacing(false);
+			} else if (getTargetTile().getX() > source.getX()) {
+				source.setFacing(true);
+			}
+			if(getTargetTile().isOpen(destLayer)){
+				source.getParent().moveEntity(source, getTargetTile(), destLayer);
+			}
 		}
-		source.getParent().moveEntity(source, getTargetTile(), destLayer);
-		return true;
+		return displayedAnim.isComplete();
 	}
 
 	/**

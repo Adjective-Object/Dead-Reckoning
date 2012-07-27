@@ -69,7 +69,7 @@ public class Door extends Entity {
 	 * .slick.GameContainer, int)
 	 */
 	@Override
-	public void updateBoardEffects(GameContainer gc, int delta) {
+	public void updateBoardEffects(GameContainer gc) {
 		ticked=false;
 	}
 

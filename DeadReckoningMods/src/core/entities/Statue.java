@@ -64,7 +64,7 @@ public class Statue extends StaticImageEntity {
 	 * .slick.GameContainer, int)
 	 */
 	@Override
-	public void updateBoardEffects(GameContainer gc, int delta) {
+	public void updateBoardEffects(GameContainer gc) {
 	}
 
 	/*

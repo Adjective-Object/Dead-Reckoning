@@ -115,6 +115,10 @@ public abstract class Action {
 		return (InteractiveEntity)GameBoard.getEntity(sourceID);
 	}
 	
+	protected Tile getSourceTile() {
+		return GameBoard.getEntity(sourceID).getLocation();
+	}
+	
 	protected Entity getTargetEntity(){
 		if(this.targetEntity!= null){
 			return this.targetEntity;

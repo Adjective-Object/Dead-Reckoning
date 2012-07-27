@@ -29,22 +29,18 @@ public class GameplayElement extends HudElement {
 	/** The state id. */
 	int stateID;
 
-	/** The current action. */
-	int currentEntity, currentAction;
+	/** The current Entity (for deciding). */
+	int currentEntity;
 	
 	/** The save number. */
 	public String saveLocation;
 
-	/** The time on. */
-	int timeOn;
-
 	/** The width. */
-	private int width;
+	private int width, height;
 
-	/** The height. */
-	private int height;
+	private boolean entitiesLooped;
 
-	/** The camera y. */
+	/** The camera positioning. */
 	public static float cameraX, cameraY;
 
 	/** The camera dest y. */
@@ -85,7 +81,6 @@ public class GameplayElement extends HudElement {
 	public GameplayElement(int saveNumber) throws SlickException {
 		super(0, 0, HudElement.TOP_LEFT, true);
 		currentEntity = 0;
-		currentAction = 0;
 	}
 
 	/**
@@ -135,6 +130,7 @@ public class GameplayElement extends HudElement {
 	public void resetBoard(){
 		this.gb=null;
 		this.lastMap="";
+		this.entitiesLooped=false;
 	}
 	
 	/**
@@ -166,11 +162,9 @@ public class GameplayElement extends HudElement {
 		cameraDestY = player.getAbsoluteY() - gc.getHeight() / 2
 				+ DeadReckoningGame.tileSize / 2;
 
-		timeOn = 0;
 		actions.clear();
 
-		updateBoardEffects(gc, 0);
-		this.currentAction = 0;
+		updateBoardEffects(gc);
 		this.currentEntity = 0;
 	}
 
@@ -229,9 +223,9 @@ public class GameplayElement extends HudElement {
 	 * @param delta
 	 *            the delta
 	 */
-	public void updateBoardEffects(GameContainer gc, int delta) {
+	public void updateBoardEffects(GameContainer gc) {
 		getBoard().HideAll();
-		getBoard().updateBoardEffects(gc, delta);
+		getBoard().updateBoardEffects(gc);
 		for(int i=0; i<getBoard().getIngameEntities().size(); i++){
 			Entity e = getBoard().getIngameEntities().get(i);
 			if(e.allignmnet==Entity.ALLIGN_FRIENDLY){
@@ -241,7 +235,7 @@ public class GameplayElement extends HudElement {
 	}
 
 	/**
-	 * Update actions.
+	 * Update actions. can be considered the real main loop of degame
 	 * 
 	 * @param gc
 	 *            the gc
@@ -250,37 +244,29 @@ public class GameplayElement extends HudElement {
 	 * @throws SlickException 
 	 */
 	private void updateActions(GameContainer gc, int delta) throws SlickException {
-		if (actions.size() == 0) {// if the current entity is in the middle of
-									// being parsed..
-			while (!getBoard().getIngameEntities().get(this.currentEntity)
-					.getLocation().canBeSeen()
-					|| !getBoard().getIngameEntities().get(this.currentEntity)
-							.makesActions()) {// iterate through all invisible
-												// entities
-				if (getBoard().getIngameEntities().get(this.currentEntity)
-						.makesActions()) {
-					getActions(delta);// get their actions
-					while (!actionsComplete()) {// apply all the actions until
-												// completion
-						applyAllActions(delta);
-					}
-				}
+		
+		// resolving entity descisions...
+		if (!entitiesLooped) {// if the game is still trying to determine all the actions, try and resolve them all.
+			Action a = this.getBoard().getIngameEntities().get(currentEntity).chooseAction(gc, delta);
+			while (a!=null && a.takesTurn && !entitiesLooped){//iterate through all entities, until the point where an entitiy cannot decide (player input)
+				actions.add(a);
+				actions.addAll(this.getBoard().getIngameEntities().get(currentEntity).advanceTurn());
 				advanceEntity();
-			}
-
-			// when it hits an entity that is on screen and is interactive
-			// (takes multiple updateActions calls)
-			getActions(delta);
-			alertCameraTo(this.getBoard().getIngameEntities().get(currentEntity));
-		} else if (cameraIsFocused()) {
-			applyAllActions(delta);
-			if (actionsComplete()) {
-				if (actionsTakeTurn()) {
-					finalizeTurn(delta);
-				} else {
-					currentAction = 0;
-					actions.clear();
+				if(!this.entitiesLooped){// this happens when all the entities have their actions decided.
+					a = this.getBoard().getIngameEntities().get(currentEntity).chooseAction(gc, delta);
 				}
+			}
+			if(!entitiesLooped && a!=null){ // if it was terminated because an instant-drop action was selected
+				//TODO apply the instant action.
+			}
+		}
+		
+		//applying entity actions
+		if(entitiesLooped){
+			applyAllActions(delta);
+			if(actionsComplete()){// if they have been applied
+				finalizeTurn();
+				entitiesLooped=false;//go back to deciding the next round of actions
 			}
 		}
 	}
@@ -291,11 +277,11 @@ public class GameplayElement extends HudElement {
 	 * @param delta
 	 *            the delta
 	 */
-	private void finalizeTurn(int delta) {
-		advanceEntity();
-		updateBoardEffects(gc, delta);
+	private void finalizeTurn() {
+		updateBoardEffects(gc);
 		getBoard().clearHighlightedSquares();
 		input.clearKeyPressedRecord();
+		alertCameraTo(player);
 	}
 
 	/**
@@ -306,90 +292,31 @@ public class GameplayElement extends HudElement {
 	 * @throws SlickException 
 	 */
 	private void applyAllActions(int delta) throws SlickException {
-		actions.get(currentAction).applyAction(delta);
-		if (actions.size() > 0 && actions.get(currentAction).completed) {
-			currentAction++;
+		for(int i=0; i<actions.size(); i++){
+			actions.get(i).applyAction(delta);
 		}
 	}
-
-	/**
-	 * Actions take turn.
-	 * 
-	 * @return true, if successful
-	 */
-	private boolean actionsTakeTurn() {
-		for (int i = 0; i < this.actions.size(); i++) {
-			if (this.actions.get(i).takesTurn) {
-				return true;
-			}
-		}
-		return actions.size() == 0;
-	}
-
-	/**
-	 * Gets the actions.
-	 * 
-	 * @param delta
-	 *            the delta
-	 * @return the actions
-	 */
-	private void getActions(int delta) {
-		Action a = this.getBoard().getIngameEntities().get(currentEntity)
-				.chooseAction(gc, delta);
-		if (a != null) {
-			if (a.takesTurn) {
-				actions.addAll(this.getBoard().getIngameEntities()
-						.get(currentEntity).advanceTurn());
-			}
-			actions.add(a);
-		}
-	}
-
-	/**
-	 * Camera is focused.
-	 * 
-	 * @return true, if successful
-	 */
-	private boolean cameraIsFocused() {
-		return (Math.abs(cameraDestX - cameraX) < cameraSensitivityFrac && Math
-				.abs(cameraDestY - cameraY) < cameraSensitivityFrac)
-				|| !this.getBoard().getIngameEntities().get(currentEntity)
-						.getLocation().canBeSeen();
-	}
-
-	/**
-	 * Alert camera to.
-	 * 
-	 * @param e
-	 *            the e
-	 */
+	
 	private void alertCameraTo(Entity e) {
-		int nx = e.getAbsoluteX() - gc.getWidth() / 2
+		cameraDestX = e.getAbsoluteX() - gc.getWidth() / 2
 				+ DeadReckoningGame.tileSize / 2;
-		int ny = e.getAbsoluteY() - gc.getHeight() / 2
+		cameraDestY = e.getAbsoluteY() - gc.getHeight() / 2
 				+ DeadReckoningGame.tileSize / 2;
-		if (Math.abs(cameraDestX - nx) > gc.getWidth() * 0.4F) {
-			cameraDestX = nx;
-			timeOn = 0;
-		}
-		if (Math.abs(cameraDestY - ny) > gc.getHeight() *0.4F) {
-			cameraDestY = ny;
-			timeOn = 0;
-		}
 	}
 
 	/**
 	 * Advance entity.
 	 */
-	private void advanceEntity() {//assumes contiguous keyset. there is no scenario in which this would NOT be the case, but just to be safe, I will put a warning here for future generations
+	private void advanceEntity() {
 		boolean f = true;
 		while(!gb.getIngameEntities().get(currentEntity).makesActions() || f){
 			f=false;
-			currentEntity = (currentEntity+1)%gb.getIngameEntities().size();
+			currentEntity = (currentEntity+1);
+			if(currentEntity>=gb.getIngameEntities().size()){
+				currentEntity -= gb.getIngameEntities().size();
+				entitiesLooped=true;
+			}
 		}
-
-		actions.clear();
-		currentAction = 0;
 	}
 
 	/**

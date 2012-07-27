@@ -166,7 +166,6 @@ public class DeadReckoningGame extends StateBasedGame {
 	 * @throws FileNotFoundException 
 	 */
 	public static void main(String[] args) throws SlickException, LWJGLException, FileNotFoundException {
-		System.out.println(new File(".").getAbsolutePath());
 		//for saving things to Log
 		Log.setLogSystem(new DeadReckoningLogSystem("log.rtf"));
 		// for options

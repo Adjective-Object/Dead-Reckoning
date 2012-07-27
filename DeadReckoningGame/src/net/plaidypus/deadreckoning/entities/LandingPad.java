@@ -72,7 +72,7 @@ public class LandingPad extends Entity {
 	 * .slick.GameContainer, int)
 	 */
 	@Override
-	public void updateBoardEffects(GameContainer gc, int delta) {
+	public void updateBoardEffects(GameContainer gc) {
 		// TODO Auto-generated method stub
 
 	}

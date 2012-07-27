@@ -55,8 +55,6 @@ public class DeadReckoningContainer extends AppGameContainer{
 	protected void handleError(SlickException e) {
 		Log.error(e);
 		
-		e.printStackTrace();
-		
 		StringWriter errors = new StringWriter();
 		e.printStackTrace(new PrintWriter(errors));
 		HudLayersState s = (HudLayersState)(DeadReckoningGame.instance.getState(DeadReckoningGame.ERRORSTATE));

@@ -156,8 +156,8 @@ public abstract class LivingEntity extends InteractiveEntity {
 	}
 
 	@Override
-	public void updateBoardEffects(GameContainer gc, int delta){
-		super.updateBoardEffects(gc,delta);
+	public void updateBoardEffects(GameContainer gc){
+		super.updateBoardEffects(gc);
 		if (this.HP <= 0) {
 			this.kill();
 		}

@@ -84,11 +84,9 @@ public abstract class Entity extends DeadReckoningComponent {
 	 * 
 	 * @param gc
 	 *            the gc
-	 * @param delta
-	 *            the elapsed milliseconds since the last call of update
 	 */
 
-	public abstract void updateBoardEffects(GameContainer gc, int delta);
+	public abstract void updateBoardEffects(GameContainer gc);
 
 	/**
 	 * Choose action.

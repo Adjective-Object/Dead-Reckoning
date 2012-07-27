@@ -79,9 +79,10 @@ public class Chest extends InteractiveEntity {
 	 * net.plaidypus.deadreckoning.entities.InteractiveEntity#updateBoardEffects
 	 * (org.newdawn.slick.GameContainer, int)
 	 */
-	public void updateBoardEffects(GameContainer gc, int delta) {
+	public void updateBoardEffects(GameContainer gc) {
 		if (this.inventory.isEmpty()) {
 			this.kill();
+			this.getParent().addEffectOver(this.getLocation(),new FadeoutEffect(this.getLocation(),chest));
 		}
 	}
 

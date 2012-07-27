@@ -453,9 +453,9 @@ public class GameBoard implements ILosBoard {
 	 * @param delta
 	 *            the delta
 	 */
-	public void updateBoardEffects(GameContainer gc, int delta) {
+	public void updateBoardEffects(GameContainer gc) {
 		for (int i=0; i<this.ingameEntities.size(); i++) {
-			ingameEntities.get(i).updateBoardEffects(gc, delta);
+			ingameEntities.get(i).updateBoardEffects(gc);
 		}
 	}
 
