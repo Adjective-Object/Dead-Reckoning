@@ -81,6 +81,7 @@ public class BiomeEditor implements ModEditor{
 		}
 	}
 	
+	@Override
 	public String getName(){
 		return "Biome";
 	}

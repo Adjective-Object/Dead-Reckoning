@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.WaitAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
-import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.StaticImageEntity;
 
@@ -41,6 +40,7 @@ public class Statue extends StaticImageEntity {
 	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#init()
 	 */
+	@Override
 	public void init() throws SlickException {
 		i = new Image("res/statue.png");
 	}

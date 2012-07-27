@@ -63,14 +63,12 @@ public class MoveEntityEffect extends GridEffect {
 	 */
 	@Override
 	public void update(int delta) {
+		this.xoff-=a*(speed/delta)/hypotenuse;
+		this.yoff-=b*(speed/delta)/hypotenuse;
+		distravelled+=(speed/delta)/DeadReckoningGame.tileSize;
 		if( !destination.canBeSeen() || distravelled>=hypotenuse ){
 			this.setComplete(true);
 			GameBoard.getEntity(entityID).setVisible(true);
-		}
-		else{
-			this.xoff-=a*(speed/delta)/hypotenuse;
-			this.yoff-=b*(speed/delta)/hypotenuse;
-			distravelled+=(speed/delta)/DeadReckoningGame.tileSize;
 		}
 	}
 

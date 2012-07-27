@@ -11,7 +11,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ListModel;
 import javax.swing.border.TitledBorder;
 
 import net.plaidypus.deadreckoning.modmaker.saveformats.ModContentManager;

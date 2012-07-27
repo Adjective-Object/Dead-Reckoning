@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.AttackAction;
-import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.statmaster.StatMaster;
@@ -51,6 +50,7 @@ public class OnFire extends AnimatedStatus {
 	 * @throws SlickException
 	 *             the slick exception
 	 */
+	@Override
 	public void init() throws SlickException {
 		image = ModLoader.loadImage("core/res/onFireIcon.png");
 		details = "OH SHIT, YOU'RE ON FIRE";
@@ -103,6 +103,7 @@ public class OnFire extends AnimatedStatus {
 		return super.getGenericSave()+"-"+this.power;
 	}
 	
+	@Override
 	public Status loadFromString(String[] args){
 		return new OnFire(Integer.parseInt(args[1]),Integer.parseInt(args[2]),Integer.parseInt(args[3]));
 	}

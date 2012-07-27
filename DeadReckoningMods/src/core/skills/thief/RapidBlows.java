@@ -58,6 +58,7 @@ public class RapidBlows extends OffensiveSkill{
 		RapidBlows.image = ModLoader.loadImage("core/res/RAPIDBLOWS.png");
 	}
 	
+	@Override
 	public void setLevel(int level){
 		super.setLevel(level);
 		this.setDescriptor("Attacks a random number of times,\ndealing "+80+this.level*5+"% damage each hit");

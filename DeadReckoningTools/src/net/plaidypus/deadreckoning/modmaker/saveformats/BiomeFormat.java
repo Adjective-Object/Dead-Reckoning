@@ -22,10 +22,12 @@ public class BiomeFormat implements SaveFormat{
 		
 	}
 	
+	@Override
 	public SaveFormat makeFrom(File source){
 		return null;
 	}
 	
+	@Override
 	public ImageIcon getImageIcon(){
 		try {
 			if(this.tileImage!=null){

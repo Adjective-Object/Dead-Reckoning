@@ -3,15 +3,12 @@ package core.statuses;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import core.skills.thief.FocusedMindSkill;
 
 import net.plaidypus.deadreckoning.actions.Action;
-import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
-import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.statmaster.StatMaster;
 import net.plaidypus.deadreckoning.status.Status;
 

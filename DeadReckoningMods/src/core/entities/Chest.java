@@ -5,11 +5,9 @@ import java.util.ArrayList;
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.LootAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
-import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.InteractiveEntity;
 import net.plaidypus.deadreckoning.grideffects.FadeoutEffect;
-import net.plaidypus.deadreckoning.items.EtcDrop;
 import net.plaidypus.deadreckoning.items.Item;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 
@@ -58,6 +56,7 @@ public class Chest extends InteractiveEntity {
 	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#init()
 	 */
+	@Override
 	public void init() throws SlickException {
 		Chest.chest = ModLoader.loadImage("core/res/chest.png");
 	}
@@ -69,6 +68,7 @@ public class Chest extends InteractiveEntity {
 	 * net.plaidypus.deadreckoning.entities.InteractiveEntity#update(org.newdawn
 	 * .slick.GameContainer, int)
 	 */
+	@Override
 	public void update(GameContainer gc, int delta) {
 	}
 
@@ -79,6 +79,7 @@ public class Chest extends InteractiveEntity {
 	 * net.plaidypus.deadreckoning.entities.InteractiveEntity#updateBoardEffects
 	 * (org.newdawn.slick.GameContainer, int)
 	 */
+	@Override
 	public void updateBoardEffects(GameContainer gc) {
 		if (this.inventory.isEmpty()) {
 			this.kill();

@@ -47,7 +47,7 @@ public class GameplayElement extends HudElement {
 	public static float cameraDestX, cameraDestY;
 
 	/** The Constant cameraRate. */
-	static final float cameraRate = 0.2F, cameraSensitivityFrac = 1.0F;
+	static final float cameraRate = 1000F, cameraSensitivityFrac = 1.0F;
 
 	/** The last map. */
 	public String lastMap;
@@ -69,6 +69,8 @@ public class GameplayElement extends HudElement {
 
 	/** The actions. */
 	ArrayList<Action> actions = new ArrayList<Action>(0);
+	
+	Action instantAction = null;
 
 	/**
 	 * Instantiates a new gameplay element.
@@ -188,9 +190,9 @@ public class GameplayElement extends HudElement {
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-
-		cameraX = cameraX + (cameraDestX - cameraX) * cameraRate;
-		cameraY = cameraY + (cameraDestY - cameraY) * cameraRate;
+		
+		cameraX = cameraX + (cameraDestX - cameraX) * (delta/cameraRate);
+		cameraY = cameraY + (cameraDestY - cameraY) * (delta/cameraRate);
 
 		if (gc.getInput().isKeyPressed(Input.KEY_Y)) {
 			cameraDestX = getBoard().getIngameEntities().get(currentEntity)
@@ -239,6 +241,8 @@ public class GameplayElement extends HudElement {
 	/**
 	 * Update actions. can be considered the real main loop of degame
 	 * 
+	 * 3 seperate ifs, and not linked in an if/then statement because it means actions can be resolved in fewer frames.
+	 * 
 	 * @param gc
 	 *            the gc
 	 * @param delta
@@ -246,9 +250,8 @@ public class GameplayElement extends HudElement {
 	 * @throws SlickException 
 	 */
 	private void updateActions(GameContainer gc, int delta) throws SlickException {
-		
-		// resolving entity descisions...
-		if (!entitiesLooped) {// if the game is still trying to determine all the actions, try and resolve them all.
+		// if the game is still trying to determine all the actions, try and resolve them all, and there is no instant action to drop
+		if(!entitiesLooped && instantAction==null){
 			Action a = this.getBoard().getIngameEntities().get(currentEntity).chooseAction(gc, delta);
 			while (a!=null && a.takesTurn && !entitiesLooped){//iterate through all entities, until the point where an entitiy cannot decide (player input)
 				actions.add(a);
@@ -259,12 +262,20 @@ public class GameplayElement extends HudElement {
 				}
 			}
 			if(!entitiesLooped && a!=null){ // if it was terminated because an instant-drop action was selected
-				//TODO apply the instant action.
+				instantAction=a;
+			}
+		}
+		
+		//applying instant actions
+		if(instantAction!=null){
+			instantAction.applyAction(delta);
+			if(instantAction.completed){
+				instantAction=null;
 			}
 		}
 		
 		//applying entity actions
-		if(entitiesLooped){
+		if(entitiesLooped && instantAction==null){
 			applyAllActions(delta);
 			if(actionsComplete()){// if they have been applied
 				finalizeTurn();
@@ -272,7 +283,7 @@ public class GameplayElement extends HudElement {
 			}
 		}
 	}
-
+	
 	/**
 	 * Finalize turn.
 	 * 

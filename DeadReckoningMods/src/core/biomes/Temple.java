@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
+import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.entities.Monster;
 import net.plaidypus.deadreckoning.generator.Room;
@@ -93,7 +94,7 @@ public class Temple extends RoomBasedBiome {
 			Tile t = room.getTileIn(target);
 			if(t.isEmpty(Tile.LAYER_ACTIVE)){
 				Monster m = new Monster("core", "livingEntities/goblin.entity",
-						new StatMaster(15, 15, 4, 4, 4, 4, 1), LivingEntity.ALLIGN_HOSTILE);
+						new StatMaster(15, 15, 4, 4, 4, 4, 1), Entity.ALLIGN_HOSTILE);
 				m.getInventory().addAll(m.getDropItems());
 				target.placeEntity(t, m, Tile.LAYER_ACTIVE);
 			}
@@ -194,6 +195,7 @@ public class Temple extends RoomBasedBiome {
 		t.blocking=false;
 	}
 	
+	@Override
 	public int getNullTileValue(){
 		return TILE_NULL;
 	}

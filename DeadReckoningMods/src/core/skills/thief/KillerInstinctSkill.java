@@ -3,7 +3,6 @@ package core.skills.thief;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-import core.statuses.FocusedMindStatus;
 import core.statuses.KillerInstinctStatus;
 
 import net.plaidypus.deadreckoning.actions.Action;

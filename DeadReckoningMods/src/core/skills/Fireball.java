@@ -13,8 +13,6 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.grideffects.AnimationEffect;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.skills.OffensiveSkill;
-import net.plaidypus.deadreckoning.skills.Skill;
-
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -49,6 +47,7 @@ public class Fireball extends OffensiveSkill {
 	 * @throws SlickException
 	 *             the slick exception
 	 */
+	@Override
 	public void init() throws SlickException {
 		Fireball.fireball = new SpriteSheet(ModLoader.loadImage("core/res/FireBurst.png"),
 				DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
@@ -61,6 +60,7 @@ public class Fireball extends OffensiveSkill {
 	 * @see net.plaidypus.deadreckoning.skills.Skill#makeAction(net.plaidypus.
 	 * deadreckoning.board.Tile)
 	 */
+	@Override
 	public Action makeAction(Tile target) {
 		ArrayList<Action> toRet = new ArrayList<Action>(0);
 		Animation an = new Animation(fireball, 40);
@@ -80,6 +80,7 @@ public class Fireball extends OffensiveSkill {
 	 * 
 	 * @see net.plaidypus.deadreckoning.skills.Skill#updateSkill()
 	 */
+	@Override
 	public void updateSkill() {
 		super.updateSkill();
 		this.levelcap = (this.getSource().getStatMaster().getLevel() - 1) * 1;
@@ -90,6 +91,7 @@ public class Fireball extends OffensiveSkill {
 	 * 
 	 * @see net.plaidypus.deadreckoning.skills.Skill#canBeCast()
 	 */
+	@Override
 	public boolean canBeCast() {
 		return super.canBeCast() && getLevel() > 0;
 	}
@@ -101,6 +103,7 @@ public class Fireball extends OffensiveSkill {
 	 * net.plaidypus.deadreckoning.skills.Skill#highlightRange(net.plaidypus
 	 * .deadreckoning.board.GameBoard)
 	 */
+	@Override
 	public void highlightRange(GameBoard board) {
 		highlightRadial(board, 2);
 	}

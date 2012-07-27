@@ -68,6 +68,7 @@ public class ModMaker implements ActionListener{
         return menuBar;
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
     	try{
     		for(int i=0; i<views.length; i++){
@@ -81,7 +82,8 @@ public class ModMaker implements ActionListener{
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
+            @Override
+			public void run() {
             	ModContentManager.init();
             	ModMaker m = new ModMaker();
                 m.createAndShowGUI();

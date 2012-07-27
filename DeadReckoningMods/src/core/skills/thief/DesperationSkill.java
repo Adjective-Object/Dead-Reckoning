@@ -4,8 +4,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import core.statuses.DesperationStatus;
-import core.statuses.FocusedMindStatus;
-
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.ApplyStatusAction;
 import net.plaidypus.deadreckoning.board.GameBoard;

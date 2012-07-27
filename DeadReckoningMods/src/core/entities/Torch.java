@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.board.GameBoard;
-import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 
@@ -61,6 +60,7 @@ public class Torch extends Entity {
 	 * 
 	 * @see net.plaidypus.deadreckoning.entities.Entity#init()
 	 */
+	@Override
 	public void init() throws SlickException {
 		img = new SpriteSheet(ModLoader.loadImage("core/res/torch.png"), 32, 32);
 	}
@@ -72,6 +72,7 @@ public class Torch extends Entity {
 	 * net.plaidypus.deadreckoning.entities.Entity#update(org.newdawn.slick.
 	 * GameContainer, int)
 	 */
+	@Override
 	public void update(GameContainer gc, int delta) {
 		this.ani.update(delta);
 	}
@@ -83,6 +84,7 @@ public class Torch extends Entity {
 	 * net.plaidypus.deadreckoning.entities.Entity#updateBoardEffects(org.newdawn
 	 * .slick.GameContainer, int)
 	 */
+	@Override
 	public void updateBoardEffects(GameContainer gc) {
 		this.getParent().lightInRadius(getLocation(), this.light);
 	}
@@ -94,6 +96,7 @@ public class Torch extends Entity {
 	 * net.plaidypus.deadreckoning.entities.Entity#chooseAction(org.newdawn.
 	 * slick.GameContainer, int)
 	 */
+	@Override
 	public Action chooseAction(GameContainer gc, int delta) {
 		return null;
 	}
@@ -105,6 +108,7 @@ public class Torch extends Entity {
 	 * net.plaidypus.deadreckoning.entities.Entity#forceRender(org.newdawn.slick
 	 * .Graphics, float, float)
 	 */
+	@Override
 	public void forceRender(Graphics g, float x, float y) {
 		g.drawImage(ani.getCurrentFrame(), x, y);
 	}

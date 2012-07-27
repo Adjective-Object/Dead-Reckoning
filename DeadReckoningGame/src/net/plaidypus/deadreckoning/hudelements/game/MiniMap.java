@@ -81,7 +81,7 @@ public class MiniMap extends HudElement {
 							g.setColor(Color.blue);
 						}
 					} else if (til.blocking){
-						g.setColor(Color.lightGray);
+						g.setColor(Color.black);
 					}else if ((!til.isOpen(Tile.LAYER_PASSIVE_MAP) && til
 					
 									.getEntity(Tile.LAYER_PASSIVE_MAP)
