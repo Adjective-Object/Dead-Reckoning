@@ -38,6 +38,7 @@ import net.plaidypus.deadreckoning.state.substates.PlayerViewerState;
 import net.plaidypus.deadreckoning.utilities.DeadReckoningLogSystem;
 import net.plaidypus.deadreckoning.utilities.KeyConfig;
 import net.plaidypus.deadreckoning.utilities.OptionsHandler;
+import net.plaidypus.deadreckoning.utilities.RichTextLogSystem;
 
 import org.lwjgl.LWJGLException;
 import org.newdawn.slick.AppGameContainer;
@@ -165,6 +166,15 @@ public class DeadReckoningGame extends StateBasedGame {
 	 * @throws FileNotFoundException 
 	 */
 	public static void main(String[] args) throws SlickException, LWJGLException, FileNotFoundException {
+		
+		
+		System.setProperty("org.lwjgl.librarypath",System.getProperty("user.dir") + "/lib/natives");
+		
+		String[] libs = System.getProperty("java.library.path").split(";");
+		for(int i=0; i<libs.length; i++){
+			System.out.println(libs[i]);
+		}
+		
 		//for saving things to Log
 		Log.setLogSystem(new DeadReckoningLogSystem("log.rtf"));
 		// for options
@@ -231,21 +241,26 @@ public class DeadReckoningGame extends StateBasedGame {
 			)
 		);
 		
-		container.getInput().enableKeyRepeat();
-		
-		ModLoader.loadModpacks(ModLoader.resolveMods(true));
-		
-		
-		// initialization of internal entities and things that will not be
-		// initialized by classloader
-		new Player().init();
-		new Stair().init();
+		try{
+			container.getInput().enableKeyRepeat();
 			
-			ArrayList<HudElement> subBackground = new ArrayList<HudElement>(0);
-			subBackground.add(new VicariousRenderer(DeadReckoningGame.instance.getGameElement()));
-			subBackground.add(new ColorFiller(new Color(0,0,0,100)) );
+			ModLoader.loadModpacks(ModLoader.resolveMods(true));
 			
-			defineStates(makeMenuBackground(container), subBackground);
+			
+			// initialization of internal entities and things that will not be
+			// initialized by classloader
+			new Player().init();
+			new Stair().init();
+				
+				ArrayList<HudElement> subBackground = new ArrayList<HudElement>(0);
+				subBackground.add(new VicariousRenderer(DeadReckoningGame.instance.getGameElement()));
+				subBackground.add(new ColorFiller(new Color(0,0,0,100)) );
+				
+				defineStates(makeMenuBackground(container), subBackground);
+		} catch (SlickException e){
+			Log.error(e);
+			RichTextLogSystem.closeWriter();
+		}
 	}
 
 	private void defineStates(ArrayList<HudElement> menuBackground, ArrayList<HudElement> subBackground) throws SlickException {
