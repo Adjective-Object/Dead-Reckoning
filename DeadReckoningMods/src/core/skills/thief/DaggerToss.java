@@ -1,10 +1,5 @@
 package core.skills.thief;
 
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
-
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.AttackAction;
 import net.plaidypus.deadreckoning.board.GameBoard;
@@ -13,6 +8,11 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.grideffects.AnimatedProjectileEffect;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.skills.OffensiveSkill;
+
+import org.newdawn.slick.Animation;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 
 public class DaggerToss extends OffensiveSkill{
 
@@ -48,7 +48,7 @@ public class DaggerToss extends OffensiveSkill{
 
 	@Override
 	public void init() throws SlickException {
-		spinningDagger=new SpriteSheet(ModLoader.loadImage("core/res/daggerProjectile.png"),12,12);
+		spinningDagger=new SpriteSheet(ModLoader.loadImage("core/res/DAGGERPROJECTILE.png"),12,12);
 		daggerIcon=ModLoader.loadImage("core/res/DAGGERTOSS.png");
 	}
 

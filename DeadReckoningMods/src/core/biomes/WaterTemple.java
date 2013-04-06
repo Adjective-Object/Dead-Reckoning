@@ -7,7 +7,6 @@ import net.plaidypus.deadreckoning.DeadReckoningGame;
 import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
-import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.entities.Monster;
 import net.plaidypus.deadreckoning.entities.Stair;
 import net.plaidypus.deadreckoning.generator.Room;
@@ -54,7 +53,7 @@ public class WaterTemple extends RoomBasedBiome {
 
 	@Override
 	public void init() throws SlickException {
-		Image tile = ModLoader.loadImage("core/res/floorTilesBiome1.png");
+		Image tile = ModLoader.loadImage("core/res/FLOORTILESBIOME1.png");
 		this.tileImage = new SpriteSheet(tile,
 				DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
 		WaterTemple.interchangable= new HashMap<Integer, int[]>();

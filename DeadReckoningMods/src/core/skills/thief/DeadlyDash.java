@@ -2,10 +2,6 @@ package core.skills.thief;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
-
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.ActionSpawner;
 import net.plaidypus.deadreckoning.board.GameBoard;
@@ -13,6 +9,10 @@ import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.skills.Skill;
 import net.plaidypus.deadreckoning.utilities.Utilities;
+
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 
 public class DeadlyDash extends Skill{
 
@@ -95,7 +95,7 @@ public class DeadlyDash extends Skill{
 	@Override
 	public void init() throws SlickException {
 		icon = ModLoader.loadImage("core/res/SMOKEBOMB.png");
-		smokeBomb = new SpriteSheet(ModLoader.loadImage("core/res/smokeBombExplosion.png"),32,32);
+		smokeBomb = new SpriteSheet(ModLoader.loadImage("core/res/SMOKEBOMBEXPLOSION.png"),32,32);
 	}
 
 }

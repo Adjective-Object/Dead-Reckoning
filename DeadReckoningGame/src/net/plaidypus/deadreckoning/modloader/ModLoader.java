@@ -138,25 +138,42 @@ public class ModLoader {
 			int numProfessions = 0;
 			String[] classKeys = new String[] { "/biomes/", "/skills/",
 					"/entities/", "/statuses/" };
-			// populates list of biomes for loading
+			
+			Class configClass = null;
+			// populates list of biome classfiles for loading, and counts the number of professions.
 			while (contents.hasMoreElements()) {
 				JarEntry e = contents.nextElement();
-
-				for (int i = 0; i < classKeys.length; i++) {
-					classes.add(new ArrayList<Class>(0));
-					if (e.getName().contains(classKeys[i])
-							&& e.getName().endsWith(".class")) {
-						classes.get(i).add(
-								urlLoader.loadClass(e.getName()
-										.replace("/", ".")
-										.replace(".class", "")));
+				if (e.getName().contains("Config.class")){
+					Log.debug(e.getName());
+					configClass=urlLoader.loadClass(e.getName()
+							.replace("/", ".")
+							.replace(".class", "")
+							);
+				} else{
+					for (int i = 0; i < classKeys.length; i++) {
+						classes.add(new ArrayList<Class>(0));
+						if (e.getName().contains(classKeys[i])
+								&& e.getName().endsWith(".class")) {
+							classes.get(i).add(
+									urlLoader.loadClass(e.getName()
+											.replace("/", ".")
+											.replace(".class", "")));
+						}
+					}
+					if (e.getName().contains("/professions/")
+							&& e.getName().endsWith("player.entity")) {
+						numProfessions++;
 					}
 				}
-				if (e.getName().contains("/professions/")
-						&& e.getName().endsWith("player.entity")) {
-					numProfessions++;
+			}
+			if(configClass!=null){
+				try{
+					configClass.getMethod("initializeMod",new Class[] {});
+				} catch (NoSuchMethodException ex){
+					Log.debug(modname+"'s config class does not contain an initializeMod method. Any custom mod initialization will not be run");
 				}
-
+			} else{
+				Log.debug("Config class not found in "+modname);
 			}
 
 			// initializes custom components
@@ -180,7 +197,7 @@ public class ModLoader {
 			}
 
 			// loads professions
-			// handes special cases of professions
+			// handles special cases of professions
 			for (int prof = 0; prof < numProfessions; prof++) {
 				Profession p = new Profession(modname, prof,
 						urlLoader.getResourceAsStream(modname + "/professions/"
@@ -235,18 +252,31 @@ public class ModLoader {
 			loadModpack(f.get(i));
 		}
 	}
-
+	
+	static HashMap<String,Image> loadedImages = new HashMap<String,Image>(0);
+	
 	public static Image loadImage(String imagepath) throws SlickException{
+		return loadImage(imagepath,false);
+	}
+	public static Image loadImage(String imagepath, boolean unique) throws SlickException{
 		String modpack = imagepath.split("(/|\\\\)")[0];
-		try {
-			return new Image(
-					TextureLoader.getTexture("PNG",ModLoader.getModpackLoader(modpack)
-									.getResourceAsStream(imagepath)));
-		} catch (IOException e) {
-			return new Image("res/noSkill.png");
-		} catch (NullPointerException e ){
-			Log.error("can't load image "+imagepath+" in "+modpack+" with "+ModLoader.getModpackLoader(modpack));
-			return null;
+		if(!unique && loadedImages.containsKey(imagepath)){
+			return loadedImages.get(imagepath);
+		}
+		else{
+			try {
+				Image i = new Image(
+						TextureLoader.getTexture("PNG",ModLoader.getModpackLoader(modpack)
+								.getResourceAsStream(imagepath)));
+				loadedImages.put(imagepath,i);
+				return i;
+				
+			} catch (IOException e) {
+				return new Image("res/noSkill.png");
+			} catch (NullPointerException e ){
+				Log.error("can't load image "+imagepath+" in "+modpack+" with "+ModLoader.getModpackLoader(modpack));
+				return null;
+			}
 		}
 	}
 

@@ -52,9 +52,9 @@ public class OnFire extends AnimatedStatus {
 	 */
 	@Override
 	public void init() throws SlickException {
-		image = ModLoader.loadImage("core/res/onFireIcon.png");
+		image = ModLoader.loadImage("core/res/ONFIREICON.png");
 		details = "OH SHIT, YOU'RE ON FIRE";
-		sprite = new SpriteSheet( ModLoader.loadImage("core/res/fireAnimation.png"),
+		sprite = new SpriteSheet( ModLoader.loadImage("core/res/FIREANIMATION.png"),
 				DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
 	}
 

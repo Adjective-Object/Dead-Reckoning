@@ -37,10 +37,9 @@ public class GameplayElement extends HudElement {
 	private boolean entitiesLooped;
 
 	/** The camera positioning. */
-	private float cameraX, cameraY;
-
-	/** The camera dest y. */
-	private float cameraDestX, cameraDestY;
+	private double cameraX, cameraY;
+	/** The camera destination positioning. */
+	private double cameraDestX, cameraDestY;
 
 	/** The Constant cameraRate. */
 	private static final float cameraRate = 1000F;
@@ -314,9 +313,9 @@ public class GameplayElement extends HudElement {
 	}
 	
 	private void alertCameraTo(Entity e) {
-		cameraDestX = e.getAbsoluteX() - gc.getWidth() / 2
+		cameraDestX = e.getAbsoluteX()+e.getOffsetX() - gc.getWidth() / 2
 				+ DeadReckoningGame.tileSize / 2;
-		cameraDestY = e.getAbsoluteY() - gc.getHeight() / 2
+		cameraDestY = e.getAbsoluteY()+e.getOffsetY() - gc.getHeight() / 2
 				+ DeadReckoningGame.tileSize / 2;
 	}
 

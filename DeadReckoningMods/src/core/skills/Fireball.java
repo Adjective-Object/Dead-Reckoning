@@ -13,6 +13,7 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.grideffects.AnimationEffect;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.skills.OffensiveSkill;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -49,9 +50,9 @@ public class Fireball extends OffensiveSkill {
 	 */
 	@Override
 	public void init() throws SlickException {
-		Fireball.fireball = new SpriteSheet(ModLoader.loadImage("core/res/FireBurst.png"),
+		Fireball.fireball = new SpriteSheet(ModLoader.loadImage("core/res/FIREBURST.png"),
 				DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
-		Fireball.image = ModLoader.loadImage("core/res/onFireIcon.png");
+		Fireball.image = ModLoader.loadImage("core/res/ONFIREICON.png");
 	}
 
 	/*

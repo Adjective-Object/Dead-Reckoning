@@ -62,7 +62,7 @@ public class Torch extends Entity {
 	 */
 	@Override
 	public void init() throws SlickException {
-		img = new SpriteSheet(ModLoader.loadImage("core/res/torch.png"), 32, 32);
+		img = new SpriteSheet(ModLoader.loadImage("core/res/TORCH.png"), 32, 32);
 	}
 
 	/*

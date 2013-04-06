@@ -58,7 +58,7 @@ public class Chest extends InteractiveEntity {
 	 */
 	@Override
 	public void init() throws SlickException {
-		Chest.chest = ModLoader.loadImage("core/res/chest.png");
+		Chest.chest = ModLoader.loadImage("core/res/CHEST.png");
 	}
 
 	/*

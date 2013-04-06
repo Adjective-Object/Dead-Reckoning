@@ -2,13 +2,6 @@ package core.skills.thief;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
-
-import core.statuses.Stealthed;
-
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.ActionSpawner;
 import net.plaidypus.deadreckoning.actions.ApplyStatusAction;
@@ -19,6 +12,13 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.grideffects.AnimationEffect;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.skills.Skill;
+
+import org.newdawn.slick.Animation;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
+
+import core.statuses.Stealthed;
 
 public class SmokeBomb extends Skill{
 
@@ -100,7 +100,7 @@ public class SmokeBomb extends Skill{
 	@Override
 	public void init() throws SlickException {
 		icon = ModLoader.loadImage("core/res/SMOKEBOMB.png");
-		smokeBomb = new SpriteSheet(ModLoader.loadImage("core/res/smokeBombExplosion.png"),32,32);
+		smokeBomb = new SpriteSheet(ModLoader.loadImage("core/res/SMOKEBOMBEXPLOSION.png"),32,32);
 	}
 
 }

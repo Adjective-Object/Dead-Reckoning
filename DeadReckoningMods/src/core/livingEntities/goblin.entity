@@ -1,6 +1,7 @@
 :INFORMATION:
 NAME=Goblin
 DESCRIPTION=Oh Shit, a Goblin!
+
 DROPITEMS=2-core-0-50, 2-core-1-50
 
 :STATS:
@@ -10,7 +11,7 @@ TILEY=32
 AITYPE=1
 
 :IMAGES:
-StandSheet = "core/res/Goblin stand.png"
+StandSheet = "core/res/GOBLINSTAND.png"
 
 :SPRITES:
 Stand = StandSheet_120_0,0, 1,0, 2,0, 3,0, 4,0, 5,0,

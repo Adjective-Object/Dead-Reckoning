@@ -45,8 +45,8 @@ public class Door extends Entity {
 	 */
 	@Override
 	public void init() throws SlickException {
-		openImg = ModLoader.loadImage("core/res/doorOpen.png");
-		closeImg = ModLoader.loadImage("core/res/doorClosed.png");
+		openImg = ModLoader.loadImage("core/res/DOOROPEN.png");
+		closeImg = ModLoader.loadImage("core/res/DOORCLOSED.png");
 	}
 
 	/*

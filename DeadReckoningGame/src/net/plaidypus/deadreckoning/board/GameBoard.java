@@ -386,7 +386,7 @@ public class GameBoard implements ILosBoard {
 	 * @param yOff
 	 *            the y off
 	 */
-	public void updateSelctor(Input i, float xOff, float yOff) {
+	public void updateSelctor(Input i, double xOff, double yOff) {
 
 		if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			primaryHighlight = board[Utilities.limitTo(

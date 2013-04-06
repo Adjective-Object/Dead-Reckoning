@@ -2,15 +2,15 @@ package core.statuses;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.statmaster.StatMaster;
 import net.plaidypus.deadreckoning.status.Status;
+
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 public class Stealthed extends Status{
 	
@@ -51,7 +51,7 @@ public class Stealthed extends Status{
 
 	@Override
 	public void init() throws SlickException {
-		Stealthed.ghostIcon=ModLoader.loadImage("core/res/stealthed.png");
+		Stealthed.ghostIcon=ModLoader.loadImage("core/res/STEALTHED.png");
 	}
 
 	@Override
