@@ -150,5 +150,4 @@ public class SkillMonitorElement extends HudElement { // TODO turn into a
 			}
 		}
 	}
-
 }

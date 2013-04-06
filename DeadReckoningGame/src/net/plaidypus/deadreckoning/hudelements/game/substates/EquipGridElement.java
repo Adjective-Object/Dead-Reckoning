@@ -104,6 +104,4 @@ public class EquipGridElement extends SimplePanel{
 	public void removeEquip(Equip e){
 		this.contents.set(e.getSlot(),null);
 	}
-
-
 }

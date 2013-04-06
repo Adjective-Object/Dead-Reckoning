@@ -2,9 +2,6 @@ package core.skills.thief;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-
 import net.plaidypus.deadreckoning.actions.Action;
 import net.plaidypus.deadreckoning.actions.ActionSpawner;
 import net.plaidypus.deadreckoning.actions.AttackAction;
@@ -14,6 +11,9 @@ import net.plaidypus.deadreckoning.entities.LivingEntity;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.skills.OffensiveSkill;
 import net.plaidypus.deadreckoning.utilities.Utilities;
+
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 public class RapidBlows extends OffensiveSkill{
 

@@ -110,5 +110,4 @@ public class StatDisplayElement extends HudElement {
 				+ "+(" + Integer.toString(target.getStatMaster().getBonusLUK())
 				+ ")", getAbsoluteX() + 101, getAbsoluteY() + 65);
 	}
-
 }

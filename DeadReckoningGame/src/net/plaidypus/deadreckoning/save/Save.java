@@ -159,6 +159,7 @@ public class Save {
 		} catch (FileNotFoundException e) {
 			throw new SlickException("fuck",e);
 		}
+		game.resetCamera();
 	}
 
 	private static void setPlayerPosition(Player player, GameBoard b, String lastMap) {
