@@ -30,19 +30,17 @@ public class InventoryState extends PrebakedHudLayersState{
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		super.update(container, game, delta);
-		if(doubleClick){
-			if(itemGrid.getClicked()!=null && itemGrid.getClicked().classification==Item.ITEM_EQUIP){
-				itemGrid.addItem(equipGrid.target.equipItem((Equip) itemGrid.getClicked()));
-				itemGrid.removeItem(itemGrid.getClicked());
-				equipGrid.target.profession.resetStatBonuses();
-				itemGrid.clearClicked();
-			}
-			else if(equipGrid.getClickedEquip()!=null){
-				itemGrid.addItem(equipGrid.getClickedEquip());
-				equipGrid.removeEquip(equipGrid.getClickedEquip());
-				equipGrid.target.profession.resetStatBonuses();
-				equipGrid.clearClickedEquip();
-			}
+		if(itemGrid.getClicked()!=null && itemGrid.getClicked().classification==Item.ITEM_EQUIP){
+			itemGrid.addItem(equipGrid.target.equipItem((Equip) itemGrid.getClicked()));
+			itemGrid.removeItem(itemGrid.getClicked());
+			equipGrid.target.profession.resetStatBonuses();
+			itemGrid.clearClicked();
+		}
+		else if(equipGrid.getClickedEquip()!=null){
+			itemGrid.addItem(equipGrid.getClickedEquip());
+			equipGrid.removeEquip(equipGrid.getClickedEquip());
+			equipGrid.target.profession.resetStatBonuses();
+			equipGrid.clearClickedEquip();
 		}
 	}
 	
