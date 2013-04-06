@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="DeadReckoningGame/src"/>
+	<classpathentry kind="src" path="DeadReckoningMods/src"/>
+	<classpathentry kind="src" path="DeadReckoningTools/src"/>
+	<classpathentry kind="lib" path="DeadReckoningGame/lib/lwjgl.jar"/>
+	<classpathentry kind="lib" path="DeadReckoningGame/lib/rlforj.0.2.jar"/>
+	<classpathentry kind="lib" path="DeadReckoningGame/lib/slick.jar"/>
+	<classpathentry kind="lib" path="DeadReckoningGame/modpacks/core.jar"/>
+	<classpathentry kind="lib" path="runnable release/GAMERUN.jar"/>
+	<classpathentry kind="lib" path="runnable release/lib/lwjgl.jar"/>
+	<classpathentry kind="lib" path="runnable release/lib/rlforj.0.2.jar"/>
+	<classpathentry kind="lib" path="runnable release/lib/slick.jar"/>
+	<classpathentry kind="lib" path="runnable release/modpacks/core.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="DeadReckoningMods/bin"/>
+</classpath>
