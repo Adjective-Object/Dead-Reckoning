@@ -54,14 +54,16 @@ public class ClassCreationState extends PrebakedHudLayersState{
 		if(rightButton.isPressed() || leftButton.isPressed()){
 			this.updateToProfession(Profession.getProfession(this.currentProfession));
 		}
-		this.bigImage.xoff+=(container.getWidth()/2-this.bigImage.getWidth()-this.bigImage.xoff)*0.1;
-		if(this.bigImage.xoff<container.getWidth()/2-this.bigImage.getWidth()){
+		this.bigImage.xoff+=(400-this.bigImage.getWidth()-this.bigImage.xoff)*0.1;
+		if(this.bigImage.xoff<400-this.bigImage.getWidth()){
 			this.bigImage.xoff+=1;
 		}
 		
 		for(int i=0; i<3; i++){
 			if(this.selectors.get(i).isTreeChanged()){
 				this.treeImages.get(i).makeFrom(selectors.get(i).getSelectedTree().getSkills()[0].getIcon());
+				this.treeImages.get(i).setMouseoverText(
+						this.selectors.get(i).mouseoverValues[this.selectors.get(i).getSelectedTreeIndex()]);
 			}
 		}
 		

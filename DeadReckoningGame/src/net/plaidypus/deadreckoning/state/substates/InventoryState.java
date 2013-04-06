@@ -35,9 +35,13 @@ public class InventoryState extends PrebakedHudLayersState{
 				itemGrid.addItem(equipGrid.target.equipItem((Equip) itemGrid.getClicked()));
 				itemGrid.removeItem(itemGrid.getClicked());
 				equipGrid.target.profession.resetStatBonuses();
+				itemGrid.clearClicked();
 			}
 			else if(equipGrid.getClickedEquip()!=null){
-				
+				itemGrid.addItem(equipGrid.getClickedEquip());
+				equipGrid.removeEquip(equipGrid.getClickedEquip());
+				equipGrid.target.profession.resetStatBonuses();
+				equipGrid.clearClickedEquip();
 			}
 		}
 	}

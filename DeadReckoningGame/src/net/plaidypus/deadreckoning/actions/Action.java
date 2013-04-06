@@ -27,7 +27,7 @@ public abstract class Action {
 	private Entity targetEntity;
 
 	/** Indicates if the action has been completed (set to true when done)*/
-	public boolean completed, logged, is;
+	public boolean completed, logged, isPriority;
 	
 	/** Indicates if carrying out this action should advance the turn (no for invenory management, etc.)*/
 	public boolean takesTurn = true;

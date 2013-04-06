@@ -2,9 +2,11 @@ package net.plaidypus.deadreckoning.hudelements;
 
 import net.plaidypus.deadreckoning.DeadReckoningGame;
 
+import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.state.StateBasedGame;
 
 // TODO: Auto-generated Javadoc
@@ -27,6 +29,10 @@ public abstract class HudElement {
 
 	/** The mouseover text. */
 	String mouseoverText = null;
+	
+	int mouseoverWidth, mouseoverHeight;
+	
+	boolean mouseoverCalculated;
 
 	/** The Constant BOTTOM_RIGHT. */
 	public static final int TOP_LEFT = 0, TOP_CENTER = 1, TOP_RIGHT = 2,
@@ -131,6 +137,27 @@ public abstract class HudElement {
 	 */
 	public void setMouseoverText(String text) {
 		this.mouseoverText = text;
+		this.mouseoverCalculated = false;
+	}
+	
+	public String getMouseoverText() {
+		return this.mouseoverText;
+	}
+	
+	/**
+	 * Meant to work around the fact that Font.Getwidth only gets the width for the 1st line.
+	 */
+	public void calcMouseoverWidth(Font font){
+		mouseoverWidth = font.getWidth(mouseoverText);
+		mouseoverHeight = font.getHeight(mouseoverText);
+		
+		String[] mouseSplit = mouseoverText.split("(\r|\n)");
+		for(int i=1; i<mouseSplit.length; i++){
+			int t = font.getWidth(mouseSplit[i]);
+			if(t>mouseoverWidth){mouseoverWidth=t;}
+		}
+		
+		this.mouseoverCalculated=true;
 	}
 
 	/**
@@ -192,22 +219,29 @@ public abstract class HudElement {
 		int mx = gc.getInput().getMouseX(), my = gc.getInput().getMouseY();
 
 		g.setFont(DeadReckoningGame.menuSmallFont);
-
+		
 		if (mx > getAbsoluteX() && mx < getAbsoluteX() + getWidth() && my > getAbsoluteY()
 				&& my < getAbsoluteY() + getHeight() && mouseoverText != null) {
+			
+			if(!mouseoverCalculated){
+				this.calcMouseoverWidth(g.getFont());
+			}
+			
 			g.setColor(DeadReckoningGame.mouseoverBoxColor);
-			g.fillRect(cursorSize + gc.getInput().getMouseX(), cursorSize
-					+ gc.getInput().getMouseY(),
-					g.getFont().getWidth(mouseoverText) + 10, g.getFont()
-							.getHeight(mouseoverText) + 10);
+			g.fillRect(
+					cursorSize + gc.getInput().getMouseX(),
+					cursorSize + gc.getInput().getMouseY(),
+					mouseoverWidth+10,
+					mouseoverHeight+10);
 			g.setColor(DeadReckoningGame.mouseoverTextColor);
-			g.drawRect(cursorSize + gc.getInput().getMouseX(), cursorSize
-					+ gc.getInput().getMouseY(),
-					g.getFont().getWidth(mouseoverText) + 10, g.getFont()
-							.getHeight(mouseoverText) + 10);
-			g.drawString(mouseoverText, cursorSize + 5
-					+ gc.getInput().getMouseX(), cursorSize + 5
-					+ gc.getInput().getMouseY());
+			g.drawRect(
+					cursorSize + gc.getInput().getMouseX(),
+					cursorSize + gc.getInput().getMouseY(),
+					mouseoverWidth+10,
+					mouseoverHeight+10);
+			g.drawString(mouseoverText,
+					cursorSize + 5 + gc.getInput().getMouseX(),
+					cursorSize + 5 + gc.getInput().getMouseY());
 		}
 	}
 	

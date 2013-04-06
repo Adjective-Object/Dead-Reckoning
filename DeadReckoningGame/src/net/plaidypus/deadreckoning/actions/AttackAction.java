@@ -95,6 +95,7 @@ public class AttackAction extends EntityTypeAction {
 		this.animate = animate;
 		this.physical = physical;
 		this.damageFrame=damageFrame;
+		this.isPriority=true;
 	}
 	
 	public void setGridEffects(GridEffect sourceTopEffect, GridEffect sourceBottomEffect,

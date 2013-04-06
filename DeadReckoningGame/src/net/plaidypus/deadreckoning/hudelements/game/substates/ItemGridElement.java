@@ -175,9 +175,13 @@ public class ItemGridElement extends SimplePanel {
 	public Item getClicked() {
 		return this.clickedItem;
 	}
+	
+	public void clearClicked() {
+		this.clickedItem=null;
+	}
 
 	public void removeItem(Item item) {
-		this.contents.set(contents.indexOf(item),null);
+		this.contents.remove(contents.indexOf(item));
 		this.selector=-1;
 	}
 }

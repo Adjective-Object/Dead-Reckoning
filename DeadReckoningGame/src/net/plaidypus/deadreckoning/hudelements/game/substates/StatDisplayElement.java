@@ -25,6 +25,31 @@ public class StatDisplayElement extends HudElement {
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
+		int mx = gc.getInput().getMouseX()-this.getAbsoluteX(), my =gc.getInput().getMouseY()-this.getAbsoluteY();
+		
+		if(my>=65){
+			if(mx>=80){
+				this.setMouseoverText("LUK");
+			} else{
+				this.setMouseoverText("DEX");
+			}
+		}
+		else if(my>=45){
+			if(mx>=80){
+				this.setMouseoverText("INT");
+			} else{
+				this.setMouseoverText("STR");
+			}
+		}
+		else if(my>=20 && mx<80){
+			this.setMouseoverText("Mana");
+		}
+		else if(my>=5 && mx<80){
+			this.setMouseoverText("Health");
+		}
+		else{
+			this.setMouseoverText(null);
+		}
 	}
 
 	@Override

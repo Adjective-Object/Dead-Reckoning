@@ -13,6 +13,7 @@ public class TickerBox extends Button{
 	int width,height;
 	
 	boolean ticked=false;
+	boolean changeTicked = false;
 	
 	public TickerBox(int x, int y, int bindMethod) {
 		this(x, y, 15,15, bindMethod);
@@ -30,6 +31,7 @@ public class TickerBox extends Button{
 		super.update(gc, sbg, delta);
 		if(this.isPressed()){
 			this.ticked=!this.ticked;
+			this.changeTicked = true;
 		}
 	}
 	
@@ -69,6 +71,14 @@ public class TickerBox extends Button{
 
 	public boolean isTicked() {
 		return this.ticked;
+	}
+	
+	public boolean changeTicked(){
+		if(changeTicked){
+			changeTicked=false;
+			return true;
+		}
+		return false;
 	}
 
 }

@@ -26,7 +26,9 @@ public class SkillTreeSelectionElement extends Panel{
 	int numClassButtons = 9;
 	
 	Profession selectedProfession = null;
-	SkillProgression selectedTree = null;
+	int selectedTree;
+	
+	public String[] mouseoverValues = new String[] {"","",""};
 	
 	static Image upArrow, downArrow, backButton;
 	boolean treeChanged;
@@ -77,7 +79,7 @@ public class SkillTreeSelectionElement extends Panel{
 		else if(selectedProfession!=null){
 			for(int i=1; i<4; i++){
 				if(skillSelectButtons.get(i).isPressed()){
-					this.selectedTree=this.selectedProfession.getTrees()[i-1];
+					this.selectedTree=i-1;
 					treeChanged=true;
 				}
 			}
@@ -103,7 +105,7 @@ public class SkillTreeSelectionElement extends Panel{
 	}
 	
 	public void reset(){
-		this.selectedTree=null;
+		this.selectedTree=0;
 		if(this.selectedProfession!=null){
 			this.selectedProfession=null;
 			this.enterClassSelect();
@@ -115,6 +117,22 @@ public class SkillTreeSelectionElement extends Panel{
 		for(int i=1; i<this.skillSelectButtons.size(); i++){
 			this.skillSelectButtons.get(i).makeFrom(p.getTrees()[i-1].getSkills()[0].getIcon());
 		}
+		
+		for (int i=0; i<3; i++){
+			String 
+				sk1 = p.getTrees()[i].getSkills()[0].getName(),
+				sk2 = p.getTrees()[i].getSkills()[1].getName(),
+				sk3 = p.getTrees()[i].getSkills()[2].getName();
+			
+			String l = sk1+"\n"+
+					sk2+"\n"+
+					sk3+"\n";
+			
+			mouseoverValues[i]=l;
+			
+			skillSelectButtons.get(i+1).setMouseoverText(l);
+		}
+
 	}
 
 	public void updateToScroll(int scrollValue){
@@ -146,6 +164,10 @@ public class SkillTreeSelectionElement extends Panel{
 	}
 	
 	public SkillProgression getSelectedTree(){
+		return this.selectedProfession.getTrees()[this.selectedTree];
+	}
+	
+	public int getSelectedTreeIndex(){
 		return this.selectedTree;
 	}
 

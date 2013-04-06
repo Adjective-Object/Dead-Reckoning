@@ -36,14 +36,21 @@ public class RapidBlows extends OffensiveSkill{
 	public Action makeAction(Tile target) {
 		ArrayList<Action> spawnableActions = new ArrayList<Action>(0);
 		
-		int a = Utilities.randInt(2,this.level+4);
+		spawnableActions.add(
+				new AttackAction(
+						this.sourceID,(LivingEntity)target.getEntity(Tile.LAYER_ACTIVE),
+						(int)(this.getSource().getStatMaster().getPhysicalDamageFrom()*.8),
+						true,true,0)
+				);
+
+		int a = Utilities.randInt(1,this.level+4);
 		for(int i=0; i<a;i++){
 			spawnableActions.add(
 					new AttackAction(
 							this.sourceID,(LivingEntity)target.getEntity(Tile.LAYER_ACTIVE),
 							(int)(this.getSource().getStatMaster().getPhysicalDamageFrom()*.8),
-							true,true,i*200)
-				);
+							true,false,(i+1)*200)
+					);
 		}
 		return new ActionSpawner(sourceID, spawnableActions);
 	}

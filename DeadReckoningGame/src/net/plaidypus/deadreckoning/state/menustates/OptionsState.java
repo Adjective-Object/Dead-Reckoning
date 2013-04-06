@@ -25,6 +25,8 @@ public class OptionsState extends PrebakedHudLayersState{
 	
 	TextElement frameText, resText;
 	
+	boolean somethingChanged=false;
+	
 	public OptionsState(int stateID, ArrayList<HudElement> elements)
 			throws SlickException {
 		super(stateID, elements);
@@ -52,6 +54,7 @@ public class OptionsState extends PrebakedHudLayersState{
 				OptionsHandler.resolution=(OptionsHandler.resolution+1)%OptionsHandler.resolutions.length;
 			}
 			resText.makeFrom(OptionsHandler.getResolution(OptionsHandler.resolution));
+			somethingChanged=true;
 		}
 		
 		if(frameL.isPressed()||frameR.isPressed()){
@@ -62,15 +65,28 @@ public class OptionsState extends PrebakedHudLayersState{
 				OptionsHandler.frameRate++	;
 			}
 			frameText.makeFrom(Integer.toString(OptionsHandler.frameRate));
+			somethingChanged=true;
 		}
 		
 		if(confirm.isPressed()){
 			OptionsHandler.saveSettings();
-			DeadReckoningGame.instance.enterState(DeadReckoningGame.MAINMENUSTATE);
+			if(this.somethingChanged){
+				DeadReckoningGame.instance.enterState(DeadReckoningGame.OPTIONEXITSTATE);
+			}
+			else{
+				DeadReckoningGame.instance.enterState(DeadReckoningGame.MAINMENUSTATE);
+			}
 		}
 		if(cancel.isPressed()){
 			loadFromOptions();
 			DeadReckoningGame.instance.enterState(DeadReckoningGame.MAINMENUSTATE);
+		}
+		
+		if (
+				fullscreen.changeTicked() ||
+				stretch.changeTicked() ||
+				vsynch.changeTicked() ){
+			somethingChanged=true;
 		}
 
 		OptionsHandler.fullScreen=fullscreen.isTicked();

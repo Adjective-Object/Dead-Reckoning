@@ -24,7 +24,7 @@ public class HudLayersState extends BasicGameState{
 	int stateID;
 	
 	int clickCount, lastClick;
-	private static final int clickSize=400;
+	private static final int clickSize=500;
 	public static boolean doubleClick=false;
 
 	/** The parent DeadReckoningGame. */

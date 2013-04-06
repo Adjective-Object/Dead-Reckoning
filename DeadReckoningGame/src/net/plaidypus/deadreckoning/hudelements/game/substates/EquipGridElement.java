@@ -59,6 +59,7 @@ public class EquipGridElement extends SimplePanel{
 			int rx = i.getMouseX() - this.getAbsoluteX();
 			int ry = i.getMouseY() - this.getAbsoluteY();
 			
+			boolean nothingMoused = true;
 			for(int x=0; x<itemCoords.length; x++){
 				if( rx>itemCoords[x][0] &&
 					rx<itemCoords[x][0]+32 &&
@@ -66,10 +67,14 @@ public class EquipGridElement extends SimplePanel{
 					ry<itemCoords[x][1]+32 &&
 					contents.get(x)!=null){
 					this.setMouseoverText(contents.get(x).getMouseoverText());
-					if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON) && HudLayersState.doubleClick){
+					nothingMoused=false;
+					if(HudLayersState.doubleClick){
 						this.clickedEquip=contents.get(x);
 					}
 				}
+			}
+			if(nothingMoused){
+				this.setMouseoverText(null);
 			}
 		}
 	}
@@ -90,6 +95,10 @@ public class EquipGridElement extends SimplePanel{
 	
 	public Equip getClickedEquip(){
 		return this.clickedEquip;
+	}
+	
+	public void clearClickedEquip(){
+		this.clickedEquip=null;
 	}
 	
 	public void removeEquip(Equip e){

@@ -28,6 +28,7 @@ import net.plaidypus.deadreckoning.state.HudLayersState;
 import net.plaidypus.deadreckoning.state.menustates.ClassCreationState;
 import net.plaidypus.deadreckoning.state.menustates.MainMenuState;
 import net.plaidypus.deadreckoning.state.menustates.NewGameState;
+import net.plaidypus.deadreckoning.state.menustates.OptionsExitState;
 import net.plaidypus.deadreckoning.state.menustates.OptionsState;
 import net.plaidypus.deadreckoning.state.menustates.SaveSelectorState;
 import net.plaidypus.deadreckoning.state.substates.DeathScreenState;
@@ -56,7 +57,7 @@ import org.newdawn.slick.util.Log;
 /**
  * The Class DeadReckoningGame. the Central Game class of the DeadReckoningGame.
  * It manages several HudLayersStates (an extention of the BasicStates provided
- * by Slick). It also holds important constants (UI colors, indicies of stored
+ * by Slick). It also holds important constants (UI colors, indicies of stored 	
  * states, size of tiles)
  * 
  * Only once instance of a DeadReckoningGame can be active at any time. This is
@@ -72,7 +73,7 @@ public class DeadReckoningGame extends StateBasedGame {
 	GAMEPLAYSTATE = 2, MAINMENUSTATE = 3, SAVESELECTSTATE = 4,
 	MAPSTATE = 5, SKILLSTATE = 6, NEWGAMESTATE = 7, ERRORSTATE = 8,
 	DEATHSTATE = 9, NEWCLASSSTATE = 10, INGAMEMENUSTATE = 11,
-	OPTIONSSTATE = 12;
+	OPTIONSSTATE = 12, OPTIONEXITSTATE=13;
 
 	/**
 	 * The Constant tileSize, that governs the size of the tiles in the game
@@ -303,7 +304,9 @@ public class DeadReckoningGame extends StateBasedGame {
 		this.addState(new DeathScreenState(DEATHSTATE,subBackground));
 		this.addState(new ClassCreationState(NEWCLASSSTATE, menuBackground));
 		this.addState(new OptionsState(OPTIONSSTATE, menuBackground));
+		this.addState(new OptionsExitState(OPTIONEXITSTATE,menuBackground));
 		this.addState(new InGameMenuState(INGAMEMENUSTATE,subBackground));
+
 		
 		this.enterState(MAINMENUSTATE);
 	}

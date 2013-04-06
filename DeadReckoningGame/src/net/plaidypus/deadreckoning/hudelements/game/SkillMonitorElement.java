@@ -57,7 +57,7 @@ public class SkillMonitorElement extends HudElement { // TODO turn into a
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-		if (this.toMonitor == null) {
+		if (this.toMonitor == null) {	
 			this.toMonitor = targetGame.player.getProfession();
 		}
 	}
