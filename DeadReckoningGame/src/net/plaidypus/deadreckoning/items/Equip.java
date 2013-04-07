@@ -30,7 +30,8 @@ public class Equip extends Item {
 		SLOT_PANTS=4,
 		SLOT_BOOTS=5,
 		SLOT_RING=6,
-		SLOT_AMULET=7;
+		SLOT_AMULET=7,
+		SLOT_2H=8;
 	;
 
 	/** The class compatability. */

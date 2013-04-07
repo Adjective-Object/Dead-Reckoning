@@ -1,17 +1,17 @@
-Rusty Dagger
-a really, really\nrusty dagger.
-core/res/items/DAGGER_0.png
-80
+Old Staff
+Where the hell did this \n come from?
+core/res/items/STAFF_0.png
+40
+8
+0
+40
 0
 0
 0
 0
+10
 0
 30
-10
-10
-0
-0
 0
 
 
@@ -35,6 +35,7 @@ MDef
 			SLOT_BODY=1,
 			SLOT_HAND_LEFT=2,
 			SLOT_HAND_RIGHT=3,
+			SLOT_2H=8,
 			SLOT_PANTS=4,
 			SLOT_BOOTS=5,
 			SLOT_RING=6,
