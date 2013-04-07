@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import net.plaidypus.deadreckoning.hudelements.HudElement;
 import net.plaidypus.deadreckoning.hudelements.game.substates.ItemGridElement;
 import net.plaidypus.deadreckoning.hudelements.game.substates.ReturnToGameElement;
+import net.plaidypus.deadreckoning.items.Item;
 import net.plaidypus.deadreckoning.state.HudLayersState;
 import net.plaidypus.deadreckoning.state.PrebakedHudLayersState;
 import net.plaidypus.deadreckoning.utilities.KeyConfig;
@@ -28,18 +29,19 @@ public class LootState extends PrebakedHudLayersState{
 		
 		if(HudLayersState.doubleClick ||container.getInput().isKeyPressed(Input.KEY_ENTER)){
 			if(gridA.getSelected()!=null){
-				gridB.addItem(gridA.getSelected());
-				gridA.removeItem(gridA.getSelected());
+				gridB.addItem(gridA.removeItem(gridA.getSelected()));
+				gridB.contents = Item.collapseItemArray(gridB.contents);
 			}
 			else if(gridB.getClicked()!=null){
-				gridA.addItem(gridB.getSelected());
-				gridB.removeItem(gridB.getSelected());
+				gridA.addItem(gridB.removeItem(gridB.getSelected()));
+				gridA.contents = Item.collapseItemArray(gridA.contents);
 			}
 		}
 		
 		if (container.getInput().isKeyPressed(Input.KEY_A)) {
 			gridA.contents.addAll(gridB.contents);
 			gridB.contents.clear();
+			gridA.contents = Item.collapseItemArray(gridA.contents);
 		}
 	}
 	

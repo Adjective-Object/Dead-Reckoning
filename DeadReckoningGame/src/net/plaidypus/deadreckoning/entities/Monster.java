@@ -51,17 +51,17 @@ public class Monster extends LivingEntity {
 	 *            the stats
 	 * @param allign
 	 *            the allign
-	 * @throws SlickException 
+	 * @throws SlickException
 	 */
-	public Monster(String parentMod, String entityFile,
-			StatMaster stats, int allign) throws SlickException {
+	public Monster(String parentMod, String entityFile, StatMaster stats,
+			int allign) throws SlickException {
 		super(parentMod, entityFile, stats, allign);
 		movement = new Movement(this.getID());
 		attack = new Attack(this.getID());
 		this.skills.add(movement);
 		this.skills.add(attack);
 	}
-	
+
 	/**
 	 * if something is blocking its path, it will turn left.
 	 * 
@@ -73,17 +73,16 @@ public class Monster extends LivingEntity {
 	 */
 	@Override
 	public Action decideNextAction(GameContainer gc, int delta) {
-		for (int i = 1; i < 8; i+=2) {
-			int x = i%3 -1;
-			int y = i/3 -1;
+		for (int i = 1; i < 8; i += 2) {
+			int x = i % 3 - 1;
+			int y = i / 3 - 1;
 			for (int k = 0; k < Tile.numLayers; k++) {
 				if (!this.getLocation().getRelativeTo(x, y).isOpen(k)) {
 					Entity n = this.getLocation().getRelativeTo(x, y)
 							.getEntity(k);
 					if (n.getAllignment() != this.getAllignment()
 							&& n.getAllignment() != Entity.ALLIGN_NEUTRAL
-							&& n.makesActions()
-							&& !n.isStealthed()
+							&& n.makesActions() && !n.isStealthed()
 							&& Utilities.randFloat() <= 0.8) {
 						return attack.makeAction(this.getLocation()
 								.getRelativeTo(x, y));
@@ -112,16 +111,19 @@ public class Monster extends LivingEntity {
 	 */
 	@Override
 	// TODO loading from jarfile
-	public Entity makeFromString(GameBoard g, String[] toload) throws SlickException {
+	public Entity makeFromString(GameBoard g, String[] toload)
+			throws SlickException {
 		Monster toRet = new Monster();
 		super.loadGenericSave(g, toload, toRet);
 		return toRet;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see net.plaidypus.deadreckoning.entities.Entity#saveingameEntities.get(i)tring()
+	 * @see
+	 * net.plaidypus.deadreckoning.entities.Entity#saveingameEntities.get(i)
+	 * tring()
 	 */
 	@Override
 	public String saveToString() {
@@ -149,21 +151,21 @@ public class Monster extends LivingEntity {
 		// TODO I don't know ehat to put here...
 		return null;
 	}
-	
-	public ArrayList<Item> getDropItems(){
+
+	public ArrayList<Item> getDropItems() throws SlickException {
 		ArrayList<Item> toRet = new ArrayList<Item>(0);
-		if(info.containsKey("DROPITEMS")){
-			String[] itemDefs = this.info.get("DROPITEMS").replaceAll(" ","").split(",");
-			for(int i=0; i<itemDefs.length; i++){
+		if (info.containsKey("DROPITEMS")) {
+			String[] itemDefs = this.info.get("DROPITEMS").replaceAll(" ", "")
+					.split(",");
+			for (int i = 0; i < itemDefs.length; i++) {
 				String[] itemDef = itemDefs[i].split("-");
-				float chance = Float.parseFloat(itemDef[3])/100F;
-				if(Utilities.randFloat()>chance){
-					toRet.add(Item.loadFromString(itemDef));
+				float chance = Float.parseFloat(itemDef[1]) / 100F;
+				if (Utilities.randFloat() > chance) {
+					toRet.add(Item.generateItemFromString( (Utilities.getSubArray(itemDef, 1, itemDef.length)) ) );
 				}
 			}
-		}
-		else{
-			System.err.println("NO DROPITEMS: "+info);
+		} else {
+			System.err.println("NO DROPITEMS: " + info);
 		}
 		return toRet;
 	}

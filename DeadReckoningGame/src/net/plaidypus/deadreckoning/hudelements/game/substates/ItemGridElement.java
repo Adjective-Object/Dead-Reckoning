@@ -180,8 +180,15 @@ public class ItemGridElement extends SimplePanel {
 		this.clickedItem=null;
 	}
 
-	public void removeItem(Item item) {
-		this.contents.remove(contents.indexOf(item));
-		this.selector=-1;
+	//returns true if item is removed altogether
+	public Item removeItem(Item item) throws SlickException{
+		if(item.stacks==1){
+			this.contents.remove(contents.indexOf(item));
+			this.selector=-1;
+			return item;
+		} else{
+			item.stacks-=1;
+			return item.getSingleCopy();
+		}
 	}
 }

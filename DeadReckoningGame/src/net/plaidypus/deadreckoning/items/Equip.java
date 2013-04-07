@@ -21,6 +21,17 @@ public class Equip extends Item {
 
 	/** The equip slot. */
 	int equipSlot;
+	
+	public static final int
+		SLOT_HEAD=0,
+		SLOT_BODY=1,
+		SLOT_HAND_LEFT=2,
+		SLOT_HAND_RIGHT=3,
+		SLOT_PANTS=4,
+		SLOT_BOOTS=5,
+		SLOT_RING=6,
+		SLOT_AMULET=7;
+	;
 
 	/** The class compatability. */
 	int[] classCompatability;
@@ -31,8 +42,15 @@ public class Equip extends Item {
 	 * @param itemID
 	 *            the item id
 	 */
-	public Equip(String parentMod, Integer itemID) throws SlickException{
+	public Equip(String parentMod, Integer itemID) throws SlickException {
 		super(parentMod, itemID, Item.ITEM_EQUIP);
+	}
+
+	// type-modpack-itemnumber
+	public static Item loadFromString(String[] s) throws NumberFormatException,
+			SlickException {
+		Utilities.logArray(s);
+		return new Equip( s[1], Integer.parseInt(s[2]) );
 	}
 
 	/**
@@ -46,7 +64,8 @@ public class Equip extends Item {
 		name = reader.readLine();
 		description = Utilities.collapseNewlines(reader.readLine());
 		image = ModLoader.loadImage(reader.readLine());
-
+		goldvalue = Integer.parseInt(reader.readLine());
+		
 		equipSlot = Integer.parseInt(reader.readLine());
 		STR = Integer.parseInt(reader.readLine());
 		INT = Integer.parseInt(reader.readLine());
@@ -58,7 +77,7 @@ public class Equip extends Item {
 		WDef = Integer.parseInt(reader.readLine());
 		MAtt = Integer.parseInt(reader.readLine());
 		MDef = Integer.parseInt(reader.readLine());
-		
+
 		reader.close();
 	}
 
@@ -84,22 +103,29 @@ public class Equip extends Item {
 	public Item combineWith(Item item) {
 		return null;
 	}
-	
-	public int getSlot(){
+
+	public int getSlot() {
 		return this.equipSlot;
 	}
-	
+
 	@Override
-	public String getMouseoverText(){
-		String toRet = super.getMouseoverText()+"\n";
-		int[] ppp = new int[] {this.HP, this.MP, this.STR, this.INT, this.DEX, this.LUK, this.WAtt, this.WDef, this.MAtt, this.MDef};
-		String[] names = new String[]{"HP","MP","STR","INT","DEX","LUK","Weapon Attack","Armor", "Magic Attack", "Magic Defense"};
-		for(int i=0; i<ppp.length; i++){
-			if(ppp[i]!=0){
-				toRet+=names[i]+" +"+ppp[i]+"\n";
+	public String getMouseoverText() {
+		String toRet = super.getMouseoverText() + "\n";
+		int[] ppp = new int[] { this.HP, this.MP, this.STR, this.INT, this.DEX,
+				this.LUK, this.WAtt, this.WDef, this.MAtt, this.MDef };
+		String[] names = new String[] { "HP", "MP", "STR", "INT", "DEX", "LUK",
+				"Weapon Attack", "Armor", "Magic Attack", "Magic Defense" };
+		for (int i = 0; i < ppp.length; i++) {
+			if (ppp[i] != 0) {
+				toRet += names[i] + " +" + ppp[i] + "\n";
 			}
 		}
 		return toRet;
+	}
+
+	@Override
+	public Item getSingleCopy() throws SlickException {
+		return this;
 	}
 
 }

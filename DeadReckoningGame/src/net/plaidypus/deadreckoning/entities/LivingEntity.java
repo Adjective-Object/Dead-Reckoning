@@ -28,7 +28,8 @@ import org.newdawn.slick.SpriteSheet;
 /**
  * The Class LivingEntity.
  * 
- * A subclass of entity, used to handle monsters, the player, and (in the future) neutral mobs and pets
+ * A subclass of entity, used to handle monsters, the player, and (in the
+ * future) neutral mobs and pets
  */
 public abstract class LivingEntity extends InteractiveEntity {
 
@@ -39,7 +40,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	public String parentMod, entityFile;
 
 	/** The animations. */
-	protected HashMap<String,Animation> animations;
+	protected HashMap<String, Animation> animations;
 	protected HashMap<String, String> info;
 	protected HashMap<String, Integer> stats;
 
@@ -50,14 +51,18 @@ public abstract class LivingEntity extends InteractiveEntity {
 	public ArrayList<Skill> skills = new ArrayList<Skill>(0);
 
 	/** The Constant ANIMATION_DEATH. */
-	public static final String ANIMATION_STAND = "Stand", ANIMATION_ATTACK = "AttackBasic",
-			ANIMATION_WALK = "Walk", ANIMATION_FLINCH_FRONT = "FlinchFront",
+	public static final String ANIMATION_STAND = "Stand",
+			ANIMATION_ATTACK = "AttackBasic", ANIMATION_WALK = "Walk",
+			ANIMATION_FLINCH_FRONT = "FlinchFront",
 			ANIMATION_FLINCH_BACK = "FlinchBack", ANIMATION_DEATH = "Death";
-	
+
 	/** The id of the current animation. */
 	String currentAnimationID = ANIMATION_STAND;
 
-	/** The stat master, used to handle the (somewhat) unchanging stats of the entity */
+	/**
+	 * The stat master, used to handle the (somewhat) unchanging stats of the
+	 * entity
+	 */
 	protected StatMaster statMaster;
 
 	// Exists only for the purpose of referencing methods that should be static,
@@ -84,8 +89,8 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * @param allignment
 	 *            the allignment
 	 */
-	public LivingEntity(String parentMod,
-			String entityFile, StatMaster statMaster, int allignment) throws SlickException {
+	public LivingEntity(String parentMod, String entityFile,
+			StatMaster statMaster, int allignment) throws SlickException {
 		super();
 		try {
 			InputStream entityReader = ModLoader.getModpackLoader(parentMod)
@@ -96,7 +101,9 @@ public abstract class LivingEntity extends InteractiveEntity {
 			loadFromFile(reader);
 			reader.close();
 		} catch (IOException e) {
-			throw new SlickException("Cannot load Entity "+this.getClass().getSimpleName()+" from livingentityfile");
+			throw new SlickException("Cannot load Entity "
+					+ this.getClass().getSimpleName()
+					+ " from livingentityfile");
 		}
 
 		currentAnimationID = LivingEntity.ANIMATION_STAND;
@@ -111,14 +118,15 @@ public abstract class LivingEntity extends InteractiveEntity {
 		this.HP = this.statMaster.getMaxHP();
 		this.MP = this.statMaster.getMaxMP();
 	}
-	
+
 	/**
-	 * used for when entities are initialized with no properties,
-	 * and then their properties are later assigned through outside methods
-	 * (loading from saves)
-	 * @throws SlickException 
+	 * used for when entities are initialized with no properties, and then their
+	 * properties are later assigned through outside methods (loading from
+	 * saves)
+	 * 
+	 * @throws SlickException
 	 */
-	public void finishBaking() throws SlickException{
+	public void finishBaking() throws SlickException {
 		try {
 			InputStream entityReader = ModLoader.getModpackLoader(parentMod)
 					.getResourceAsStream(parentMod + "/" + entityFile);
@@ -128,11 +136,12 @@ public abstract class LivingEntity extends InteractiveEntity {
 			loadFromFile(reader);
 			reader.close();
 		} catch (IOException e) {
-			throw new SlickException("Cannot load Entity "+this.getClass().getSimpleName()+" from livingentityfile");
+			throw new SlickException("Cannot load Entity "
+					+ this.getClass().getSimpleName()
+					+ " from livingentityfile");
 		}
 	}
-	
-	
+
 	/**
 	 * updates the entity (updates the animation).
 	 * 
@@ -154,13 +163,13 @@ public abstract class LivingEntity extends InteractiveEntity {
 	}
 
 	@Override
-	public void updateBoardEffects(GameContainer gc){
+	public void updateBoardEffects(GameContainer gc) {
 		super.updateBoardEffects(gc);
 		if (this.HP <= 0) {
 			this.kill();
 		}
 	}
-	
+
 	/**
 	 * still abstract because different livingEntities will have differing AIs.
 	 * 
@@ -209,18 +218,18 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * 
 	 * @param damage
 	 *            the damage to deal
-	 * @return 
+	 * @return
 	 */
 	public int damagePhysical(int damage) {
 		int x = attemptDodge(this.statMaster.getPhysicalDamageTo(damage));
 		this.HP -= x;
 		return x;
-		
+
 	}
 
 	/**
 	 * deals the entity some amount of magical damage. This method takes the raw
-	 * damage, and applies the magical defense of the livingentity to it 
+	 * damage, and applies the magical defense of the livingentity to it
 	 * 
 	 * @param damage
 	 *            the damage to deal
@@ -230,9 +239,9 @@ public abstract class LivingEntity extends InteractiveEntity {
 		this.HP -= x;
 		return x;
 	}
-	
-	public int attemptDodge(int damage){
-		if(Utilities.randFloat() <= this.statMaster.getDodgeChance()){
+
+	public int attemptDodge(int damage) {
+		if (Utilities.randFloat() <= this.statMaster.getDodgeChance()) {
 			return damage;
 		}
 		return 0;
@@ -251,10 +260,10 @@ public abstract class LivingEntity extends InteractiveEntity {
 	@Override
 	public void forceRender(Graphics g, float x, float y) {
 		g.drawImage(
-				getCurrentAntimation().getCurrentFrame().getFlippedCopy(getFacing(),
-						false), (int) x + DeadReckoningGame.tileSize / 2
-						- this.width / 2, (int) y + DeadReckoningGame.tileSize
-						- this.height);
+				getCurrentAntimation().getCurrentFrame().getFlippedCopy(
+						getFacing(), false), (int) x
+						+ DeadReckoningGame.tileSize / 2 - this.width / 2,
+				(int) y + DeadReckoningGame.tileSize - this.height);
 		for (int i = 0; i < statuses.size(); i++) {
 			statuses.get(i).render(g, (int) x, (int) y);
 		}
@@ -352,8 +361,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	@Override
 	public void onDeath() {
 		this.getParent().placeEntityNear(this.getX(), this.getY(),
-				new Corpse(this),
-				Tile.LAYER_PASSIVE_PLAY);
+				new Corpse(this), Tile.LAYER_PASSIVE_PLAY);
 	}
 
 	/*
@@ -443,7 +451,8 @@ public abstract class LivingEntity extends InteractiveEntity {
 			// WHY DID I FEEL THE NEED TO DO THIS?
 			in = reader.readLine();
 			if (!in.equals("")) {
-				if (in.substring(0,1).equals(":") && in.substring(in.length()-1).equals(":")) {
+				if (in.substring(0, 1).equals(":")
+						&& in.substring(in.length() - 1).equals(":")) {
 					ParsingMode = in;
 				}
 
@@ -461,7 +470,8 @@ public abstract class LivingEntity extends InteractiveEntity {
 
 						String[] toimageB = toimage[1].split("\"");
 
-						SpriteSheet p = new SpriteSheet(ModLoader.loadImage(toimageB[1]),
+						SpriteSheet p = new SpriteSheet(
+								ModLoader.loadImage(toimageB[1]),
 								stats.get("TILEX"), stats.get("TILEY"));
 
 						images.put(toimage[0], p);
@@ -478,14 +488,21 @@ public abstract class LivingEntity extends InteractiveEntity {
 							frames[i] = Integer.parseInt(toAnimationC[i]);
 							durations[i] = Integer.parseInt(toAnimationB[1]);
 						}
-						try{
+						try {
 							animations.put(toAnimation[0],
-								new Animation(images.get(toAnimationB[0]),
-										frames, durations));
-						} catch (RuntimeException e){
-							 System.err.println("Animation "+toAnimation[0]+" in "+info.get("NAME")+" is invalid");
-							 System.err.println(images.get(toAnimationB[0]).getHorizontalCount()+","+images.get(toAnimationB[0]).getVerticalCount());
-							 e.printStackTrace();
+									new Animation(images.get(toAnimationB[0]),
+											frames, durations));
+						} catch (RuntimeException e) {
+							System.err
+									.println("Animation " + toAnimation[0]
+											+ " in " + info.get("NAME")
+											+ " is invalid");
+							System.err.println(images.get(toAnimationB[0])
+									.getHorizontalCount()
+									+ ","
+									+ images.get(toAnimationB[0])
+											.getVerticalCount());
+							e.printStackTrace();
 						}
 					}
 				}
@@ -495,35 +512,36 @@ public abstract class LivingEntity extends InteractiveEntity {
 		parseInfo(info);
 		parseStats(stats);
 		parseAnims(animations);
-		
-		this.info=info;
-		this.stats=stats;
-		this.animations=animations;
+
+		this.info = info;
+		this.stats = stats;
+		this.animations = animations;
 	}
 
-	protected void parseInfo(HashMap<String,String> info){
+	protected void parseInfo(HashMap<String, String> info) {
 		setName(info.get("NAME"));
-		if(info.containsKey("DESCRIPTION")){
-			this.description=info.get("DESCRIPTION");
+		if (info.containsKey("DESCRIPTION")) {
+			this.description = info.get("DESCRIPTION");
 		}
 	}
-	
-	protected void parseStats(HashMap<String,Integer> stats){
+
+	protected void parseStats(HashMap<String, Integer> stats) {
 		width = stats.get("TILEX");
 		height = stats.get("TILEY");
 	}
-	
+
 	/**
 	 * defines properties of the animations
+	 * 
 	 * @param animations
 	 */
-	protected void parseAnims(HashMap<String,Animation> animations){
+	protected void parseAnims(HashMap<String, Animation> animations) {
 		animations.get("AttackBasic").setLooping(false);
 		animations.get("FlinchFront").setLooping(false);
 		animations.get("FlinchBack").setLooping(false);
 		animations.get("Death").setLooping(false);
 	}
-	
+
 	/**
 	 * Gets the game.
 	 * 
@@ -547,15 +565,15 @@ public abstract class LivingEntity extends InteractiveEntity {
 		}
 		recalculateStatBonuses();
 		for (int i = 0; i < statuses.size(); i++) {
-			if(statuses.get(i).isFinished()){
+			if (statuses.get(i).isFinished()) {
 				this.statuses.remove(i);
 				i--;
 			}
 		}
 		return actions;
 	}
-	
-	public void recalculateStatBonuses(){
+
+	public void recalculateStatBonuses() {
 		this.statMaster.resetStatBonuses();
 		for (int i = 0; i < statuses.size(); i++) {
 			statuses.get(i).alterStatMaster(this.statMaster);
@@ -584,55 +602,55 @@ public abstract class LivingEntity extends InteractiveEntity {
 		}
 		return p;
 	}
-	
+
 	@Override
 	protected String getGenericSave() {
-		String toRet = super.getGenericSave()+":"+LivingEntity.getStatusesAsString(this.statuses)+":"+this.HP+":"+this.MP+":"
-				+this.statMaster.toString()+":"+this.allignmnet+":"+this.parentMod+":"+this.entityFile;
+		String toRet = super.getGenericSave() + ":"
+				+ LivingEntity.getStatusesAsString(this.statuses) + ":"
+				+ this.HP + ":" + this.MP + ":" + this.statMaster.toString()
+				+ ":" + this.allignmnet + ":" + this.parentMod + ":"
+				+ this.entityFile;
 		return toRet;
 	}
-	
-	public void loadGenericSave(GameBoard board, String[] args, LivingEntity e) throws SlickException{
+
+	public void loadGenericSave(GameBoard board, String[] args, LivingEntity e)
+			throws SlickException {
 		super.loadGenericSave(board, args, e);
 		e.loadStatuses(e, args[5].split(","));
 		e.statMaster = loadStatMaster(args[8].split(","));
 		e.setAllignment(Integer.parseInt(args[9]));
-		e.HP=Integer.parseInt(args[6]);
-		e.MP=Integer.parseInt(args[7]);
+		e.HP = Integer.parseInt(args[6]);
+		e.MP = Integer.parseInt(args[7]);
 		e.parentMod = args[10];
 		e.entityFile = args[11];
 		e.finishBaking();
 	}
 
-	
-	protected void loadStatuses(LivingEntity target, String[] statuses) throws SlickException{
-		for(int i=0; i<statuses.length; i++){
-			if(statuses[i].length()>0){
+	protected void loadStatuses(LivingEntity target, String[] statuses)
+			throws SlickException {
+		for (int i = 0; i < statuses.length; i++) {
+			if (statuses[i].length() > 0) {
 				target.addCondition(Status.loadStatusFromString(statuses[i]));
 			}
 		}
 	}
-	
+
 	protected static String getStatusesAsString(ArrayList<Status> stati) {
 		String toRet = "";
-		for(int i=0; i<stati.size(); i++){
-			if(i!=0){
-				toRet+=",";
+		for (int i = 0; i < stati.size(); i++) {
+			if (i != 0) {
+				toRet += ",";
 			}
-			toRet+=stati.get(i).saveToString();
+			toRet += stati.get(i).saveToString();
 		}
 		return toRet;
 	}
-	
-	protected StatMaster loadStatMaster(String[] toload){
-		return new StatMaster(
-				Integer.parseInt(toload[0]),
-				Integer.parseInt(toload[1]),
-				Integer.parseInt(toload[2]),
-				Integer.parseInt(toload[3]),
-				Integer.parseInt(toload[4]),
-				Integer.parseInt(toload[5]),
-				Integer.parseInt(toload[6]));
+
+	protected StatMaster loadStatMaster(String[] toload) {
+		return new StatMaster(Integer.parseInt(toload[0]),
+				Integer.parseInt(toload[1]), Integer.parseInt(toload[2]),
+				Integer.parseInt(toload[3]), Integer.parseInt(toload[4]),
+				Integer.parseInt(toload[5]), Integer.parseInt(toload[6]));
 	}
 
 	/**
@@ -643,11 +661,11 @@ public abstract class LivingEntity extends InteractiveEntity {
 	public int calculateEXPValue() {
 		return this.statMaster.calculateEXPValue();
 	}
-	
+
 	@Override
-	public void setID(int newID){
+	public void setID(int newID) {
 		super.setID(newID);
-		for(int i=0; i<this.skills.size(); i++){
+		for (int i = 0; i < this.skills.size(); i++) {
 			skills.get(i).setSource(this.entityID);
 		}
 	}

@@ -70,5 +70,10 @@ public class UseItem extends Item {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public Item getSingleCopy() throws SlickException {//TODO this
+		return this;
+	}
 
 }

@@ -1,6 +1,7 @@
 Rusty Dagger
 a really, really\nrusty dagger.
-core/res/RUSTYDAGGER.png
+core/res/items/RUSTYDAGGER.png
+80
 0
 0
 0
@@ -12,3 +13,29 @@ core/res/RUSTYDAGGER.png
 0
 0
 0
+
+
+name
+description
+image
+goldvalue
+equipSlot (see below)
+STR 
+INT 
+DEX 
+LUK 
+HP
+MP
+WAtt
+WDef
+MAtt
+MDef
+
+			SLOT_HEAD=0,
+			SLOT_BODY=1,
+			SLOT_HAND_LEFT=2,
+			SLOT_HAND_RIGHT=3,
+			SLOT_PANTS=4,
+			SLOT_BOOTS=5,
+			SLOT_RING=6,
+			SLOT_AMULET=7;

@@ -22,8 +22,8 @@ public class EquipGridElement extends SimplePanel{
 	
 	static final int[][] itemCoords = new int[][] {
 		new int[] {70,50},
-		new int[] {70,100},
-		new int[] {70,100},
+		new int[] {70,100}, 
+		new int[] {130,100},
 		new int[] {70,200},
 		new int[] {40,100},
 		new int[] {100,100},

@@ -8,6 +8,8 @@ import java.util.Random;
 
 import net.plaidypus.deadreckoning.board.Tile;
 
+import org.newdawn.slick.util.Log;
+
 /**
  * The Class Utilities. contains some basic self-explanatory methods that are
  * used around the game (easy random generation, basic math, number range
@@ -53,6 +55,9 @@ public class Utilities {
 	 * @return the int
 	 */
 	public static int randInt(int lower, int higher) {
+		if(lower==higher){
+			return lower;
+		}
 		return r.nextInt(higher - lower) + lower;
 	}
 
@@ -268,5 +273,29 @@ public class Utilities {
 				target.add( toAdd.get(i) );
 			}
 		}
+	}
+	
+	public static String[] getSubArray (String[] a, int start, int end){
+		String[] p = new String[end-start];
+		for (int i=start; i<end; i++){
+			p[i-start]=a[i];
+		}
+		return p;
+	}
+	
+	public static void logArray(Object[] a){
+		Log.debug( getArrayString(a) );
+	}
+	
+	public static String getArrayString(Object[] a){
+		StringBuilder s = new StringBuilder("(");
+		for(int i=0; i<a.length; i++){
+			s.append(a[i].toString());
+			if(i!=a.length-1){
+				s.append(", ");
+			}
+		}
+		s.append(")");
+		return s.toString() ;
 	}
 }

@@ -17,10 +17,11 @@ import org.newdawn.slick.SlickException;
 public abstract class InteractiveEntity extends Entity {
 
 	/** The inventory. */
-	protected ArrayList<Item> inventory = new ArrayList<Item>(0) ;
+	protected ArrayList<Item> inventory = new ArrayList<Item>(0);
 
 	/** The inventory size. */
 	public int inventorySize = 5;
+
 	/**
 	 * Instantiates a new interactive entity.
 	 * 
@@ -100,29 +101,10 @@ public abstract class InteractiveEntity extends Entity {
 	}
 
 	/**
-	 * Collapse item array.
-	 * 
-	 * @param in
-	 *            the in
-	 * @return the array list
-	 */
-	public static ArrayList<Item> collapseItemArray(ArrayList<Item> in) {
-		for (int i = 1; i < in.size(); i++) {
-			for (int x = 0; x < i; x++) {
-				if (in.get(i).stacksWith(in.get(x))) {
-					in.set(i, in.get(i).combineWith(in.get(x)));
-					in.remove(x);
-				}
-			}
-		}
-		return in;
-	}
-
-	/**
 	 * Collapse inventory.
 	 */
 	public void collapseInventory() {// TODO this doesn't work at all.
-		collapseItemArray(this.inventory);
+		Item.collapseItemArray(this.inventory);
 	}
 
 	/**
@@ -140,43 +122,47 @@ public abstract class InteractiveEntity extends Entity {
 		}
 		return false;
 	}
-	
-	public static ArrayList<Item> loadItems(String[] split){
+
+	public static ArrayList<Item> loadItems(String[] split)
+			throws SlickException {
 		ArrayList<Item> e = new ArrayList<Item>(0);
-		for(int i=0; i<split.length; i++){
-			if(!split[i].equals("null")){
-				e.add(Item.loadFromString(split[i].split("-")));
+		for (int i = 0; i < split.length; i++) {
+			if (!split[i].equals("null")) {
+				e.add(Item.generateItemFromString(split[i].split("-")));
 			}
 		}
 		return e;
 	}
 
 	@Override
-	protected String getGenericSave(){
-		return super.getGenericSave()+":"+getInventoryAsString(this.inventory, this.inventorySize);
+	protected String getGenericSave() {
+		return super.getGenericSave() + ":"
+				+ getInventoryAsString(this.inventory, this.inventorySize);
 	}
-	
-	public void loadGenericSave(GameBoard board, String[] args, InteractiveEntity e) throws SlickException{
+
+	public void loadGenericSave(GameBoard board, String[] args,
+			InteractiveEntity e) throws SlickException {
 		super.loadGenericSave(board, args, e);
 		e.inventory.addAll(loadItems(args[4].split(",")));
 	}
-	
-	public static String getInventoryAsString(ArrayList<? extends Item> inv, int maxLen){
-		String toRet="";
-		if(maxLen==-1){
-			maxLen=inv.size();
+
+	public static String getInventoryAsString(ArrayList<? extends Item> inv,
+			int maxLen) {
+		String toRet = "";
+		if (maxLen == -1) {
+			maxLen = inv.size();
 		}
-		for(int i=0; i<maxLen; i++){
-			if(i!=0){toRet+=",";}
-			if(inv.size()>i && inv.get(i)!=null){
-				toRet+=inv.get(i).toItemString();
+		for (int i = 0; i < maxLen; i++) {
+			if (i != 0) {
+				toRet += ",";
 			}
-			else{
-				toRet+="null";
+			if (inv.size() > i && inv.get(i) != null) {
+				toRet += inv.get(i).toItemString();
+			} else {
+				toRet += "null";
 			}
 		}
 		return toRet;
 	}
-	
-	
+
 }
