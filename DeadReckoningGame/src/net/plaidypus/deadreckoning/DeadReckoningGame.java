@@ -36,6 +36,7 @@ import net.plaidypus.deadreckoning.state.substates.InGameMenuState;
 import net.plaidypus.deadreckoning.state.substates.InventoryState;
 import net.plaidypus.deadreckoning.state.substates.LootState;
 import net.plaidypus.deadreckoning.state.substates.PlayerViewerState;
+import net.plaidypus.deadreckoning.state.substates.StoreState;
 import net.plaidypus.deadreckoning.utilities.DeadReckoningLogSystem;
 import net.plaidypus.deadreckoning.utilities.KeyConfig;
 import net.plaidypus.deadreckoning.utilities.OptionsHandler;
@@ -73,7 +74,7 @@ public class DeadReckoningGame extends StateBasedGame {
 	GAMEPLAYSTATE = 2, MAINMENUSTATE = 3, SAVESELECTSTATE = 4,
 	MAPSTATE = 5, SKILLSTATE = 6, NEWGAMESTATE = 7, ERRORSTATE = 8,
 	DEATHSTATE = 9, NEWCLASSSTATE = 10, INGAMEMENUSTATE = 11,
-	OPTIONSSTATE = 12, OPTIONEXITSTATE=13;
+	OPTIONSSTATE = 12, OPTIONEXITSTATE=13, STORESTATE=14;
 
 	/**
 	 * The Constant tileSize, that governs the size of the tiles in the game
@@ -306,6 +307,7 @@ public class DeadReckoningGame extends StateBasedGame {
 		this.addState(new OptionsState(OPTIONSSTATE, menuBackground));
 		this.addState(new OptionsExitState(OPTIONEXITSTATE,menuBackground));
 		this.addState(new InGameMenuState(INGAMEMENUSTATE,subBackground));
+		this.addState(new StoreState(STORESTATE,subBackground));
 
 		
 		this.enterState(MAINMENUSTATE);

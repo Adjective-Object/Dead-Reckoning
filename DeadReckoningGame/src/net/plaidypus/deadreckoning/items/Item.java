@@ -29,7 +29,7 @@ public abstract class Item {
 
 	/** The item id. */
 	int itemID;
-	int goldvalue;
+	public int goldvalue;
 	public int stacks =1;
 
 	/** The image. */
@@ -160,5 +160,9 @@ public abstract class Item {
 	}
 	
 	public abstract Item getSingleCopy() throws SlickException;
+
+	public boolean matches(String string, int i) {
+		return this.parentMod.equals(string)&&this.itemID==i;
+	}
 
 }
