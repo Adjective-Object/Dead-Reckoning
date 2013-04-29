@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Dead-Reckoning Game"/>
 	<classpathentry kind="lib" path="/Dead-Reckoning Game/lib/lwjgl.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Dead-Reckoning Game/lib/natives"/>
@@ -10,5 +9,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="/Dead-Reckoning Game/lib/rlforj.0.2.jar"/>
 	<classpathentry kind="lib" path="/Dead-Reckoning Game/lib/slick.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Dead-Reckoning Game"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -79,7 +79,7 @@ public abstract class InteractiveEntity extends Entity {
 	 * slick.GameContainer, int)
 	 */
 	@Override
-	public abstract Action chooseAction(GameContainer gc, int delta);
+	public abstract Action chooseAction(GameContainer gc, int delta) throws SlickException;
 
 	/*
 	 * (non-Javadoc)

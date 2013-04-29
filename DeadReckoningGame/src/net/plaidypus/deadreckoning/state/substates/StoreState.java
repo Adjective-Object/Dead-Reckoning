@@ -27,6 +27,10 @@ public class StoreState extends PrebakedHudLayersState{
 		super(stateID, background);
 	}
 	
+	public void makeFrom(ArrayList<Item> storeContents){
+		this.storeGrid.contents = storeContents;
+	}
+	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException{
 		super.update(container, game, delta);

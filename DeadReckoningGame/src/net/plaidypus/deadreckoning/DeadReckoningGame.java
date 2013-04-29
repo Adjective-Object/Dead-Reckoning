@@ -25,6 +25,7 @@ import net.plaidypus.deadreckoning.hudelements.simple.StringPutter;
 import net.plaidypus.deadreckoning.hudelements.simple.TextElement;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
 import net.plaidypus.deadreckoning.state.HudLayersState;
+import net.plaidypus.deadreckoning.state.NPCSpeechState;
 import net.plaidypus.deadreckoning.state.menustates.ClassCreationState;
 import net.plaidypus.deadreckoning.state.menustates.MainMenuState;
 import net.plaidypus.deadreckoning.state.menustates.NewGameState;
@@ -74,7 +75,8 @@ public class DeadReckoningGame extends StateBasedGame {
 	GAMEPLAYSTATE = 2, MAINMENUSTATE = 3, SAVESELECTSTATE = 4,
 	MAPSTATE = 5, SKILLSTATE = 6, NEWGAMESTATE = 7, ERRORSTATE = 8,
 	DEATHSTATE = 9, NEWCLASSSTATE = 10, INGAMEMENUSTATE = 11,
-	OPTIONSSTATE = 12, OPTIONEXITSTATE=13, STORESTATE=14;
+	OPTIONSSTATE = 12, OPTIONEXITSTATE=13, STORESTATE=14,
+	NPCSPEECHSTATE = 15;
 
 	/**
 	 * The Constant tileSize, that governs the size of the tiles in the game
@@ -307,6 +309,7 @@ public class DeadReckoningGame extends StateBasedGame {
 		this.addState(new OptionsState(OPTIONSSTATE, menuBackground));
 		this.addState(new OptionsExitState(OPTIONEXITSTATE,menuBackground));
 		this.addState(new InGameMenuState(INGAMEMENUSTATE,subBackground));
+		this.addState(new NPCSpeechState(NPCSPEECHSTATE,subBackground));
 		this.addState(new StoreState(STORESTATE,subBackground));
 
 		

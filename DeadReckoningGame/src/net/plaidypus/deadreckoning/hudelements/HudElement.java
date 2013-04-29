@@ -21,10 +21,10 @@ public abstract class HudElement {
 	public int xoff, yoff, bindMethod, personalBindMethod=TOP_LEFT;
 
 	/** The has focus. */
-	public boolean hasFocus;
+	public boolean hasFocus, needsFocus;
 
-	/** The needs focus. */
-	public boolean needsFocus;
+	/** controls if it is updateed / if it is active*/
+	public boolean isVisible=true, isActive=true;
 
 	/** The mouseover text. */
 	String mouseoverText = null;

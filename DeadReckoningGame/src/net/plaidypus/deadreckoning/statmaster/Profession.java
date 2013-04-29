@@ -310,8 +310,7 @@ public class Profession extends StatMaster {
 	 * @return the entity file
 	 */
 	public String getEntityFile() {
-		System.out.println("professions/" + baseClassID + "/player.entity");
-		return "professions/" + baseClassID + "/player.entity";
+		return parentMod+"/professions/" + baseClassID + "/player.entity";
 	}
 
 	/**

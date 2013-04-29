@@ -1,0 +1,38 @@
+:INFORMATION:
+NAME=Goblin
+DESCRIPTION=Oh Shit, a Goblin!
+
+DROPITEMS=50-2-core-0, 50-2-core-1, 100-0-core-2-10-20
+
+:STATS:
+
+TILEX=32
+TILEY=32
+AITYPE=1
+
+:IMAGES:
+StandSheet = "core/res/SHOP.png"
+
+:SPRITES:
+Stand = StandSheet_400_0,0, 1,0, 0,0, 1,0, 0,0, 1,0, 0,0, 1,0, 0,0, 2,0, 0,0, 0,0, 2,0, 0,0, 
+AttackBasic = StandSheet_400_0,0,
+FlinchFront = StandSheet_1000_2,0,
+FlinchBack = StandSheet_1000_2,0,
+Walking = StandSheet_1000_0,0,
+Death = StandSheet_1000_2,0,
+
+:EXIT:
+animation = sourceanimation_millisecondsperframe_x1,y1, x2,y2, ...(etc)
+you need:
+Stand
+FlinchFront
+FlinchBack
+Walking
+Death
+
+dropitems format:
+chance/100 - itemtype - modsource - itemID - args
+itemtype: 0=etc, 1=use, 2=equip;
+for etc, args = number of stacks min - number of stacks max
+
+here you can put comments and shit

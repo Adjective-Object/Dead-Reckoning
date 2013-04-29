@@ -23,6 +23,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.util.Log;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -94,7 +95,8 @@ public abstract class LivingEntity extends InteractiveEntity {
 		super();
 		try {
 			InputStream entityReader = ModLoader.getModpackLoader(parentMod)
-					.getResourceAsStream(parentMod + "/" + entityFile);
+					.getResourceAsStream(entityFile);
+			Log.debug("TRYAND MAKE LIVING ENTITY OF "+entityFile);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
 					entityReader));
 			this.parentMod = parentMod;
@@ -129,7 +131,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	public void finishBaking() throws SlickException {
 		try {
 			InputStream entityReader = ModLoader.getModpackLoader(parentMod)
-					.getResourceAsStream(parentMod + "/" + entityFile);
+					.getResourceAsStream(entityFile);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
 					entityReader));
 			this.parentMod = parentMod;
@@ -180,7 +182,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 * @return the action
 	 */
 	@Override
-	public Action chooseAction(GameContainer gc, int delta) {
+	public Action chooseAction(GameContainer gc, int delta) throws SlickException{
 		return parseFinishedAction(decideNextAction(gc, delta));
 	}
 
@@ -193,7 +195,7 @@ public abstract class LivingEntity extends InteractiveEntity {
 	 *            the delta
 	 * @return the action
 	 */
-	protected abstract Action decideNextAction(GameContainer gc, int delta);
+	protected abstract Action decideNextAction(GameContainer gc, int delta) throws SlickException;
 
 	/**
 	 * enacts something (be default, the updating of skill cooldowns) based on

@@ -94,7 +94,9 @@ public class HudLayersState extends BasicGameState{
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		for (int i = 0; i < contents.size(); i++) {
-			contents.get(i).update(container, game, delta);
+			if (contents.get(i).isActive){
+				contents.get(i).update(container, game, delta);
+			}
 		}
 		doubleClick=false;
 		if (container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)){
@@ -124,10 +126,14 @@ public class HudLayersState extends BasicGameState{
 		}
 		g.fillRect(0, 0, gc.getWidth(), gc.getHeight());
 		for (int i = 0; i < contents.size(); i++) {
-			contents.get(i).render(gc, game, g);
+			if(contents.get(i).isVisible){
+				contents.get(i).render(gc, game, g);
+			}
 		}
 		for (int i = 0; i < contents.size(); i++) {
-			contents.get(i).renderMouseOver(gc, game, g);
+			if(contents.get(i).isVisible){
+				contents.get(i).renderMouseOver(gc, game, g);
+			}
 		}
 	}
 
@@ -141,7 +147,6 @@ public class HudLayersState extends BasicGameState{
 	 *            the objects
 	 */
 	public void makeFrom(Object[] objects) {
-		System.out.println("HudLayersState " + stateID);
 		for (int i = 0; i < objects.length; i++) {
 			this.contents.get(i % contents.size()).makeFrom(objects[i]);
 		}

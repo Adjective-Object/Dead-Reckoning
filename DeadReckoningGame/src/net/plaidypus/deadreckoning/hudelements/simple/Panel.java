@@ -140,7 +140,9 @@ public class Panel extends SimplePanel implements HudElementContainer{
 		super.render(gc, sbg, g);
 		
 		for (int i = 0; i < contents.size(); i++) {
-			contents.get(i).render(gc, sbg, g);
+			if(contents.get(i).isVisible){
+				contents.get(i).render(gc, sbg, g);
+			}
 		}
 
 	}

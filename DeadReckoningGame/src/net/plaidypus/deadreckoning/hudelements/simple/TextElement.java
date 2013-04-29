@@ -150,5 +150,9 @@ public class TextElement extends HudElement {
 		g.setFont(font);
 		g.drawString(text, getAbsoluteX(), getAbsoluteY());
 	}
+	
+	public void setText(String s){
+		this.text=s;
+	}
 
 }

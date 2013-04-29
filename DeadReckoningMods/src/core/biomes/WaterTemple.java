@@ -8,7 +8,6 @@ import net.plaidypus.deadreckoning.board.GameBoard;
 import net.plaidypus.deadreckoning.board.Tile;
 import net.plaidypus.deadreckoning.entities.Entity;
 import net.plaidypus.deadreckoning.entities.Monster;
-import net.plaidypus.deadreckoning.entities.Stair;
 import net.plaidypus.deadreckoning.generator.Room;
 import net.plaidypus.deadreckoning.generator.RoomBasedBiome;
 import net.plaidypus.deadreckoning.modloader.ModLoader;
@@ -22,6 +21,7 @@ import org.newdawn.slick.SpriteSheet;
 
 import core.entities.Door;
 import core.entities.Torch;
+import core.npc.ShopNPC;
  
 /**
  * The Class Hemple.
@@ -72,7 +72,7 @@ public class WaterTemple extends RoomBasedBiome {
 
 
 	@Override
-	public GameBoard makeBoard(int depth, ArrayList<Stair> floorLinks) throws SlickException{
+	public GameBoard makeBoard(int depth, ArrayList floorLinks) throws SlickException{
 		GameBoard b = super.makeBoard(depth, floorLinks);
 		BiomeUtils.exchangeCompatableTiles(b, interchangable);
 		return b;
@@ -115,12 +115,13 @@ public class WaterTemple extends RoomBasedBiome {
 		target.placeEntity(room.getTileAt(target,room.width-1,0),new Torch(5), Tile.LAYER_PASSIVE_MAP);
 		target.placeEntity(room.getTileAt(target,0,room.height-1),new Torch(5), Tile.LAYER_PASSIVE_MAP);		
 		target.placeEntity(room.getTileAt(target,room.width-1,room.height-1),new Torch(5), Tile.LAYER_PASSIVE_MAP);
+		target.placeEntity(room.getTileAt(target,room.width/2,room.height/2),new ShopNPC(), Tile.LAYER_PASSIVE_MAP);
 
 		
 		for(int i=0; i<Utilities.randInt(0,4); i++){
 			Tile t = room.getTileIn(target);
 			if(t.isEmpty(Tile.LAYER_ACTIVE)){
-				Monster m = new Monster("core", "livingEntities/goblin.entity",
+				Monster m = new Monster("core", "core/livingEntities/goblin.entity",
 						new StatMaster(15, 15, 4, 4, 4, 4, 1), Entity.ALLIGN_HOSTILE);
 				m.getInventory().addAll(m.getDropItems());
 				target.placeEntity(t, m, Tile.LAYER_ACTIVE);

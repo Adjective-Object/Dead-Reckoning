@@ -98,8 +98,9 @@ public abstract class Entity extends DeadReckoningComponent {
 	 * @param delta
 	 *            the delta
 	 * @return the action
+	 * @throws SlickException 
 	 */
-	public abstract Action chooseAction(GameContainer gc, int delta);
+	public abstract Action chooseAction(GameContainer gc, int delta) throws SlickException;
 
 	/**
 	 * renders to Graphics only if this.visible calls this.forceRender()
