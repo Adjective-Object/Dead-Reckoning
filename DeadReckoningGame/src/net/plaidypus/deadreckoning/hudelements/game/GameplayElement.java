@@ -224,7 +224,7 @@ public class GameplayElement extends HudElement {
 		for(int i=0; i<getBoard().getIngameEntities().size(); i++){
 			Entity e = getBoard().getIngameEntities().get(i);
 			if(e.allignmnet==Entity.ALLIGN_FRIENDLY){
-				getBoard().revealFromEntity(e , 10);
+				getBoard().revealFromEntity(e , 4);
 			}
 		}
 	}
@@ -358,7 +358,6 @@ public class GameplayElement extends HudElement {
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		getBoard().render(g, (int)-cameraX, (int)-cameraY);
-
 	}
 
 	/**

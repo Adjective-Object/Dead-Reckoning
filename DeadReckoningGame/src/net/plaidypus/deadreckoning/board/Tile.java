@@ -240,22 +240,12 @@ public class Tile {
 	 */
 	public void render(Graphics g, int x, int y) {
 		if ((explored||DeadReckoningGame.debugMode) && this.tileFace!=this.getParent().getBiome().getNullTileValue()) {
-
-			float renderLight = this.lightLevel;
-			if (renderLight == 0 || !this.isVisible()) {
-				renderLight = 0.5F;
-			}
-			
-			if(DeadReckoningGame.debugMode){
-				renderLight=numLightLevels;
-			}
 			
 			SpriteSheet s = this.getParent().getBiome().getTileImage();
+			
 			Image toDraw = s.getSprite(
 					tileFace % s.getHorizontalCount(), tileFace
 							/ s.getHorizontalCount());
-			toDraw.setAlpha((1 - ((numLightLevels - renderLight) / (numLightLevels)))
-					* brightness + (1 - brightness));
 			g.drawImage(toDraw, x, y);
 
 			if (this.highlighted != HIGHLIGHT_NULL) {
@@ -264,6 +254,22 @@ public class Tile {
 						DeadReckoningGame.tileSize);
 			}
 		}
+
+	}
+	
+	public float getLightAlpha(){
+		float renderLight = this.lightLevel;
+		if (renderLight == 0 || !this.isVisible()) {
+			renderLight = 0.5F;
+		}
+		
+		if(DeadReckoningGame.debugMode){
+			renderLight=numLightLevels;
+		}
+		
+		return
+				((numLightLevels - renderLight) / (numLightLevels))
+				* brightness + (1 - brightness);
 
 	}
 

@@ -10,7 +10,7 @@ import org.newdawn.slick.Image;
 public abstract class StaticImageEntity extends Entity {
 
 	/** The draw. */
-	Image draw;
+	protected Image draw;
 
 	/**
 	 * Instantiates a new static image entity.
@@ -42,7 +42,7 @@ public abstract class StaticImageEntity extends Entity {
 	 */
 	@Override
 	public void forceRender(Graphics g, float x, float y) {
-		g.drawImage(draw, x, y);
+		g.drawImage(draw, x+16-draw.getWidth()/2, y+32-draw.getHeight());
 	}
 
 }

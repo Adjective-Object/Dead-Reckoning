@@ -344,14 +344,17 @@ public class GameBoard implements ILosBoard {
 			}
 		}
 
-		if (primaryHighlight != null) {
-			g.setColor(primaryHighlightColor);
-			g.drawRect(primaryHighlight.getX() * DeadReckoningGame.tileSize
-					+ xoff, primaryHighlight.getY()
-					* DeadReckoningGame.tileSize + yoff,
-					DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
+		for (int x = lowX; x < highX; x++) {
+			for (int y = lowY; y < highY; y++) {
+				g.setColor(new Color(0,0,0,board[x][y].getLightAlpha()*0.2F));
+				g.fillRect(
+						(x * DeadReckoningGame.tileSize + xoff),
+						(y * DeadReckoningGame.tileSize + yoff),
+						DeadReckoningGame.tileSize,
+						DeadReckoningGame.tileSize);
+			}
 		}
-
+		
 		for (int i = 0; i < underEffects.size(); i++) {
 			underEffects.get(i).render(g, xoff, yoff);
 		}
@@ -360,9 +363,10 @@ public class GameBoard implements ILosBoard {
 			for (int y = lowY; y < highY; y++) {
 				for (int i = Tile.numLayers - 1; i >= 0; i--) {
 					if (!board[x][y].isOpen(i)
-							&& ( (board[x][y].lightLevel >= 1 && board[x][y]
-									.isVisible()) || (board[x][y].getEntity(i)
-									.isTerrain() && board[x][y].explored) || DeadReckoningGame.debugMode )) {
+							&& (( (board[x][y].lightLevel >= 1 &&
+									board[x][y].isVisible())) ||
+									( board[x][y].getEntity(i).isTerrain() && board[x][y].explored) ||
+									DeadReckoningGame.debugMode ) ) {
 						board[x][y].getEntity(i).render(g,
 								(x * DeadReckoningGame.tileSize + xoff),
 								(y * DeadReckoningGame.tileSize + yoff) );
@@ -374,6 +378,27 @@ public class GameBoard implements ILosBoard {
 		for (int i = 0; i < overEffects.size(); i++) {
 			overEffects.get(i).render(g, xoff, yoff);
 		}
+		
+
+		for (int x = lowX; x < highX; x++) {
+			for (int y = lowY; y < highY; y++) {
+				g.setColor(new Color(0,0,0,board[x][y].getLightAlpha()*0.8F));
+				g.fillRect(
+						(x * DeadReckoningGame.tileSize + xoff),
+						(y * DeadReckoningGame.tileSize + yoff),
+						DeadReckoningGame.tileSize,
+						DeadReckoningGame.tileSize);
+			}
+		}
+		
+		if (primaryHighlight != null) {
+			g.setColor(primaryHighlightColor);
+			g.drawRect(primaryHighlight.getX() * DeadReckoningGame.tileSize
+					+ xoff, primaryHighlight.getY()
+					* DeadReckoningGame.tileSize + yoff,
+					DeadReckoningGame.tileSize, DeadReckoningGame.tileSize);
+		}
+		
 	}
 
 	/**

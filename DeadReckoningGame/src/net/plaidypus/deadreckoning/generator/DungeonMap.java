@@ -46,8 +46,14 @@ public class DungeonMap {
 					+ (depth + 1) + ".map", Stair.DOWN));
 		}
 		Biome b = Biome.getRandomBiome();
-		while((b.minDepth>depth && b.minDepth!=-1) || (b.maxDepth<depth&&b.maxDepth!=-1)){
+		while(!(
+				(b.minDepth<depth || b.minDepth==-1) &&
+				(b.maxDepth>depth||b.maxDepth==-1)
+				)){
 			b = Biome.getRandomBiome();
+		}
+		if(this.depth==depth){
+			b=Biome.getBiome("core.biomes.ThroneRoom");
 		}
 		return b.makeBoard(depth, topass);
 	}

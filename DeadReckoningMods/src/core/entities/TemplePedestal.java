@@ -13,12 +13,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class Torch.
- */
-public class Torch extends Entity {
-
+public class TemplePedestal extends Entity{
+	
 	/** The light. */
 	int light;
 
@@ -27,69 +23,27 @@ public class Torch extends Entity {
 
 	/** The ani. */
 	Animation ani;
-
-	// Exists only for the purpose of referencing methods that should be static,
-	// but need to be abstract, because fuck Java
-	/**
-	 * Instantiates a new torch.
-	 */
-	public Torch() {
-	}
-
-	/**
-	 * Instantiates a new torch.
-	 * 
-	 * @param t
-	 *            the t
-	 * @param layer
-	 *            the layer
-	 * @param areaofLight
-	 *            the areaof light
-	 */
-	public Torch(int areaofLight, SpriteSheet img) {
+	
+	public TemplePedestal(){}
+	
+	public TemplePedestal(int area){
 		super();
-		this.light = areaofLight;
-		this.ani = new Animation(img, new int[] { 0, 0, 1, 0, 2, 0, 3, 0 },
-				new int[] { 60, 60, 60, 60 });
-		this.description = "the fire flickers mesmerizingly";
+		this.light = area;
 		this.isTerrain = true;
+		this.ani = new Animation(img,
+				new int[] { 0,0, 1,0, 2,0, 1,0 },
+				new int[] { 1000, 500, 500, 500 });
 	}
 	
-	public Torch(int area){
-		this(area,img);
-	}
-	
-	
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.plaidypus.deadreckoning.entities.Entity#init()
-	 */
-	@Override
 	public void init() throws SlickException {
-		img = new SpriteSheet(ModLoader.loadImage("core/res/TORCH.png"), 32, 32);
+		img = new SpriteSheet(ModLoader.loadImage("core/res/bossroom/pedastal.png"), 32, 32);
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.plaidypus.deadreckoning.entities.Entity#update(org.newdawn.slick.
-	 * GameContainer, int)
-	 */
+	
 	@Override
 	public void update(GameContainer gc, int delta) {
 		this.ani.update(delta);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.plaidypus.deadreckoning.entities.Entity#updateBoardEffects(org.newdawn
-	 * .slick.GameContainer, int)
-	 */
 	@Override
 	public void updateBoardEffects(GameContainer gc) {
 		this.getParent().lightInRadius(getLocation(), this.light);
@@ -116,9 +70,7 @@ public class Torch extends Entity {
 	 */
 	@Override
 	public void forceRender(Graphics g, float x, float y) {
-		g.drawImage(ani.getCurrentFrame(),
-				x+16-ani.getCurrentFrame().getWidth()/2,
-				y+32-ani.getCurrentFrame().getHeight());
+		g.drawImage(ani.getCurrentFrame(), x, y);
 	}
 
 	/*
@@ -130,7 +82,7 @@ public class Torch extends Entity {
 	 */
 	@Override
 	public Entity makeFromString(GameBoard g, String[] toload) {
-		Torch t = new Torch(Integer.parseInt(toload[4]));
+		TemplePedestal t = new TemplePedestal(Integer.parseInt(toload[4]));
 		t.setLocation(
 				g.getTileAt(
 						Integer.parseInt(toload[1]),
@@ -190,4 +142,5 @@ public class Torch extends Entity {
 		// TODO nothing doing here
 		return null;
 	}
+	
 }
